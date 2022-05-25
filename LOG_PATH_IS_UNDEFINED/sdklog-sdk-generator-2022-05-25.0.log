@@ -1,0 +1,270 @@
+2022-05-25 00:02:57.829 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - The following profiles are active: bluetooth-app
+2022-05-25 00:02:58.375 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-25 00:02:58.377 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-25 00:02:58.396 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2022-05-25 00:02:58.569 - sdk-generator - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=994d7b6e-ae48-30ed-a5b8-3e8ac8bc426a
+2022-05-25 00:02:58.795 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48123 (http)
+2022-05-25 00:02:58.801 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-25 00:02:58.801 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-05-25 00:02:58.880 - sdk-generator - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-05-25 00:02:58.880 - sdk-generator - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1036 ms
+2022-05-25 00:03:00.880 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:03:01.308 - sdk-generator - INFO  --- [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-25 00:03:01.315 - sdk-generator - INFO  --- [main] c.saidake.common.swagger2.SwaggerAutoConfiguration - sdk.swagger.enabled start check
+2022-05-25 00:03:03.017 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:03:03.041 - sdk-generator - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-05-25 00:03:03.212 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48123 (http) with context path ''
+2022-05-25 00:03:03.219 - sdk-generator - INFO  --- [main] c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP sdk-generator 192.168.22.1:48123 register finished
+2022-05-25 00:03:04.632 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:03:04.632 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2022-05-25 00:03:04.648 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-05-25 00:03:04.674 - sdk-generator - INFO  --- [main] s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2022-05-25 00:03:04.741 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - Started GeneratorApp in 10.514 seconds (JVM running for 11.283)
+2022-05-25 00:03:04.743 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - 创建父文件夹成功: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser
+2022-05-25 00:03:04.744 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - 创建新文件成功: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser\AccountVo.java
+2022-05-25 00:03:04.746 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - 创建新文件成功: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser\LalaFaFaVo.java
+2022-05-25 00:03:04.746 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - 创建父文件夹成功: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther
+2022-05-25 00:03:04.747 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - 创建新文件成功: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther\DDBaBaVo.java
+2022-05-25 00:03:04.747 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - 创建新文件成功: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther\KKDaDaVo.java
+2022-05-25 00:10:45.213 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - The following profiles are active: bluetooth-app
+2022-05-25 00:10:45.774 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-25 00:10:45.776 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-25 00:10:45.794 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2022-05-25 00:10:45.962 - sdk-generator - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=994d7b6e-ae48-30ed-a5b8-3e8ac8bc426a
+2022-05-25 00:10:46.194 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48123 (http)
+2022-05-25 00:10:46.200 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-25 00:10:46.201 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-05-25 00:10:46.272 - sdk-generator - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-05-25 00:10:46.273 - sdk-generator - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1046 ms
+2022-05-25 00:10:48.228 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:10:48.660 - sdk-generator - INFO  --- [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-25 00:10:48.666 - sdk-generator - INFO  --- [main] c.saidake.common.swagger2.SwaggerAutoConfiguration - sdk.swagger.enabled start check
+2022-05-25 00:10:50.344 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:10:50.370 - sdk-generator - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-05-25 00:10:50.557 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48123 (http) with context path ''
+2022-05-25 00:10:50.564 - sdk-generator - INFO  --- [main] c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP sdk-generator 192.168.22.1:48123 register finished
+2022-05-25 00:10:51.975 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:10:51.975 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2022-05-25 00:10:51.990 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-05-25 00:10:52.014 - sdk-generator - INFO  --- [main] s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2022-05-25 00:10:52.078 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - Started GeneratorApp in 10.516 seconds (JVM running for 11.283)
+2022-05-25 00:11:23.590 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - The following profiles are active: bluetooth-app
+2022-05-25 00:11:24.142 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-25 00:11:24.144 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-25 00:11:24.170 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2022-05-25 00:11:24.339 - sdk-generator - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=994d7b6e-ae48-30ed-a5b8-3e8ac8bc426a
+2022-05-25 00:11:24.574 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48123 (http)
+2022-05-25 00:11:24.579 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-25 00:11:24.580 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-05-25 00:11:24.652 - sdk-generator - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-05-25 00:11:24.652 - sdk-generator - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1048 ms
+2022-05-25 00:11:26.618 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:11:27.053 - sdk-generator - INFO  --- [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-25 00:11:27.061 - sdk-generator - INFO  --- [main] c.saidake.common.swagger2.SwaggerAutoConfiguration - sdk.swagger.enabled start check
+2022-05-25 00:11:28.871 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:11:28.895 - sdk-generator - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-05-25 00:11:29.063 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48123 (http) with context path ''
+2022-05-25 00:11:29.070 - sdk-generator - INFO  --- [main] c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP sdk-generator 192.168.22.1:48123 register finished
+2022-05-25 00:11:30.485 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:11:30.485 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2022-05-25 00:11:30.501 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-05-25 00:11:30.526 - sdk-generator - INFO  --- [main] s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2022-05-25 00:11:30.594 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - Started GeneratorApp in 10.925 seconds (JVM running for 11.939)
+2022-05-25 00:13:39.619 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - The following profiles are active: bluetooth-app
+2022-05-25 00:13:40.166 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-25 00:13:40.167 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-25 00:13:40.186 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2022-05-25 00:13:40.359 - sdk-generator - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=994d7b6e-ae48-30ed-a5b8-3e8ac8bc426a
+2022-05-25 00:13:40.587 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48123 (http)
+2022-05-25 00:13:40.594 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-25 00:13:40.594 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-05-25 00:13:40.672 - sdk-generator - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-05-25 00:13:40.672 - sdk-generator - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1038 ms
+2022-05-25 00:13:42.636 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:13:43.057 - sdk-generator - INFO  --- [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-25 00:13:43.063 - sdk-generator - INFO  --- [main] c.saidake.common.swagger2.SwaggerAutoConfiguration - sdk.swagger.enabled start check
+2022-05-25 00:13:44.759 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:13:44.783 - sdk-generator - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-05-25 00:13:44.952 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48123 (http) with context path ''
+2022-05-25 00:13:44.960 - sdk-generator - INFO  --- [main] c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP sdk-generator 192.168.22.1:48123 register finished
+2022-05-25 00:13:46.377 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:13:46.377 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2022-05-25 00:13:46.394 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-05-25 00:13:46.420 - sdk-generator - INFO  --- [main] s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2022-05-25 00:13:46.486 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - Started GeneratorApp in 10.51 seconds (JVM running for 11.48)
+2022-05-25 00:13:46.489 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser\AccountVo.java
+2022-05-25 00:13:46.490 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser\LalaFaFaVo.java
+2022-05-25 00:13:46.491 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther\DDBaBaVo.java
+2022-05-25 00:13:46.492 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther\KKDaDaVo.java
+2022-05-25 00:14:18.396 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - The following profiles are active: bluetooth-app
+2022-05-25 00:14:18.946 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-25 00:14:18.948 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-25 00:14:18.966 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2022-05-25 00:14:19.139 - sdk-generator - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=994d7b6e-ae48-30ed-a5b8-3e8ac8bc426a
+2022-05-25 00:14:19.369 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48123 (http)
+2022-05-25 00:14:19.375 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-25 00:14:19.376 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-05-25 00:14:19.450 - sdk-generator - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-05-25 00:14:19.450 - sdk-generator - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1040 ms
+2022-05-25 00:14:21.409 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:14:21.825 - sdk-generator - INFO  --- [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-25 00:14:21.831 - sdk-generator - INFO  --- [main] c.saidake.common.swagger2.SwaggerAutoConfiguration - sdk.swagger.enabled start check
+2022-05-25 00:14:23.516 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:14:23.540 - sdk-generator - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-05-25 00:14:23.707 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48123 (http) with context path ''
+2022-05-25 00:14:23.714 - sdk-generator - INFO  --- [main] c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP sdk-generator 192.168.22.1:48123 register finished
+2022-05-25 00:14:25.131 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 00:14:25.131 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2022-05-25 00:14:25.147 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-05-25 00:14:25.171 - sdk-generator - INFO  --- [main] s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2022-05-25 00:14:25.236 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - Started GeneratorApp in 10.649 seconds (JVM running for 11.632)
+2022-05-25 00:14:25.239 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser\AccountVo.java
+2022-05-25 00:14:25.241 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser\LalaFaFaVo.java
+2022-05-25 00:14:25.241 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther\DDBaBaVo.java
+2022-05-25 00:14:25.242 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther\KKDaDaVo.java
+2022-05-25 09:44:01.934 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - The following profiles are active: bluetooth-app
+2022-05-25 09:44:02.545 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-25 09:44:02.548 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-25 09:44:02.570 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2022-05-25 09:44:02.754 - sdk-generator - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=994d7b6e-ae48-30ed-a5b8-3e8ac8bc426a
+2022-05-25 09:44:03.013 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48123 (http)
+2022-05-25 09:44:03.020 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-25 09:44:03.021 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-05-25 09:44:03.101 - sdk-generator - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-05-25 09:44:03.102 - sdk-generator - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1152 ms
+2022-05-25 09:44:05.115 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 09:44:05.557 - sdk-generator - INFO  --- [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-25 09:44:05.565 - sdk-generator - INFO  --- [main] c.saidake.common.swagger2.SwaggerAutoConfiguration - sdk.swagger.enabled start check
+2022-05-25 09:44:07.273 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 09:44:07.297 - sdk-generator - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-05-25 09:44:13.561 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48123 (http) with context path ''
+2022-05-25 09:44:19.704 - sdk-generator - ERROR --- [main] c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, sdk-generator register failed...NacosRegistration{nacosDiscoveryProperties=NacosDiscoveryProperties{serverAddr='localhost:8848', endpoint='', namespace='', watchDelay=30000, logName='', service='sdk-generator', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.22.1', networkInterface='', port=48123, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null}},
+com.alibaba.nacos.api.exception.NacosException: failed to req API:/nacos/v1/ns/instance after all servers([localhost:8848]) tried: java.net.ConnectException: Connection refused: connect
+	at com.alibaba.nacos.client.naming.net.NamingProxy.reqApi(NamingProxy.java:556)
+	at com.alibaba.nacos.client.naming.net.NamingProxy.reqApi(NamingProxy.java:498)
+	at com.alibaba.nacos.client.naming.net.NamingProxy.reqApi(NamingProxy.java:493)
+	at com.alibaba.nacos.client.naming.net.NamingProxy.registerService(NamingProxy.java:246)
+	at com.alibaba.nacos.client.naming.NacosNamingService.registerInstance(NacosNamingService.java:212)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:74)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.register(AbstractAutoServiceRegistration.java:232)
+	at com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration.register(NacosAutoServiceRegistration.java:78)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.start(AbstractAutoServiceRegistration.java:133)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.bind(AbstractAutoServiceRegistration.java:98)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:86)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:47)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:421)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378)
+	at org.springframework.boot.web.servlet.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:46)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:447)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1356)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1345)
+	at com.saidake.generator.GeneratorApp.main(GeneratorApp.java:18)
+2022-05-25 09:44:19.704 - sdk-generator - WARN  --- [main] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is java.lang.reflect.UndeclaredThrowableException
+2022-05-25 09:44:29.081 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2022-05-25 09:44:29.092 - sdk-generator - INFO  --- [main] o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2022-05-25 09:44:29.122 - sdk-generator - ERROR --- [main] org.springframework.boot.SpringApplication - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is java.lang.reflect.UndeclaredThrowableException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:447)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1356)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1345)
+	at com.saidake.generator.GeneratorApp.main(GeneratorApp.java:18)
+Caused by: java.lang.reflect.UndeclaredThrowableException: null
+	at org.springframework.util.ReflectionUtils.rethrowRuntimeException(ReflectionUtils.java:147)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:83)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.register(AbstractAutoServiceRegistration.java:232)
+	at com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration.register(NacosAutoServiceRegistration.java:78)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.start(AbstractAutoServiceRegistration.java:133)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.bind(AbstractAutoServiceRegistration.java:98)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:86)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:47)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:421)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378)
+	at org.springframework.boot.web.servlet.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:46)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 14 common frames omitted
+Caused by: com.alibaba.nacos.api.exception.NacosException: failed to req API:/nacos/v1/ns/instance after all servers([localhost:8848]) tried: java.net.ConnectException: Connection refused: connect
+	at com.alibaba.nacos.client.naming.net.NamingProxy.reqApi(NamingProxy.java:556)
+	at com.alibaba.nacos.client.naming.net.NamingProxy.reqApi(NamingProxy.java:498)
+	at com.alibaba.nacos.client.naming.net.NamingProxy.reqApi(NamingProxy.java:493)
+	at com.alibaba.nacos.client.naming.net.NamingProxy.registerService(NamingProxy.java:246)
+	at com.alibaba.nacos.client.naming.NacosNamingService.registerInstance(NacosNamingService.java:212)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:74)
+	... 27 common frames omitted
+2022-05-25 09:44:41.416 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - The following profiles are active: bluetooth-app
+2022-05-25 09:44:41.957 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-25 09:44:41.959 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-25 09:44:41.977 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2022-05-25 09:44:42.138 - sdk-generator - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=994d7b6e-ae48-30ed-a5b8-3e8ac8bc426a
+2022-05-25 09:44:42.357 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48123 (http)
+2022-05-25 09:44:42.363 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-25 09:44:42.363 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-05-25 09:44:42.437 - sdk-generator - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-05-25 09:44:42.437 - sdk-generator - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1007 ms
+2022-05-25 09:44:44.388 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 09:44:44.812 - sdk-generator - INFO  --- [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-25 09:44:44.818 - sdk-generator - INFO  --- [main] c.saidake.common.swagger2.SwaggerAutoConfiguration - sdk.swagger.enabled start check
+2022-05-25 09:44:46.498 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 09:44:46.521 - sdk-generator - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-05-25 09:44:46.775 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48123 (http) with context path ''
+2022-05-25 09:44:46.790 - sdk-generator - INFO  --- [main] c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP sdk-generator 192.168.22.1:48123 register finished
+2022-05-25 09:44:48.198 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 09:44:48.198 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2022-05-25 09:44:48.215 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-05-25 09:44:48.241 - sdk-generator - INFO  --- [main] s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2022-05-25 09:44:48.309 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - Started GeneratorApp in 10.495 seconds (JVM running for 11.247)
+2022-05-25 09:45:17.943 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - The following profiles are active: bluetooth-app
+2022-05-25 09:45:18.480 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-25 09:45:18.482 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-25 09:45:18.500 - sdk-generator - INFO  --- [main] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2022-05-25 09:45:18.668 - sdk-generator - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=994d7b6e-ae48-30ed-a5b8-3e8ac8bc426a
+2022-05-25 09:45:18.888 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48123 (http)
+2022-05-25 09:45:18.894 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-25 09:45:18.894 - sdk-generator - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-05-25 09:45:18.968 - sdk-generator - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2022-05-25 09:45:18.968 - sdk-generator - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1010 ms
+2022-05-25 09:45:20.932 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 09:45:21.354 - sdk-generator - INFO  --- [main] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-25 09:45:21.360 - sdk-generator - INFO  --- [main] c.saidake.common.swagger2.SwaggerAutoConfiguration - sdk.swagger.enabled start check
+2022-05-25 09:45:23.055 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 09:45:23.079 - sdk-generator - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-05-25 09:45:23.244 - sdk-generator - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48123 (http) with context path ''
+2022-05-25 09:45:23.253 - sdk-generator - INFO  --- [main] c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP sdk-generator 192.168.22.1:48123 register finished
+2022-05-25 09:45:24.669 - sdk-generator - INFO  --- [main] org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2022-05-25 09:45:24.669 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2022-05-25 09:45:24.684 - sdk-generator - INFO  --- [main] s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-05-25 09:45:24.709 - sdk-generator - INFO  --- [main] s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2022-05-25 09:45:24.773 - sdk-generator - INFO  --- [main] com.saidake.generator.GeneratorApp - Started GeneratorApp in 10.405 seconds (JVM running for 11.191)
+2022-05-25 09:45:24.775 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser\AccountVo.java
+2022-05-25 09:45:24.777 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tUser\LalaFaFaVo.java
+2022-05-25 09:45:24.778 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther\DDBaBaVo.java
+2022-05-25 09:45:24.778 - sdk-generator - INFO  --- [main] c.s.g.service.generator.impl.GeneratorServiceImpl - [重写] 文件: D:\Desktop\DevProject\bluetooth-app\src\main\java\com\saidake\model\common\tOther\KKDaDaVo.java

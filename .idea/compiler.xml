@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="boss-common-core" />
+        <module name="boss-common-spring-boot-starter" />
+        <module name="boss-config" />
+        <module name="boss-gateway" />
+        <module name="boss-generator" />
+        <module name="boss-loadbalancer-spring-boot-starter" />
+        <module name="boss-swagger2-spring-boot-starter" />
+        <module name="sdk-common-core" />
+        <module name="sdk-common-spring-boot-starter" />
+        <module name="sdk-config" />
+        <module name="sdk-gateway" />
+        <module name="sdk-generator" />
+        <module name="sdk-loadbalancer-spring-boot-starter" />
+        <module name="sdk-mybatis-plus" />
+        <module name="sdk-swagger-ui" />
+        <module name="sdk-swagger2-spring-boot-starter" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="boss-common" target="1.8" />
+      <module name="boss-common-core" target="1.8" />
+      <module name="boss-common-spring-boot-starter" target="1.8" />
+      <module name="boss-config" target="1.8" />
+      <module name="boss-gateway" target="1.8" />
+      <module name="boss-generator" target="1.8" />
+      <module name="boss-loadbalancer-spring-boot-starter" target="1.8" />
+      <module name="boss-service" target="1.8" />
+      <module name="boss-swagger2-spring-boot-starter" target="1.8" />
+      <module name="saidake-manage-project" target="1.8" />
+      <module name="sdk-common" target="1.8" />
+      <module name="sdk-common-core" target="1.8" />
+      <module name="sdk-common-spring-boot-starter" target="1.8" />
+      <module name="sdk-config" target="1.8" />
+      <module name="sdk-custom" target="1.8" />
+      <module name="sdk-gateway" target="1.8" />
+      <module name="sdk-generator" target="1.8" />
+      <module name="sdk-loadbalancer-spring-boot-starter" target="1.8" />
+      <module name="sdk-mybatis-plus" target="1.8" />
+      <module name="sdk-service" target="1.8" />
+      <module name="sdk-swagger-ui" target="1.8" />
+      <module name="sdk-swagger2-spring-boot-starter" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

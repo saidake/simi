@@ -1,0 +1,7 @@
+sdk:
+  swagger:
+    enabled: true
+    title: 模板mybatis-plus服务
+    description: 模板mybatis-plus服务接口文档
+    version: 1.0
+    base-package: com.saidake.mybatis.plus.controller

@@ -1,0 +1,145 @@
+{
+  "groups": [
+    {
+      "name": "sdk.swagger",
+      "type": "com.saidake.common.swagger2.SwaggerProperties",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties"
+    },
+    {
+      "name": "sdk.swagger.contact",
+      "type": "com.saidake.common.swagger2.SwaggerProperties$Contact",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "boss.swagger.contact.email",
+      "type": "java.lang.String",
+      "description": "联系人email",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties$Contact",
+      "defaultValue": ""
+    },
+    {
+      "name": "boss.swagger.contact.name",
+      "type": "java.lang.String",
+      "description": "联系人",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties$Contact",
+      "defaultValue": ""
+    },
+    {
+      "name": "boss.swagger.contact.url",
+      "type": "java.lang.String",
+      "description": "联系人url",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties$Contact",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.base-package",
+      "type": "java.lang.String",
+      "description": "swagger会解析的包路径",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.base-path",
+      "type": "java.util.List<java.lang.String>",
+      "description": "swagger会解析的url规则",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties"
+    },
+    {
+      "name": "sdk.swagger.contact.email",
+      "type": "java.lang.String",
+      "description": "联系人email",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties$Contact",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.contact.name",
+      "type": "java.lang.String",
+      "description": "联系人",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties$Contact",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.contact.url",
+      "type": "java.lang.String",
+      "description": "联系人url",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties$Contact",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.description",
+      "type": "java.lang.String",
+      "description": "描述",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.docket",
+      "type": "java.util.Map<java.lang.String,com.saidake.common.swagger2.SwaggerProperties$DocketInfo>",
+      "description": "分组文档",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties"
+    },
+    {
+      "name": "sdk.swagger.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否开启swagger",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties"
+    },
+    {
+      "name": "sdk.swagger.exclude-path",
+      "type": "java.util.List<java.lang.String>",
+      "description": "在basePath基础上需要排除的url规则",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties"
+    },
+    {
+      "name": "sdk.swagger.global-operation-parameters",
+      "type": "java.util.List<com.saidake.common.swagger2.SwaggerProperties$GlobalOperationParameter>",
+      "description": "全局参数配置",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties"
+    },
+    {
+      "name": "sdk.swagger.host",
+      "type": "java.lang.String",
+      "description": "host信息",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.license",
+      "type": "java.lang.String",
+      "description": "许可证",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.license-url",
+      "type": "java.lang.String",
+      "description": "许可证URL",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.terms-of-service-url",
+      "type": "java.lang.String",
+      "description": "服务条款URL",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.title",
+      "type": "java.lang.String",
+      "description": "标题",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "sdk.swagger.version",
+      "type": "java.lang.String",
+      "description": "版本",
+      "sourceType": "com.saidake.common.swagger2.SwaggerProperties",
+      "defaultValue": ""
+    }
+  ],
+  "hints": []
+}
