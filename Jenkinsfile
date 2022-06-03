@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
      SYSTEM_PARA='abc'
-     ONE_ACCESS_KEY=credentials('custom-secret')
+     ONE_ACCESS_KEY=credentials('saidake-credit')
   }
   stages {
      stage('Build maven') {
