@@ -37,8 +37,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Jenkinsfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+            <state relative-caret-position="276">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -112,7 +112,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/sdk-common/sdk-swagger2-spring-boot-starter/src/main/java/com/saidake/common/swagger2/SwaggerAutoConfiguration.java" />
         <option value="$PROJECT_DIR$/sdk-common/sdk-swagger2-spring-boot-starter/src/main/java/com/saidake/common/swagger2/SwaggerProperties.java" />
         <option value="$PROJECT_DIR$/sdk-common/sdk-swagger2-spring-boot-starter/pom.xml" />
         <option value="$PROJECT_DIR$/sdk-gateway/src/main/java/com/saidake/geteway/GatewayApplication.java" />
@@ -163,6 +162,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/sdk-service/sdk-generator/pom.xml" />
         <option value="$PROJECT_DIR$/JenkinsFile" />
+        <option value="$PROJECT_DIR$/Jenkinsfile" />
       </list>
     </option>
   </component>
@@ -347,12 +347,12 @@
       <workItem from="1654097717370" duration="9614000" />
       <workItem from="1654187758875" duration="3171000" />
       <workItem from="1654201077786" duration="3326000" />
-      <workItem from="1654261525656" duration="2127000" />
+      <workItem from="1654261525656" duration="2195000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="263585000" />
+    <option name="totallyTimeSpent" value="263653000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="527" y="136" width="1930" height="1174" extended-state="0" />
@@ -764,8 +764,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Jenkinsfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+        <state relative-caret-position="276">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>

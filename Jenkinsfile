@@ -10,7 +10,6 @@ pipeline {
             steps {
                 def username ='JENKINS'
                 echo 'xxx ${env.BUILD_ID} ${username}'
-                sh 'cd /loopo'        执行命令
             }
      }
      stage('Sonar扫描') {
