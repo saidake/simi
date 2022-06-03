@@ -6,7 +6,7 @@ pipeline {
   }
   stages {
      stage('Build maven') {
-            when {branch 'master'}
+            when {branch 'main'}
             steps {
                 def username ='JENKINS'
                 echo 'xxx ${env.BUILD_ID} ${username}'
