@@ -6,13 +6,17 @@ pipeline {
   stages {
      stage('Build maven') {
             steps {
-                def username ='JENKINS'
-                echo 'xxx ${username}'
+                script{
+                    def username ='JENKINS'
+                    println("--- test content ---")
+                    println(username)
+                }
+                echo 'xxx ${env.SYSTEM_PARA}'
             }
      }
      stage('Sonar扫描') {
             steps {
-                 echo 'xxx '
+                 echo 'xxx'
             }
      }
   }
