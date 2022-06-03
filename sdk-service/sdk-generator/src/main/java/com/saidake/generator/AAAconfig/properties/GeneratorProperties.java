@@ -4,14 +4,16 @@ package com.saidake.generator.AAAconfig.properties;
 import com.saidake.common.core.util.data.StringUtil;
 import com.saidake.common.core.util.file.FileUtil;
 import com.saidake.generator.model.properties.*;
-import com.saidake.generator.service.generator.GeneratorService;
-import com.saidake.generator.service.generator.impl.GeneratorServiceImpl;
+import com.saidake.generator.service.generator.impl.GeneratorTemplateImpl;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * 生成器核心配置项
+ */
 @Data
 @Component
 @ConfigurationProperties(prefix = "sdk.generator")
@@ -33,8 +35,7 @@ public class GeneratorProperties {
     private List<ServiceTableConfig> appendServices;
 
 
-    private AppendCommonVoParamsConfig appendCommonVoParams;
-    private List<CommonVoConfig> appendCommonVo;
+    private List<AppendCommonVoConfig> appendCommonVo;
 
 
 
@@ -47,8 +48,8 @@ public class GeneratorProperties {
 
     //初始化 追加vo 参数
     private void initAppendCommonVoParams(ParamsConfig params) {
-        params.setReadTemplateVoCommonFilePath(FileUtil.joinPathAndPackage(params.getSrcPath(),this.getAppendCommonVoParams().getTemplate())+GeneratorProperties.javaSuffix);
-        params.setWriteVoCommonFolderPath(FileUtil.joinPathAndPackage(params.getSrcPath(),this.getAppendCommonVoParams().getCommonVoPackage()));
+//        params.setReadTemplateVoCommonFilePath(FileUtil.joinPathAndPackage(params.getSrcPath(),this.getAppendCommonVoParams().getTemplate())+GeneratorProperties.javaSuffix);
+//        params.setWriteVoCommonFolderPath(FileUtil.joinPathAndPackage(params.getSrcPath(),this.getAppendCommonVoParams().getCommonVoPackage()));
     }
 
     @PostConstruct
@@ -88,38 +89,38 @@ public class GeneratorProperties {
 
 
         //确定读取的 dto模板文件路径
-        params.setReadTemplateDtoRequestFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName,startLowerTemplateTableName,params.getWriteDtoRequestFolderPath(),suffix.getDtoRequestSuffix(),
+        params.setReadTemplateDtoRequestFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName,startLowerTemplateTableName,params.getWriteDtoRequestFolderPath(),suffix.getDtoRequestSuffix(),
                 GeneratorProperties.javaSuffix,hasDtoTableFolder,false)
         );
-        params.setReadTemplateDtoResponseFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName,startLowerTemplateTableName,params.getWriteDtoRequestFolderPath(),suffix.getDtoResponseSuffix(),
+        params.setReadTemplateDtoResponseFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName,startLowerTemplateTableName,params.getWriteDtoRequestFolderPath(),suffix.getDtoResponseSuffix(),
                 GeneratorProperties.javaSuffix,hasDtoTableFolder,false)
         );
 
-        params.setReadTemplateDtoAddRequestFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName,startLowerTemplateTableName,params.getWriteDtoRequestFolderPath(),suffix.getDtoAddRequestSuffix(),
+        params.setReadTemplateDtoAddRequestFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName,startLowerTemplateTableName,params.getWriteDtoRequestFolderPath(),suffix.getDtoAddRequestSuffix(),
                 GeneratorProperties.javaSuffix,hasDtoTableFolder,false)
         );
-        params.setReadTemplateDtoUpdateRequestFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName,startLowerTemplateTableName,params.getWriteDtoRequestFolderPath(),suffix.getDtoUpdateRequestSuffix(),
+        params.setReadTemplateDtoUpdateRequestFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName,startLowerTemplateTableName,params.getWriteDtoRequestFolderPath(),suffix.getDtoUpdateRequestSuffix(),
                 GeneratorProperties.javaSuffix,hasDtoTableFolder,false)
         );
 
 
 
         //确定读取的 业务模板文件路径
-        params.setReadTemplateDtoServiceFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteDtoRequestFolderPath(), suffix.getDtoRequestSuffix(),
+        params.setReadTemplateDtoServiceFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteDtoRequestFolderPath(), suffix.getDtoRequestSuffix(),
                 GeneratorProperties.javaSuffix, hasDtoTableFolder, false));
 
         //确定读取的 模板文件路径
-        params.setReadTemplateServiceFilePath( GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteServiceFolderPath(), suffix.getServiceSuffix(),
+        params.setReadTemplateServiceFilePath( GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteServiceFolderPath(), suffix.getServiceSuffix(),
                 GeneratorProperties.javaSuffix, hasServiceTableFolder, false));
-        params.setReadTemplateServiceImplFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteServiceFolderPath(), suffix.getServiceImplSuffix(),
+        params.setReadTemplateServiceImplFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteServiceFolderPath(), suffix.getServiceImplSuffix(),
                 GeneratorProperties.javaSuffix, hasServiceTableFolder, true));
-        params.setReadTemplateMapperFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteMapperFolderPath(), suffix.getMapperSuffix(),
+        params.setReadTemplateMapperFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteMapperFolderPath(), suffix.getMapperSuffix(),
                 GeneratorProperties.javaSuffix, false, false));
-        params.setReadTemplateMapperResourcesFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteMapperResourcesFolderPath(), suffix.getMapperResourcesSuffix(),
+        params.setReadTemplateMapperResourcesFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteMapperResourcesFolderPath(), suffix.getMapperResourcesSuffix(),
                 GeneratorProperties.xmlSuffix, hasMapperResourcesTableFolder, false));
-        params.setReadTemplateControllerFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteControllerFolderPath(), suffix.getControllerSuffix(),
+        params.setReadTemplateControllerFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteControllerFolderPath(), suffix.getControllerSuffix(),
                 GeneratorProperties.javaSuffix, hasControllerTableFolder, false));
-        params.setReadTemplateEntityFilePath(GeneratorServiceImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteEntityFolderPath(), suffix.getEntitySuffix(), GeneratorProperties.javaSuffix, false, false));
+        params.setReadTemplateEntityFilePath(GeneratorTemplateImpl.getTableWriteFilePath(startUpperTemplateTableName, startLowerTemplateTableName, params.getWriteEntityFolderPath(), suffix.getEntitySuffix(), GeneratorProperties.javaSuffix, false, false));
 
     }
 }

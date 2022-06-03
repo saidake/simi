@@ -18,7 +18,7 @@ public  class ParamsConfig{
     private String writeDtoRequestFolderPath;
     private String writeDtoResponseFolderPath;
     private String writeEntityFolderPath;
-    private String writeVoCommonFolderPath;
+//    private String writeVoCommonFolderPath;
 
     private String writeServiceFolderPath;
     private String writeControllerFolderPath;
@@ -33,7 +33,7 @@ public  class ParamsConfig{
     private String readTemplateDtoAddRequestFilePath;
     private String readTemplateDtoUpdateRequestFilePath;
     private String readTemplateDtoServiceFilePath;
-    private String readTemplateVoCommonFilePath;
+//    private String readTemplateVoCommonFilePath;
 
     private String readTemplateEntityFilePath;
     private String readTemplateServiceFilePath;

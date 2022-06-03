@@ -6,3 +6,6 @@ spring:
         file-extension: yml        #文件后缀名  对应nacos配置文件的Data Id的后缀名
   profiles:
     active: dev          #开发环境，对应nacos配置文件的Data Id的profile名
+
+sdklog:
+  logpath: D:\Desktop\DevProject\AAAlogs

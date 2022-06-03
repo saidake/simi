@@ -1,9 +1,7 @@
 package com.saidake.generator.service.generator;
 
 
-import com.saidake.generator.model.properties.ServiceMethodConfig;
-import com.saidake.generator.model.properties.ServiceParamsConfig;
-import com.saidake.generator.model.properties.ServiceTableConfig;
+import com.saidake.generator.model.properties.*;
 import com.saidake.generator.mybatis.entity.ColumnEntity;
 import com.saidake.generator.mybatis.entity.TableEntity;
 
@@ -13,7 +11,9 @@ import java.io.File;
 import java.util.List;
 import java.util.Set;
 
-public interface GeneratorService {
+public interface GeneratorTemplate {
+    //-------------------------------------------------------------------------------------- 稳定版 -----------------------------------------------------------------------------//
+    void generateCommonVoClass();
 
     //-------------------------------------------------------------------------------------- 核心 -----------------------------------------------------------------------------//
     //清空除了模板文件名开头的 其他所有文件（sdkTemplate开头或 SdkTemplate 的文件或文件夹不被清除）
@@ -23,8 +23,7 @@ public interface GeneratorService {
     void generateInitServicesFiles();
 
 
-
-    void generateAppendServicesFiles();
+    void generateAppendServices();
 
     //写入dto request文件
     void writeSpecialDto(
@@ -38,9 +37,14 @@ public interface GeneratorService {
             ServiceMethodConfig currentServiceMethodConfig
     );
 
-    void generateCommonVoClassFiles();
 
     //-------------------------------------------------------------------------------------- 业务方法 -----------------------------------------------------------------------------//
+
+    void writeTemplateVoFile(
+            CommonVoParamsConfig commonVoParamsConfig,
+            BufferedReader bufferedReader, int readAheadLimit, BufferedWriter bufferedWriter,
+            List<ServiceParamsConfig> fieldList, String voItemName, String voItemComment, String folder
+            );
 
     //写入entity文件
     void writeTemplateFileCheckInside(
@@ -72,17 +76,9 @@ public interface GeneratorService {
                                  ServiceTableConfig currentServiceTableConfig
     );
 
-    /**
-     * 写模板vo文件
-     *
-     * @param bufferedReader 读取的文件
-     * @param bufferedWriter 写的文件
-     * @param fieldList
-     * @param voItemName
-     * @param voItemComment
-     * @param folder
-     */
-    void writeTemplateVoFile(BufferedReader bufferedReader, int readAheadLimit,BufferedWriter bufferedWriter, List<ServiceParamsConfig> fieldList, String voItemName, String voItemComment, String folder);
+    void writeCommonVoClass(AppendCommonVoConfig appendCommonVoConfig);
+
+
 
 
     String customExampleByJavaType(ServiceParamsConfig item);
@@ -124,8 +120,6 @@ public interface GeneratorService {
      * @param needRequestParam      是否需要@RequestParam注解
      * @return      返回 参数定义数组
      */
-
-
     List<String> getFunctionParamListByLoginParams(List<ServiceParamsConfig> itemRequest, String itemPrefix, Boolean needRequestParam, Boolean needType);
 
     //-------------------------------------------------------------------------------------- 工具方法 -----------------------------------------------------------------------------//

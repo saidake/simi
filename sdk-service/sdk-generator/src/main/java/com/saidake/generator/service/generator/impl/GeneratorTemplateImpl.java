@@ -6,7 +6,7 @@ import com.saidake.generator.model.properties.*;
 import com.saidake.generator.mybatis.entity.ColumnEntity;
 import com.saidake.generator.mybatis.entity.TableEntity;
 import com.saidake.generator.mybatis.mapper.DatabaseMapper;
-import com.saidake.generator.service.generator.GeneratorService;
+import com.saidake.generator.service.generator.GeneratorTemplate;
 import com.saidake.common.core.util.file.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 @Service
 @Slf4j
-public class GeneratorServiceImpl implements GeneratorService {
+public class GeneratorTemplateImpl implements GeneratorTemplate {
     @Resource
     private GeneratorProperties generatorProperties;
 
@@ -233,7 +233,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
 
     @Override
-    public void generateAppendServicesFiles() {
+    public void generateAppendServices() {
         List<ServiceTableConfig> appendServices = generatorProperties.getAppendServices();
         ParamsConfig params = generatorProperties.getParams();
         SuffixConfig suffix = generatorProperties.getSuffix();
@@ -385,12 +385,20 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     @Override
-    public void generateCommonVoClassFiles() {
+    public void generateCommonVoClass() {
+        List<AppendCommonVoConfig> appendCommonVo = generatorProperties.getAppendCommonVo();
+        appendCommonVo.stream().filter(AppendCommonVoConfig::getEnabled).forEach(this::writeCommonVoClass);
+    }
+    @Override
+    public void writeCommonVoClass(AppendCommonVoConfig appendCommonVoConfig){
         ParamsConfig params = generatorProperties.getParams();
-        AppendCommonVoParamsConfig appendCommonVoParams = generatorProperties.getAppendCommonVoParams();
-        List<CommonVoConfig> appendCommonVoList = generatorProperties.getAppendCommonVo();
+        CommonVoParamsConfig commonVoParamsConfig = appendCommonVoConfig.getCommonVoParamsConfig();
+        List<CommonVoConfig> appendCommonVoList = appendCommonVoConfig.getVoList();
         //1. 获取读文件
-        File voCommonFile = new File(params.getReadTemplateVoCommonFilePath());
+        String readTemplateVoCommonFilePath= FileUtil.joinPathAndPackage(params.getSrcPath(),commonVoParamsConfig.getTemplate())+GeneratorProperties.javaSuffix;
+        String writeVoCommonFolderPath= FileUtil.joinPathAndPackage(params.getSrcPath(),commonVoParamsConfig.getCommonVoPackage());
+
+        File voCommonFile = new File(readTemplateVoCommonFilePath);
         int readAheadLimit = (int) voCommonFile.length() + 1;
         BufferedReader bufferedReader = createBufferedReader(voCommonFile);
         //1. 遍历配置，创建并写入新文件
@@ -399,9 +407,9 @@ public class GeneratorServiceImpl implements GeneratorService {
                 String voItemName = voItem.getName().get(0);
                 String voItemComment = voItem.getName().get(1);
                 List<ServiceParamsConfig> fieldList = voItem.getFieldList();
-                String voItemPath = FileUtil.joinPath(params.getWriteVoCommonFolderPath(), folderItem.getFolder(), StringUtils.join(voItemName, appendCommonVoParams.getSuffix(), GeneratorProperties.javaSuffix));
-                BufferedWriter bufferedWriterVo = createBufferedWriter(voItemPath, !"overwrite".equals(appendCommonVoParams.getWriteMode()));
-                writeTemplateVoFile(bufferedReader, readAheadLimit, bufferedWriterVo, fieldList, voItemName, voItemComment, folderItem.getFolder());
+                String voItemPath = FileUtil.joinPath(writeVoCommonFolderPath, folderItem.getFolder(), StringUtils.join(voItemName, commonVoParamsConfig.getSuffix(), GeneratorProperties.javaSuffix));
+                BufferedWriter bufferedWriterVo = createBufferedWriter(voItemPath, !"overwrite".equals(commonVoParamsConfig.getWriteMode()));
+                writeTemplateVoFile(commonVoParamsConfig,bufferedReader, readAheadLimit, bufferedWriterVo, fieldList, voItemName, voItemComment, folderItem.getFolder());
             });
         });
         try {
@@ -414,10 +422,13 @@ public class GeneratorServiceImpl implements GeneratorService {
     //-------------------------------------------------------------------------------------- 业务辅助方法 -----------------------------------------------------------------------------//
 
     @Override
-    public void writeTemplateVoFile(BufferedReader bufferedReader, int readAheadLimit, BufferedWriter bufferedWriter, List<ServiceParamsConfig> fieldList, String voItemName, String voItemComment, String folder) {
+    public void writeTemplateVoFile(
+            CommonVoParamsConfig commonVoParamsConfig,
+            BufferedReader bufferedReader, int readAheadLimit, BufferedWriter bufferedWriter,
+            List<ServiceParamsConfig> fieldList, String voItemName, String voItemComment, String folder
+            ) {
         ParamsConfig params = generatorProperties.getParams();
         String separator = params.getSeparator();
-        AppendCommonVoParamsConfig appendCommonVoParams = generatorProperties.getAppendCommonVoParams();
         try {
             bufferedReader.mark(readAheadLimit);
             int enterTime = 0;
@@ -437,7 +448,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 //在package 一行   【写入拼接的builder】
                 if (readServiceLine.startsWith("package ") && !hasEnter) {
                     //重写package
-                    readServiceLine="package "+generatorProperties.getAppendCommonVoParams().getCommonVoPackage()+"."+folder+";";
+                    readServiceLine="package "+commonVoParamsConfig.getCommonVoPackage()+"."+folder+";";
                     StringBuilder readServiceLineBuilderStart = new StringBuilder(readServiceLine);
                     readServiceLineBuilderStart.append(separator);
                     readServiceLineBuilderStart.append(separator);
@@ -447,7 +458,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 //首次遇到 {   【写入拼接的builder】
                 else if (hasEnter && isStart) {
                     //依然需要对当前行进行 字符串替换
-                    readServiceLine = readServiceLine.replace(appendCommonVoParams.getReplaceName(), voItemName);          //vo类名替换
+                    readServiceLine = readServiceLine.replace(commonVoParamsConfig.getReplaceName(), voItemName);          //vo类名替换
                     StringBuilder readServiceLineBuilderReplace = new StringBuilder(readServiceLine);
                     readServiceLineBuilderReplace.append(separator);
                     readServiceLineBuilderReplace.append(separator);
@@ -458,7 +469,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 //不在内部，直接替换   【写入拼接的builder】
                 else if (enterTime == 0) {
                     //对当前行进行 字符串替换
-                    readServiceLine = readServiceLine.replace(appendCommonVoParams.getReplaceComment(), voItemComment);        //vo注释替换
+                    readServiceLine = readServiceLine.replace(commonVoParamsConfig.getReplaceComment(), voItemComment);        //vo注释替换
                     bufferedWriter.write(readServiceLine);  //大写表名替换
                     bufferedWriter.write(separator);
                 }

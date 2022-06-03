@@ -3,7 +3,7 @@ package com.saidake.generator.model.properties;
 import lombok.Data;
 
 @Data
-public class AppendCommonVoParamsConfig {
+public class CommonVoParamsConfig {
     private String commonVoPackage;
     private String template;
     private String suffix;
@@ -11,5 +11,4 @@ public class AppendCommonVoParamsConfig {
 
     private String replaceName;
     private String replaceComment;
-
 }

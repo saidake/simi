@@ -2,11 +2,6 @@ package com.saidake.common.core.constant;
 
 /**
  * Security 权限常量
- *
- * @author zlt
- * <p>
- * Blog: https://zlt2000.gitee.io
- * Github: https://github.com/zlt2000
  */
 public interface SecurityConstants {
     /**

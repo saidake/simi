@@ -1,5 +1,9 @@
 package com.saidake.common.core.util.data;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,6 +54,23 @@ public class StringUtil {
         return String.valueOf(chars);
     }
 
+    /**
+     * 大写转变量 CONTACT & CREDIT  ==> contactCredit
+     * @param str
+     * @return
+     */
+    public static String convertUpperString(String str,Boolean isStartUpper) {
+        String[] split = str.split("[^A-z]+");
+        List<String> stringList=new ArrayList<>();
+        for (int i = 0; i < split.length; i++) {
+            if(i==0&&!isStartUpper){
+                stringList.add(split[i].toLowerCase());
+                continue;
+            }
+            stringList.add(startUpper(split[i].toLowerCase()));
+        }
+        return StringUtils.join(stringList);
+    }
 
     /**
      * 驼峰转下划线,最后转为大写

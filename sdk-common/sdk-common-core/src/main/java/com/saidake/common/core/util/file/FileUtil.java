@@ -1,14 +1,13 @@
 package com.saidake.common.core.util.file;
 
-import com.saidake.common.core.util.data.CheckUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -27,7 +26,38 @@ public class FileUtil {
         return path.concat(packageName);
     }
 
-
+    /**
+     * 读写文件，对每一行做操作
+     */
+    @FunctionalInterface
+    public interface ReadAndWriteTheSameFileLambda{
+        String execute(String currentStorageLine);
+    }
+    public static void readAndWriteTheSameFile(String readAndWritePath,ReadAndWriteTheSameFileLambda readAndWriteTheSameFileLambda){
+        File file = new File(readAndWritePath);
+        if(!file.exists()){
+            throw new RuntimeException("file not exist");
+        }
+        List<String> storageReadLine=new ArrayList<>();
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
+                storageReadLine.add(currentLine);
+            }
+            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(file));
+            for (String currentStorageLine : storageReadLine) {
+                // Do your code here
+                String resultLine = readAndWriteTheSameFileLambda.execute(currentStorageLine);
+                bufferedWriter.write(resultLine);
+            }
+            bufferedReader.close();
+            bufferedWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 拼接多路径
      * @return
