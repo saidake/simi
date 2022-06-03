@@ -11,7 +11,7 @@ pipeline {
                     println("--- test content ---")
                     println(username)
                 }
-                echo 'xxx ${env.SYSTEM_PARA}'
+                echo 'xxx ${SYSTEM_PARA} ${env.BUILD_ID} '
             }
      }
      stage('Sonar扫描') {

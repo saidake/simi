@@ -37,8 +37,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Jenkinsfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="368">
+              <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -190,8 +190,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="946" />
-    <option name="y" value="184" />
+    <option name="x" value="889" />
+    <option name="y" value="169" />
     <option name="width" value="1930" />
     <option name="height" value="1174" />
   </component>
@@ -347,20 +347,20 @@
       <workItem from="1654097717370" duration="9614000" />
       <workItem from="1654187758875" duration="3171000" />
       <workItem from="1654201077786" duration="3326000" />
-      <workItem from="1654261525656" duration="4184000" />
+      <workItem from="1654261525656" duration="4490000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="265642000" />
+    <option name="totallyTimeSpent" value="265948000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="946" y="184" width="1930" height="1174" extended-state="0" />
+    <frame x="889" y="169" width="1930" height="1174" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Web" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.8678161" visible="true" weight="0.22032085" />
-      <window_info id="Structure" order="2" sideWeight="0.13218391" side_tool="true" visible="true" weight="0.22032085" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.86754" visible="true" weight="0.22032085" />
+      <window_info id="Structure" order="2" sideWeight="0.13245997" side_tool="true" visible="true" weight="0.22032085" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
@@ -377,7 +377,7 @@
       <window_info anchor="bottom" id="Spring" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="13" visible="true" weight="0.4857143" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="13" visible="true" weight="0.32315272" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.32833466" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -764,8 +764,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Jenkinsfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="368">
+          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
         </state>
       </provider>
     </entry>
