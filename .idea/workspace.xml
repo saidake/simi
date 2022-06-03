@@ -2,56 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ba501bd4-39a1-4ab5-8e36-da015373d1a9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/model/properties/CommonVoParamsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LOG_PATH_IS_UNDEFINED/sdklog-sdk-generator-2022-05-23.0.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LOG_PATH_IS_UNDEFINED/sdklog-sdk-generator-2022-05-24.0.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LOG_PATH_IS_UNDEFINED/sdklog-sdk-generator-2022-05-25.0.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-common/sdk-common-core/src/main/java/com/saidake/common/core/constant/SecurityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-common/sdk-common-core/src/main/java/com/saidake/common/core/constant/SecurityConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-common/sdk-common-core/src/main/java/com/saidake/common/core/util/data/RandomUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-common/sdk-common-core/src/main/java/com/saidake/common/core/util/data/RandomUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-common/sdk-common-core/src/main/java/com/saidake/common/core/util/data/StringUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-common/sdk-common-core/src/main/java/com/saidake/common/core/util/data/StringUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-common/sdk-common-core/src/main/java/com/saidake/common/core/util/file/FileUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-common/sdk-common-core/src/main/java/com/saidake/common/core/util/file/FileUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-common/sdk-common-core/target/classes/com/saidake/common/core/constant/SecurityConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-common/sdk-common-core/target/classes/com/saidake/common/core/constant/SecurityConstants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-common/sdk-common-core/target/classes/com/saidake/common/core/util/data/RandomUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-common/sdk-common-core/target/classes/com/saidake/common/core/util/data/RandomUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-common/sdk-common-core/target/classes/com/saidake/common/core/util/data/StringUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-common/sdk-common-core/target/classes/com/saidake/common/core/util/data/StringUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-common/sdk-common-core/target/classes/com/saidake/common/core/util/file/FileUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-common/sdk-common-core/target/classes/com/saidake/common/core/util/file/FileUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-config/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-config/src/main/resources/application-dev.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-config/src/main/resources/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-config/src/main/resources/bootstrap.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-config/target/classes/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-config/target/classes/application-dev.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-config/target/classes/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-config/target/classes/bootstrap.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/sdk-generator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/sdk-generator.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/AAAconfig/properties/GeneratorProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/AAAconfig/properties/GeneratorProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/GeneratorApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/GeneratorApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/model/properties/AppendCommonVoParamsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/model/properties/AppendCommonVoConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/model/properties/ParamsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/model/properties/ParamsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/service/generator/GeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/service/generator/GeneratorTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/service/generator/impl/GeneratorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/service/generator/impl/GeneratorTemplateImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/resources/application-bluetooth-app.yml" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/src/main/resources/application-bluetooth-app.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/application-bluetooth-app.yml" beforeDir="false" afterPath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/application-bluetooth-app.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/AAAconfig/properties/GeneratorProperties.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/GeneratorApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/controller/TestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/AppendCommonVoParamsConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/CommonVoClassConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/CommonVoConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/CoreConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/DbConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/IOConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/ParamsConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/ServiceFieldsConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/ServiceMethodConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/ServiceParamsConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/ServiceTableConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/SuffixConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/model/properties/TemplateConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/mybatis/entity/ColumnEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/mybatis/entity/TableEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/mybatis/mapper/DatabaseMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/service/generator/GeneratorService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sdk-service/sdk-generator/target/classes/com/saidake/generator/service/generator/impl/GeneratorServiceImpl.class" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/JenkinsFile" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/boss-service/target/" />
@@ -84,10 +35,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/JenkinsFile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sdk-service/sdk-generator/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="108" selection-start-line="108" selection-end-line="108" />
+            <state relative-caret-position="126">
+              <caret line="94" column="51" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -152,7 +112,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/sdk-gateway/src/main/java/com/saidake/geteway/AAAconfig/SwaggerAggProperties.java" />
         <option value="$PROJECT_DIR$/sdk-common/sdk-swagger2-spring-boot-starter/src/main/java/com/saidake/common/swagger2/SwaggerAutoConfiguration.java" />
         <option value="$PROJECT_DIR$/sdk-common/sdk-swagger2-spring-boot-starter/src/main/java/com/saidake/common/swagger2/SwaggerProperties.java" />
         <option value="$PROJECT_DIR$/sdk-common/sdk-swagger2-spring-boot-starter/pom.xml" />
@@ -203,6 +162,7 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/sdk-service/sdk-generator/pom.xml" />
+        <option value="$PROJECT_DIR$/JenkinsFile" />
       </list>
     </option>
   </component>
@@ -230,8 +190,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="623" />
-    <option name="y" value="224" />
+    <option name="x" value="527" />
+    <option name="y" value="136" />
     <option name="width" value="1930" />
     <option name="height" value="1174" />
   </component>
@@ -251,17 +211,6 @@
             <path>
               <item name="saidake-manage-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="saidake-manage-project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saidake-manage-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saidake-manage-project" type="462c0819:PsiDirectoryNode" />
-              <item name="sdk-service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saidake-manage-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saidake-manage-project" type="462c0819:PsiDirectoryNode" />
-              <item name="sdk-service" type="462c0819:PsiDirectoryNode" />
-              <item name="sdk-generator" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -284,7 +233,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="ts.external.directory.path" value="D:\Desktop\DevProject\saidake-manage-project\sdk-web-swagger\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
@@ -398,27 +347,27 @@
       <workItem from="1654097717370" duration="9614000" />
       <workItem from="1654187758875" duration="3171000" />
       <workItem from="1654201077786" duration="3326000" />
-      <workItem from="1654261525656" duration="605000" />
+      <workItem from="1654261525656" duration="1771000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="262063000" />
+    <option name="totallyTimeSpent" value="263229000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="623" y="224" width="1930" height="1174" extended-state="0" />
+    <frame x="527" y="136" width="1930" height="1174" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Web" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.5083744" visible="true" weight="0.22032085" />
-      <window_info id="Structure" order="2" sideWeight="0.4916256" side_tool="true" visible="true" weight="0.22032085" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.8689655" visible="true" weight="0.22032085" />
+      <window_info id="Structure" order="2" sideWeight="0.13103448" side_tool="true" visible="true" weight="0.22032085" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Java Enterprise" order="0" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32952547" />
-      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.40197045" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.40197045" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.3433307" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -428,7 +377,7 @@
       <window_info anchor="bottom" id="Spring" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="13" weight="0.28887135" />
+      <window_info anchor="bottom" id="Terminal" order="13" weight="0.4315271" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.32833466" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -445,16 +394,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sdk-service/sdk-generator/src/main/java/com/saidake/generator/service/generator/impl/GeneratorTemplateImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16376">
-          <caret line="730" column="65" selection-start-line="730" selection-start-column="65" selection-end-line="730" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/UserProgram/Java/jdk1.8.0_181/src.zip!/java/util/stream/ReferencePipeline.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3174">
@@ -818,8 +757,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sdk-service/sdk-generator/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="108" selection-start-line="108" selection-end-line="108" />
+        <state relative-caret-position="126">
+          <caret line="94" column="51" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JenkinsFile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="41" />
         </state>
       </provider>
     </entry>
