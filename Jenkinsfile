@@ -11,6 +11,9 @@ pipeline {
             }
      }
      stage('Sonar扫描') {
+            steps {
+                 echo 'xxx '
+            }
      }
   }
 
