@@ -1,7 +1,0 @@
-server:
-  port: 48124
-
-
-spring:
-  application:
-    name: sdk-mybatis-plus
