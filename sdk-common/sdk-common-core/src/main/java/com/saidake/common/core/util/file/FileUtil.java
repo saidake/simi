@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,21 +29,22 @@ public class FileUtil {
      * 读写文件，对每一行做操作
      */
     @FunctionalInterface
-    public interface ReadAndWriteTheSameFileLambda{
-        String execute(String currentStorageLine);
+    public interface ReadAndWriteTheSameFileLambda<T,R>{
+        R execute(String T);
     }
-    public static void readAndWriteTheSameFile(String readAndWritePath,ReadAndWriteTheSameFileLambda readAndWriteTheSameFileLambda){
-        File file = new File(readAndWritePath);
-        if(!file.exists()){
+    public static void readAndWriteTheSameFile(String readPath,String writePath,ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda){
+        File readFile = new File(readPath);
+        File writeFile = new File(writePath);
+        if(!readFile.exists()){
             throw new RuntimeException("file not exist");
         }
         List<String> storageReadLine=new ArrayList<>();
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(readFile));
             for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
                 storageReadLine.add(currentLine);
             }
-            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(file));
+            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(writeFile));
             for (String currentStorageLine : storageReadLine) {
                 // Do your code here
                 String resultLine = readAndWriteTheSameFileLambda.execute(currentStorageLine);
@@ -52,12 +52,12 @@ public class FileUtil {
             }
             bufferedReader.close();
             bufferedWriter.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
     /**
      * 拼接多路径
      * @return

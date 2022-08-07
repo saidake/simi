@@ -1,11 +1,18 @@
 package com.saidake.common.core.util.data;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RandomUtil {
-
     private static String ChineseFamilyNameSingle = "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻水云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳鲍史唐费岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅卞齐康伍余元卜顾孟平"
             + "黄和穆萧尹姚邵湛汪祁毛禹狄米贝明臧计成戴宋茅庞熊纪舒屈项祝董粱杜阮席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田胡凌霍万柯卢莫房缪干解应宗丁宣邓郁单杭洪包诸左石崔吉"
             + "龚程邢滑裴陆荣翁荀羊甄家封芮储靳邴松井富乌焦巴弓牧隗山谷车侯伊宁仇祖武符刘景詹束龙叶幸司韶黎乔苍双闻莘劳逄姬冉宰桂牛寿通边燕冀尚农温庄晏瞿茹习鱼容向古戈终居衡步都耿满弘国文东殴沃曾关红游盖益桓公晋楚闫";
@@ -276,7 +283,6 @@ public class RandomUtil {
         return new Date(result);
     }
 
-
     /**
      * 生成随即日期
      *
@@ -290,4 +296,219 @@ public class RandomUtil {
         long result = from + (long) (Math.random() * (to - from));
         return new Date(result);
     }
+
+    //========================================================================================================================= 数据
+
+    public static String getRandomString() {
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        int length = (int) (Math.random() * 8 + 3);
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
+    }
+
+
+    public static String getRandomString(int length) {
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 用随机数据填充对象
+     //        SubmitBookingOrderRequest submitBookingOrderRequest = (SubmitBookingOrderRequest) RandomUtil.fillObjectWithRandomString(new SubmitBookingOrderRequest(),
+     //                new HashMap<String, List<String>>() {{
+     //                    put("Long", Arrays.asList("pickUpPortId", "HeavyCabinetPortId", "originPortId", "targetPortId"));
+     //                    put("String", Arrays.asList("packForm", "countryNo", "transportServiceType", "otherRequirement"));
+     //                }},
+     //                new HashMap<String, List<?>>() {{
+     //                    put("packForm", Arrays.asList("9", "2", "5"));
+     //                    put("countryNo", Arrays.asList("86", "7", "351", "349"));
+     //                    put("pickUpPortId", Arrays.asList(14, 15, 16, 17, 18, 19, 20));
+     //                    put("HeavyCabinetPortId", Arrays.asList(14, 15, 16, 17, 18, 19, 20));
+     //                    put("originPortId", Arrays.asList(61, 76, 80, 110, 134));
+     //                    put("targetPortId", Arrays.asList(1166, 1167, 3332, 1171, 3595, 3602));
+     //                    put("transportServiceType", Arrays.asList("0,1", "0", "1", ""));
+     //                    put("otherRequirement", Arrays.asList("自动化测试运单1", "自动化测试运单2", "自动化测试运单3", "自动化测试运单4"));
+     //                }});
+     * @param object         源对象
+     * @param typeStringMap  类型名--字段名数组
+     * @param matchStringMap 字段名--取值数组
+     * @return
+     */
+    public static Object fillObjectWithRandomString(Object object,
+                                                    Map<String, List<String>> typeStringMap,
+                                                    Map<String, List<?>> matchStringMap) {
+        Random random = new Random();
+        BeanWrapper beanWrapper = new BeanWrapperImpl(object);
+        PropertyDescriptor[] propertyDescriptorList = beanWrapper.getPropertyDescriptors();
+        //开始遍历属性描述器
+        out:
+        for (PropertyDescriptor propertyDescriptor : propertyDescriptorList) {
+            String currentFieldName = propertyDescriptor.getName();
+            Class<?> currentFieldClass = propertyDescriptor.getPropertyType();
+            //自定义检测
+            if (typeStringMap.containsKey("String") && String.class.equals(currentFieldClass)) {
+                for (String typeKeyNameString : typeStringMap.get("String")) {
+                    if (currentFieldName.toLowerCase().contains(typeKeyNameString.toLowerCase())) {
+                        beanWrapper.setPropertyValue(currentFieldName, String.valueOf(getRandomElement(matchStringMap.get(typeKeyNameString))));
+                        continue out;
+                    }
+                }
+            } else if (typeStringMap.keySet().contains("Long") && Long.class.equals(currentFieldClass)) {
+                for (String typeKeyNameLong : typeStringMap.get("Long")) {
+                    if (currentFieldName.toLowerCase().contains(typeKeyNameLong.toLowerCase())) {
+                        beanWrapper.setPropertyValue(currentFieldName, getRandomElement(matchStringMap.get(typeKeyNameLong)));
+                        continue out;
+                    }
+                }
+            }
+            //String类型处理
+            if (String.class.equals(currentFieldClass)) {
+                //邮箱检测
+                if (currentFieldName.toLowerCase().contains("email")) {
+                    beanWrapper.setPropertyValue(currentFieldName, getRandomString(6) + "@qq.com");
+                    //手机检测
+                } else if (currentFieldName.toLowerCase().contains("phone")) {
+                    beanWrapper.setPropertyValue(currentFieldName, String.valueOf(getRandomLong(13330000000L, 19800000000L)));
+                    //姓名检测
+                } else if (currentFieldName.toLowerCase().contains("name")) {
+                    beanWrapper.setPropertyValue(currentFieldName, getRandomName());
+                } else {
+                    beanWrapper.setPropertyValue(currentFieldName, getRandomString());
+                }
+                //Long类型处理
+            } else if (Long.class.equals(currentFieldClass)) {
+                beanWrapper.setPropertyValue(currentFieldName, getRandomLong(1L, 600L));
+                //时间戳类型处理
+            } else if (Timestamp.class.equals(currentFieldClass)) {
+                beanWrapper.setPropertyValue(currentFieldName, Timestamp.valueOf(LocalDateTime.now()));
+                //float类型处理
+            } else if (float.class.equals(currentFieldClass) || double.class.equals(currentFieldClass)) {
+                beanWrapper.setPropertyValue(currentFieldName, getRandomDouble(1, 600));
+                //枚举
+            } else if (currentFieldClass.isEnum()) {
+                beanWrapper.setPropertyValue(currentFieldName, getRandomElement(currentFieldClass.getEnumConstants()));
+                //Boolean
+            } else if (Boolean.class.equals(currentFieldClass)) {
+                beanWrapper.setPropertyValue(currentFieldName, true);
+                //List 递归
+            } else if (currentFieldClass.isAssignableFrom(List.class)) {
+                Type currentRealType = null;
+                try {
+                    currentRealType = object.getClass().getDeclaredField(currentFieldName).getGenericType();
+                } catch (NoSuchFieldException e) {
+                    try {
+                        currentRealType = object.getClass().getSuperclass().getDeclaredField(currentFieldName).getGenericType();
+                    } catch (NoSuchFieldException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+
+                if (currentRealType instanceof ParameterizedType) {
+                    ParameterizedType parameterizedType = (ParameterizedType) currentRealType;
+                    Class<?> tType = (Class<?>) parameterizedType.getActualTypeArguments()[0];
+                    //创建泛型实例
+                    int typeInstanceLength = random.nextInt(9) + 1;
+                    List<Object> resultList = new ArrayList<>();
+                    for (int i = 0; i < typeInstanceLength; i++) {
+                        try {
+                            resultList.add(fillObjectWithRandomString(tType.newInstance(), typeStringMap, matchStringMap));
+                        } catch (InstantiationException | IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    beanWrapper.setPropertyValue(currentFieldName, resultList);
+                }
+
+            } else if (Object.class.isAssignableFrom(currentFieldClass) && !"bytes".equals(currentFieldName) && !"class".equals(currentFieldName)) {
+                try {
+                    beanWrapper.setPropertyValue(currentFieldName, fillObjectWithRandomString(currentFieldClass.newInstance(), typeStringMap, matchStringMap));
+                } catch (IllegalAccessException | InstantiationException exp) {
+                    exp.printStackTrace();
+                }
+            }
+        }
+//        System.out.println("最终实例：" + beanWrapper.getWrappedInstance());
+        return beanWrapper.getWrappedInstance();
+    }
+
+
+    /**
+     * 取一个随机数
+     *
+     * @param lower 最低值
+     * @param upper 最高值
+     * @return int随机数
+     */
+    public static int getRandomInt(int lower, int upper) {
+        int rand = (int) (Math.random() * (upper - lower)) + lower;
+        return rand;
+    }
+
+    /**
+     * 取一个随机数
+     *
+     * @param lower 最低值
+     * @param upper 最高值
+     * @return int随机数
+     */
+    public static Long getRandomLong(Long lower, Long upper) {
+        Double rand = Math.random() * (upper - lower) + lower;
+        return rand.longValue();
+    }
+
+    /**
+     * 取一个随机数
+     *
+     * @param lower 最低值
+     * @param upper 最高值
+     * @return double随机数
+     */
+    public static double getRandomDouble(double lower, double upper) {
+        return Math.random() * (upper - lower) + lower;
+    }
+
+
+    /**
+     * 随机个数 生成 随机中文文字
+     *
+     * @return [1, 10)个随机中文
+     */
+    public static String getRandomText() {
+        int time = getRandomInt(1, 10);
+        String text[] = {"我", "你", "他", "炸", "了", "有", "和", "吃", "都", "在", "炸", "及", "问", "有", "方", "哦", "的", "额", "去", "还", "将", "到", "过", "后", "如", "票", "过", "日", "好", "跑", "家", "等", "怕"};
+        String end = "";
+        for (int i = 0; i < time; i++) {
+            end += getRandomElement(text);
+        }
+        return end;
+    }
+
+
+    /**
+     * 指定个数 生成 随机中文文字
+     *
+     * @param time 文字个数
+     * @return time个中文字
+     */
+    public static String getRandomText(int time) {
+
+        String text[] = {"我", "你", "他", "炸", "了", "有", "和", "吃", "都", "在", "炸", "及", "问", "有", "方", "哦", "的", "额", "去", "还", "将", "到", "过", "后", "如", "票", "过", "日", "好", "跑", "家", "等", "怕"};
+        String end = "";
+        for (int i = 0; i < time; i++) {
+            end += getRandomElement(text);
+        }
+        return end;
+    }
+
 }

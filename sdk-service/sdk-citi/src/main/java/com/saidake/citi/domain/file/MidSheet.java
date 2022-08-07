@@ -1,4 +1,5 @@
 package com.saidake.citi.domain.file;
 
-public class MidSheet {
+public interface MidSheet {
+    String getName();
 }

@@ -7,7 +7,7 @@ sdk:
       table-name: sdk_template
     core:
       service-package: com.saidake.service
-      controller-package: com.saidake.controller
+      controller-package: com.saidake.com.saidake.citi.controller
       mapper-package: com.saidake.mybatis.mapper
       mapper-resources-folder: mapper
 

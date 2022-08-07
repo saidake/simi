@@ -5,4 +5,4 @@ spring:
   application:
     name: sdk-generator
   profiles:
-    active: bluetooth-app   # generator特有的profile
+    active: dev   # generator特有的profile

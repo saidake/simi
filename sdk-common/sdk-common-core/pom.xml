@@ -12,20 +12,31 @@
     <artifactId>sdk-common-core</artifactId>
 
     <dependencies>
+        <!--==================================================================================================== 自定义依赖 -->
+        <!--======================================================================================================= 核心 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <!--======================================================================================================= 继承依赖 -->
+        <!--======================================================================================================= 数据库 -->
+        <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--======================================================================================================= 项目协助 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
         </dependency>
+        <!--======================================================================================================= 数据工具 -->
+        <!--======================================================================================================= 安全 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -42,6 +53,6 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
-
+        <!--======================================================================================================= 日志 -->
     </dependencies>
 </project>

@@ -1,4 +1,4 @@
-package com.saidake.citi.config;
+package com.saidake.citi.AAAconfig;
 
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.models.ExternalDocumentation;

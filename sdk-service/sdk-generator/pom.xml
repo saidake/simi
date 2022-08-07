@@ -34,10 +34,10 @@
             <artifactId>sdk-loadbalancer-spring-boot-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.saidake</groupId>
-            <artifactId>sdk-swagger2-spring-boot-starter</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.saidake</groupId>-->
+            <!--<artifactId>sdk-swagger2-spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
         <!--<dependency>-->
             <!--<groupId>com.github.xiaoymin</groupId>-->
             <!--<artifactId>knife4j-spring-boot-starter</artifactId>-->
@@ -80,7 +80,28 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <!--======================================================================================================= 项目协助 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-bean-validators</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
         <!--======================================================================================================= 数据工具 -->
+
         <!--======================================================================================================= 安全 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -106,6 +127,10 @@
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
     </dependencies>
 
 
@@ -124,15 +149,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>         <!-- maven打包插件（子工程引入父工程时，会引入这个插件导致打包）-->
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>repackage
-                            </goal>    <!--可以把依赖的包都打包到生成的Jar包中，默认goal，mvn package 执行之后，先将生成的JAR重命名为 XXX.origin，再次使用spring-boot:repackage打包生成可执行的 JAR -->
-                        </goals>
-                    </execution>
-                </executions>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
         </plugins>
     </build>

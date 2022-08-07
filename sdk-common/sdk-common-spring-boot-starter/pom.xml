@@ -16,6 +16,4 @@
             <artifactId>sdk-common-core</artifactId>
         </dependency>
     </dependencies>
-
-
 </project>

@@ -14,7 +14,8 @@
 
     <modules>
         <module>sdk-generator</module>
-        <module>sdk-mybatis-plus</module>
+        <module>sdk-citi</module>
+        <module>sdk-paizhi</module>
     </modules>
 
 

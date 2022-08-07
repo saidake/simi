@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+
+
+
+#=============================================================================================================== 文件
+xml.fuhui-directory: C:\Users\saidake\AppData\Local\Temp\FxtsReportsTmp

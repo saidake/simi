@@ -11,8 +11,13 @@
     <file url="file://$PROJECT_DIR$/sdk-custom" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sdk-custom/sdk-swagger-ui" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sdk-gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sdk-gateway/sdk-eureka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sdk-gateway/sdk-main" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sdk-integration" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sdk-integration/sdk-eureka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sdk-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sdk-service/sdk-citi" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sdk-service/sdk-generator" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sdk-service/sdk-mybatis-plus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sdk-service/sdk-paizhi" charset="UTF-8" />
   </component>
 </project>

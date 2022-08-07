@@ -1,0 +1,6 @@
+server:
+  port: 48991
+
+spring:
+  application:
+    name: sdk-gateway

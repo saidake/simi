@@ -1,4 +1,4 @@
-package com.central.common.lock;
+package com.saidake.common.core.lock;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

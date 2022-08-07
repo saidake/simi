@@ -58,7 +58,7 @@ public interface GeneratorTemplate {
             ServiceTableConfig currentServiceTableConfig,
             ServiceMethodConfig currentServiceMethodConfig
     );
-    //写入模板文件   0 service 1 serviceImpl  2 mapper 3 mapperResources 4 controller
+    //写入模板文件   0 service 1 serviceImpl  2 mapper 3 mapperResources 4 com.saidake.citi.controller
     void writeTemplateFile(String writeType, BufferedReader bufferedReader,
                            int readServiceFileAheadLimit,
                            BufferedWriter bufferedWriter,
@@ -69,7 +69,7 @@ public interface GeneratorTemplate {
     );
 
 
-    //写入模板文件   0 service 1 serviceImpl  2 mapper 3 mapperResources 4 controller
+    //写入模板文件   0 service 1 serviceImpl  2 mapper 3 mapperResources 4 com.saidake.citi.controller
     void writeTemplateFileAppend(String writeType, List<String> bufferedReaderString,
                                  BufferedWriter bufferedWriter,
                                  String currentWriteFilePath,

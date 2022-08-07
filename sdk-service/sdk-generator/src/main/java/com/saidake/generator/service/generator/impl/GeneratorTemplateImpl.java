@@ -81,7 +81,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
             String currentTableName = StringUtil.lineToHump(item.getTableName());
             String currentStartUpperTableName = StringUtil.startUpper(currentTableName);
             String currentStartLowerTableName = StringUtil.startLower(currentTableName);
-            //1. 写模板文件，获取 将要生成的文件路径【service，serviceImpl，mapper，mapperResources，controller】
+            //1. 写模板文件，获取 将要生成的文件路径【service，serviceImpl，mapper，mapperResources，com.saidake.citi.controller】
             String currentTableServiceFilePath = getTableWriteFilePath(currentStartUpperTableName, currentStartLowerTableName, params.getWriteServiceFolderPath(), suffix.getServiceSuffix(),
                     GeneratorProperties.javaSuffix, hasServiceTableFolder, false);
             String currentTableServiceImplFilePath = getTableWriteFilePath(currentStartUpperTableName, currentStartLowerTableName, params.getWriteServiceFolderPath(), suffix.getServiceImplSuffix(), GeneratorProperties.javaSuffix, hasServiceTableFolder, true);
@@ -91,8 +91,8 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
             //此顺序必须和fileList顺序对应，filePathList和bufferedWriterList是没有entity的（排除了entity）
             List<String> currentWriteFilePathList = Stream.of(currentTableServiceFilePath, currentTableServiceImplFilePath, currentTableMapperFilePath, currentTableMapperResourcesFilePath, currentTableControllerFilePath).collect(Collectors.toList());
             List<BufferedWriter> bufferedWriterList = currentWriteFilePathList.stream().map(item33 -> createBufferedWriter(item33, false)).collect(Collectors.toList());
-            // service  serviceImpl   mapper  mapperResources  controller
-            HashMap<Integer, String> checkMap = MapUtil.of(0, "service", 1, "serviceImpl", 2, "mapper", 3, "mapperResources", 4, "controller");
+            // service  serviceImpl   mapper  mapperResources  com.saidake.citi.controller
+            HashMap<Integer, String> checkMap = MapUtil.of(0, "service", 1, "serviceImpl", 2, "mapper", 3, "mapperResources", 4, "com.saidake.citi.controller");
             List<ServiceTableConfig> services = generatorProperties.getServices();
             ServiceTableConfig currentServiceTableConfig = services.stream().filter(item22 -> item22.getTable().equals(item.getTableName())).findFirst().orElse(null);
             for (int i = 0; i < bufferedWriterList.size(); i++) {
@@ -135,7 +135,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
         //END  //==================================================================== foreach 写入模板文件
     }
 
-    //写入模板文件   0 service 1 serviceImpl  2  controller
+    //写入模板文件   0 service 1 serviceImpl  2  com.saidake.citi.controller
     @Override
     public void writeTemplateFileAppend(String writeType, List<String> bufferedReaderString,
                                         BufferedWriter bufferedWriter,
@@ -171,7 +171,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
                     writeImportSet(readServiceLineBuilderStartPackage,importPostTypeDefinition(currentServiceTableConfig));
                     bufferedWriter.write(readServiceLineBuilderStartPackage.toString());
                 }
-                // 3). 在末尾，包含特殊服务时，controller 写特殊服务
+                // 3). 在末尾，包含特殊服务时，com.saidake.citi.controller 写特殊服务
                 else if (hasEnter.get() && enterTime.get() == 0) {
                     StringBuilder readServiceLineBuilderEnd = new StringBuilder(separator);
                     List<ServiceMethodConfig> serviceMethodConfigList = currentServiceTableConfig.getSpecial();
@@ -257,7 +257,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
                     GeneratorProperties.javaSuffix, generatorProperties.getIo().getHasControllerTableFolder(), false);
 
             // 3). 存储Controller，Service，ServiceImpl文件 到内存 storageReadLineList
-            HashMap<Integer, String> checkMap = MapUtil.of(0, "service", 1, "serviceImpl", 2, "controller");  // 各个索引都是什么东西
+            HashMap<Integer, String> checkMap = MapUtil.of(0, "service", 1, "serviceImpl", 2, "com.saidake.citi.controller");  // 各个索引都是什么东西
             List<File> fileList = Stream.of(currentTableServiceFilePath, currentTableServiceImplFilePath, currentTableControllerFilePath).map(File::new).collect(Collectors.toList());
             List<List<String>> storageReadLineList = fileList.stream().map(itemFile -> {
                 BufferedReader currentBufferedReader = createBufferedReader(itemFile);
@@ -366,7 +366,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
                 } else if (enterTime == 0) {
                     //对当前行进行 字符串替换
                     String loginComment = currentServiceMethodConfig.getName().get(1);
-                    readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableComment(), loginComment);  //表注释替换【controller】
+                    readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableComment(), loginComment);  //表注释替换【com.saidake.citi.controller】
                     bufferedWriter.write(readServiceLine);
                     bufferedWriter.write(separator);
                 }
@@ -600,11 +600,11 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
                     readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableName(), currentLineTableName);    //下划线表名替换【mapper resources】
                     if (isSpecial) {
                         String loginComment = currentServiceMethodConfig.getName().get(1);
-                        readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableComment(), currentTableComment + loginComment);  //表注释替换【controller】
+                        readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableComment(), currentTableComment + loginComment);  //表注释替换【com.saidake.citi.controller】
                         if (readServiceLine.contains("接口"))
-                            readServiceLine = readServiceLine.replace("表", "");  //表注释替换【controller】
+                            readServiceLine = readServiceLine.replace("表", "");  //表注释替换【com.saidake.citi.controller】
                     } else {
-                        readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableComment(), currentTableComment);  //表注释替换【controller】
+                        readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableComment(), currentTableComment);  //表注释替换【com.saidake.citi.controller】
                     }
                     bufferedWriter.write(readServiceLine);  //大写表名替换
                     bufferedWriter.write(separator);
@@ -944,7 +944,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
     }
 
 
-    //写入模板文件   0 service 1 serviceImpl  2 mapper 3 mapperResources 4 controller
+    //写入模板文件   0 service 1 serviceImpl  2 mapper 3 mapperResources 4 com.saidake.citi.controller
     @Override
     public void writeTemplateFile(String writeType, BufferedReader bufferedReader,
                                   int readServiceFileAheadLimit,
@@ -955,7 +955,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
                                   ServiceTableConfig currentServiceTableConfig
     ) {
 
-        if ("controller".equals(writeType)
+        if ("com.saidake.citi.controller".equals(writeType)
                 && generatorProperties.getDb() != null
                 && generatorProperties.getDb().getControllerPassTables() != null
                 && generatorProperties.getDb().getControllerPassTables().contains(tableEntity.getTableName())
@@ -963,7 +963,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
             try {
                 bufferedReader.reset();
                 bufferedWriter.close();
-                log.info("pass controller table: {}", tableEntity.getTableName());
+                log.info("pass com.saidake.citi.controller table: {}", tableEntity.getTableName());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -997,7 +997,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
                 if (count2 > 0) {
                     enterTime -= count2;
                 }
-                List<String> checkList = Arrays.asList("controller", "service", "serviceImpl");
+                List<String> checkList = Arrays.asList("com.saidake.citi.controller", "service", "serviceImpl");
                 //在开头import
                 if (checkList.contains(writeType) && readServiceLine.startsWith("package ") && currentServiceTableConfig != null && currentServiceTableConfig.getSpecial() != null) {
                     StringBuilder readServiceLineBuilderStartPackage = new StringBuilder(readServiceLine);
@@ -1017,7 +1017,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
                     });
                     bufferedWriter.write(readServiceLineBuilderStartPackage.toString());
                 }
-                //在末尾，包含特殊服务时，controller 写特殊服务
+                //在末尾，包含特殊服务时，com.saidake.citi.controller 写特殊服务
                 else if (hasEnter && enterTime == 0) {
                     if (checkList.contains(writeType) && currentServiceTableConfig != null && currentServiceTableConfig.getSpecial() != null) {
                         bufferedReader.readLine(); //跳过}
@@ -1037,10 +1037,10 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
                     readServiceLine = readServiceLine.replace(params.getStartLowerTemplateTableName(), currentStartLowerTableName);  //小写表名替换
                     if ("mapperResources".equals(writeType))
                         readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableName(), currentLineTableName);    //下划线表名替换【mapper resources】
-                    if ("controller".equals(writeType)) {
-                        readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableComment(), currentTableComment);  //表注释替换【controller】
+                    if ("com.saidake.citi.controller".equals(writeType)) {
+                        readServiceLine = readServiceLine.replace(generatorProperties.getTemplate().getTableComment(), currentTableComment);  //表注释替换【com.saidake.citi.controller】
                         if (readServiceLine.contains("接口"))
-                            readServiceLine = readServiceLine.replace("表", "");  //表注释替换【controller】
+                            readServiceLine = readServiceLine.replace("表", "");  //表注释替换【com.saidake.citi.controller】
                     }
                     bufferedWriter.write(readServiceLine);  //大写表名替换
                     bufferedWriter.write(separator);
@@ -1076,7 +1076,7 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
         String paramNameResponseUpper = StringUtils.join(currentStartUpperTableName, loginStartUpper, dtoResponseSuffix);
 
         // 2. controller的话，添加@RequestMapping和@ApiOperation
-        if ("controller".equals(writeType)) {
+        if ("com.saidake.citi.controller".equals(writeType)) {
             readServiceLineBuilderEnd.append(String.format("\t@%sMapping(\"/%s\")", methodStartUpper, login));
             readServiceLineBuilderEnd.append(separator);
             readServiceLineBuilderEnd.append(String.format("\t@ApiOperation(value = \"业务--%s\")", loginComment));
@@ -1115,8 +1115,8 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
             readServiceLineBuilderEnd.append(separator);
             readServiceLineBuilderEnd.append("\t}");
             readServiceLineBuilderEnd.append(separator);
-        // 4.3 为 controller 添加参数定义，并添加调用service和return代码
-        } else if ("controller".equals(writeType)) {
+        // 4.3 为 com.saidake.citi.controller 添加参数定义，并添加调用service和return代码
+        } else if ("com.saidake.citi.controller".equals(writeType)) {
             //写注解
             readServiceLineBuilderEnd.append(separator);
             //根据get post 确定参数

@@ -1,15 +1,9 @@
-package com.central.common.lock;
+package com.saidake.common.core.lock;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * 分布式锁顶级接口
- *
- * @author zlt
- * @date 2018/5/29 14:12
- * <p>
- * Blog: https://zlt2000.gitee.io
- * Github: https://github.com/zlt2000
  */
 public interface DistributedLock {
     /**
