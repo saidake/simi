@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/sdk-common/sdk-loadbalancer-spring-boot-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/sdk-common/sdk-swagger2-spring-boot-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/sdk-gateway/sdk-main/pom.xml" />
+        <option value="$PROJECT_DIR$/sdk-integration/sdk-eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/sdk-service/sdk-kafka-produce/pom.xml" />
+        <option value="$PROJECT_DIR$/sdk-service/sdk-mybatis-plus/pom.xml" />
+        <option value="$PROJECT_DIR$/sdk-service/sdk-paizhi/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/classes" />
+  </component>
+</project>
