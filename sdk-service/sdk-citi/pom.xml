@@ -17,8 +17,11 @@
             <groupId>com.saidake</groupId>
             <artifactId>sdk-common-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.saidake</groupId>
+            <artifactId>sdk-config</artifactId>
+        </dependency>
         <!--======================================================================================================= 核心 -->
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -38,12 +41,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <version>2.6.6</version>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <!--======================================================================================================= 继承依赖 -->
         <!--======================================================================================================= 数据库 -->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.4</version>
+        </dependency>
         <!--======================================================================================================= 项目协助 -->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -52,7 +63,6 @@
         <dependency>
             <groupId>com.googlecode.libphonenumber</groupId>
             <artifactId>libphonenumber</artifactId>
-            <version>8.0.0</version>
         </dependency>
         <!--======================================================================================================= 数据工具 -->
         <!--======================================================================================================= 安全 -->
@@ -61,59 +71,17 @@
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>fop</artifactId>
-            <version>2.6</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>5.2.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.2.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
-        <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>5.6</version>
-        </dependency>
-
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
 
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>         <!-- maven打包插件（子工程引入父工程时，会引入这个插件导致打包）-->
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <!--可以把依赖的包都打包到生成的Jar包中，默认goal，mvn package 执行之后，先将生成的JAR重命名为 XXX.origin，再次使用spring-boot:repackage打包生成可执行的 JAR -->
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

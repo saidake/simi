@@ -6,11 +6,6 @@ pipeline {
   stages {
      stage('Build maven') {
             steps {
-                script{
-                    def username ='JENKINS'
-                    println("--- test content ---")
-                    println(username)
-                }
                 echo 'xxx ${SYSTEM_PARA} ${env.BUILD_ID} '
             }
      }

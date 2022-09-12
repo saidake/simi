@@ -52,9 +52,6 @@ const App: React.FC<any> = () => {
         0
       )
     );
-    
-
-
     let successTimes = 0;
     let failedTimes = 0;
     let successTimesEURUSD = 0;

@@ -9,7 +9,6 @@
     <springProperty name="SERVER_IP" scope="context" source="spring.cloud.client.ip-address" defaultValue="0.0.0.0"/>
     <springProperty name="SERVER_PORT" scope="context" source="server.port" defaultValue="0000"/>
 
-
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%date{yyyy-MM-dd HH:mm:ss.SSS}){blue} %clr(-){faint}%clr(%5level) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%thread]){yellow} %clr(%logger){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>        <!-- 自定义彩色日志格式配置，自定义属性，可以使"${}"来使用变量，faint  blue  yellow magenta orange cyan -->
 
     <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} - ${APP_NAME} - %-5level --- [%thread] %logger{50} - %msg%n "/>        <!-- 自定义文件日志格式配置 -->

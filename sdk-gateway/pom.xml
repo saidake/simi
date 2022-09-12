@@ -12,7 +12,7 @@
     <artifactId>sdk-gateway</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>sdk-main</module>
+        <module>sdk-eureka</module>
     </modules>
 
 </project>

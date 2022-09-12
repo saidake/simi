@@ -20,12 +20,7 @@
         <module name="sdk-config" />
         <module name="sdk-eureka" />
         <module name="sdk-generator" />
-        <module name="sdk-integration" />
-        <module name="sdk-loadbalancer-spring-boot-starter" />
-        <module name="sdk-main" />
-        <module name="sdk-paizhi" />
         <module name="sdk-swagger-ui" />
-        <module name="sdk-swagger2-spring-boot-starter" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">

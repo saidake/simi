@@ -1,0 +1,80 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <!-- customize swagger style -->
+    <style>
+        .curl-command{
+            display:none;
+            background-color: #f0f;
+        }
+        .information-container.wrapper .info{
+            margin: 3px 0;
+        }
+        .swagger-ui .scheme-container {
+            padding: 5px 0;
+        }
+        .swagger-ui .opblock .opblock-section-header{
+            background-color: #ccc;
+        }
+        .swagger-ui .response-controls {
+            display: none;
+        }
+        .responses-inner > table > tbody > .response > .response-col_status{
+            color: rgb(201,22,35);
+            font-weight: 700;
+        }
+        .swagger-ui .response-col_description__inner > .renderedMarkdown p{
+            margin: 0;
+        }
+        div.parameters-container td.parameters-col_description .renderedMarkdown:last-of-type p{
+            color: gray;
+            font-size: 13px;
+        }
+        div.parameters-container td.parameters-col_description .renderedMarkdown:last-of-type p i{
+            font-style: normal;
+        }
+        div.parameters-container td.parameters-col_description p{
+            margin-top: 0;
+        }
+        /* normal border color: #60affe */
+        div.responses-wrapper > div.responses-inner  .responses-table.live-responses-table{
+            border: 2px solid orange;
+            background-color: #001529;
+        }
+        div.responses-wrapper > div.responses-inner  .responses-table.live-responses-table  .response-col_status,
+        div.responses-wrapper > div.responses-inner  .responses-table.live-responses-table  .response-col_description,
+        div.responses-wrapper > div.responses-inner  .responses-table.live-responses-table  h5{
+            color: #ccc;
+        }
+        div.responses-wrapper > div.responses-inner  .responses-table.live-responses-table th:first-child,
+        div.responses-wrapper > div.responses-inner  .responses-table.live-responses-table td:first-child{
+            padding-left:20px;
+        }
+        div.responses-wrapper > div.responses-inner  .responses-table.live-responses-table tr.response td.response-col_description{
+            padding-bottom: 20px;
+            padding-right:20px;
+        }
+        /* parameter color */
+        .parameters-col_name > .parameter__name{
+            color: orange;
+        }
+        .parameters-container > .table-container > .parameters > tbody > tr[data-param-in=header] .parameter__name {
+            color: #3bf;
+        }
+    </style>
+</head>
+
+<body>
+<div id="swagger-ui"></div>
+<script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+<script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+<script src="./swagger-initializer.js" charset="UTF-8"> </script>
+</body>
+</html>

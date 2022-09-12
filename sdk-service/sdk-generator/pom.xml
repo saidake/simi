@@ -101,7 +101,11 @@
             <version>3.0.3</version>
         </dependency>
         <!--======================================================================================================= 数据工具 -->
-
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.5.1</version>
+        </dependency>
         <!--======================================================================================================= 安全 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

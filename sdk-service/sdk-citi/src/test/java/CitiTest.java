@@ -1,5 +1,3 @@
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
 import com.saidake.citi.domain.file.SdkSheet;
 import com.saidake.citi.domain.file.SdkWorkbook;
 import lombok.AllArgsConstructor;
@@ -34,27 +32,16 @@ public class CitiTest {
         _4("GP-4");
         private String value;
     }
-    public static void main(String[] args) throws IOException, CsvException {
-        FileInputStream fileInputStream=new FileInputStream("D:\\Desktop\\DevProject\\saidake-manage-project\\sdk-service\\sdk-citi\\assets\\test.xlsx");
-        // sdk
+    public static void main(String[] args) throws IOException {
+        FileInputStream fileInputStream=new FileInputStream("D:\\Desktop\\DevProject\\saidake-manage-project\\sdk-service\\sdk-citi\\assets\\xlsx\\test.xlsx");
+        //============================================================================= sdk
         SdkWorkbook sdkWorkbook=new SdkWorkbook(fileInputStream);
         SdkSheet sdkSheet = sdkWorkbook.getSheet("综合账号结算报告");
-        // poi
+        //============================================================================= poi
         XSSFWorkbook xssfWorkbook=new XSSFWorkbook(fileInputStream);
-        // OPCPackage.open(stream)
-
         XSSFSheet xssfSheet = xssfWorkbook.getSheet("综合账号结算报告");
         XSSFRow xssfRow = xssfSheet.getRow(13);
         XSSFCell xssfCell = xssfRow.getCell(1);
         System.out.println(xssfCell.getStringCellValue());
-
-        CSVReader csvReader=new CSVReader(new FileReader("D:\\Desktop\\DevProject\\saidake-manage-project\\sdk-service\\sdk-citi\\assets\\EURUSD\\EURUSD5.csv"));
-        String[] strings = csvReader.readNext();
-        System.out.println(strings[0]);
-        System.out.println(strings[1]);
-        System.out.println(strings[2]);
-        System.out.println(strings[3]);
-
-
     }
 }

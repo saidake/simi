@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 @Configuration
 @EnableOpenApi
-@Profile({"prod","test","bluetooth-app"})
+@Profile({"prod","test"})
 public class SwaggerConfig  implements WebMvcConfigurer {
     @Bean
     public Docket docket(){
