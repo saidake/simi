@@ -1,8 +1,0 @@
-server:
-  port: 48123
-
-spring:
-  application:
-    name: sdk-generator
-  profiles:
-    active: bluetooth-app   # generator特有的profile
