@@ -1,8 +1,0 @@
-server:
-  port: 48123
-
-spring:
-  application:
-    name: sdk-generator
-  profiles:
-    active: dev   # generator特有的profile
