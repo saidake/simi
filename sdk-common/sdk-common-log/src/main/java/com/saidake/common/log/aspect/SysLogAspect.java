@@ -42,7 +42,7 @@ public class SysLogAspect {
             }
             catch (Exception e) {
                 // SPEL 表达式异常，获取 value 的值
-                log.error("@SysLog 解析SPEL {} 异常", expression);
+                log.info("@SysLog 解析SPEL {} 异常", expression);
             }
         }
 
