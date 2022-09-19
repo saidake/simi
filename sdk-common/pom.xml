@@ -13,10 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>sdk-common-core</module>
-        <module>sdk-common-spring-boot-starter</module>
-        <module>sdk-swagger2-spring-boot-starter</module>
-        <module>sdk-loadbalancer-spring-boot-starter</module>
+        <module>sdk-common-log</module>
     </modules>
-
 
 </project>

@@ -15,11 +15,11 @@
         <!--==================================================================================================== 自定义依赖 -->
         <dependency>
             <groupId>com.saidake</groupId>
-            <artifactId>sdk-common-spring-boot-starter</artifactId>
+            <artifactId>sdk-config</artifactId>
         </dependency>
         <dependency>
             <groupId>com.saidake</groupId>
-            <artifactId>sdk-config</artifactId>
+            <artifactId>sdk-common-log</artifactId>
         </dependency>
         <!--======================================================================================================= 核心 -->
         <dependency>

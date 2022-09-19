@@ -101,6 +101,11 @@
             </dependency>
             <dependency>
                 <groupId>com.saidake</groupId>
+                <artifactId>sdk-common-log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.saidake</groupId>
                 <artifactId>sdk-common-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>

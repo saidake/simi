@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Api(tags = "Swagger测试接口", value = "swagger")
 public class TestController {
-    @GetMapping("/test/{dd}")
+    @GetMapping("/test")
     @ApiOperation(value = "列表")
-    public String getTest( @PathVariable("dd") @ApiParam(value = "ID", example = "0") String dd) {
-        log.info("id："+dd);
-        return "success+"+dd;
+    public String getTest( ) {
+        return "success";
     }
     @GetMapping("/fafa")
     @ApiOperation(value = "dd")

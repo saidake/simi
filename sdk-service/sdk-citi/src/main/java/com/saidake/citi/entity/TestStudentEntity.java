@@ -1,15 +1,14 @@
 package com.saidake.citi.entity;
+import com.saidake.citi.entity.listener.TestStudentListener;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "TEST_STUDENT")
-public class TestStudent {
+@EntityListeners(TestStudentListener.class)
+public class TestStudentEntity {
     @Id
     @Column(name = "STU_ID")
     private Long stuId;

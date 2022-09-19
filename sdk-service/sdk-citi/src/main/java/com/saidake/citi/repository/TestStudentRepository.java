@@ -1,7 +1,8 @@
 package com.saidake.citi.repository;
-import com.saidake.citi.entity.TestStudent;
+import com.saidake.citi.entity.TestStudentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
-public interface TestStudentRepository extends JpaRepository<TestStudent,Long> {
+public interface TestStudentRepository extends JpaRepository<TestStudentEntity,Long> {
+
+    TestStudentEntity findFirstByStuId(Long stuId);
 }

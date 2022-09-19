@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.saidake.common.log.LogAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=com.saidake.common.log.init.ApplicationLoggerInitializer

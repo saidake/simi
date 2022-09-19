@@ -26,12 +26,7 @@
         </dependency>
         <dependency>
             <groupId>com.saidake</groupId>
-            <artifactId>sdk-common-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.saidake</groupId>
-            <artifactId>sdk-loadbalancer-spring-boot-starter</artifactId>
+            <artifactId>sdk-common-core</artifactId>
         </dependency>
 
         <!--<dependency>-->
@@ -57,9 +52,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.alibaba.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+        <!--</dependency>-->
         <!--======================================================================================================= 继承依赖 -->
         <!--======================================================================================================= 数据库 -->
         <dependency>

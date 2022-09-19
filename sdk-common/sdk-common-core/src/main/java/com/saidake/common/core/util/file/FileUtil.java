@@ -106,7 +106,8 @@ public class FileUtil {
     }
 
     /**
-     * 清空其他文件，除了文件名 在stringList里，有任何一个开头的
+     * Clear other files in sourcePath except fileName starts with stringList.
+     *
      * @param sourcePath
      * @param stringList
      */

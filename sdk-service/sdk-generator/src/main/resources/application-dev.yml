@@ -1,8 +1,8 @@
 sdk:
   generator:
-    project-root-path: D:\Desktop\DevProject\bluetooth-app
+    project-root-path: D:\Desktop\DevProject\saidake-manage-project\sdk-service\sdk-citi
     template:   # 模板表名
-      table-name: sdk_template
+      table-name: TEST_STUDENT
       table-comment: SdkReplaceComment    # 将被替换成各种注释
       # dto：       SdkTemplateAddRequest   SdkTemplateUpdateRequest
       #            SdkTemplateRequest      SdkTemplateResponse
@@ -11,7 +11,7 @@ sdk:
       # entity:        SdkTemplateEntity
       # mapper:        SdkTemplateMapper
       # mapper resources:        SdkTemplateMapper.xml
-    core:       # 在这些包中寻找 模板文件，生成各种业务文件（模板通通放在sdkTemplate目录下）
+    core:       # project package info
       service-package: com.saidake.service              # has-service-table-folder
       controller-package: com.saidake.com.saidake.citi.controller        # has-com.saidake.citi.controller-table-folder
       mapper-package: com.saidake.mybatis.mapper

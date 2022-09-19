@@ -32,7 +32,6 @@ public class GeneratorTemplateImpl implements GeneratorTemplate {
 
     @Override
     public void clearOtherFiles() {
-        //可以传入impl 排除impl文件夹
         List<String> excludeFileList = new ArrayList<>();
         ParamsConfig params = generatorProperties.getParams();
         excludeFileList.add(params.getStartLowerTemplateTableName());

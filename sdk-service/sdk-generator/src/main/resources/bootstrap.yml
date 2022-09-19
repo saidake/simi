@@ -6,3 +6,8 @@ spring:
     name: sdk-generator
   profiles:
     active: dev   # generator特有的profile
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:48992/eureka/       #将消费者userservice注册到eureka注册中心，可多个（配合注册中心时，此配置必须移到bootstrap.yml中）

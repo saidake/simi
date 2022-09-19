@@ -15,7 +15,6 @@
     <modules>
         <module>sdk-generator</module>
         <module>sdk-citi</module>
-        <module>sdk-paizhi</module>
     </modules>
 
 
