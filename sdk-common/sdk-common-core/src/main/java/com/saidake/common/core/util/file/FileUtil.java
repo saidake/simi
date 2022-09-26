@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class FileUtil {
@@ -32,7 +33,7 @@ public class FileUtil {
     public interface ReadAndWriteTheSameFileLambda<T,R>{
         R execute(String T);
     }
-    public static void readAndWriteTheSameFile(String readPath,String writePath,ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda){
+    public static void readAndWriteFile(String readPath,String writePath,ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda){
         File readFile = new File(readPath);
         File writeFile = new File(writePath);
         if(!readFile.exists()){
@@ -56,8 +57,37 @@ public class FileUtil {
             e.printStackTrace();
         }
     }
-
-
+    /**
+     * 读写文件，对每一行做操作，标记一行，
+     */
+    public static void readAndWriteFile(String readPath,String writePath,Integer markLineNumber,ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda){
+        File readFile = new File(readPath);
+        File writeFile = new File(writePath);
+        if(!readFile.exists()){
+            throw new RuntimeException("file not exist");
+        }
+        List<String> storageReadLine=new ArrayList<>();
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(readFile));
+            for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
+                storageReadLine.add(currentLine);
+            }
+            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(writeFile));
+            for (int i = 0; i < storageReadLine.size(); i++) {
+                String currentStorageLine =storageReadLine.get(i);
+                if(i==markLineNumber){
+                     currentStorageLine = readAndWriteTheSameFileLambda.execute(currentStorageLine);
+                    bufferedWriter.write(currentStorageLine);
+                }else{
+                    bufferedWriter.write(currentStorageLine+System.lineSeparator());
+                }
+            }
+            bufferedReader.close();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 拼接多路径
      * @return

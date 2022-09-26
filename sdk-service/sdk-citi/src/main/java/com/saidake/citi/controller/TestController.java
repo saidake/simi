@@ -27,15 +27,6 @@ public class TestController {
         return "success233cc3:"+id;
     }
 
-    @PostMapping("/multi")
-    @Operation(description = "测试formdata接口")
-    public String getPostTest(@RequestPart MultipartFile file,
-                              @RequestParam(value = "docName",required = false) String docName,
-                              @RequestParam(value = "userName",required = false) String userName, HttpServletRequest request) throws InterruptedException {
-        Thread.sleep(120000);
-        return "success"+docName;
-    }
-
     @GetMapping("/async")
     @SysLog("asyncSend")
     @Operation(description = "测试异步接口")

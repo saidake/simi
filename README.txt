@@ -1,7 +1,10 @@
 ========================================================================================== 服务介绍
 sdk-common
     sdk-common-core     核心组件
-
+        config          SpringContextHolder             applicationContext存储器
+        domain.config   HttpRequestInterceptor
+        domain.config   ServletAttributesTaskDecorator  异步父子线程servletRequest传递
+        util            公共工具
 sdk-integration  网关服务
     sdk-eureka          注册中心（http://localhost:48992）
 sdk-service  业务集合
