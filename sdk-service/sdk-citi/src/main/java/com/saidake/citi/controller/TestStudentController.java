@@ -34,6 +34,7 @@ public class TestStudentController {
 
     @GetMapping("/{id}")
     @Operation(description = "查询")
+
     public ResponseEntity<TestStudentEntity> detailRequest(@PathVariable Long id) {
         return testStudentService.detailHandler(id);
     }

@@ -45,6 +45,8 @@ const App: React.FC<any> = () => {
 
   const getAccountData = async () => {
     let res: IAccountData = await fetchAccuntDataSync();
+    console.log("res.accountLinkedList",res.accountLinkedList)
+    res.accountLinkedList=res.accountLinkedList.filter(item=>item.currencyType!="TRY/JPY"&&item.currencyType!="USD/JPY")
     setAccountRecoilData(res);
     setTotalNetProfitAndLoss(
       res.accountLinkedList.reduce(

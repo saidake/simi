@@ -1,5 +1,7 @@
 package com.saidake.common.core.util.file;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -9,16 +11,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+@Slf4j
 public class FileUtil {
+    public static String SDK_MARK_TAG="SDK_MARK_TAG";
+    public static String SDK_RETURN_MARK_TAG="SDK_RETURN_MARK_TAG";
+    private static ThreadLocal<Boolean> alreadyMarked=new ThreadLocal<>();
 
     /**
      * 拼接路径和包名
-     * @param path
-     * @param packageName
-     * @return
+     * @param path  路径
+     * @param packageName   包名
+     * @return  拼接路径
      */
     public static String joinPathAndPackage(String path,String packageName){
         packageName=packageName.replace(".",File.separator);
@@ -28,66 +33,62 @@ public class FileUtil {
 
     /**
      * 读写文件，对每一行做操作
+     * 可选功能：标记一行，向下获取信息（不写入新行），再返回之前地那一行
+     *         返回 "SDK_MARK_TAG"             标记行
+     *         返回 "SDK_RETURN_MARK_TAG????"  返回标记行，后方拼接内容为标记行最终写入内容
      */
     @FunctionalInterface
     public interface ReadAndWriteTheSameFileLambda<T,R>{
-        R execute(String T);
+        R execute(T t);
     }
-    public static void readAndWriteFile(String readPath,String writePath,ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda){
+    public static void readAndWriteFile(String readPath,String writePath,ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda) throws IOException {
+        //A. 公共数据
         File readFile = new File(readPath);
         File writeFile = new File(writePath);
-        if(!readFile.exists()){
-            throw new RuntimeException("file not exist");
+        boolean isSameFile= readPath.equals(writePath);
+        //A. 创建临时文件
+        if(isSameFile){
+            readFile = File.createTempFile(readFile.getName(), ".backup");  // 临时读取文件
+            FileUtils.copyFile(writeFile,readFile);
+            log.info("create temp file successfully: {}",readFile.getPath());
         }
-        List<String> storageReadLine=new ArrayList<>();
+        //A. 执行匿名函数
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(readFile));
-            for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
-                storageReadLine.add(currentLine);
-            }
             BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(writeFile));
-            for (String currentStorageLine : storageReadLine) {
+            for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
                 // Do your code here
-                String resultLine = readAndWriteTheSameFileLambda.execute(currentStorageLine);
-                bufferedWriter.write(resultLine);
-            }
-            bufferedReader.close();
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    /**
-     * 读写文件，对每一行做操作，标记一行，
-     */
-    public static void readAndWriteFile(String readPath,String writePath,Integer markLineNumber,ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda){
-        File readFile = new File(readPath);
-        File writeFile = new File(writePath);
-        if(!readFile.exists()){
-            throw new RuntimeException("file not exist");
-        }
-        List<String> storageReadLine=new ArrayList<>();
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(readFile));
-            for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
-                storageReadLine.add(currentLine);
-            }
-            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(writeFile));
-            for (int i = 0; i < storageReadLine.size(); i++) {
-                String currentStorageLine =storageReadLine.get(i);
-                if(i==markLineNumber){
-                     currentStorageLine = readAndWriteTheSameFileLambda.execute(currentStorageLine);
-                    bufferedWriter.write(currentStorageLine);
-                }else{
-                    bufferedWriter.write(currentStorageLine+System.lineSeparator());
+                String resultLine = readAndWriteTheSameFileLambda.execute(currentLine);
+                if(resultLine==null)continue;
+                if(SDK_MARK_TAG.equals(resultLine)){
+                    bufferedReader.mark((int)readFile.length()+1);
+                    alreadyMarked.set(true);
+                }else if(resultLine.startsWith(SDK_RETURN_MARK_TAG)){
+                    bufferedReader.reset();
+                    alreadyMarked.set(false);
+                    bufferedWriter.write(resultLine.substring(SDK_RETURN_MARK_TAG.length()));
+                }else if(alreadyMarked.get()==null||Boolean.FALSE.equals(alreadyMarked.get())){
+                    bufferedWriter.write(resultLine);
                 }
             }
+            if(Boolean.TRUE.equals(alreadyMarked.get())){
+                log.error("didn't return SDK_RETURN_MARK_TAG");
+                alreadyMarked.set(false);
+            }
             bufferedReader.close();
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //A. 删除临时文件
+        if(isSameFile&&!readFile.delete()) {
+           throw new RuntimeException("delete file error: "+readFile.getPath());
+        }else{
+            log.info("delete temp file successfully: {}",readFile.getPath());
+        }
     }
+
+
     /**
      * 拼接多路径
      * @return

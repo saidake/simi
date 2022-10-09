@@ -6,3 +6,5 @@ spring:
 #=============================================================================================================== 文件
 day:
   sr: ${BASEDIR}\assets\day\28#SR2305.day
+xml:
+  fuhui-directory: C:\Users\saidake\AppData\Local\Temp\FxtsReportsTmp  # 获取福汇导出的账号交易数据 目录

@@ -41,6 +41,10 @@
             <artifactId>transmittable-thread-local</artifactId>
         </dependency>
         <!--======================================================================================================= 数据工具 -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
         <!--======================================================================================================= 安全 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
