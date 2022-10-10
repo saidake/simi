@@ -35,7 +35,7 @@ public class FileUtil {
      * 读写文件，对每一行做操作
      * 可选功能：标记一行，向下获取信息（不写入新行），再返回之前地那一行
      *         返回 "SDK_MARK_TAG"             标记行
-     *         返回 "SDK_RETURN_MARK_TAG????"  返回标记行，后方拼接内容为标记行最终写入内容
+     *         返回 "SDK_RETURN_MARK_TAG????"  返回标记行，后方拼接内容为标记行最终写入内容，然后转移到下一行
      */
     @FunctionalInterface
     public interface ReadAndWriteTheSameFileLambda<T,R>{
