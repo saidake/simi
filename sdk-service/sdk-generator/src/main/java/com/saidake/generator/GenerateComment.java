@@ -22,18 +22,31 @@ public class GenerateComment {
     public static void main(String[] args) {
         String projectRootPath = System.getProperty("user.dir");
         String blackboard = FileUtil.joinPath(projectRootPath, "sdk-service/sdk-generator/src/main/java/com/saidake/generator/blackboard.txt");
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(TARGET_FILE_PATH)));
-            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(new File(blackboard)))
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(TARGET_FILE_PATH));
+            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(blackboard))
         ){
             //A. 公共数据
-            Pattern functionStartPattern = Pattern.compile(String.format("^[^\"]+(public|private|protected)\\s*(static)?\\s*[A-z]+\\s*%s\\s*\\(", FUNCTION_NAME));
+            Pattern functionStartPattern = Pattern.compile(String.format("^[^\"]+(public|private|protected)\\s*(static)?\\s*(([A-z]+)|([A-z]+.*?>))\\s*%s\\s*\\(", FUNCTION_NAME));
             Pattern commentNumberPattern = Pattern.compile("^\\s*//[A-Z]\\.\\s.*?");  //支持1-4
+            Pattern ifPattern = Pattern.compile("^\\s*?if\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
+            Pattern switchPattern = Pattern.compile("^\\s*?switch\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
+            Pattern ifElsePattern = Pattern.compile("^\\s*?}\\s*?else\\s*?\\{\\s*?");  //支持1-4
+            Pattern switchCasePattern = Pattern.compile("^\\s*?case\\s*?[A-z1-9\".]+\\s*?:\\s*?");  //支持1-4
+            Pattern switchCaseContentPattern = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
+            Pattern switchDefaultPattern = Pattern.compile("^\\s*?default\\s*?:\\s*?");  /**  */
             List<CommentEntry> commentStorage=new ArrayList<>();
             boolean isFunctionFirstLine=false;
             boolean isFunctionFirstLineEnded=false;
             boolean isAlreadyEnteredFunction=false;
             int leftCount = 0;          //  { 的个数
             int rightCount = 0;         //  } 的个数
+            int tempLeftCount = 0;          //  if或switch { 的个数
+            int tempRightCount = 0;         //  if或switch { 的个数
+            boolean isIfStart=false;
+            boolean isSwitchStart=false;
+            boolean isIfStartComment=false;
+            boolean isSwitchStartComment=false;
+            int ifOrSwitchLevel=0;
             for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()) {
                 Matcher functionStartMatcher = functionStartPattern.matcher(currentLine);
                 // 之前函数开始部分已经结束了
@@ -47,24 +60,69 @@ public class GenerateComment {
                 }
                 // 已经进入函数内部
                 if(isAlreadyEnteredFunction){
+                    Matcher ifMatcher = ifPattern.matcher(currentLine);
+                    Matcher switchMatcher = switchPattern.matcher(currentLine);
+                    Matcher ifElseMatcher = ifElsePattern.matcher(currentLine);
+                    Matcher switchCaseMatcher = switchCasePattern.matcher(currentLine);
+                    Matcher switchDefaultMatcher = switchDefaultPattern.matcher(currentLine);
+                    // 检测语句
+                    if(ifMatcher.find()&&isIfStartComment)isIfStart=true;
+                    if(switchMatcher.find()&&isSwitchStartComment)isSwitchStart=true;
+                    // 去掉字符串
                     String checkCountLine = currentLine.replaceAll("\".*?\"", "");
                     Matcher commentNumberMatcher = commentNumberPattern.matcher(checkCountLine);
                     if(commentNumberMatcher.find()){
                         int currentCommentNumber= (int) commentNumberMatcher.group(0).replaceAll("[^A-Z]", "").charAt(0)-64;  // 从1开始
                         String currentCommentContent = checkCountLine.replaceAll("^\\s*//[A-Z]\\.\\s.*?", "").trim();
+                        if(currentCommentContent.startsWith("IF(")){
+                            isIfStartComment=true;
+                            ifOrSwitchLevel=currentCommentNumber;
+                        }
+                        if(currentCommentContent.startsWith("SWITCH:")){
+                            isSwitchStartComment=true;
+                            ifOrSwitchLevel=currentCommentNumber;
+                        }
                         commentStorage.add(new CommentEntry(currentCommentNumber,currentCommentContent));
                     }
                     int currentLeftCount = checkCountLine.length()-checkCountLine.replaceAll("\\{","").length();
                     int currentRightCount = checkCountLine.length()-checkCountLine.replaceAll("}","").length();
-                    leftCount+=leftCount+currentLeftCount;
-                    rightCount+=rightCount+currentRightCount;
+                    leftCount+=currentLeftCount;
+                    rightCount+=currentRightCount;
+                    if(isIfStart||isSwitchStart){
+                        tempLeftCount+=currentLeftCount;
+                        tempRightCount+=currentRightCount;
+                    }
+                    if(tempLeftCount+1>tempRightCount){
+                        if(isIfStart&&ifElseMatcher.find()){
+                            commentStorage.add(new CommentEntry(ifOrSwitchLevel,"ELSE"));
+                        }else if(isSwitchStart&&switchCaseMatcher.find()){
+                            Matcher matcher = switchCaseContentPattern.matcher(currentLine);
+                            if(matcher.find()){
+                                String group = matcher.group(0);
+                                if(group!=null){
+                                    commentStorage.add(new CommentEntry(ifOrSwitchLevel,"SWITCH("+group.trim()+")"));
+                                }
+                            }
+                        }else if(isSwitchStart&&switchDefaultMatcher.find()){
+                            commentStorage.add(new CommentEntry(ifOrSwitchLevel,"SWITCH(DEFAULT)"));
+                        }
+                    }else if(tempLeftCount+1==tempRightCount){
+                        log.info("clear if switch check: {}",currentLine);
+                        isIfStart=false;
+                        isSwitchStart=false;
+                        isSwitchStartComment=false;
+                        isIfStartComment=false;
+                    }
                     // 到达函数底部
                     if(rightCount-leftCount==1){
                         log.info("entered function end: {}",currentLine);
                         bufferedWriter.write(FUNCTION_PREFIX+SUMMARY_TITLE+System.lineSeparator());
-                        for (CommentEntry item : commentStorage) {
-                            bufferedWriter.write(FUNCTION_PREFIX+StringUtils.repeat("    ", item.getLevel()) + item.getContent()+System.lineSeparator());
+                        for (int i = 0; i < commentStorage.size()-1; i++) {
+                            CommentEntry item = commentStorage.get(i);
+                            bufferedWriter.write(FUNCTION_PREFIX + StringUtils.repeat("    ", item.getLevel()) + item.getContent() + System.lineSeparator());
                         }
+                        CommentEntry lastEntry = commentStorage.get(commentStorage.size() - 1);
+                        bufferedWriter.write(FUNCTION_PREFIX + StringUtils.repeat("    ", lastEntry.getLevel()) + lastEntry.getContent());
                         return;
                     }
                 }

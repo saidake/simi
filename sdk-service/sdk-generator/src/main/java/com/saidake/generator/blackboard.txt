@@ -10,3 +10,12 @@
  *         第二步骤testttt
  *             第二步骤2
  *     aaaa4步骤
+ *     IF(AA)      从formData里获取
+ *     ELSE
+ *     SWITCH:   获取form信息 用searchType
+ *     SWITCH("ddd")
+ *         dododod1
+ *     SWITCH("dddb")
+ *         dododod2
+ *     SWITCH(DEFAULT)
+ *         dododod3

@@ -34,10 +34,10 @@ public class MainTest {
         Matcher matcher = normalFunctionPattern.matcher("    public static void main(String[] args)  {");
         System.out.println(matcher.find());
 
-
-        Pattern commentEnd = Pattern.compile("^\\s*?\\*/\\s*?$");  /**  */
-        Matcher matcher2 = commentEnd.matcher("  */  ");
+        Pattern commentEnd = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
+        Matcher matcher2 = commentEnd.matcher("            case   \"dddb\"   :    ");
         System.out.println(matcher2.find());
+        System.out.println(matcher2.group(0));
     }
 
     public static void test(
@@ -65,10 +65,37 @@ public class MainTest {
         Matcher matcher = normalFunctionPattern.matcher("    public static void main(String[] args)  {");
         System.out.println(matcher.find());
 
+        //A. IF(AA)      从formData里获取
+        if(matcher!=null){
+            System.out.println("test");
+        }else if(matcher!=null){
+            System.out.println("dd");
+        }else{
+            System.out.println("else");
+        }
+        String dddd="";
 
-        Pattern commentEnd = Pattern.compile("^\\s*\\*/\\s*$");  /**  */
-        Matcher matcher2 = commentEnd.matcher("Pattern normalFunctionPattern = Pattern.compile(\"(public|private|protected)?\\\\s*(static)?\\\\s*[A-z]+\\\\s*main\\\\s*\\\\(\");");
+        //A. SWITCH:   获取form信息 用searchType
+        switch (dddd){
+            case "ddd":
+                System.out.println("ddd");
+                //B. dododod1
+                break;
+            case   "dddb"   :
+                System.out.println("ddd");
+                //B. dododod2
+                break;
+            default:
+                //B. dododod3
+                System.out.println("ddd");
+                break;
+        }
+
+
+        Pattern commentEnd = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
+        Matcher matcher2 = commentEnd.matcher("            case   \"dddb\"   :    ");
         System.out.println(matcher2.find());
+
     }
 
 
