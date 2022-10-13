@@ -22,8 +22,13 @@ public class TestController {
 
     @GetMapping("/test")
     @Operation(description = "测试普通接口")
-    public String getTest(@RequestParam(required = false) String id) {
+    public String getTest(@RequestParam(required = false) Integer id) throws TestFirstException, TestSecondException {
         log.info("id："+id);
+        if(id==2){
+            throw new TestFirstException();
+        }else if(id==3){
+            throw new TestSecondException();
+        }
         return "success233cc3:"+id;
     }
 
