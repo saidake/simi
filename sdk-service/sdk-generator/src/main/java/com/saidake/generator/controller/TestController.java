@@ -24,5 +24,4 @@ public class TestController {
         log.info("id："+id);
         return "success+fafa";
     }
-
 }

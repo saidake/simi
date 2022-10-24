@@ -1,5 +1,6 @@
 package com.saidake.common.core.util.data;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
@@ -12,6 +13,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * 随机工具类
+ */
+@UtilityClass
 public class RandomUtil {
     private static String ChineseFamilyNameSingle = "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻水云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳鲍史唐费岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅卞齐康伍余元卜顾孟平"
             + "黄和穆萧尹姚邵湛汪祁毛禹狄米贝明臧计成戴宋茅庞熊纪舒屈项祝董粱杜阮席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田胡凌霍万柯卢莫房缪干解应宗丁宣邓郁单杭洪包诸左石崔吉"
@@ -50,7 +56,7 @@ public class RandomUtil {
      */
     public static String getRandomName() {
         String currentSex=getRandomSex();
-        return getRamdonFamilyName()+getRandomOnlyNameBySex(currentSex);
+        return getRandomFamilyName()+getRandomOnlyNameBySex(currentSex);
     }
 
 
@@ -58,7 +64,7 @@ public class RandomUtil {
      * 功能：随机产生姓氏
      * @return 姓氏
      */
-    public static String getRamdonFamilyName() {
+    public static String getRandomFamilyName() {
         String str = "";
         int randNum = new Random().nextInt(2) + 1;
         int strLen = randNum == 1 ? ChineseFamilyNameSingle.length() : ChineseFamilyNameDouble.length();

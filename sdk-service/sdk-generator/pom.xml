@@ -28,6 +28,10 @@
             <groupId>com.saidake</groupId>
             <artifactId>sdk-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.saidake</groupId>
+            <artifactId>sdk-common-log</artifactId>
+        </dependency>
 
         <!--<dependency>-->
             <!--<groupId>com.saidake</groupId>-->

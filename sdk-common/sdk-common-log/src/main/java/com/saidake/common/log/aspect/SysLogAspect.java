@@ -1,7 +1,7 @@
 package com.saidake.common.log.aspect;
 
 import cn.hutool.core.util.StrUtil;
-import com.saidake.common.core.config.SpringContextHolder;
+import com.saidake.common.core.util.app.SpringContextUtil;
 import com.saidake.common.log.entity.SysLog;
 import com.saidake.common.log.event.SysLogEvent;
 import com.saidake.common.log.util.LogTypeEnum;
@@ -64,7 +64,7 @@ public class SysLogAspect {
         finally {
             Long endTime = System.currentTimeMillis();
             logVo.setTime(endTime - startTime);
-            SpringContextHolder.publishEvent(new SysLogEvent(logVo));
+            SpringContextUtil.publishEvent(new SysLogEvent(logVo));
         }
 
         return obj;

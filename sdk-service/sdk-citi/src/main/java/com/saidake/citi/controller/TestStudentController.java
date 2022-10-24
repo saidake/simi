@@ -1,7 +1,7 @@
 package com.saidake.citi.controller;
 
-import com.saidake.citi.domain.request.TestStudentAddRequest;
-import com.saidake.citi.domain.request.TestStudentUpdateRequest;
+import com.saidake.citi.domain.test.TestStudentAddRequest;
+import com.saidake.citi.domain.test.TestStudentUpdateRequest;
 import com.saidake.citi.entity.TestStudentEntity;
 import com.saidake.citi.service.TestStudentService;
 import io.swagger.v3.oas.annotations.Operation;

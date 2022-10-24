@@ -1,6 +1,6 @@
 package com.saidake.citi.AAAconfig;
 
-import com.saidake.common.core.domain.config.ServletAttributesTaskDecorator;
+import com.saidake.common.core.config.http.ServletAttributesTaskDecorator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;

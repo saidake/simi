@@ -2,12 +2,14 @@ package com.saidake.citi.service;
 
 import com.saidake.citi.entity.TestStudentEntity;
 import com.saidake.citi.repository.TestStudentRepository;
+import com.saidake.common.log.event.SysLogEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestAttributes;
@@ -16,7 +18,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -27,7 +31,9 @@ public class TestService {
     @Autowired
     TestStudentRepository testStudentRepository;
 
-    @Transactional
+//    @Transactional
+    @Async
+//    @SuppressWarnings("unchecked")
     public void testAsync(Long id) throws InterruptedException {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
@@ -50,12 +56,12 @@ public class TestService {
     }
 
 
-    private void printToken(HttpServletRequest request,Long id) throws InterruptedException {
+    public void printToken(HttpServletRequest request,Long id) throws InterruptedException {
         Thread.sleep(6000);
         log.info("=========测试token: {}", request.getHeader("token"));
         log.info("=========测试id: {}", id);
     }
-    private void requestInstance() {
+    public void requestInstance() {
         ResponseEntity<String> exchange = restTemplate.exchange("http://SDK-GENERATOR/test", HttpMethod.GET, new HttpEntity<>(new HashMap<>(), new HttpHeaders()), String.class);
         log.info("=========测试响应 response: {}", exchange.getBody());
     }

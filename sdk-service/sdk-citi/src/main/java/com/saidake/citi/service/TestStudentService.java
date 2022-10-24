@@ -1,7 +1,7 @@
 package com.saidake.citi.service;
 
-import com.saidake.citi.domain.request.TestStudentAddRequest;
-import com.saidake.citi.domain.request.TestStudentUpdateRequest;
+import com.saidake.citi.domain.test.TestStudentAddRequest;
+import com.saidake.citi.domain.test.TestStudentUpdateRequest;
 import com.saidake.citi.entity.TestStudentEntity;
 import org.springframework.http.ResponseEntity;
 

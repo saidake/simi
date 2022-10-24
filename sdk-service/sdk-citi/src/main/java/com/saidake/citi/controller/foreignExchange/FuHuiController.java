@@ -1,7 +1,7 @@
 package com.saidake.citi.controller.foreignExchange;
 
-import com.saidake.citi.domain.request.foreignExchange.Account;
-import com.saidake.citi.domain.request.foreignExchange.AccountResponse;
+import com.saidake.citi.domain.fuhui.Account;
+import com.saidake.citi.domain.fuhui.AccountResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -32,9 +33,10 @@ import java.util.regex.Pattern;
 @RestController
 @Tag(name = "FuHui",description = "福汇交易平台")
 @Slf4j
+@RequestMapping("fuhui")
 public class FuHuiController {
 
-    @Value("${xml.fuhui-directory}")
+    @Value("${fuhui.account-info-path}")
     private String fuhuiDirectory;
 
     @GetMapping("/account")

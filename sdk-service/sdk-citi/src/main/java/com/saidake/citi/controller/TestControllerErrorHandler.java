@@ -10,7 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 @ControllerAdvice
 @ResponseBody
 @Slf4j
-public class TesetControllerErrorHandller {
+public class TestControllerErrorHandler {
 
     @ExceptionHandler(TestFirstException.class)
     public String processControllerError1(NativeWebRequest request, TestFirstException ex) {
@@ -24,11 +24,11 @@ public class TesetControllerErrorHandller {
         return "TestSecondException";
     }
 
-    @ExceptionHandler(Throwable.class)
-    public String processControllerError3(NativeWebRequest request, Throwable ex) {
-        System.out.println("throwable");
-        return "Throwable";
-    }
+//    @ExceptionHandler(Throwable.class)
+//    public String processControllerError3(NativeWebRequest request, Throwable ex) {
+//        System.out.println("throwable: "+ex.getMessage());
+//        return "Throwable";
+//    }
 
 }
 

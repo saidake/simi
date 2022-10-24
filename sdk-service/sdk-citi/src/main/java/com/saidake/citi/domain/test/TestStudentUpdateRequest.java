@@ -1,4 +1,4 @@
-package com.saidake.citi.domain.request;
+package com.saidake.citi.domain.test;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

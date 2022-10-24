@@ -1,4 +1,4 @@
-package com.saidake.common.core.domain.config;
+package com.saidake.common.core.config.http;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import java.util.Map;
 
 @Slf4j
-public class ServletAttributesTaskDecorator implements TaskDecorator {
+    public class ServletAttributesTaskDecorator implements TaskDecorator {
 
     @Override
     public Runnable decorate(Runnable runnable) {

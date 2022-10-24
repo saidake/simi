@@ -1,4 +1,4 @@
-package com.saidake.citi.domain.request.foreignExchange;
+package com.saidake.citi.domain.fuhui;
 
 import lombok.Data;
 

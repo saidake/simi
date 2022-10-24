@@ -58,14 +58,14 @@ public class SysLogUtils {
 	/**
 	 * 获取spel 定义的参数值
 	 * @param context 参数容器
-	 * @param key key
+	 * @param spelStr spelStr
 	 * @param clazz 需要返回的类型
 	 * @param <T> 返回泛型
 	 * @return 参数值
 	 */
-	public <T> T getValue(EvaluationContext context, String key, Class<T> clazz) {
+	public <T> T getValue(EvaluationContext context, String spelStr, Class<T> clazz) {
 		SpelExpressionParser spelExpressionParser = new SpelExpressionParser();
-		Expression expression = spelExpressionParser.parseExpression(key);
+		Expression expression = spelExpressionParser.parseExpression(spelStr);
 		return expression.getValue(context, clazz);
 	}
 
