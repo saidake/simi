@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 public class AccountInfoExcel {
     //====================================================================== 标准信息
+    @ExcelProperty("Account Type")
+    private String accountType;
+
     @ExcelProperty("Name")
     private String name;
 
@@ -18,6 +21,9 @@ public class AccountInfoExcel {
 
     @ExcelProperty("Point Value")
     private String pointValue;
+
+    @ExcelProperty("Num")
+    private String num;
 
     @ExcelProperty("Cost")
     private String cost;
@@ -32,6 +38,15 @@ public class AccountInfoExcel {
     private String trendDirection;
 
     //====================================================================== 交易信息
+    @ExcelProperty("Trade Time")
+    private String tradeTime;
+
+    @ExcelProperty("Trade Direction")
+    private String tradeDirection;
+
+    @ExcelProperty("Except Point")
+    private Integer exceptPoint;
+
     @ExcelProperty("Enter Price")
     private String enterPrice;
 
@@ -44,6 +59,23 @@ public class AccountInfoExcel {
     @ExcelProperty("Net Profit")
     private String netProfit;
 
+    //====================================================================== 交易系统
+    @ExcelProperty("Rule")
+    private String rule;
+
+    @ExcelProperty("Reference Line")
+    private String referenceLine;
+
+    @ExcelProperty("Trade Reason")
+    private String tradeReason;
+
+    @ExcelProperty("Second Reason")
+    private String secondReason;
+
+    @ExcelProperty("Fail Reason")
+    private String failReason;
+
+    //====================================================================== 额外信息
     @ExcelProperty("Enter Assets")
     private String enterAssets;
 
@@ -55,14 +87,4 @@ public class AccountInfoExcel {
 
     @ExcelProperty("Calc Profit")
     private String CalcProfit;
-
-    //====================================================================== 交易系统
-    @ExcelProperty("Rule")
-    private String rule;
-
-    @ExcelProperty("Trade Reason")
-    private String tradeReason;
-
-    @ExcelProperty("Fail Reason")
-    private String failReason;
 }

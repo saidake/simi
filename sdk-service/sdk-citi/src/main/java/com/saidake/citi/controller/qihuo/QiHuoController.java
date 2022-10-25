@@ -21,16 +21,9 @@ import java.io.IOException;
 @RequestMapping("/qihuo")
 public class QiHuoController {
 
-    @Value("${qihuo.day.sr}")
-    private String srDayData;
-
     @Value("${qihuo.simulate.account-info-path}")
     private String qihuoAccountInfoPath;
 
-    @GetMapping("/sr")
-    public String getTest() {
-        return "success:"+srDayData;
-    }
     @GetMapping("/account")
     public QihuoAccountInfoResponse getAccount() {
         AccountInfoExcelListener accountInfoExcelListener = new AccountInfoExcelListener();
