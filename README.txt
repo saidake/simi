@@ -9,7 +9,7 @@ sdk-integration  网关服务
     sdk-eureka          注册中心（http://localhost:48992）
 sdk-service  业务集合
     sdk-citi            股票服务（http://localhost:48124/swagger） 【依赖：sdk-eureka】
-    sdk-generator       生成器服务（48123）
+    sdk-generator       生成器服务（http://localhost:48123/swagger）
     sdk-paizhi
 ========================================================================================== 主机 = homehost-vm-main(192.168.22.133)
 linux用户组

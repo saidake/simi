@@ -12,12 +12,12 @@ public class RestTemplateConfig {
 
     @Bean
     @Primary
-    @LoadBalanced
+//    @LoadBalanced
     public RestTemplate restTemplate(){
         setTrustStore();
         final RestTemplate restTemplate=new RestTemplate();
 //        restTemplate.getInterceptors().add();
-        restTemplate.getMessageConverters().add(0,new Jaxb2RootElementHttpMessageConverter());
+//        restTemplate.getMessageConverters().add(0,new Jaxb2RootElementHttpMessageConverter());
         return restTemplate;
     }
 

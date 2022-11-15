@@ -7,84 +7,62 @@ import lombok.Data;
 @Data
 public class AccountInfoExcel {
     //====================================================================== 标准信息
-    @ExcelProperty("Account Type")
+    @ExcelProperty("账号类型")
     private String accountType;
 
-    @ExcelProperty("Name")
+    @ExcelProperty("名称")
     private String name;
 
-    @ExcelProperty("Code")
+    @ExcelProperty("代码")
     private String code;
 
-    @ExcelProperty("Std Point")
-    private String stdPoint;
-
-    @ExcelProperty("Point Value")
-    private String pointValue;
-
-    @ExcelProperty("Num")
-    private String num;
-
-    @ExcelProperty("Cost")
-    private String cost;
-
-    @ExcelProperty("Type")
+    @ExcelProperty("类型")
     private String type;
-    //====================================================================== 趋势信息
-    @ExcelProperty("Trend Time")
-    private String trendTime;
-
-    @ExcelProperty("Trend Direction")
-    private String trendDirection;
-
     //====================================================================== 交易信息
-    @ExcelProperty("Trade Time")
+    @ExcelProperty("本金")
+    private String baseAssets;
+
+    @ExcelProperty("交易时间")
     private String tradeTime;
 
-    @ExcelProperty("Trade Direction")
+    @ExcelProperty("交易方向")
     private String tradeDirection;
 
-    @ExcelProperty("Except Point")
+    @ExcelProperty("手数")
+    private String num;
+
+    @ExcelProperty("期望点数")
     private Integer exceptPoint;
 
-    @ExcelProperty("Enter Price")
+    @ExcelProperty("开单价格")
     private String enterPrice;
 
-    @ExcelProperty("Out Price")
+    @ExcelProperty("结算价格")
     private String outPrice;
 
-    @ExcelProperty("Trade Point")
+    @ExcelProperty("结算点数")
     private String tradePoint;
 
-    @ExcelProperty("Net Profit")
+    @ExcelProperty("净盈利")
     private String netProfit;
 
     //====================================================================== 交易系统
-    @ExcelProperty("Rule")
+    @ExcelProperty("规则")
     private String rule;
 
-    @ExcelProperty("Reference Line")
+    @ExcelProperty("参考线")
     private String referenceLine;
 
-    @ExcelProperty("Trade Reason")
+    @ExcelProperty("交易原因")
     private String tradeReason;
 
-    @ExcelProperty("Second Reason")
+    @ExcelProperty("次要原因")
     private String secondReason;
 
-    @ExcelProperty("Fail Reason")
+    @ExcelProperty("风险")
+    private String risk;
+
+    @ExcelProperty("失败原因")
     private String failReason;
 
-    //====================================================================== 额外信息
-    @ExcelProperty("Enter Assets")
-    private String enterAssets;
-
-    @ExcelProperty("Out Assets")
-    private String outAssets;
-
-    @ExcelProperty("Real Profit")
-    private String realProfit;
-
-    @ExcelProperty("Calc Profit")
-    private String CalcProfit;
 }

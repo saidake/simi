@@ -1,35 +1,42 @@
 import { atom, RecoilState } from "recoil";
 
-export interface IAccountData {
-  totalTime: string;
-  accountLinkedList:  {
-    currencyType: string;
-    startTime: string;
-    endTime: string;
-    turnover: string;
-    purchasePrice: string;
-    sellingPrice: string;
-    totalProfitAndLoss: string;
-    netProfitAndLoss: string;
-    isBuy: boolean;
-  }[];
+//======================================================= /qihuo/account
+export interface ITotalInfo {
+  totalProfitTimes: number,
+  totalLossTimes: number,
+  totalTradeTimes: number,
+  totalNetProfit: number,
+  totalWiningRate: string,
+  name: string,
 }
-export const accountData: RecoilState<IAccountData> = atom({
-  key: "accountData",
-  default: {
-    totalTime: "",
-    accountLinkedList: [
-      {
-        currencyType: "",
-        startTime: "",
-        endTime: "",
-        turnover: "",
-        purchasePrice: "",
-        sellingPrice: "",
-        totalProfitAndLoss: "",
-        netProfitAndLoss: "",
-        isBuy: Boolean(true),
-      },
-    ],
-  },
+export interface IStragetyMap extends ITotalInfo {
+    rule: string,
+}
+
+export interface IVarietyMap extends ITotalInfo{
+    code: string,
+    strategyDataMap: {
+      [xxx:string]:IStragetyMap
+    },
+}
+export interface IBaseAccountInfo {
+  totalProfitTimes: number,
+  totalLossTimes: number,
+  totalTradeTimes: number,
+  totalNetProfit: number,
+  totalWiningRate: string,
+  baseAssets: number,
+  winPercent: string,
+  varietyDataMap: {
+    [xxx:string]:IVarietyMap
+  }
+}
+
+export interface IAccountResponseData {
+  general: IBaseAccountInfo,
+  real: IBaseAccountInfo,
+  simulated: IBaseAccountInfo
+}
+export const accountData: RecoilState<IAccountResponseData> = atom({
+  key: "accountData"
 });

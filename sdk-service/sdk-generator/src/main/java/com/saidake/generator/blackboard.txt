@@ -11,6 +11,12 @@
  *             第二步骤2
  *     aaaa4步骤
  *     IF(AA)      从formData里获取
+ *             dododod1
+ *             dododod2
+ *             IF(AA)      fsfatrea  taann ta
+ *                 testtstst
+ *             ELSE
+ *             dododod3
  *     ELSE
  *     SWITCH:   获取form信息 用searchType
  *     SWITCH("ddd")

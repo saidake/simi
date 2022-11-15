@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 @RestController
 @Slf4j
 @Api(tags = "Swagger测试接口", value = "swagger")
@@ -18,10 +20,14 @@ public class TestController {
     public String getTest( ) {
         return "success";
     }
+
     @GetMapping("/fafa")
     @ApiOperation(value = "dd")
-    public String getDDTest( @RequestParam(required = false) @ApiParam(value = "ID", example = "0") String id) {
+    public HashMap<String, Long> getDDTest( @RequestParam(required = false) @ApiParam(value = "ID", example = "0") String id) {
         log.info("id："+id);
-        return "success+fafa";
+        HashMap<String, Long> objectObjectHashMap = new HashMap<String, Long>(){{
+            put("date",1662494400000L);
+        }};
+        return objectObjectHashMap;
     }
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import {RecoilRoot} from 'recoil';
-import {BrowserRouter} from 'react-router-dom'
 import reportWebVitals from "./reportWebVitals"
+import 'normalize.css/normalize.css'
+import "antd/dist/antd.min.css"
+import './index.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-        <App role="test"/>
+        <App />
     </RecoilRoot>
   </React.StrictMode>
 )

@@ -21,6 +21,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
+      "@/*":["src/*"],
       "@pages/*":["src/pages/*"]
     }
   },

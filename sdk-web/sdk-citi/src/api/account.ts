@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export const fetchAccuntDataSync = async ()=>{
-     const res=await axios.get("/sdk-citi/account");
+     const res=await axios.get("/sdk-citi/qihuo/account");
      return res.data;
 }
