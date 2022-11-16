@@ -36,60 +36,71 @@ public class GenerateComment {
         File tempReadFile=new File(FileUtils.getTempDirectory(),TEMP_FOLDER+File.separator+targetFile.getName());
         log.info("copy to tempFile: {}",tempReadFile.getPath());
 
+        //A. 定义正则匹配规则
+        Pattern commentStartCheckPattern= Pattern.compile("^\\s*/\\*\\*\\s*$");
+        Pattern functionStartPattern = Pattern.compile(String.format("^[^\"]+(public|private|protected)\\s*(static)?\\s*(([A-z]+)|([A-z]+.*?>))\\s*%s\\s*\\(", FUNCTION_NAME.replaceAll("\\(.*?\\)","")));
+        Pattern functionNameCheckPattern= Pattern.compile("[A-z1-9]+");
+        Pattern functionNameCheckPattern2= Pattern.compile("[A-z1-9]+\\(.*?\\)");
+        Pattern commentNumberPattern = Pattern.compile("^\\s*//[A-Z]\\.\\s.*?");  //支持1-4
+        Pattern ifPattern = Pattern.compile("^\\s*?if\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
+        Pattern switchPattern = Pattern.compile("^\\s*?switch\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
+        Pattern ifElsePattern = Pattern.compile("^\\s*?}\\s*?else\\s*?\\{\\s*?");  //支持1-4
+        Pattern switchCasePattern = Pattern.compile("^\\s*?case\\s*?[A-z1-9\".]+\\s*?:\\s*?");  //支持1-4
+        Pattern switchCaseContentPattern = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
+        Pattern switchDefaultPattern = Pattern.compile("^\\s*?default\\s*?:\\s*?");  /**  */
+
+        //A. 检测functionName是否准确
+        boolean functionNameCheckResult1 = functionNameCheckPattern.matcher(FUNCTION_NAME).find();
+        boolean isParamFunctionName = functionNameCheckPattern2.matcher(FUNCTION_NAME).find();
+        if(!functionNameCheckResult1&&!isParamFunctionName){
+            throw new RuntimeException("error function name: "+FUNCTION_NAME);
+        }
+
+        //A. 定义公共数据
+        String[] paramList = StringUtils.splitByWholeSeparator(FUNCTION_NAME.replaceAll("(.*\\()|\\)|\\s", ""), ",");
+        List<CommentEntry> commentStorage=new ArrayList<>();
+        boolean isCommentStart=false;
+        boolean hasComment=false;
+
+        boolean isSearchFunction=false;
+        boolean isFunctionParamsEnd=false;
+        boolean isEnteredFunctionParamList=false;
+        boolean isEnteredFunction=false;
+        boolean isEnteredFunctionSecond=false;
+        int leftCount = 0;          //  { 的个数
+        int rightCount = 0;         //  } 的个数
+        int tempLeftCount = 0;          //  if或switch { 的个数
+        int tempRightCount = 0;         //  if或switch { 的个数
+        boolean isIfStart=false;
+        boolean isSwitchStart=false;
+        boolean isIfStartComment=false;
+        boolean isSwitchStartComment=false;
+        LinkedList<Integer> ifLevelList=new LinkedList<>();
+        LinkedList<Integer> switchLevelList=new LinkedList<>();
+        List<String> functionParamList=new ArrayList<>();
+        BufferedWriter targetFileWriter=null;
         //A. 读取文件
         try(BufferedReader tempReadFileReader = new BufferedReader(new FileReader(tempReadFile));
-            BufferedWriter blackboardWriter=new BufferedWriter(new FileWriter(blackboard));
-//            BufferedWriter targetFileWriter=new BufferedWriter(new FileWriter(targetFile))
+            BufferedWriter blackboardWriter=new BufferedWriter(new FileWriter(blackboard))
         ){
-            //A. 定义正则匹配规则
-            Pattern functionStartPattern = Pattern.compile(String.format("^[^\"]+(public|private|protected)\\s*(static)?\\s*(([A-z]+)|([A-z]+.*?>))\\s*%s\\s*\\(", FUNCTION_NAME.replaceAll("\\(.*?\\)","")));
-            Pattern functionNameCheckPattern= Pattern.compile("[A-z1-9]+");
-            Pattern functionNameCheckPattern2= Pattern.compile("[A-z1-9]+\\(.*?\\)");
-            Pattern commentNumberPattern = Pattern.compile("^\\s*//[A-Z]\\.\\s.*?");  //支持1-4
-            Pattern ifPattern = Pattern.compile("^\\s*?if\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
-            Pattern switchPattern = Pattern.compile("^\\s*?switch\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
-            Pattern ifElsePattern = Pattern.compile("^\\s*?}\\s*?else\\s*?\\{\\s*?");  //支持1-4
-            Pattern switchCasePattern = Pattern.compile("^\\s*?case\\s*?[A-z1-9\".]+\\s*?:\\s*?");  //支持1-4
-            Pattern switchCaseContentPattern = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
-            Pattern switchDefaultPattern = Pattern.compile("^\\s*?default\\s*?:\\s*?");  /**  */
-
-            //A. 检测functionName是否准确
-            boolean functionNameCheckResult1 = functionNameCheckPattern.matcher(FUNCTION_NAME).find();
-            boolean isParamFunctionName = functionNameCheckPattern2.matcher(FUNCTION_NAME).find();
-            if(!functionNameCheckResult1&&!isParamFunctionName){
-                throw new RuntimeException("error function name: "+FUNCTION_NAME);
-            }
-
-            //A. 定义公共数据
-            String[] paramList = StringUtils.splitByWholeSeparator(FUNCTION_NAME.replaceAll("(.*\\()|\\)|\\s", ""), ",");
-            List<CommentEntry> commentStorage=new ArrayList<>();
-            boolean isSearchFunction=false;
-            boolean isFunctionParamsEnd=false;
-            boolean isEnteredFunctionParamList=false;
-            boolean isEnteredFunction=false;
-            boolean isEnteredFunctionSecond=false;
-            int leftCount = 0;          //  { 的个数
-            int rightCount = 0;         //  } 的个数
-            int tempLeftCount = 0;          //  if或switch { 的个数
-            int tempRightCount = 0;         //  if或switch { 的个数
-            boolean isIfStart=false;
-            boolean isSwitchStart=false;
-            boolean isIfStartComment=false;
-            boolean isSwitchStartComment=false;
-            LinkedList<Integer> ifLevelList=new LinkedList<>();
-            LinkedList<Integer> switchLevelList=new LinkedList<>();
-            List<String> functionParamList=new ArrayList<>();
+            if(!isOutputDashboard)targetFileWriter=new BufferedWriter(new FileWriter(targetFile));
             //A. 开始读取临时文件
             for ( String currentLine = tempReadFileReader.readLine();currentLine!=null;currentLine = tempReadFileReader.readLine()) {
+                //B. 注释检查
+                if(commentStartCheckPattern.matcher(currentLine).find()){
+                    isCommentStart=true;
+                }
+
                 //B. 之前函数开始部分已经结束了
                 if(isEnteredFunction){
                     isEnteredFunctionSecond=true;
                 }
                 //B. 找到目标函数了（首行通过，但是没有{，继续检测）
-                Matcher functionStartMatcher = functionStartPattern.matcher(currentLine);
-                if(functionStartMatcher.find()||isEnteredFunctionParamList){
+                if(functionStartPattern.matcher(currentLine).find()||isEnteredFunctionParamList){
+//                    if(!isOutputDashboard){
+//                        tempReadFileReader.mark(tempReadFile);
+//                    }
                     isEnteredFunctionParamList=true;
-//                    if(isParamFunctionName){
                     log.info("check function line: {}",currentLine);
                     if(!isFunctionParamsEnd&&isParamFunctionName){
                         String[] currentParamList = StringUtils.splitByWholeSeparator(currentLine.replaceAll("(.*\\()|\\)|\\{|(^,)|(,$)|(throws.*)", ""), ",");
@@ -106,7 +117,7 @@ public class GenerateComment {
                         isEnteredFunction=true;
                         if(IntStream.range(0,paramList.length).allMatch(i->i<functionParamList.size()&&functionParamList.get(i).equals(paramList[i]))||!isParamFunctionName){
                             isSearchFunction=true;
-                            log.info("passed param list check: {}",functionParamList);
+                            log.info("passed param list check: {}",isParamFunctionName?functionParamList:"empty");
                             functionParamList.clear();
                         }
 
@@ -165,7 +176,6 @@ public class GenerateComment {
                             commentStorage.add(new CommentEntry(switchLevelList.removeLast(),"SWITCH(DEFAULT)"));
                         }
                     }else if(tempLeftCount+1==tempRightCount){
-//                        log.info("clear if switch check: {}",currentLine);
                         isIfStart=false;
                         isSwitchStart=false;
                         isSwitchStartComment=false;
@@ -173,20 +183,27 @@ public class GenerateComment {
                     }
                     //A. 到达函数底部
                     if(rightCount-leftCount==1){
-//                        log.info("entered function end: {}",currentLine);
-                        blackboardWriter.write(FUNCTION_PREFIX+SUMMARY_TITLE+System.lineSeparator());
-                        for (int i = 0; i < commentStorage.size()-1; i++) {
-                            CommentEntry item = commentStorage.get(i);
-                            blackboardWriter.write(FUNCTION_PREFIX + StringUtils.repeat("    ", item.getLevel()) + item.getContent() + System.lineSeparator());
+                        if(isOutputDashboard){
+                            blackboardWriter.write(FUNCTION_PREFIX+SUMMARY_TITLE+System.lineSeparator());
+                            for (int i = 0; i < commentStorage.size()-1; i++) {
+                                CommentEntry item = commentStorage.get(i);
+                                blackboardWriter.write(FUNCTION_PREFIX + StringUtils.repeat("    ", item.getLevel()) + item.getContent() + System.lineSeparator());
+                            }
+                            CommentEntry lastEntry = commentStorage.get(commentStorage.size() - 1);
+                            blackboardWriter.write(FUNCTION_PREFIX + StringUtils.repeat("    ", lastEntry.getLevel()) + lastEntry.getContent());
+                            return;
                         }
-                        CommentEntry lastEntry = commentStorage.get(commentStorage.size() - 1);
-                        blackboardWriter.write(FUNCTION_PREFIX + StringUtils.repeat("    ", lastEntry.getLevel()) + lastEntry.getContent());
-                        return;
                     }
+                }
+
+                if(!isOutputDashboard){
+                    targetFileWriter.write(currentLine+System.lineSeparator());
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if(targetFileWriter!=null)targetFileWriter.close();
         }
 
     }
