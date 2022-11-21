@@ -20,12 +20,8 @@ public class DESUtil {
 //        KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
         SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
         secureRandom.setSeed(strKey.getBytes());
-
         keyGenerator.init(secureRandom);
-        Key key = keyGenerator.generateKey();
-        keyGenerator = null;
-
-        return key;
+        return keyGenerator.generateKey();
     }
     
     

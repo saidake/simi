@@ -2,7 +2,6 @@ package com.saidake.common.core.util.encode;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import sun.misc.BASE64Decoder;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,11 +13,7 @@ import java.security.spec.X509EncodedKeySpec;
 
 public class RSAUtil {
 
-    /**
-     * 提供者
-     */
     private static final BouncyCastleProvider PROVIDER = new BouncyCastleProvider();
-
 
     /**
      * 默认的签名算法“SHA1WithRSA”
@@ -42,15 +37,12 @@ public class RSAUtil {
             throws Exception {
         try {
             byte[] keyBytes = loadKey(keyFileName, keyPassword);//????????????????????
-
             PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initSign(keyFactory.generatePrivate(pkcs8KeySpec));
             signature.update(signText.getBytes("UTF-8"));
-
             byte[] result = signature.sign();
-            //import org.apache.commons.codec.binary.Base64;
             return Base64.encodeBase64String(result);
         } catch (Exception ex) {
             throw new Exception("加密失败", ex);
@@ -94,18 +86,7 @@ public class RSAUtil {
         return Base64.decodeBase64(signKey);
     }
 
-    /*sign*/
-    //?????????
 
-    /**
-     * ?????????
-     *
-     * @param verifiText  ???????????????????
-     * @param signedText  ???????????
-     * @param keyFileName ??·???????????
-     * @param keyPassword ??????????????????????????????????????
-     * @throws Exception
-     */
     public void verify(String verifiText, String signedText, String keyFileName, String keyPassword) throws Exception {
 
         boolean verifyResult;
@@ -130,7 +111,8 @@ public class RSAUtil {
 
     public static PublicKey getPublicKey(String key) throws Exception {
         byte[] keyBytes;
-        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+//        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        keyBytes = Base64.decodeBase64(key);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PublicKey publicKey = keyFactory.generatePublic(keySpec);
@@ -139,7 +121,8 @@ public class RSAUtil {
 
     public static PrivateKey getPrivateKey(String key) throws Exception {
         byte[] keyBytes;
-        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+//        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        keyBytes = Base64.decodeBase64(key);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
