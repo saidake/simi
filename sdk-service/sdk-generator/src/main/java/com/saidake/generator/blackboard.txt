@@ -17,11 +17,32 @@
  *                 testtstst
  *             ELSE
  *             dododod3
+ *         if 测试
+ *         test conent
+ *     ELSE IF(matcher!=null)
+ *         IF(AAdfsfsf)     ffffffffff 从formData里获取2
+ *         ELIF(matcher test)
+ *         ELSE IF(matcher!=null)
+ *                 testtstst2222
+ *         ELSE IF(matcher!=null)
+ *                 testtstst2222333
+ *         ELSE
+ *         else if 测试
  *     ELSE
+ *                 else 测试testtstst
  *     SWITCH:   获取form信息 用searchType
  *     SWITCH("ddd")
  *         dododod1
  *     SWITCH("dddb")
+ *     IF(AAdfsfsf)     ffffffffff 从formData里获取2
+ *                 testtstst
+ *     ELSE IF(matcher!=null)
+ *                 testtstst2222
+ *     ELSE IF(matcher!=null)
+ *                 testtstst2222333
+ *     ELSE
  *         dododod2
  *     SWITCH(DEFAULT)
  *         dododod3
+ *                 testtstst
+ *                 testtstst

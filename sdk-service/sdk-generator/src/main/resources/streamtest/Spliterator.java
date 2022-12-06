@@ -7,7 +7,8 @@ public interface Spliterator<T> {
     int SIZED      = 0x00000040;
     int SUBSIZED = 0x00004000;
     int SORTED     = 0x00000004;
-
+    long estimateSize();
+    Spliterator<T> trySplit();
     int characteristics();
     default Comparator<? super T> getComparator() {
         throw new IllegalStateException();

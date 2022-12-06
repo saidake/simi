@@ -38,8 +38,9 @@ public class TestStudentServiceImpl implements TestStudentService {
     @Override
     public ResponseEntity<Long> addHandler(TestStudentAddRequest testStudentAddRequest) {
         TestStudentEntity testStudentEntity=new TestStudentEntity();
+        testStudentAddRequest.setClassName(testStudentAddRequest.getClassName().length()>30?testStudentAddRequest.getClassName().substring(0,30):testStudentAddRequest.getClassName());
         BeanUtils.copyProperties(testStudentAddRequest,testStudentEntity);
-        testStudentSaveLogRepository.save(testStudentEntity);
+        testStudentRepository.save(testStudentEntity);
         return ResponseEntity.ok(testStudentEntity.getStuId());
     }
 
@@ -47,7 +48,7 @@ public class TestStudentServiceImpl implements TestStudentService {
     public ResponseEntity<Long> updateHandler(TestStudentUpdateRequest testStudentUpdateRequest) {
         TestStudentEntity testStudentEntity = testStudentRepository.findFirstByStuId(testStudentUpdateRequest.getStuId());
         BeanUtils.copyProperties(testStudentUpdateRequest,testStudentEntity);
-        testStudentSaveLogRepository.save(testStudentEntity);
+        testStudentRepository.save(testStudentEntity);
         return ResponseEntity.ok(null);
     }
 

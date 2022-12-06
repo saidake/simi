@@ -16,9 +16,9 @@ public class MainTest {
         System.out.println("String[] test ".replaceAll("\\s+.*$",""));
     }
 
-    public static String test(
-            String[] args,
-            String test)
+    public static java.lang.String test(
+            java.lang.String[] args,
+            java.lang.String test)
             throws IOException
     {
         //A. 测试内容
@@ -55,8 +55,8 @@ public class MainTest {
                     //C. dododod2
                     //C. IF(AA)      fsfatrea  taann ta
                     if(matcher!=null) {
-                        System.out.println("test");
                         //D. testtstst
+                        System.out.println("test");
                     }else{
                         System.out.println("lala");
                     }
@@ -66,10 +66,33 @@ public class MainTest {
                     System.out.println("ddd");
                     break;
             }
+            //B. if 测试
+        //B. test conent
         }else if(matcher!=null){
+            System.out.println("else");
+            //B. IF(AAdfsfsf)     ffffffffff 从formData里获取2
+            if(matcher!=null) {
+                System.out.println("test");
+            //B. ELIF(matcher test)
+            }  else if(matcher!=null) {
+                System.out.println("testddddfsfsf");
+                //D. testtstst2222
+            }else if(matcher!=null) {
+                System.out.println("test33");
+                //D. testtstst2222333
+            }else{
+                System.out.println("lala");
+            }
+            //B. else if 测试
             System.out.println("dd");
         }else{
             System.out.println("else");
+            if(matcher!=null) {
+                System.out.println("test");
+                //D. else 测试testtstst
+            }else{
+                System.out.println("lala");
+            }
         }
         String dddd="";
 
@@ -81,6 +104,19 @@ public class MainTest {
                 break;
             case   "dddb"   :
                 System.out.println("ddd");
+                //A. IF(AAdfsfsf)     ffffffffff 从formData里获取2
+                if(matcher!=null) {
+                    System.out.println("test");
+                    //D. testtstst
+                }  else if(matcher!=null) {
+                    System.out.println("test");
+                    //D. testtstst2222
+                }else if(matcher!=null) {
+                    System.out.println("test33");
+                    //D. testtstst2222333
+                }else{
+                    System.out.println("lala");
+                }
                 //B. dododod2
                 break;
             default:
@@ -88,10 +124,21 @@ public class MainTest {
                 System.out.println("ddd");
                 break;
         }
-
+        if(matcher!=null) {
+            System.out.println("test");
+            //D. testtstst
+        }else{
+            System.out.println("lala");
+        }
         Pattern commentEnd = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
         Matcher matcher2 = commentEnd.matcher("            case   \"dddb\"   :    ");
         System.out.println(matcher2.find());
+        if(matcher!=null) {
+            System.out.println("test");
+            //D. testtstst
+        }else{
+            System.out.println("lala");
+        }
         return null;
     }
 

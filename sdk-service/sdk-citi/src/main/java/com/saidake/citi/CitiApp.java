@@ -1,7 +1,5 @@
 package com.saidake.citi;
 
-import com.saidake.citi.repository.CronRepository;
-import com.saidake.citi.repository.TestStudentRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

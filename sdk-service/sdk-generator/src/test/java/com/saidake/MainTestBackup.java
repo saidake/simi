@@ -70,6 +70,12 @@
 //            System.out.println("dd");
 //        }else{
 //            System.out.println("else");
+//            if(matcher!=null) {
+//                System.out.println("test");
+//                //D. testtstst
+//            }else{
+//                System.out.println("lala");
+//            }
 //        }
 //        String dddd="";
 //
@@ -88,10 +94,21 @@
 //                System.out.println("ddd");
 //                break;
 //        }
-//
+//        if(matcher!=null) {
+//            System.out.println("test");
+//            //D. testtstst
+//        }else{
+//            System.out.println("lala");
+//        }
 //        Pattern commentEnd = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
 //        Matcher matcher2 = commentEnd.matcher("            case   \"dddb\"   :    ");
 //        System.out.println(matcher2.find());
+//        if(matcher!=null) {
+//            System.out.println("test");
+//            //D. testtstst
+//        }else{
+//            System.out.println("lala");
+//        }
 //        return null;
 //    }
 //
