@@ -1,8 +1,10 @@
 package com.saidake.common.core.util.file;
 
+import cn.hutool.core.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.lang.Nullable;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -15,8 +17,8 @@ import java.util.stream.Stream;
 
 @Slf4j
 public class FileUtil {
-    public static String SDK_MARK_TAG="SDK_MARK_TAG";
-    public static String SDK_RETURN_MARK_TAG="SDK_RETURN_MARK_TAG";
+    private static String SDK_MARK_TAG="SDK_MARK_TAG";
+    private static String SDK_RETURN_MARK_TAG="SDK_RETURN_MARK_TAG";
     private static ThreadLocal<Boolean> alreadyMarked=new ThreadLocal<>();
 
     /**
@@ -33,18 +35,32 @@ public class FileUtil {
 
     /**
      * 读写文件，对每一行做操作
-     * 可选功能：标记一行，向下获取信息（不写入新行），再返回之前地那一行
+     * 可选功能：根据readAndWriteTheSameFileLambda返回的内容，标记一行，向下获取信息（不写入新行），再返回之前地那一行
      *         返回 "SDK_MARK_TAG"             标记行
-     *         返回 "SDK_RETURN_MARK_TAG????"  返回标记行，后方拼接内容为标记行最终写入内容，然后转移到下一行
+     *         返回 "SDK_RETURN_MARK_TAGxxx"  返回标记行，同时 写入 标记行 查询信息后的最终内容
      */
     @FunctionalInterface
     public interface ReadAndWriteTheSameFileLambda<T,R>{
         R execute(T t);
     }
-    public static void readAndWriteFile(String readPath,String writePath,ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda) throws IOException {
-        //A. 公共数据
+    public static void readAndWriteFile(String readPath, @Nullable String writePath, ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda) throws IOException {
+        Assert.notNull(readPath,"readPath must not be null");
+        Assert.notNull(readAndWriteTheSameFileLambda,"lambda must not be null");
         File readFile = new File(readPath);
-        File writeFile = new File(writePath);
+        File writeFile;
+        Assert.isFalse(readFile.exists(),"read file not exist");
+
+        //A. writePath不存在时，创建临时文件
+        if(writePath==null){
+            File readTempFile = File.createTempFile(readFile.getName(), ".backup");
+            FileUtils.copyFile(readFile,readTempFile);
+            log.info("created temp file: {}",readTempFile.getPath());
+            readFile=readTempFile;
+            writeFile=new File(readPath);
+        }else{
+            writeFile = new File(writePath);
+        }
+        //A. 公共数据
         boolean isSameFile= readPath.equals(writePath);
         //A. 创建临时文件
         if(isSameFile){
@@ -57,7 +73,7 @@ public class FileUtil {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(readFile));
             BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(writeFile));
             for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
-                // Do your code here
+                //B. 预定义lambda
                 String resultLine = readAndWriteTheSameFileLambda.execute(currentLine);
                 if(resultLine==null)continue;
                 if(SDK_MARK_TAG.equals(resultLine)){

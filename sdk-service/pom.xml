@@ -14,7 +14,7 @@
 
     <modules>
         <module>sdk-generator</module>
-        <module>sdk-citi</module>
+        <module>sdk-trade</module>
     </modules>
 
 

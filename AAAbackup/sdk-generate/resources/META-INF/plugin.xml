@@ -1,0 +1,38 @@
+<idea-plugin>
+  <id>com.saidake.plugin.generate</id>
+  <name>saidake-generate</name>
+  <version>1.2.0</version>
+  <vendor email="saidake@qq.com" url="https://wx.mail.qq.com/login/loginpage">saidake</vendor>
+
+  <description><![CDATA[
+      test description.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0" until-build="2019.2.*"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+  <depends>com.intellij.modules.platform</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+      <toolWindow id="sdk-api" factoryClass="com.saidake.plugin.generate.window.ControllerAnchorWindowFactory"
+                  anchor="right" icon="/img/mybatis.ico">
+      </toolWindow>
+  </extensions>
+
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+</idea-plugin>

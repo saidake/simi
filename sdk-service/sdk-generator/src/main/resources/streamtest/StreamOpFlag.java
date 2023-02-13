@@ -1,6 +1,5 @@
 package com.saidake.streamtest;
 
-import com.saidake.backup.Spliterator;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -20,6 +19,7 @@ public enum StreamOpFlag {
     static final int IS_SHORT_CIRCUIT = SHORT_CIRCUIT.set;
     static final int NOT_SIZED = SIZED.clear;
     static final int IS_SIZED = SIZED.set;
+    static final int NOT_ORDERED = ORDERED.clear;
 
     private static class MaskBuilder {
         final Map<Type, Integer> map;

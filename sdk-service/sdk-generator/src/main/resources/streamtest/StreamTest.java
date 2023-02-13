@@ -14,7 +14,6 @@ public class StreamTest {
         Stream<Integer> integerStream = stream.map(item -> item + 1);
         List<Integer> collect = integerStream.collect(Collectors.toList());
         System.out.println(collect);
-
     }
 
 }

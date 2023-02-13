@@ -1,7 +1,6 @@
 package com.saidake.streamtest;
 
 
-import com.saidake.backup.Spliterator;
 
 import java.util.function.IntFunction;
 import java.util.function.Supplier;

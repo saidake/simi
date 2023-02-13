@@ -1,6 +1,6 @@
 sdk:
   generator:
-    project-root-path: D:\Desktop\DevProject\saidake-manage-project\sdk-service\sdk-citi
+    project-root-path: D:\Desktop\DevProject\saidake-manage-project\sdk-service\sdk-trade
     template:   # 模板表名
       table-name: TEST_STUDENT
       table-comment: SdkReplaceComment    # 将被替换成各种注释

@@ -52,10 +52,10 @@ public class GenerateComment {
         Pattern functionNameCheckPattern = Pattern.compile("[A-z1-9]+");
         Pattern functionNameCheckPattern2 = Pattern.compile("[A-z1-9]+\\(.*?\\)");
         Pattern commentNumberPattern = Pattern.compile("^\\s*//[A-Z]\\.\\s.*?");  //支持1-4
-        Pattern ifPattern = Pattern.compile("^\\s*?if\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
-        Pattern switchPattern = Pattern.compile("^\\s*?switch\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
+        Pattern ifPattern = Pattern.compile("^\\s*?if\\s*?\\(");  //支持1-4
+        Pattern switchPattern = Pattern.compile("^\\s*?switch\\s*?\\(");  //支持1-4
         Pattern elsePattern = Pattern.compile("^\\s*?}\\s*?else\\s*?\\{\\s*?");  //支持1-4
-        Pattern elseIfPattern = Pattern.compile("^\\s*?}\\s*?else\\s*?if\\s*?(.*?)\\s*?\\{\\s*?");  //支持1-4
+        Pattern elseIfPattern = Pattern.compile("^\\s*?}\\s*?else\\s*?if\\s*?\\(");  //支持1-4
         Pattern switchCasePattern = Pattern.compile("^\\s*?case\\s*?[A-z1-9\".]+\\s*?:\\s*?");  //支持1-4
         Pattern switchCaseContentPattern = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
         Pattern switchDefaultPattern = Pattern.compile("^\\s*?default\\s*?:\\s*?");  /**  */
@@ -245,8 +245,12 @@ public class GenerateComment {
                     }
                 }
 
-                //C. 进入switch内部，排除了首行的{，
-                if ( lastTempLeftAndRightCount!=null&&IfSwitchTypeEnum.SWITCH.equals(lastIfSwitchLevel.type)) {
+                 if(lastTempLeftAndRightCount!=null&&IfSwitchTypeEnum.SWITCH.equals(lastIfSwitchLevel.type)&& lastTempLeftAndRightCount.get(0).equals(lastTempLeftAndRightCount.get(1))){
+                    //D. SWITCH 结束
+                    ifSwitchLevelList.removeLast();
+                    ifSwitchLeftAndRightCountList.removeLast();
+                 //C. 进入switch内部，排除了首行的{，
+                } else if ( lastTempLeftAndRightCount!=null&&IfSwitchTypeEnum.SWITCH.equals(lastIfSwitchLevel.type)) {
                     if (switchCaseMatcher.find()) {
                         Matcher matcher = switchCaseContentPattern.matcher(currentLine);
                         if (matcher.find()) {
@@ -258,12 +262,8 @@ public class GenerateComment {
                     } else if (switchDefaultMatcher.find()) {
                         commentStorage.add(new CommentEntry(lastIfSwitchLevel.getLevel(), "SWITCH(DEFAULT)"));
                     }
-                }else if(lastTempLeftAndRightCount!=null&&IfSwitchTypeEnum.SWITCH.equals(lastIfSwitchLevel.type)&& lastTempLeftAndRightCount.get(0).equals(lastTempLeftAndRightCount.get(1))){
-                    //D. SWITCH 结束
-                    ifSwitchLevelList.removeLast();
-                    ifSwitchLeftAndRightCountList.removeLast();
-                //C. 刚从if内部出来 } else {
-                } else if (lastTempLeftAndRightCount!=null&&IfSwitchTypeEnum.IF.equals(lastIfSwitchLevel.type)&& lastTempLeftAndRightCount.get(0).equals(lastTempLeftAndRightCount.get(1)+1)) {
+                     //C. 刚从if内部出来 } else {
+                 }else if (lastTempLeftAndRightCount!=null&&IfSwitchTypeEnum.IF.equals(lastIfSwitchLevel.type)&& lastTempLeftAndRightCount.get(0).equals(lastTempLeftAndRightCount.get(1)+1)) {
                     if (elseMatcher.find()) {
                         //D. IF结束
                         commentStorage.add(new CommentEntry(lastIfSwitchLevel.getLevel(), "ELSE"));

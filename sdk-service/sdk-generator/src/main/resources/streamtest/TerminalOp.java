@@ -1,6 +1,5 @@
 package com.saidake.streamtest;
 
-import com.saidake.backup.Spliterator;
 
 interface TerminalOp<E_IN, R> {
     default StreamShape inputShape() { return StreamShape.REFERENCE; }
