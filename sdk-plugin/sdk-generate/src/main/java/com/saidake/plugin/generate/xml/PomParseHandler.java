@@ -10,7 +10,7 @@ public class PomParseHandler extends DefaultHandler {
     private boolean modulesStart=false;
     private boolean moduleStart=false;
     private boolean artifactIdStart=false; //检测当前项目的名称 artifactId
-    public String currentProjectName; //检测当前项目的名称 artifactId
+    private String currentProjectName; //检测当前项目的名称 artifactId
     private Map<String,Integer> artifactIdExcludeStartElementMap=new HashMap<String,Integer>(){{
         put("parent",0);
         put("dependencies",0);

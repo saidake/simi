@@ -11,6 +11,10 @@ import java.io.*;
 
 public class CitiTest {
     @Data
+    private static class Father extends Person{
+        String name;
+    }
+    @Data
     private static class Person {
         String name;
         Integer age;
@@ -29,6 +33,7 @@ public class CitiTest {
         private String value;
     }
     public static void main(String[] args) throws IOException {
+        Person  f=new Father();
         FileInputStream fileInputStream=new FileInputStream("D:\\Desktop\\DevProject\\saidake-manage-project\\sdk-service\\sdk-trade\\assets\\xlsx\\test.xlsx");
         //============================================================================= sdk
         SdkWorkbook sdkWorkbook=new SdkWorkbook(fileInputStream);

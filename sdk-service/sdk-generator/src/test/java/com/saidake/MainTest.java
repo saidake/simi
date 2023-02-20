@@ -2,7 +2,9 @@ package com.saidake;
 
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
@@ -27,12 +29,7 @@ import java.util.stream.Collectors;
 public class MainTest {
 
     public static void main(String[] args) {
-        MultiValueMap<String,Person> collect = new LinkedMultiValueMap<>();
-        collect.put("test",personList);
-        collect.put("test2",personList);
-        System.out.println(collect);
-        System.out.println(collect.get("test"));
-
+        //=================================================================== 异常测试
         try{
             try{
                 int a=999;
@@ -88,7 +85,8 @@ public class MainTest {
         }
     }
 
-    @Data
+    @Getter
+    @Setter
     public static class Person{
         public String name;
         public Integer age;
@@ -104,178 +102,4 @@ public class MainTest {
             ));
     public static List<Person> emptyPersonList=new ArrayList<>();
 
-
-
-    public static java.lang.String test(
-            java.lang.String[] args,
-            java.lang.String test)
-            throws IOException
-    {
-        //A. 测试内容
-        System.out.println(alreadyMarked.get());
-        //B. 第二步骤
-        alreadyMarked.set(false);
-        //C. 第二步骤2
-        System.out.println(Boolean.FALSE.equals(alreadyMarked.get()));
-        //C. ccc步骤
-        //A. aaaa2步骤
-        //A. aaaa3步骤
-        //B. 第二步骤testttt
-        //C. 第二步骤3
-        //B. 第二步骤testttt
-        //C. 第二步骤2
-        //A. aaaa4步骤
-        System.out.println(Integer.valueOf("A".charAt(0)));
-        Pattern normalFunctionPattern = Pattern.compile("(public|private|protected)?\\s*(static)?\\s*[A-z]+\\s*[A-z]+\\s*\\(");
-
-        Matcher matcher = normalFunctionPattern.matcher("    public static void main(String[] args)  {");
-        System.out.println(matcher.find());
-
-        //A. IF(AA)      从formData里获取
-        if(matcher!=null){
-            System.out.println("test");
-            String dddd="";
-            switch (dddd){
-                case "ddd":
-                    System.out.println("ddd");
-                    //C. dododod1
-                    break;
-                case   "dddb"   :
-                    System.out.println("ddd");
-                    //C. dododod2
-                    //C. IF(AA)      fsfatrea  taann ta
-                    if(matcher!=null) {
-                        //D. testtstst
-                        System.out.println("test");
-                    }else{
-                        System.out.println("lala");
-                    }
-                    break;
-                default:
-                    //C. dododod3
-                    System.out.println("ddd");
-                    break;
-            }
-            //B. if 测试
-        //B. test conent
-        }else if(matcher!=null){
-            System.out.println("else");
-            //B. IF(AAdfsfsf)     ffffffffff 从formData里获取2
-            if(matcher!=null) {
-                System.out.println("test");
-            //B. ELSE IF(matcher test)
-            }  else if(matcher!=null) {
-                System.out.println("testddddfsfsf");
-                //D. testtstst2222
-            }else if(matcher!=null) {
-                System.out.println("test33");
-                //D. testtstst2222333
-            }else{
-                System.out.println("lala");
-            }
-            //B. else if 测试
-            System.out.println("dd");
-        }else{
-            System.out.println("else");
-            if(matcher!=null) {
-                System.out.println("test");
-                //D. else 测试testtstst
-            }else{
-                System.out.println("lala");
-            }
-        }
-        String dddd="";
-
-        //A. SWITCH:   获取form信息 用searchType
-        switch (dddd){
-            case "ddd":
-                System.out.println("ddd");
-                //B. dododod1
-                break;
-            case   "dddb"   :
-                System.out.println("ddd");
-                //A. IF(AAdfsfsf)     ffffffffff 从formData里获取2
-                if(matcher!=null) {
-                    System.out.println("test");
-                    //D. testtstst
-                }  else if(matcher!=null) {
-                    System.out.println("test");
-                    //D. testtstst2222
-                }else if(matcher!=null) {
-                    System.out.println("test33");
-                    //D. testtstst2222333
-                }else{
-                    System.out.println("lala");
-                }
-                //B. dododod2
-                break;
-            default:
-                //B. dododod3
-                System.out.println("ddd");
-                break;
-        }
-        if(matcher!=null) {
-            System.out.println("test");
-            //D. testtstst
-        }else{
-            System.out.println("lala");
-        }
-        Pattern commentEnd = Pattern.compile("(?<=case)\\s*?[A-z1-9.\"]+\\s*?(?=:)");  /**  */
-        Matcher matcher2 = commentEnd.matcher("            case   \"dddb\"   :    ");
-        System.out.println(matcher2.find());
-        if(matcher!=null) {
-            System.out.println("test");
-            //D. testtstst
-        }else{
-            System.out.println("lala");
-        }
-        return null;
-    }
-
-
-    public static void test(
-            String[] args)
-    {
-        //A. 测试内容sfffffffffffffffffff
-        System.out.println(alreadyMarked.get());
-        //B. 第二步骤sffffffffffffff
-        alreadyMarked.set(false);
-        //C. 第二步骤2fssssssssssss
-    }
-
-
-
-    public static void dddd(
-            String[] args,
-            String test)
-            throws IOException
-    {
-        //A. 测试内容ddddddddddddddddddddd
-        System.out.println(alreadyMarked.get());
-        //B. 第二步骤
-        alreadyMarked.set(false);
-        //C. 第二步骤2
-        System.out.println(Boolean.FALSE.equals(alreadyMarked.get()));
-        //C. ccc步骤
-        //A. aaaa2步骤
-        //A. aaaa3步骤
-        /*
-        dddddddddddddddddd
-         */
-        //B. 第二步骤testttt
-        //C. 第二步骤3
-        //B. 第二步骤testttt
-        //C. 第二步骤2
-        //A. aaaa4步骤
-        System.out.println(Integer.valueOf("A".charAt(0)));
-        Pattern normalFunctionPattern = Pattern.compile("(public|private|protected)?\\s*(static)?\\s*[A-z]+\\s*[A-z]+\\s*\\(");
-
-        Matcher matcher = normalFunctionPattern.matcher("    public static void main(String[] args)  {");
-        System.out.println(matcher.find());
-
-
-        Pattern commentEnd = Pattern.compile("^\\s*\\*/\\s*$");  /**  */
-        Matcher matcher2 = commentEnd.matcher("Pattern normalFunctionPattern = Pattern.compile(\"(public|private|protected)?\\\\s*(static)?\\\\s*[A-z]+\\\\s*main\\\\s*\\\\(\");");
-        System.out.println(matcher2.find());
-    }
 }

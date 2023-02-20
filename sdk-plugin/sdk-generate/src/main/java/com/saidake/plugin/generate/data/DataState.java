@@ -3,9 +3,8 @@ package com.saidake.plugin.generate.data;
 
 
 
-import com.twelvemonkeys.util.LinkedSet;
+import com.saidake.plugin.generate.data.request.ControllerInfo;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class DataState {
@@ -21,11 +20,10 @@ public class DataState {
     /**
      * pom项目内部Controller结构
      */
-    private Map<String, Map<String,String>> projectControllerList=new HashMap<>();
+    private Map<String, List<ControllerInfo>> projectControllerList=new HashMap<>();
 
 
     //======================================================================= data tool
-    @Nullable
     public Set<String> getPomProjectList() {
         return pomProjectList;
     }
@@ -34,7 +32,7 @@ public class DataState {
         this.pomProjectList = pomProjectList;
     }
 
-    public Map<String, Map<String, String>> getProjectControllerList() {
+    public Map<String, List<ControllerInfo>> getProjectControllerList() {
         return projectControllerList;
     }
 
