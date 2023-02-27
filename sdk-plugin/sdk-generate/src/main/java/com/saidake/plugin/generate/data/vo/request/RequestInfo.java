@@ -1,6 +1,6 @@
-package com.saidake.plugin.generate.data.request;
+package com.saidake.plugin.generate.data.vo.request;
 
-import com.saidake.plugin.generate.data.reflect.MethodInfo;
+import com.saidake.plugin.generate.data.vo.reflect.MethodInfo;
 
 /**
  * 请求信息

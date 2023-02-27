@@ -1,4 +1,4 @@
-package com.saidake.plugin.generate.data.tree;
+package com.saidake.plugin.generate.data.vo.tree;
 
 
 

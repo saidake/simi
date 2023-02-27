@@ -1,4 +1,4 @@
-package com.saidake;
+package com.saidake.constant;
 
 
 import lombok.AllArgsConstructor;

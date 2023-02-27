@@ -3,7 +3,7 @@ package com.saidake.plugin.generate.data;
 
 
 
-import com.saidake.plugin.generate.data.request.ControllerInfo;
+import com.saidake.plugin.generate.data.vo.request.ControllerInfo;
 
 import java.util.*;
 

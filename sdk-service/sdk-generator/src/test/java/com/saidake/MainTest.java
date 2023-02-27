@@ -24,11 +24,20 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Slf4j
 public class MainTest {
 
+    private static boolean test(int a,int... b){
+        for (int i : b) {
+            System.out.println(i);
+        }
+        return true;
+    }
     public static void main(String[] args) {
+        int testdd=9;
+        System.out.println(testdd==5?test(testdd,1,2,3):23333);
         //=================================================================== 异常测试
         try{
             try{

@@ -1,6 +1,6 @@
-package com.saidake.plugin.generate.data.request;
+package com.saidake.plugin.generate.data.vo.request;
 
-import com.saidake.plugin.generate.data.reflect.BaseInfo;
+import com.saidake.plugin.generate.data.vo.reflect.BaseInfo;
 
 import java.util.ArrayList;
 import java.util.List;

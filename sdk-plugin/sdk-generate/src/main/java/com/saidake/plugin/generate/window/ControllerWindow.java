@@ -4,11 +4,11 @@ import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.JBColor;
-import com.saidake.plugin.generate.data.request.ControllerInfo;
-import com.saidake.plugin.generate.data.request.RequestInfo;
+import com.saidake.plugin.generate.data.vo.request.ControllerInfo;
+import com.saidake.plugin.generate.data.vo.request.RequestInfo;
 import com.saidake.plugin.generate.data.DataHolder;
 import com.saidake.plugin.generate.data.DataState;
-import com.saidake.plugin.generate.data.tree.UserTreeNode;
+import com.saidake.plugin.generate.data.vo.tree.UserTreeNode;
 import com.saidake.plugin.generate.listener.ControllerTreeSelectionListener;
 
 import javax.swing.*;

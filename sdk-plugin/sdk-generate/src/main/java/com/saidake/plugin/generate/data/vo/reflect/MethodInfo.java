@@ -1,4 +1,4 @@
-package com.saidake.plugin.generate.data.reflect;
+package com.saidake.plugin.generate.data.vo.reflect;
 
 public class MethodInfo extends BaseInfo {
 
