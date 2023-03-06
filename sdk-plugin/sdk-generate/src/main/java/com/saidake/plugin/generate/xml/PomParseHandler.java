@@ -1,6 +1,6 @@
 package com.saidake.plugin.generate.xml;
 
-import com.saidake.plugin.generate.data.DataHolder;
+import com.saidake.plugin.generate.data.core.DataHolder;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 

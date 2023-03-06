@@ -3,6 +3,9 @@ package com.saidake.plugin.generate.data.regex;
 
 import java.util.regex.Pattern;
 
+/**
+ * 正则管理中心
+ */
 public interface PatternHolder {
     // package com.saidake.dd;
     Pattern packagePattern= Pattern.compile("package\\s*?([A-z0-9$.]*?)\\s*?;");

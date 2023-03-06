@@ -16,6 +16,5 @@ import java.util.Arrays;
 public class TradeApp {
     public static void main(String[] args){
         ConfigurableApplicationContext run = SpringApplication.run(TradeApp.class, args);
-        System.out.println(Arrays.asList(run.getBeanDefinitionNames()));
     }
 }

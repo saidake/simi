@@ -291,10 +291,6 @@ public final class LocalDateTimeUtil {
         return localToDate(localDateTime);
     }
 
-    public static void main(String[] args){
-        System.out.println(getDateTimesTamp());
-    }
-
 
 }
 

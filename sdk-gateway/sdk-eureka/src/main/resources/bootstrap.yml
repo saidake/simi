@@ -17,5 +17,5 @@ eureka:
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/   #eureka服务端地址，客户端使用该地址进行通信，可多个
-    register-with-eureka: false    # 是否将自己的路径注册到eureka上（server不需要，false）
+    register-with-eureka: false     # 是否将自己的路径注册到eureka上（server不需要，false）
     fetch-registry: false           # 是否需要从eureka中抓取路径（server不需要，false）

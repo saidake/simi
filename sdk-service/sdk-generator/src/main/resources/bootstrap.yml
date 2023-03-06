@@ -6,7 +6,6 @@ spring:
     name: sdk-generator
   profiles:
     active: dev   # generator特有的profile
-
 eureka:
   client:
     service-url:

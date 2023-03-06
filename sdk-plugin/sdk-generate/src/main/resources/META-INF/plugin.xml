@@ -18,7 +18,7 @@
         <toolWindow id="Smp Controller" factoryClass="com.saidake.plugin.generate.window.ControllerWindowFactory"
                     anchor="right" icon="/img/mybatis.ico">
         </toolWindow>
-        <applicationService serviceImplementation="com.saidake.plugin.generate.data.DataHolder" />
+        <applicationService serviceImplementation="com.saidake.plugin.generate.data.core.DataHolder" />
         <!--<localInspection-->
                 <!--shortName="MavenVersionUpdateInspection"-->
                 <!--displayName="Maven version updater"-->

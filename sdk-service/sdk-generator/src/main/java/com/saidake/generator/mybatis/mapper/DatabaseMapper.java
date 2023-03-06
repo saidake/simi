@@ -9,5 +9,4 @@ public interface DatabaseMapper {
     List<TableEntity> queryTableList(String tableName);
     List<ColumnEntity> queryColumnList(@Param("tableName")  String tableName,@Param("passFields")  List<String> passFields);
     List<String> queryDistinctTableDataType(@Param("tableName")  String tableName,@Param("passFields")  List<String> passFields);
-
 }

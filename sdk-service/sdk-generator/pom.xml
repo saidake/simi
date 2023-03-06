@@ -6,10 +6,10 @@
     <parent>
         <groupId>com.saidake</groupId>
         <artifactId>sdk-service</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>sdk-generator</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <properties>
         <spring-boot-dependencies.version>2.5.9</spring-boot-dependencies.version>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -19,11 +19,7 @@
     </properties>
 
     <dependencies>
-        <!--==================================================================================================== 自定义依赖 -->
-        <dependency>
-            <groupId>com.saidake</groupId>
-            <artifactId>sdk-config</artifactId>
-        </dependency>
+        <!--==================================================================================================== 自定义 -->
         <dependency>
             <groupId>com.saidake</groupId>
             <artifactId>sdk-common-core</artifactId>
@@ -32,28 +28,9 @@
             <groupId>com.saidake</groupId>
             <artifactId>sdk-common-log</artifactId>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>com.saidake</groupId>-->
-            <!--<artifactId>sdk-swagger2-spring-boot-starter</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.github.xiaoymin</groupId>-->
-            <!--<artifactId>knife4j-spring-boot-starter</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.github.xiaoymin</groupId>-->
-            <!--<artifactId>knife4j-spring-ui</artifactId>-->
-            <!--<version>2.0.9</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.saidake</groupId>-->
-            <!--<artifactId>sdk-swagger-ui</artifactId>-->
-        <!--</dependency>-->
-        <!--======================================================================================================= 微服务 -->
         <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <groupId>com.saidake</groupId>
+            <artifactId>sdk-config</artifactId>
         </dependency>
         <!--======================================================================================================= 核心 -->
         <dependency>
@@ -68,25 +45,15 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.alibaba.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-        <!--</dependency>-->
-        <!--======================================================================================================= 继承依赖 -->
-        <!--======================================================================================================= 数据库 -->
+        <!--======================================================================================================= 数据存储 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-        <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -95,31 +62,14 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!--======================================================================================================= 项目协助 -->
+        <!--======================================================================================================= 功能扩展 -->
         <dependency>
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
-            <version>1.9.3</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>3.0.3</version>
         </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -129,7 +79,6 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
-            <version>5.5.1</version>
         </dependency>
         <!--======================================================================================================= 安全 -->
         <dependency>
@@ -150,21 +99,14 @@
             <groupId>org.bgee.log4jdbc-log4j2</groupId>
             <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
         </dependency>
-        <!--======================================================================================================= 文件 -->
+        <!--======================================================================================================= 文件处理 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml-lite</artifactId>
-            <version>5.2.2</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

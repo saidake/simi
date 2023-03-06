@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -16,10 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +27,7 @@ import java.util.stream.IntStream;
 @Slf4j
 public class MainTest {
 
+
     private static boolean test(int a,int... b){
         for (int i : b) {
             System.out.println(i);
@@ -36,9 +35,17 @@ public class MainTest {
         return true;
     }
     public static void main(String[] args) {
-        int testdd=9;
-        System.out.println(testdd==5?test(testdd,1,2,3):23333);
+        System.out.println("BBB");
+        System.out.println("ccc");
+        System.out.println("ddd");
+        System.out.println("eee");
+        //=================================================================== 时间测试
+        System.out.println("===============================================time test");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,30);
+        System.out.println(calendar.getTime());
         //=================================================================== 异常测试
+        System.out.println("===============================================exception test");
         try{
             try{
                 int a=999;
@@ -57,11 +64,10 @@ public class MainTest {
             }
         }catch (Exception e){
             StringWriter stringWriter = new StringWriter();
-            e.printStackTrace(new PrintWriter(stringWriter));
-            System.out.println("stackTraceElement=================");
-            System.out.println(stringWriter);
         }
     }
+
+
 
     public static class SdkException extends RuntimeException{
         SdkException(Exception e){
@@ -93,7 +99,6 @@ public class MainTest {
             }
         }
     }
-
     @Getter
     @Setter
     public static class Person{
@@ -110,5 +115,4 @@ public class MainTest {
             new Person(){{setName("aa");setAge(666464);}}
             ));
     public static List<Person> emptyPersonList=new ArrayList<>();
-
 }

@@ -4,11 +4,11 @@ import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.JBColor;
-import com.saidake.plugin.generate.data.vo.request.ControllerInfo;
-import com.saidake.plugin.generate.data.vo.request.RequestInfo;
-import com.saidake.plugin.generate.data.DataHolder;
-import com.saidake.plugin.generate.data.DataState;
-import com.saidake.plugin.generate.data.vo.tree.UserTreeNode;
+import com.saidake.plugin.generate.data.vo.node.ControllerNode;
+import com.saidake.plugin.generate.data.vo.node.MethodNode;
+import com.saidake.plugin.generate.data.vo.node.RequestNode;
+import com.saidake.plugin.generate.data.core.DataHolder;
+import com.saidake.plugin.generate.data.core.DataState;
 import com.saidake.plugin.generate.listener.ControllerTreeSelectionListener;
 
 import javax.swing.*;
@@ -34,9 +34,12 @@ public class ControllerWindow {
         DefaultTreeModel rootTreeModel;  // JTree数据模型
         DefaultMutableTreeNode rootMutableTreeNode = null; //树根节点
         //A. 根据pom结构构建JTree
-        DataState state = DataHolder.getInstance().getState();
-        Set<String> pomProjectSet = state.getPomProjectList();
-        Map<String, List<ControllerInfo>> projectControllerList = state.getProjectControllerList();
+        DataState dataState = DataHolder.getInstance().getState();
+        Set<String> pomProjectSet = dataState.getPomProjectList();
+        Map<String, ControllerNode> controllerNodeMap = dataState.getControllerNodeMap();
+        Map<String, RequestNode> requestNodeMap = dataState.getRequestNodeMap();
+        Map<String, MethodNode> methodNodeMap = dataState.getMethodNodeMap();
+        Map<String, List<ControllerNode>> projectControllerList = dataState.getProjectControllerList();
         Iterator<String> iterator = pomProjectSet.iterator();
         for (int i = 0; iterator.hasNext(); i++) {
             String pomItem=iterator.next();
@@ -48,17 +51,18 @@ public class ControllerWindow {
                 tree.addTreeSelectionListener(new ControllerTreeSelectionListener());
             }
             DefaultMutableTreeNode projectNode = new DefaultMutableTreeNode(pomItem);
-            List<ControllerInfo> currentProjectControllerList = projectControllerList.get(pomItem);
+            //B. 添加 面板信息
+            List<ControllerNode> currentProjectControllerList = projectControllerList.get(pomItem);
             if(currentProjectControllerList!=null){
-                for (ControllerInfo controllerInfo : currentProjectControllerList) {
-                    UserTreeNode userTreeNodeController = new UserTreeNode();
-                    userTreeNodeController.setContent(controllerInfo.getTitle()==null?controllerInfo.getHeaderUrl():controllerInfo.getTitle());
-                    DefaultMutableTreeNode controllerMutableTreeNode = new DefaultMutableTreeNode(userTreeNodeController);
-                    for (RequestInfo requestInfo : controllerInfo.getRequestInfoList()) {
-                        UserTreeNode userTreeNodeRequest = new UserTreeNode();
-                        userTreeNodeRequest.setContent(requestInfo.getTitle() == null ? requestInfo.getUrl() : requestInfo.getTitle());
-                        DefaultMutableTreeNode requestNode = new DefaultMutableTreeNode(userTreeNodeRequest);
-                        controllerMutableTreeNode.add(requestNode);
+                for (ControllerNode controllerNode : currentProjectControllerList) {
+                    String controllerText=controllerNode.getTitle()==null?controllerNode.getPrefixUrl():controllerNode.getPackagePath();
+                    controllerNodeMap.put(controllerText,controllerNode);
+                    DefaultMutableTreeNode controllerMutableTreeNode = new DefaultMutableTreeNode(controllerText);
+                    for (RequestNode requestNode : controllerNode.getRequestNodeList()) {
+                        String requestText=requestNode.getTitle()==null?requestNode.getUrl():requestNode.getPackagePath();
+                        requestNodeMap.put(requestText,requestNode);
+                        DefaultMutableTreeNode requestMutableTreeNode = new DefaultMutableTreeNode(requestText);
+                        controllerMutableTreeNode.add(requestMutableTreeNode);
                     }
                     projectNode.add(controllerMutableTreeNode);
                 }

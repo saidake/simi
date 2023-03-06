@@ -1,0 +1,331 @@
+2023-03-03 00:15:41.872 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - No active profile set, falling back to default profiles: default
+2023-03-03 00:15:42.358 - eurekaserver - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=44487e0d-2a92-3bce-a82e-cd03f8be5fd9
+2023-03-03 00:15:42.507 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48992 (http)
+2023-03-03 00:15:42.514 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-03-03 00:15:42.536 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-03-03 00:15:42.610 - eurekaserver - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-03-03 00:15:42.610 - eurekaserver - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 728 ms
+2023-03-03 00:15:42.896 - eurekaserver - INFO  --- [main] c.s.j.server.impl.application.WebApplicationImpl - Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+2023-03-03 00:15:42.977 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2023-03-03 00:15:42.978 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2023-03-03 00:15:43.042 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2023-03-03 00:15:43.043 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2023-03-03 00:15:46.753 - eurekaserver - INFO  --- [main] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses Jersey
+2023-03-03 00:15:46.794 - eurekaserver - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-03-03 00:15:46.807 - eurekaserver - INFO  --- [main] o.s.cloud.netflix.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2023-03-03 00:15:46.824 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2023-03-03 00:15:46.825 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Client configured to neither register nor query for data.
+2023-03-03 00:15:46.829 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1677773746828 with initial instances count: 0
+2023-03-03 00:15:46.852 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initializing ...
+2023-03-03 00:15:46.853 - eurekaserver - WARN  --- [main] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 00:15:46.864 - eurekaserver - INFO  --- [main] c.netflix.eureka.registry.AbstractInstanceRegistry - Finished initializing remote region registries. All known remote regions: []
+2023-03-03 00:15:46.865 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initialized
+2023-03-03 00:15:46.869 - eurekaserver - INFO  --- [main] o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-03 00:15:46.885 - eurekaserver - INFO  --- [main] o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Registering application EUREKASERVER with eureka with status UP
+2023-03-03 00:15:46.887 - eurekaserver - INFO  --- [Thread-27] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Setting the eureka configuration..
+2023-03-03 00:15:46.895 - eurekaserver - INFO  --- [Thread-27] o.s.c.netflix.eureka.server.EurekaServerBootstrap - isAws returned false
+2023-03-03 00:15:46.895 - eurekaserver - INFO  --- [Thread-27] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Initialized server context
+2023-03-03 00:15:46.895 - eurekaserver - INFO  --- [Thread-27] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Got 1 instances from neighboring DS node
+2023-03-03 00:15:46.895 - eurekaserver - INFO  --- [Thread-27] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Renew threshold is: 1
+2023-03-03 00:15:46.895 - eurekaserver - INFO  --- [Thread-27] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Changing status to UP
+2023-03-03 00:15:46.901 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48992 (http) with context path ''
+2023-03-03 00:15:46.901 - eurekaserver - INFO  --- [Thread-27] o.s.c.n.e.s.EurekaServerInitializerConfiguration - Started Eureka Server
+2023-03-03 00:15:46.901 - eurekaserver - INFO  --- [main] o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 48992
+2023-03-03 00:15:48.501 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - Started EurekaApp in 10.519 seconds (JVM running for 12.525)
+2023-03-03 00:16:46.898 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 00:17:46.907 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2023-03-03 00:18:46.917 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2023-03-03 00:19:46.926 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2023-03-03 00:24:06.332 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - No active profile set, falling back to default profiles: default
+2023-03-03 00:24:06.820 - eurekaserver - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=44487e0d-2a92-3bce-a82e-cd03f8be5fd9
+2023-03-03 00:24:06.960 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48992 (http)
+2023-03-03 00:24:06.965 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-03-03 00:24:06.965 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-03-03 00:24:07.029 - eurekaserver - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-03-03 00:24:07.030 - eurekaserver - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 688 ms
+2023-03-03 00:24:07.277 - eurekaserver - INFO  --- [main] c.s.j.server.impl.application.WebApplicationImpl - Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+2023-03-03 00:24:07.345 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2023-03-03 00:24:07.346 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2023-03-03 00:24:07.406 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2023-03-03 00:24:07.406 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2023-03-03 00:24:11.090 - eurekaserver - INFO  --- [main] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses Jersey
+2023-03-03 00:24:11.129 - eurekaserver - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-03-03 00:24:11.142 - eurekaserver - INFO  --- [main] o.s.cloud.netflix.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2023-03-03 00:24:11.159 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2023-03-03 00:24:11.159 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Client configured to neither register nor query for data.
+2023-03-03 00:24:11.163 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1677774251162 with initial instances count: 0
+2023-03-03 00:24:11.183 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initializing ...
+2023-03-03 00:24:11.184 - eurekaserver - WARN  --- [main] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 00:24:11.195 - eurekaserver - INFO  --- [main] c.netflix.eureka.registry.AbstractInstanceRegistry - Finished initializing remote region registries. All known remote regions: []
+2023-03-03 00:24:11.196 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initialized
+2023-03-03 00:24:11.201 - eurekaserver - INFO  --- [main] o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-03 00:24:11.217 - eurekaserver - INFO  --- [main] o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Registering application EUREKASERVER with eureka with status UP
+2023-03-03 00:24:11.219 - eurekaserver - INFO  --- [Thread-23] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Setting the eureka configuration..
+2023-03-03 00:24:11.227 - eurekaserver - INFO  --- [Thread-23] o.s.c.netflix.eureka.server.EurekaServerBootstrap - isAws returned false
+2023-03-03 00:24:11.227 - eurekaserver - INFO  --- [Thread-23] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Initialized server context
+2023-03-03 00:24:11.227 - eurekaserver - INFO  --- [Thread-23] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Got 1 instances from neighboring DS node
+2023-03-03 00:24:11.227 - eurekaserver - INFO  --- [Thread-23] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Renew threshold is: 1
+2023-03-03 00:24:11.227 - eurekaserver - INFO  --- [Thread-23] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Changing status to UP
+2023-03-03 00:24:11.232 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48992 (http) with context path ''
+2023-03-03 00:24:11.233 - eurekaserver - INFO  --- [main] o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 48992
+2023-03-03 00:24:11.233 - eurekaserver - INFO  --- [Thread-23] o.s.c.n.e.s.EurekaServerInitializerConfiguration - Started Eureka Server
+2023-03-03 00:24:12.836 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - Started EurekaApp in 10.607 seconds (JVM running for 12.19)
+2023-03-03 00:25:11.239 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 00:25:17.809 - eurekaserver - INFO  --- [http-nio-48992-exec-1] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-03 00:25:17.809 - eurekaserver - INFO  --- [http-nio-48992-exec-1] org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-03-03 00:25:17.810 - eurekaserver - INFO  --- [http-nio-48992-exec-1] org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-03-03 00:25:17.971 - eurekaserver - INFO  --- [http-nio-48992-exec-2] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:26:11.241 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2023-03-03 00:26:18.027 - eurekaserver - INFO  --- [http-nio-48992-exec-8] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:27:11.250 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2023-03-03 00:27:47.063 - eurekaserver - INFO  --- [http-nio-48992-exec-6] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:28:11.264 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2023-03-03 00:29:11.266 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2023-03-03 00:30:11.273 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2023-03-03 00:31:11.280 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2023-03-03 00:32:11.290 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2023-03-03 00:32:50.597 - eurekaserver - INFO  --- [http-nio-48992-exec-8] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:33:11.304 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2023-03-03 00:34:11.197 - eurekaserver - WARN  --- [Eureka-PeerNodesUpdater] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 00:34:11.305 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 00:35:11.306 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2023-03-03 00:36:11.314 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2023-03-03 00:36:17.638 - eurekaserver - INFO  --- [http-nio-48992-exec-1] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:37:11.316 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2023-03-03 00:37:47.722 - eurekaserver - INFO  --- [http-nio-48992-exec-10] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:38:11.327 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2023-03-03 00:39:11.207 - eurekaserver - INFO  --- [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 3
+2023-03-03 00:39:11.335 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2023-03-03 00:40:11.343 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2023-03-03 00:41:11.346 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2023-03-03 00:42:11.347 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2023-03-03 00:43:11.359 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 11ms
+2023-03-03 00:44:11.207 - eurekaserver - WARN  --- [Eureka-PeerNodesUpdater] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 00:44:11.366 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2023-03-03 00:45:11.376 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2023-03-03 00:46:11.378 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2023-03-03 00:46:17.509 - eurekaserver - INFO  --- [http-nio-48992-exec-5] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:47:11.389 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2023-03-03 00:48:05.208 - eurekaserver - INFO  --- [http-nio-48992-exec-5] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:48:11.398 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2023-03-03 00:49:11.401 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2023-03-03 00:49:25.500 - eurekaserver - INFO  --- [http-nio-48992-exec-4] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:50:11.403 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2023-03-03 00:51:07.250 - eurekaserver - INFO  --- [http-nio-48992-exec-2] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status DOWN (replication=false)
+2023-03-03 00:51:11.400 - eurekaserver - INFO  --- [http-nio-48992-exec-1] c.netflix.eureka.registry.AbstractInstanceRegistry - Cancelled instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 (replication=false)
+2023-03-03 00:51:11.415 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2023-03-03 00:51:26.732 - eurekaserver - INFO  --- [http-nio-48992-exec-5] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:52:11.430 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2023-03-03 00:53:11.442 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2023-03-03 00:54:11.220 - eurekaserver - INFO  --- [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 3
+2023-03-03 00:54:11.220 - eurekaserver - WARN  --- [Eureka-PeerNodesUpdater] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 00:54:11.452 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2023-03-03 00:54:17.188 - eurekaserver - INFO  --- [http-nio-48992-exec-10] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:55:11.465 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2023-03-03 00:55:16.223 - eurekaserver - INFO  --- [http-nio-48992-exec-6] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:55:59.377 - eurekaserver - INFO  --- [http-nio-48992-exec-9] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status DOWN (replication=false)
+2023-03-03 00:56:11.479 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2023-03-03 00:56:18.803 - eurekaserver - INFO  --- [http-nio-48992-exec-4] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 00:57:11.486 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2023-03-03 00:58:11.499 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2023-03-03 00:59:11.509 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2023-03-03 01:00:11.522 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2023-03-03 01:01:11.531 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2023-03-03 01:02:11.539 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2023-03-03 01:03:11.540 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 01:04:11.236 - eurekaserver - WARN  --- [Eureka-PeerNodesUpdater] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 01:04:11.544 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2023-03-03 01:05:11.559 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2023-03-03 01:06:11.574 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2023-03-03 01:07:11.580 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2023-03-03 01:11:54.964 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - No active profile set, falling back to default profiles: default
+2023-03-03 01:11:55.414 - eurekaserver - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=44487e0d-2a92-3bce-a82e-cd03f8be5fd9
+2023-03-03 01:11:55.549 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48992 (http)
+2023-03-03 01:11:55.553 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-03-03 01:11:55.553 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-03-03 01:11:55.614 - eurekaserver - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-03-03 01:11:55.614 - eurekaserver - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 640 ms
+2023-03-03 01:11:55.859 - eurekaserver - INFO  --- [main] c.s.j.server.impl.application.WebApplicationImpl - Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+2023-03-03 01:11:55.924 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2023-03-03 01:11:55.925 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2023-03-03 01:11:55.988 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2023-03-03 01:11:55.988 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2023-03-03 01:11:59.659 - eurekaserver - INFO  --- [main] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses Jersey
+2023-03-03 01:11:59.701 - eurekaserver - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-03-03 01:11:59.714 - eurekaserver - INFO  --- [main] o.s.cloud.netflix.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2023-03-03 01:11:59.731 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2023-03-03 01:11:59.732 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Client configured to neither register nor query for data.
+2023-03-03 01:11:59.737 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1677777119736 with initial instances count: 0
+2023-03-03 01:11:59.757 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initializing ...
+2023-03-03 01:11:59.759 - eurekaserver - WARN  --- [main] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 01:11:59.769 - eurekaserver - INFO  --- [main] c.netflix.eureka.registry.AbstractInstanceRegistry - Finished initializing remote region registries. All known remote regions: []
+2023-03-03 01:11:59.770 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initialized
+2023-03-03 01:11:59.774 - eurekaserver - INFO  --- [main] o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-03 01:11:59.789 - eurekaserver - INFO  --- [main] o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Registering application EUREKASERVER with eureka with status UP
+2023-03-03 01:11:59.790 - eurekaserver - INFO  --- [Thread-23] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Setting the eureka configuration..
+2023-03-03 01:11:59.798 - eurekaserver - INFO  --- [Thread-23] o.s.c.netflix.eureka.server.EurekaServerBootstrap - isAws returned false
+2023-03-03 01:11:59.799 - eurekaserver - INFO  --- [Thread-23] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Initialized server context
+2023-03-03 01:11:59.799 - eurekaserver - INFO  --- [Thread-23] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Got 1 instances from neighboring DS node
+2023-03-03 01:11:59.799 - eurekaserver - INFO  --- [Thread-23] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Renew threshold is: 1
+2023-03-03 01:11:59.799 - eurekaserver - INFO  --- [Thread-23] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Changing status to UP
+2023-03-03 01:11:59.803 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48992 (http) with context path ''
+2023-03-03 01:11:59.804 - eurekaserver - INFO  --- [main] o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 48992
+2023-03-03 01:11:59.804 - eurekaserver - INFO  --- [Thread-23] o.s.c.n.e.s.EurekaServerInitializerConfiguration - Started Eureka Server
+2023-03-03 01:12:01.603 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - Started EurekaApp in 10.613 seconds (JVM running for 12.42)
+2023-03-03 01:12:59.807 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 01:13:20.064 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - No active profile set, falling back to default profiles: default
+2023-03-03 01:13:20.607 - eurekaserver - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=44487e0d-2a92-3bce-a82e-cd03f8be5fd9
+2023-03-03 01:13:20.758 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48992 (http)
+2023-03-03 01:13:20.763 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-03-03 01:13:20.763 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-03-03 01:13:20.826 - eurekaserver - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-03-03 01:13:20.827 - eurekaserver - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 752 ms
+2023-03-03 01:13:21.073 - eurekaserver - INFO  --- [main] c.s.j.server.impl.application.WebApplicationImpl - Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+2023-03-03 01:13:21.157 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2023-03-03 01:13:21.158 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2023-03-03 01:13:21.222 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2023-03-03 01:13:21.222 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2023-03-03 01:13:25.045 - eurekaserver - INFO  --- [main] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses Jersey
+2023-03-03 01:13:25.084 - eurekaserver - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-03-03 01:13:25.095 - eurekaserver - INFO  --- [main] o.s.cloud.netflix.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2023-03-03 01:13:25.111 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2023-03-03 01:13:25.111 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Client configured to neither register nor query for data.
+2023-03-03 01:13:25.115 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1677777205114 with initial instances count: 0
+2023-03-03 01:13:25.134 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initializing ...
+2023-03-03 01:13:25.135 - eurekaserver - WARN  --- [main] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 01:13:25.145 - eurekaserver - INFO  --- [main] c.netflix.eureka.registry.AbstractInstanceRegistry - Finished initializing remote region registries. All known remote regions: []
+2023-03-03 01:13:25.146 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initialized
+2023-03-03 01:13:25.150 - eurekaserver - INFO  --- [main] o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-03 01:13:25.165 - eurekaserver - INFO  --- [main] o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Registering application EUREKASERVER with eureka with status UP
+2023-03-03 01:13:25.166 - eurekaserver - INFO  --- [Thread-22] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Setting the eureka configuration..
+2023-03-03 01:13:25.172 - eurekaserver - INFO  --- [Thread-22] o.s.c.netflix.eureka.server.EurekaServerBootstrap - isAws returned false
+2023-03-03 01:13:25.172 - eurekaserver - INFO  --- [Thread-22] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Initialized server context
+2023-03-03 01:13:25.172 - eurekaserver - INFO  --- [Thread-22] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Got 1 instances from neighboring DS node
+2023-03-03 01:13:25.172 - eurekaserver - INFO  --- [Thread-22] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Renew threshold is: 1
+2023-03-03 01:13:25.172 - eurekaserver - INFO  --- [Thread-22] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Changing status to UP
+2023-03-03 01:13:25.179 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48992 (http) with context path ''
+2023-03-03 01:13:25.179 - eurekaserver - INFO  --- [Thread-22] o.s.c.n.e.s.EurekaServerInitializerConfiguration - Started Eureka Server
+2023-03-03 01:13:25.179 - eurekaserver - INFO  --- [main] o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 48992
+2023-03-03 01:13:26.587 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - Started EurekaApp in 8.584 seconds (JVM running for 9.507)
+2023-03-03 01:14:25.188 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 01:35:21.229 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - No active profile set, falling back to default profiles: default
+2023-03-03 01:35:21.681 - eurekaserver - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=44487e0d-2a92-3bce-a82e-cd03f8be5fd9
+2023-03-03 01:35:21.817 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48992 (http)
+2023-03-03 01:35:21.822 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-03-03 01:35:21.822 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-03-03 01:35:21.884 - eurekaserver - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-03-03 01:35:21.884 - eurekaserver - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 644 ms
+2023-03-03 01:35:22.128 - eurekaserver - INFO  --- [main] c.s.j.server.impl.application.WebApplicationImpl - Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+2023-03-03 01:35:22.203 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2023-03-03 01:35:22.204 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2023-03-03 01:35:22.267 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2023-03-03 01:35:22.267 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2023-03-03 01:35:25.874 - eurekaserver - INFO  --- [main] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses Jersey
+2023-03-03 01:35:25.915 - eurekaserver - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-03-03 01:35:25.927 - eurekaserver - INFO  --- [main] o.s.cloud.netflix.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2023-03-03 01:35:25.943 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2023-03-03 01:35:25.943 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Client configured to neither register nor query for data.
+2023-03-03 01:35:25.947 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1677778525947 with initial instances count: 0
+2023-03-03 01:35:25.967 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initializing ...
+2023-03-03 01:35:25.968 - eurekaserver - WARN  --- [main] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 01:35:25.979 - eurekaserver - INFO  --- [main] c.netflix.eureka.registry.AbstractInstanceRegistry - Finished initializing remote region registries. All known remote regions: []
+2023-03-03 01:35:25.980 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initialized
+2023-03-03 01:35:25.984 - eurekaserver - INFO  --- [main] o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-03 01:35:26.000 - eurekaserver - INFO  --- [main] o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Registering application EUREKASERVER with eureka with status UP
+2023-03-03 01:35:26.002 - eurekaserver - INFO  --- [Thread-27] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Setting the eureka configuration..
+2023-03-03 01:35:26.009 - eurekaserver - INFO  --- [Thread-27] o.s.c.netflix.eureka.server.EurekaServerBootstrap - isAws returned false
+2023-03-03 01:35:26.010 - eurekaserver - INFO  --- [Thread-27] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Initialized server context
+2023-03-03 01:35:26.010 - eurekaserver - INFO  --- [Thread-27] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Got 1 instances from neighboring DS node
+2023-03-03 01:35:26.010 - eurekaserver - INFO  --- [Thread-27] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Renew threshold is: 1
+2023-03-03 01:35:26.010 - eurekaserver - INFO  --- [Thread-27] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Changing status to UP
+2023-03-03 01:35:26.014 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48992 (http) with context path ''
+2023-03-03 01:35:26.015 - eurekaserver - INFO  --- [main] o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 48992
+2023-03-03 01:35:26.015 - eurekaserver - INFO  --- [Thread-27] o.s.c.n.e.s.EurekaServerInitializerConfiguration - Started Eureka Server
+2023-03-03 01:35:27.594 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - Started EurekaApp in 10.351 seconds (JVM running for 12.001)
+2023-03-03 01:35:58.432 - eurekaserver - INFO  --- [http-nio-48992-exec-1] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-03 01:35:58.432 - eurekaserver - INFO  --- [http-nio-48992-exec-1] org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-03-03 01:35:58.433 - eurekaserver - INFO  --- [http-nio-48992-exec-1] org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-03-03 01:35:58.588 - eurekaserver - INFO  --- [http-nio-48992-exec-2] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 01:36:08.122 - eurekaserver - INFO  --- [http-nio-48992-exec-4] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status UP (replication=false)
+2023-03-03 01:36:26.013 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 01:37:26.020 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2023-03-03 01:38:26.035 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2023-03-03 01:39:26.044 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2023-03-03 01:39:30.313 - eurekaserver - INFO  --- [http-nio-48992-exec-2] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status DOWN (replication=false)
+2023-03-03 01:39:34.569 - eurekaserver - INFO  --- [http-nio-48992-exec-1] c.netflix.eureka.registry.AbstractInstanceRegistry - Cancelled instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 (replication=false)
+2023-03-03 01:39:36.459 - eurekaserver - INFO  --- [http-nio-48992-exec-6] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status DOWN (replication=false)
+2023-03-03 01:39:40.899 - eurekaserver - INFO  --- [http-nio-48992-exec-8] c.netflix.eureka.registry.AbstractInstanceRegistry - Cancelled instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 (replication=false)
+2023-03-03 01:40:34.292 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - No active profile set, falling back to default profiles: default
+2023-03-03 01:40:34.761 - eurekaserver - INFO  --- [main] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=44487e0d-2a92-3bce-a82e-cd03f8be5fd9
+2023-03-03 01:40:34.926 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 48992 (http)
+2023-03-03 01:40:34.931 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-03-03 01:40:34.931 - eurekaserver - INFO  --- [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-03-03 01:40:34.994 - eurekaserver - INFO  --- [main] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-03-03 01:40:34.994 - eurekaserver - INFO  --- [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 692 ms
+2023-03-03 01:40:35.274 - eurekaserver - INFO  --- [main] c.s.j.server.impl.application.WebApplicationImpl - Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+2023-03-03 01:40:35.393 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2023-03-03 01:40:35.394 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2023-03-03 01:40:35.468 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2023-03-03 01:40:35.468 - eurekaserver - INFO  --- [main] c.n.discovery.provider.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2023-03-03 01:40:40.193 - eurekaserver - INFO  --- [main] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses Jersey
+2023-03-03 01:40:40.238 - eurekaserver - WARN  --- [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-03-03 01:40:40.250 - eurekaserver - INFO  --- [main] o.s.cloud.netflix.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2023-03-03 01:40:40.268 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2023-03-03 01:40:40.269 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Client configured to neither register nor query for data.
+2023-03-03 01:40:40.272 - eurekaserver - INFO  --- [main] com.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1677778840272 with initial instances count: 0
+2023-03-03 01:40:40.296 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initializing ...
+2023-03-03 01:40:40.298 - eurekaserver - WARN  --- [main] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 01:40:40.309 - eurekaserver - INFO  --- [main] c.netflix.eureka.registry.AbstractInstanceRegistry - Finished initializing remote region registries. All known remote regions: []
+2023-03-03 01:40:40.310 - eurekaserver - INFO  --- [main] com.netflix.eureka.DefaultEurekaServerContext - Initialized
+2023-03-03 01:40:40.315 - eurekaserver - INFO  --- [main] o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-03 01:40:40.332 - eurekaserver - INFO  --- [main] o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Registering application EUREKASERVER with eureka with status UP
+2023-03-03 01:40:40.333 - eurekaserver - INFO  --- [Thread-24] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Setting the eureka configuration..
+2023-03-03 01:40:40.343 - eurekaserver - INFO  --- [Thread-24] o.s.c.netflix.eureka.server.EurekaServerBootstrap - isAws returned false
+2023-03-03 01:40:40.344 - eurekaserver - INFO  --- [Thread-24] o.s.c.netflix.eureka.server.EurekaServerBootstrap - Initialized server context
+2023-03-03 01:40:40.344 - eurekaserver - INFO  --- [Thread-24] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Got 1 instances from neighboring DS node
+2023-03-03 01:40:40.344 - eurekaserver - INFO  --- [Thread-24] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Renew threshold is: 1
+2023-03-03 01:40:40.344 - eurekaserver - INFO  --- [Thread-24] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Changing status to UP
+2023-03-03 01:40:40.348 - eurekaserver - INFO  --- [main] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 48992 (http) with context path ''
+2023-03-03 01:40:40.349 - eurekaserver - INFO  --- [main] o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 48992
+2023-03-03 01:40:40.350 - eurekaserver - INFO  --- [Thread-24] o.s.c.n.e.s.EurekaServerInitializerConfiguration - Started Eureka Server
+2023-03-03 01:40:40.641 - eurekaserver - INFO  --- [http-nio-48992-exec-1] o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-03 01:40:40.641 - eurekaserver - INFO  --- [http-nio-48992-exec-1] org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-03-03 01:40:40.642 - eurekaserver - INFO  --- [http-nio-48992-exec-1] org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-03-03 01:40:40.748 - eurekaserver - INFO  --- [http-nio-48992-exec-2] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 01:40:41.685 - eurekaserver - INFO  --- [http-nio-48992-exec-4] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status UP (replication=false)
+2023-03-03 01:40:42.255 - eurekaserver - INFO  --- [main] com.saidake.eureka.EurekaApp - Started EurekaApp in 12.389 seconds (JVM running for 14.132)
+2023-03-03 01:41:23.324 - eurekaserver - INFO  --- [http-nio-48992-exec-1] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status DOWN (replication=false)
+2023-03-03 01:41:27.634 - eurekaserver - INFO  --- [http-nio-48992-exec-2] c.netflix.eureka.registry.AbstractInstanceRegistry - Cancelled instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 (replication=false)
+2023-03-03 01:41:40.346 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 01:41:41.703 - eurekaserver - INFO  --- [http-nio-48992-exec-5] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 01:41:47.784 - eurekaserver - INFO  --- [http-nio-48992-exec-8] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status UP (replication=false)
+2023-03-03 01:42:40.359 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2023-03-03 01:43:40.370 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2023-03-03 01:44:40.371 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 01:45:40.383 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2023-03-03 01:45:47.356 - eurekaserver - INFO  --- [http-nio-48992-exec-4] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status UP (replication=false)
+2023-03-03 01:46:40.384 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2023-03-03 01:47:40.397 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2023-03-03 01:48:40.401 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2023-03-03 01:49:40.413 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 11ms
+2023-03-03 01:50:40.307 - eurekaserver - WARN  --- [Eureka-PeerNodesUpdater] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 01:50:40.428 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2023-03-03 01:51:06.571 - eurekaserver - INFO  --- [http-nio-48992-exec-9] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-GENERATOR/windows10.microdone.cn:sdk-generator:48123 with status UP (replication=false)
+2023-03-03 01:51:40.432 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2023-03-03 01:52:32.808 - eurekaserver - INFO  --- [http-nio-48992-exec-10] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status UP (replication=false)
+2023-03-03 01:52:40.441 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2023-03-03 01:53:40.447 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2023-03-03 01:54:40.456 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2023-03-03 01:55:40.315 - eurekaserver - INFO  --- [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] c.n.eureka.registry.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2023-03-03 01:55:40.466 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2023-03-03 01:55:52.547 - eurekaserver - INFO  --- [http-nio-48992-exec-9] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status UP (replication=false)
+2023-03-03 01:56:40.473 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2023-03-03 01:57:40.488 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 15ms
+2023-03-03 01:58:16.173 - eurekaserver - INFO  --- [http-nio-48992-exec-7] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status DOWN (replication=false)
+2023-03-03 01:58:20.338 - eurekaserver - INFO  --- [http-nio-48992-exec-4] c.netflix.eureka.registry.AbstractInstanceRegistry - Cancelled instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 (replication=false)
+2023-03-03 01:58:40.190 - eurekaserver - INFO  --- [http-nio-48992-exec-10] c.netflix.eureka.registry.AbstractInstanceRegistry - Registered instance SDK-TRADE/windows10.microdone.cn:sdk-trade:48124 with status UP (replication=false)
+2023-03-03 01:58:40.499 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2023-03-03 01:59:40.509 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2023-03-03 02:00:40.312 - eurekaserver - WARN  --- [Eureka-PeerNodesUpdater] com.netflix.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2023-03-03 02:00:40.515 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2023-03-03 02:01:40.520 - eurekaserver - INFO  --- [Eureka-EvictionTimer] c.netflix.eureka.registry.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms

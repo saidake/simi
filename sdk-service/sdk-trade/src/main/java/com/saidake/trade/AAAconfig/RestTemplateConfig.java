@@ -1,5 +1,6 @@
 package com.saidake.trade.AAAconfig;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -10,7 +11,7 @@ public class RestTemplateConfig {
 
     @Bean
     @Primary
-//    @LoadBalanced
+    @LoadBalanced
     public RestTemplate restTemplate(){
         setTrustStore();
         final RestTemplate restTemplate=new RestTemplate();

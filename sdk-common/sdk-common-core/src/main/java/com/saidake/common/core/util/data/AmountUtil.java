@@ -399,12 +399,5 @@ public class AmountUtil {
                 .divide(BigDecimal.valueOf(basePrice), BigDecimalUtils.DEFAULT_DIV_SCALE_2, BigDecimal.ROUND_HALF_EVEN);
     }
 
-    public static void main(String[] args) {
-        String timeRegex = "^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$";
-
-        BigDecimal flag = bigDecimalProfit(null,null);
-
-        System.out.println(flag);
-    }
 }
 
