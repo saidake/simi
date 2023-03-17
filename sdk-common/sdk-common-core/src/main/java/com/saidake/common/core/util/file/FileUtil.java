@@ -38,10 +38,10 @@ public class FileUtil {
          *         返回 "SDK_RETURN_MARK_TAGxxx"  返回标记行，同时 写入 标记行 查询信息后的最终内容
          */
 
-    public static void readWriteBackupFile(String readPath, @Nullable String writePath, Function<String,String> lambda) throws IOException {
-        Assert.notNull(readPath,"readPath must not be null");
+    public static void readWriteBackupFile(String readOrWritePath, @Nullable String writePath,@Nullable String appendContent, Function<String,String> lambda) throws IOException {
+        Assert.notNull(readOrWritePath,"readPath must not be null");
         Assert.notNull(lambda,"lambda must not be null");
-        File readFile = new File(readPath);
+        File readFile = new File(readOrWritePath);
         File writeFile;
         Assert.isFalse(readFile.exists(),"read file not exist");
 
@@ -51,12 +51,12 @@ public class FileUtil {
             FileUtils.copyFile(readFile,readTempFile);
             log.info("created temp file: {}",readTempFile.getPath());
             readFile=readTempFile;
-            writeFile=new File(readPath);
+            writeFile=new File(readOrWritePath);
         }else{
             writeFile = new File(writePath);
         }
         //A. 公共数据
-        boolean isSameFile= readPath.equals(writePath);
+        boolean isSameFile= readOrWritePath.equals(writePath);
         //A. 创建临时文件
         if(isSameFile){
             readFile = File.createTempFile(readFile.getName(), ".backup");  // 临时读取文件
@@ -82,6 +82,7 @@ public class FileUtil {
                     bufferedWriter.write(resultLine);
                 }
             }
+            if(StringUtils.isNotBlank(appendContent))bufferedWriter.write(appendContent);
             if(Boolean.TRUE.equals(alreadyMarked.get())){
                 log.error("didn't return SDK_RETURN_MARK_TAG");
                 alreadyMarked.set(false);

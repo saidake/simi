@@ -1,5 +1,7 @@
 package com.saidake;
 
+import com.saidake.common.core.util.file.FileUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -15,5 +17,6 @@ public class IOTest {
         String readString = Files.readString(path);
         String ddd = readString.concat("ddd");
         Files.writeString(outPath,ddd, StandardCharsets.UTF_8);
+
     }
 }
