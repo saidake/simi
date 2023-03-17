@@ -7,45 +7,40 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Slf4j
 public class FileUtil {
-    private static String SDK_MARK_TAG="SDK_MARK_TAG";
-    private static String SDK_RETURN_MARK_TAG="SDK_RETURN_MARK_TAG";
-    private static ThreadLocal<Boolean> alreadyMarked=new ThreadLocal<>();
-
-    /**
-     * 拼接路径和包名
-     * @param path  路径
-     * @param packageName   包名
-     * @return  拼接路径
-     */
-    public static String joinPathAndPackage(String path,String packageName){
-        packageName=packageName.replace(".",File.separator);
-        path=path+File.separator;
-        return path.concat(packageName);
-    }
-
-    /**
-     * 读写文件，对每一行做操作
-     * 可选功能：根据readAndWriteTheSameFileLambda返回的内容，标记一行，向下获取信息（不写入新行），再返回之前地那一行
-     *         返回 "SDK_MARK_TAG"             标记行
-     *         返回 "SDK_RETURN_MARK_TAGxxx"  返回标记行，同时 写入 标记行 查询信息后的最终内容
-     */
-    @FunctionalInterface
-    public interface ReadAndWriteTheSameFileLambda<T,R>{
-        R execute(T t);
-    }
-    public static void readAndWriteFile(String readPath, @Nullable String writePath, ReadAndWriteTheSameFileLambda<String,String> readAndWriteTheSameFileLambda) throws IOException {
+    private static final String SDK_MARK_TAG="SDK_MARK_TAG";
+    private static final String SDK_RETURN_MARK_TAG="SDK_RETURN_MARK_TAG";
+    private static final ThreadLocal<Boolean> alreadyMarked=new ThreadLocal<>();
+    public static void readWriteStringFile(String readPath, String writePath, Function<String,String> lambda) throws IOException {
         Assert.notNull(readPath,"readPath must not be null");
-        Assert.notNull(readAndWriteTheSameFileLambda,"lambda must not be null");
+        Assert.notNull(writePath,"writePath must not be null");
+        Assert.notNull(lambda,"lambda must not be null");
+        Path path = Paths.get(readPath);
+        Path outPath = Paths.get(writePath);
+        String readString = Files.readString(path);
+        Files.writeString(outPath,lambda.apply(readString), StandardCharsets.UTF_8);
+    }
+        /**
+         * 读写文件，对每一行做操作
+         * 可选功能：根据readAndWriteTheSameFileLambda返回的内容，标记一行，向下获取信息（不写入新行），再返回之前地那一行
+         *         返回 "SDK_MARK_TAG"             标记行
+         *         返回 "SDK_RETURN_MARK_TAGxxx"  返回标记行，同时 写入 标记行 查询信息后的最终内容
+         */
+
+    public static void readWriteBackupFile(String readPath, @Nullable String writePath, Function<String,String> lambda) throws IOException {
+        Assert.notNull(readPath,"readPath must not be null");
+        Assert.notNull(lambda,"lambda must not be null");
         File readFile = new File(readPath);
         File writeFile;
         Assert.isFalse(readFile.exists(),"read file not exist");
@@ -74,7 +69,7 @@ public class FileUtil {
             BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(writeFile));
             for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
                 //B. 预定义lambda
-                String resultLine = readAndWriteTheSameFileLambda.execute(currentLine);
+                String resultLine = lambda.apply(currentLine);
                 if(resultLine==null)continue;
                 if(SDK_MARK_TAG.equals(resultLine)){
                     bufferedReader.mark((int)readFile.length()+1);
@@ -98,10 +93,23 @@ public class FileUtil {
         }
         //A. 删除临时文件
         if(isSameFile&&!readFile.delete()) {
-           throw new RuntimeException("delete file error: "+readFile.getPath());
+            throw new RuntimeException("delete file error: "+readFile.getPath());
         }else{
             log.info("delete temp file successfully: {}",readFile.getPath());
         }
+    }
+
+
+    /**
+     * 拼接路径和包名
+     * @param path  路径
+     * @param packageName   包名
+     * @return  拼接路径
+     */
+    public static String joinPathAndPackage(String path,String packageName){
+        packageName=packageName.replace(".",File.separator);
+        path=path+File.separator;
+        return path.concat(packageName);
     }
 
 

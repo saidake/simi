@@ -10,16 +10,16 @@
     <version>1.0.0</version>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <knife4j.version>2.0.5</knife4j.version>
         <swagger.version>2.9.2</swagger.version>
 
-        <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>  <!-- spring cloud  alibaba 依赖管理 -->
-        <spring-boot-dependencies.version>2.5.9</spring-boot-dependencies.version>                      <!-- spring boot   依赖管理 -->
-        <spring-cloud-dependencies.version>2020.0.4</spring-cloud-dependencies.version>                <!-- spring cloud  依赖管理 -->
+<!--        <spring-cloud-alibaba-dependencies.version>2021.0.4.0</spring-cloud-alibaba-dependencies.version>  &lt;!&ndash; spring cloud  alibaba 依赖管理 2021.1&ndash;&gt;-->
+        <spring-boot-dependencies.version>3.0.0</spring-boot-dependencies.version>                      <!-- spring boot   依赖管理  2.5.9 -->
+        <spring-cloud-dependencies.version>2022.0.1</spring-cloud-dependencies.version>                <!-- spring cloud  依赖管理 2020.0.4-->
     </properties>
 
 
@@ -36,12 +36,6 @@
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-configuration-processor</artifactId>-->
@@ -63,10 +57,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.22</version>
+            <version>5.8.15</version>
         </dependency>
     </dependencies>
 
@@ -86,13 +81,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>           <!-- Spring Cloud  alibaba 依赖管理 -->
-                <version>${spring-cloud-alibaba-dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-alibaba-dependencies</artifactId>           &lt;!&ndash; Spring Cloud  alibaba 依赖管理 &ndash;&gt;-->
+<!--                <version>${spring-cloud-alibaba-dependencies.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
 
         <!--==================================================================================================== 自定义依赖 -->
             <dependency>
@@ -116,24 +111,23 @@
                 <version>1.0.0</version>
             </dependency>
             <!--======================================================================================================= 核心 -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>4.0.1</version>
+            </dependency>
             <!--======================================================================================================= 继承依赖 -->
             <!--======================================================================================================= 数据库 -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>2.2.2</version>
+                <version>3.0.1</version>
             </dependency>
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>8.0.26</version>
             </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.5.2</version>
-            </dependency>
-
             <!--======================================================================================================= 微服务 -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
@@ -197,11 +191,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>2.12.1</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.12.3</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>

@@ -34,21 +34,22 @@ import java.util.regex.Matcher;
 /**
  * ControllerWindow 窗口对象工厂
  *
- * @author  Zou, Hao David
+ * @author  Craig Hoffman
  * @see     ControllerWindow
  * @since   1.4
  */
 public class ControllerWindowFactory implements ToolWindowFactory {
 
-    private Logger logger=Logger.getLogger(ControllerWindowFactory.class.getName());
+    private final Logger logger=Logger.getLogger(ControllerWindowFactory.class.getName());
 
     public void init(ToolWindow window) {
     }
+
     /**
      * 设置窗口 ControllerWindow 的属性
      *
-     * @param project
-     * @param toolWindow
+     * @param project 项目对象
+     * @param toolWindow 窗口对象
      */
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
@@ -59,7 +60,9 @@ public class ControllerWindowFactory implements ToolWindowFactory {
             PsiElement element = PsiManager.getInstance(project).findFile(file).findElementAt(offset);
         }
         //A. 获取基础数据，检查pom结构和controller结构
-        handleInitBaseData(project,project.getBaseDir().getChildren());
+        DataHolder.getInstance().getState().clearAll();
+        //if(DataHolder.getInstance().getState().getPomProjectList().isEmpty())handleInitProjectData(project,project.getBaseDir().getChildren());
+        handleInitProjectData(project,project.getBaseDir().getChildren());
         //A. 构建window
         ControllerWindow controllerAnchorWindow=new ControllerWindow(project,toolWindow);
         ContentFactory instance = ContentFactory.SERVICE.getInstance();
@@ -74,8 +77,9 @@ public class ControllerWindowFactory implements ToolWindowFactory {
      * @param childrenList 子文件列表 {@link VirtualFile}.
      */
     @SuppressWarnings("UnsafeVfsRecursion")
-    private void handleInitBaseData(Project project, @NotNull VirtualFile[] childrenList) {
+    private void handleInitProjectData(Project project, @NotNull VirtualFile[] childrenList) {
         boolean hasPom=false;
+        //A. 检测pom.xml文件
         PomParseHandler pomParseHandler=new PomParseHandler();
         for (VirtualFile virtualFile : childrenList) {
             if("pom.xml".equals(virtualFile.getName())){
@@ -94,31 +98,35 @@ public class ControllerWindowFactory implements ToolWindowFactory {
         for (VirtualFile virtualFile : childrenList) {
             if(virtualFile.isDirectory()&&"src".equals(virtualFile.getName())){
                 String currentProjectName = pomParseHandler.getCurrentProjectName();
-                //B. 检查controller项目结构
-                checkSrcFolder(virtualFile,currentProjectName);
+                //B. 检查 src文件夹
+                handleCheckSrcFolder(virtualFile,currentProjectName);
             } else if(virtualFile.isDirectory()){
-                //B. 检查module项目结构
-                handleInitBaseData(project,virtualFile.getChildren());
+                //B. 检查 普通文件夹，递归
+                if(virtualFile.getPath().contains("pig-visual"))
+                handleInitProjectData(project,virtualFile.getChildren());
+                else continue;
             }
         }
     }
 
     /**
      * 检查src文件夹，检查Controller信息
-     * @param virtualFile
-     * @param currentProjectName
+     *
+     * @param virtualFile 虚拟文件
+     * @param currentProjectName  当前项目名
      */
-    private void checkSrcFolder(VirtualFile virtualFile, String currentProjectName){
+    private void handleCheckSrcFolder(VirtualFile virtualFile, String currentProjectName){
         VirtualFile fileByRelativePath = virtualFile.findFileByRelativePath("main/java");
-        checkControllerInControllerFile(fileByRelativePath,currentProjectName);
+        handleCheckControllerFileList(fileByRelativePath,currentProjectName);
     }
 
-    private void checkControllerInControllerFile(VirtualFile virtualFile, String currentProjectName) {
+    private void handleCheckControllerFileList(VirtualFile virtualFile, String currentProjectName) {
         if(virtualFile==null)return;
         //A. 检查
         for (VirtualFile child : virtualFile.getChildren()) {
+            //B. 检查项目中的Controller文件
             if (child.isDirectory()){
-                checkControllerInControllerFile(child,currentProjectName);
+                handleCheckControllerFileList(child,currentProjectName);
             }else{
                 try {
                     //B. 会将获取的controller信息存储到DataHolder.getInstance().getState().getProjectControllerList()
@@ -134,6 +142,7 @@ public class ControllerWindowFactory implements ToolWindowFactory {
                     String fileContent = new String(bytes, StandardCharsets.UTF_8);
                     //B. 检查是不是Controller文件，并添加Pattern判断
                     if(fileContent.contains("@RestController")||fileContent.contains("@Controller")){
+                        logger.info("handle controller file: "+child.getName());
                         controllerNodeList.add(handleControllerInfo(child, fileContent));
                     }
                 } catch (IOException e) {
@@ -141,7 +150,6 @@ public class ControllerWindowFactory implements ToolWindowFactory {
                 }
             }
         }
-
     }
 
 
@@ -153,10 +161,11 @@ public class ControllerWindowFactory implements ToolWindowFactory {
         Matcher requestMappingMatcher = PatternHolder.requestMappingPattern.matcher(fileContent);
         Matcher springDocTagMatcher = PatternHolder.springDocTagPattern.matcher(fileContent);
         Matcher springDocOperationMatcher = PatternHolder.springDocOperationPattern.matcher(fileContent);
+        Matcher callMethodMatcher = PatternHolder.callMethodPattern.matcher(fileContent);
+
         ControllerNode controllerNode =new ControllerNode();
         String packagePath=null;
         String className=null;
-        System.out.println("controllerFile: "+child.getName());
         //A. 获取package 位置
         if(packageMatcher.find()){
             packagePath=packageMatcher.group(1);
@@ -182,16 +191,16 @@ public class ControllerWindowFactory implements ToolWindowFactory {
             }
             //A. 获取Tag controller title
             if(springDocTagMatcher.find()){
-                controllerNode.setTitle(springDocTagMatcher.group(2));
+                controllerNode.setSpringDocTag(springDocTagMatcher.group(2));
             }
         }else{
             logger.severe("cannot find class");
         }
         controllerNode.setPackagePath(packagePath+"."+className);
         controllerNode.setFilePath(child.getPath());
-
-        //A. 获取method方法名 List
-        System.out.println("========================================test method");
+        controllerNode.setFileName(child.getName());
+        //A. 获取method方法名 List，构建requestNode
+        logger.info("======================================== controller method");
         String nextUrl=null;
         Integer nextRequestStart=null;
         String nextSummary=null;
@@ -199,18 +208,24 @@ public class ControllerWindowFactory implements ToolWindowFactory {
         Integer nextOperationStart=null;
         RequestNode requestNode =new RequestNode();
         List<RequestNode> requestNodeList =new ArrayList<>();
-        while (methodMatcher.find()){
-            System.out.println("fileName: "+child.getName());
+        // A. 循环检测 methodMatcher 匹配
+        int methodMatcherIndex=0;
+        while (methodMatcher.find(methodMatcherIndex)){
+            methodMatcherIndex=methodMatcher.end();
             String methodName = methodMatcher.group(4);
-            System.out.println("methodName: "+methodName);
-            requestNode.getMethodNode().setPackagePath(packagePath+"."+methodName);            //A. 检查 title
+            logger.info("fileName: "+child.getName());
+            logger.info("methodName: "+methodName);
+            MethodNode requestNodeMethodNode = requestNode.getMethodNode();
+            requestNodeMethodNode.setPackagePath(packagePath+"."+methodName);            //A. 检查 title
+            requestNodeMethodNode.setMethodName(methodName);
             //A. 已经检查过一次了
-            if(nextSummary!=null&&nextOperationStart<methodMatcher.start()){
-                requestNode.setTitle(nextSummary);
+            if(nextSummary!=null&&nextOperationStart<methodMatcherIndex){
+                requestNode.setSpringDocOperation(nextSummary);
                 requestNode.setDescription(nextDescription);
                 nextSummary=null;
                 nextDescription=null;
                 nextOperationStart=null;
+            // A. 检测 springDocOperationMatcher 匹配
             } else if(springDocOperationMatcher.find()){
                 String checkSpringDocString = springDocOperationMatcher.group(1);
                 String summary = checkSpringDocString.contains("summary")?
@@ -219,8 +234,8 @@ public class ControllerWindowFactory implements ToolWindowFactory {
                 String description = checkSpringDocString.contains("description")?
                         checkSpringDocString.replaceAll("^.*?description\\s*?=\\s*?\"","").replaceAll("\".*$","")
                         :null;
-                if(springDocOperationMatcher.start()<methodMatcher.start()){
-                    requestNode.setTitle(summary);
+                if(springDocOperationMatcher.start()<methodMatcherIndex){
+                    requestNode.setSpringDocOperation(summary);
                     requestNode.setDescription(description);
                 }else{
                     //B. 当前方法不是
@@ -228,12 +243,27 @@ public class ControllerWindowFactory implements ToolWindowFactory {
                     nextDescription=description;
                     nextOperationStart=springDocOperationMatcher.start();
                 }
+                //B. 循环检测 callMethodMatcher 匹配
+                int methodMatcherEnd = methodMatcher.end();
+                Matcher regionCallMethodMatcher;
+                if(methodMatcher.find(methodMatcher.end())){
+                    regionCallMethodMatcher = callMethodMatcher.region(methodMatcherEnd, methodMatcher.start());
+                }else{
+                    regionCallMethodMatcher = callMethodMatcher.region(methodMatcherEnd,methodMatcher.regionEnd());
+                }
+                //B. 检测区间中的方法： method开始 - 下一个method开始
+                while (regionCallMethodMatcher.find()){
+                    MethodNode sonMethodNode = new MethodNode(callMethodMatcher.group(5));
+                    requestNodeMethodNode.getChildMethodNodeList().add(sonMethodNode);
+                }
+                methodMatcherIndex=methodMatcherEnd;
             }
 
             //A. IF(nextUrl) 已经检查过一次了
-            if(nextUrl!=null&&nextRequestStart<methodMatcher.start()) {
+            if(nextUrl!=null&&nextRequestStart<methodMatcherIndex) {
                 requestNode.setUrl(nextUrl);
-                requestNode.setMethodNode(new MethodNode(packagePath,child.getPath()));
+                requestNodeMethodNode.setPackagePath(packagePath);
+                requestNodeMethodNode.setFilePath(child.getPath());
                 requestNodeList.add(requestNode);
                 requestNode =new RequestNode();
                 nextUrl=null;
@@ -242,10 +272,12 @@ public class ControllerWindowFactory implements ToolWindowFactory {
             } else if(requestMappingMatcher.find()){
                     String currentUrl = requestMappingMatcher.group(4) == null ? requestMappingMatcher.group(6) : requestMappingMatcher.group(4);
                     if(controllerNode.getPrefixUrl()!=null)currentUrl= controllerNode.getPrefixUrl()+currentUrl;
-                    if(requestMappingMatcher.start()<methodMatcher.start()){
+                    //B. @RequestMapping 在 method前面
+                    if(requestMappingMatcher.start()<methodMatcherIndex){
                         requestNode.setUrl(currentUrl);
                         requestNodeList.add(requestNode);
                         requestNode =new RequestNode();
+                    //B. @RequestMapping 在 method后面，临时存储一下当前的 nextRequestStart 和 nextUrl，下一次就不需要requestMappingMatcher.find
                     }else{
                         //B. 当前方法不是
                         nextUrl=currentUrl;

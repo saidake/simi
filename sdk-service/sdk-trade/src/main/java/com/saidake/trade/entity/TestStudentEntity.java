@@ -2,7 +2,7 @@ package com.saidake.trade.entity;
 import com.saidake.trade.entity.listener.TestStudentListener;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @Entity

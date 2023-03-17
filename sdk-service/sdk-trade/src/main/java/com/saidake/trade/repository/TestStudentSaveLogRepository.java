@@ -5,8 +5,8 @@ import com.saidake.trade.entity.TestStudentEntity;
 import com.saidake.common.core.util.data.RandomUtil;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
-import javax.transaction.Transactional;
+import jakarta.annotation.Resource;
+import jakarta.transaction.Transactional;
 
 @Repository
 public class TestStudentSaveLogRepository {

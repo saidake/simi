@@ -6,7 +6,7 @@ import com.saidake.plugin.generate.data.vo.core.SmpTreeNode;
  * 请求信息，隶属于ControllerInfo
  */
 public class RequestNode extends SmpTreeNode {
-    private String title;
+    private String springDocOperation;
     private String description;
     private String url;
     private MethodNode methodNode =new MethodNode();
@@ -14,9 +14,10 @@ public class RequestNode extends SmpTreeNode {
     public RequestNode(String url) {
         this.url = url;
     }
+
+
     public RequestNode( ) {
     }
-
     public String getUrl() {
         return url;
     }
@@ -24,7 +25,6 @@ public class RequestNode extends SmpTreeNode {
     public void setUrl(String url) {
         this.url = url;
     }
-
 
     public MethodNode getMethodNode() {
         return methodNode;
@@ -35,12 +35,12 @@ public class RequestNode extends SmpTreeNode {
     }
 
 
-    public String getTitle() {
-        return title;
+    public String getSpringDocOperation() {
+        return springDocOperation;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSpringDocOperation(String springDocOperation) {
+        this.springDocOperation = springDocOperation;
     }
 
     public String getDescription() {

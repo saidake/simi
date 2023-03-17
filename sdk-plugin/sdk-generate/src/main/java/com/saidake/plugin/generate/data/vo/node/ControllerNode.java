@@ -12,7 +12,7 @@ public class ControllerNode extends SmpTreeNode {
     /**
      * doc 标题
      */
-    private String title;
+    private String springDocTag;
 
     /**
      * controller的 前缀 网址
@@ -21,6 +21,7 @@ public class ControllerNode extends SmpTreeNode {
 
     private List<RequestNode> requestNodeList =new ArrayList<>();
 
+    //================================================================================================= constructor
     public ControllerNode(String packagePath, String filePath) {
         super(packagePath, filePath);
     }
@@ -29,12 +30,13 @@ public class ControllerNode extends SmpTreeNode {
         super();
     }
 
-    public String getTitle() {
-        return title;
+    //================================================================================================= getter setter
+    public String getSpringDocTag() {
+        return springDocTag;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSpringDocTag(String springDocTag) {
+        this.springDocTag = springDocTag;
     }
 
     public List<RequestNode> getRequestNodeList() {

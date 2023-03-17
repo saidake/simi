@@ -1,12 +1,15 @@
 package com.saidake.plugin.generate.data.regex;
 
-
 import java.util.regex.Pattern;
 
 /**
  * 正则管理中心
  */
 public interface PatternHolder {
+    // "xxx"
+    Pattern stringPattern= Pattern.compile("\".*?\"");
+
+
     // package com.saidake.dd;
     Pattern packagePattern= Pattern.compile("package\\s*?([A-z0-9$.]*?)\\s*?;");
 
@@ -26,4 +29,17 @@ public interface PatternHolder {
     Pattern springDocOperationPattern= Pattern.compile("@Operation\\((.*?" +
             "((\\s*?(summary|description)\\s*?=\\s*?\"(.*?)\")\\s*?,?)+" +
             ".*?)\\)");
+
+    // test (
+    // service.test (
+    // String result = test (
+    // String result = service.test (
+    Pattern callMethodPattern= Pattern.compile(
+            "[^@A-z0-9$]+([A-z0-9$]*?\\s*?[A-z0-9$]*?)?" +    // String result
+                    "(\\s*?=\\s*?)?"+           //  =
+                    "(([A-z0-9$]*?)\\.)?" +     //  service.
+                    "([a-z]+[A-z0-9$]*?)" +  // test
+                    "\\s*?\\("         // (
+    );
+
 }

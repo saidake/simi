@@ -10,7 +10,9 @@ import com.intellij.openapi.components.Storage;
  */
 @State(name = "DataHolder" ,storages = @Storage("plugin.xml"))
 public class DataHolder implements PersistentStateComponent<DataState> {
-    private DataState state = new DataState( );
+
+    private DataState state = new DataState();
+
     public static DataHolder getInstance() {
         return ServiceManager.getService(DataHolder.class);
     }

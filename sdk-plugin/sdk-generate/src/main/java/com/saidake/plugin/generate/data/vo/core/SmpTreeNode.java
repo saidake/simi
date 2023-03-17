@@ -12,6 +12,7 @@ import com.saidake.plugin.generate.data.vo.node.MethodNode;
 public abstract class SmpTreeNode {
     private String packagePath;
     private String filePath;
+    private String fileName;
 
     public String getPackagePath() {
         return packagePath;
@@ -22,6 +23,14 @@ public abstract class SmpTreeNode {
 
     public void setPackagePath(String packagePath) {
         this.packagePath = packagePath;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public void setFilePath(String filePath) {
