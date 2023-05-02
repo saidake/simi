@@ -1,8 +1,0 @@
-#=============================================================================================== 日志配置
-sdk:
-  datasource:
-    ip: localhost
-    username: root
-    password: root
-    port: 3306
-    database: smp

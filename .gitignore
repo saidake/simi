@@ -2,7 +2,7 @@ target/
 node_modules/
 .idea/
 *.iml
-/logs/
+/AAAlogs/
 .gradle/
 build/
 classes/

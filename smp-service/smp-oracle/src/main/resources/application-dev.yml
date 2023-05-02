@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    database: oracle
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: sdk
+    password: sdk
+  data:
+    mongodb:
+      uri: mongodb://smp:smp@localhost:27017/test
+springdoc:
+  show-actuator: true
+  enable-javadoc: true
+  swagger-ui:
+    doc-expansion: none
