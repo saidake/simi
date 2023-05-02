@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>smp-gateway</artifactId>
+        <groupId>com.saidake</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>smp-eureka</artifactId>
+
+    <dependencies>
+        <!--==================================================================================================== 自定义依赖 -->
+        <dependency>
+            <groupId>com.saidake</groupId>
+            <artifactId>smp-config</artifactId>
+        </dependency>
+        <!--======================================================================================================= 核心 -->
+        <!--======================================================================================================= 继承依赖 -->
+        <!--======================================================================================================= 数据库 -->
+        <!--======================================================================================================= 项目协助 -->
+        <!--======================================================================================================= 数据工具 -->
+        <!--======================================================================================================= 安全 -->
+        <!--======================================================================================================= 日志 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+    </dependencies>
+</project>

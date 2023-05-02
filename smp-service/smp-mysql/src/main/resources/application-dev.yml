@@ -1,0 +1,169 @@
+sdk:
+  generator:
+    project-root-path: D:\Desktop\DevProject\saidake-manage-project\sdk-service\sdk-trade
+    template:   # 模板表名
+      table-name: TEST_STUDENT
+      table-comment: SdkReplaceComment    # 将被替换成各种注释
+      # dto：       SdkTemplateAddRequest   SdkTemplateUpdateRequest
+      #            SdkTemplateRequest      SdkTemplateResponse
+      # vo:            SdkTemplateVo
+      # com.saidake.citi.controller:    SdkTemplateController
+      # entity:        SdkTemplateEntity
+      # mapper:        SdkTemplateMapper
+      # mapper resources:        SdkTemplateMapper.xml
+    core:       # project package info
+      service-package: com.saidake.service              # has-service-table-folder
+      controller-package: com.saidake.com.saidake.citi.controller        # has-com.saidake.citi.controller-table-folder
+      mapper-package: com.saidake.mybatis.mapper
+      mapper-resources-folder: mapper                   # has-mapper-resources-table-folder
+      entity-package: com.saidake.mybatis.entity
+      dto-request-package: com.saidake.model.request    # has-dto-table-folder
+      dto-response-package: com.saidake.model.response  # has-dto-table-folder
+
+    io:         # 是否要生成表文件夹
+      has-dto-table-folder: true
+      has-service-table-folder: false
+      has-controller-table-folder: false
+      has-mapper-resources-table-folder: false
+    suffix:
+      service-suffix: Service
+      service-impl-suffix: ServiceImpl
+      controller-suffix: Controller
+      mapper-suffix: Mapper
+      mapper-resources-suffix: Mapper
+
+      entity-suffix: Entity
+
+      dto-add-request-suffix: AddRequest
+      dto-update-request-suffix: UpdateRequest
+
+      dto-request-suffix: Request
+      dto-response-suffix: Response
+
+      method-suffix: Handler
+    db:
+      pass-fields: id,create_time,update_time  # entity跳过的字段
+      pass-tables: t_user,sdk_template,t_user_share,tb_user_bicycle    # 跳过的表，   配置后generate-tables会不生效
+      controller-pass-tables: tb_user_bicycle,sys_dict_value,tb_user_bicycle,sys_dict_value   # 跳过的表，   配置后generate-tables会不生效
+      request-pass-fields: del  # add request 跳过的字段（继承entity跳过的字段）
+    #generate-tables: t_user,tb_bicycle     # 必须生成的表，配置后pass-tables会不生效
+    services:
+      - table: t_user
+        add-handler:
+          request-pass-fields: del,last_login_time  # add request 跳过的字段（继承entity跳过的字段）
+        special:
+          - method: post
+            name: login,登录
+            request:
+              - info: userPhone,手机号,String,required
+              - info: password,密码,String,required
+          - method: post
+            name: register,注册
+            request:
+              - info: userPhone,手机号,String,required
+              - info: verificationCode,验证码,String,required
+              - info: password,密码,String,required
+              - info: confirmPassword,确认密码,String,required
+          - method: post
+            name: cancelAccount,注销
+            request:
+              - info: userPhone,手机号,String,required
+              - info: verificationCode,验证码,String,required
+              - info: description,描述,String,null
+          - method: post
+            name: retrievePassword,找回密码
+            request:
+              - info: userPhone,手机号,String,required
+              - info: verificationCode,验证码,String,required
+              - info: password,密码,String,required
+              - info: confirmPassword,确认密码,String,required
+          - method: post
+            name: updatePassword,修改密码
+            request:
+              - info: oldPassword,老密码,String,required
+              - info: newPassword,新密码,String,required
+              - info: verificationCode,验证码,String,required
+              - info: description,描述,String,null
+          - method: post
+            name: sendPhone,发送短信
+            request:
+              - info: userPhone,手机号,String,required
+              - info: type,发送类型【1注册 2找回密码 3 登录】,Integer,null
+          - method: post
+            name: bindBicycle,绑定车辆
+            request:
+              - info: userId,用户ID,Long,required
+              - info: bicycleId,车辆ID,Long,required
+          - method: post
+            name: unbindBicycle,解绑车辆
+            request:
+              - info: userId,用户ID,Long,required
+              - info: bicycleId,车辆ID,Long,required
+          - method: post
+            name: shareBindBicycle,共享人绑定车辆
+            request:
+              - info: userId,共享人用户ID,Long,required
+              - info: bicycleId,车辆ID,Long,required
+#================================================================================== 稳定功能，最新适配
+#    append-service-params:
+#      service-package: com.saidake.service
+#      service-middle-folder: casemgmt
+#      service-impl-inside-name: impl
+#
+#      com.saidake.citi.controller-package: com.saidake.com.saidake.citi.controller
+#      com.saidake.citi.controller-middle-folder: casemgmt
+#
+#      dto-package: com.saidake.model
+#      dto-middle-folder: casemgmt
+#      dto-request-inside-name: request
+#      dto-response-inside-name: response
+    append-services: # 找到这个表的相关文件   追加方法：Controller，Service，ServiceImpl      同时追加 requestDto
+      - table: null
+        special:
+          - method: get
+            name: login,登录
+            request:
+              - info: test,测试字符串,String,required
+              - info: num,测试数字,Integer,required
+          - method: get
+            name: cancelAccount,注销
+            request:
+              - info: userPhone,手机号,String,required
+              - info: verificationCode,验证码,String,required
+              - info: description,描述,String,null
+          - method: get
+            name: cancelAccountTest,注销
+            request:
+              - info: userPhone,手机号,String,required
+              - info: verificationCode,验证码,String,required
+              - info: description,描述,String,null
+    append-common-vo:
+      - enabled: true
+        params:
+          common-vo-package: com.saidake.model.common
+          template: com.saidake.model.common.SdkTemplateVo
+          suffix: Vo
+          write-mode: overwrite  # 写入模式【overwrite 覆盖 check 已存在抛出异常】
+          replace-name: SdkTemplate          # 替换成vo-name
+          replace-comment: SdkReplaceComment # 替换成vo-comment
+        vo-list:
+          - folder: tUser
+            vo-list:
+              - name: Account,账号
+                field-list:
+                  - info: test,测试字符串,String,required
+                  - info: num,测试数字,Integer,required
+              - name: LalaFaFa,临时
+                field-list:
+                  - info: gg,测试字符串,String,required
+                  - info: bb,测试数字,Integer,required
+          - folder: tOther
+            vo-list:
+              - name: DDBaBa,账号
+                field-list:
+                  - info: test,测试字符串,String,required
+                  - info: num,测试数字,Integer,required
+              - name: KKDaDa,临时
+                field-list:
+                  - info: aaa,测试字符串,String,required
+                  - info: ccc,测试数字,Integer,required

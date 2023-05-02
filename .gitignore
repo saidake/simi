@@ -1,0 +1,8 @@
+target/
+node_modules/
+.idea/
+*.iml
+/AAAlogs/
+.gradle/
+build/
+classes/
