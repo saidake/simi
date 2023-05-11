@@ -4,12 +4,17 @@ import jakarta.annotation.Nullable;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.*;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -30,8 +35,12 @@ import java.util.stream.Stream;
 @Slf4j
 public class SmpFileUtils {
 
+    private static String REPLACE_NODE_NAME="replace";
+
+    private static String APPEND_NODE_NAME="append";
+
     /**
-     * Read a source file and write the file content as a parameter to the
+     * Reads a source file and write the file content as a parameter to the
      * target file.
      *
      * @param readPath the path of read file
@@ -70,12 +79,34 @@ public class SmpFileUtils {
         writeProperties.store(new FileOutputStream(writePath),"merge the content of "+StringUtils.join(fileNameList,", ")+" file");
     }
 
-    public static void readAndPutAllPom(String writePomPath, String... appendXmlPath) throws IOException, ParserConfigurationException, SAXException {
-        @Cleanup FileInputStream fileInputStream = new FileInputStream(writePomPath);
-        DefaultHandler defaultHandler = new DefaultHandler();
-        SAXParserFactory saxParserFactory = SAXParserFactory.newNSInstance();
-        SAXParser saxParser = saxParserFactory.newSAXParser();
-        saxParser.parse(fileInputStream,defaultHandler);
+    public static void readAndPutAllPom(String writePomPath, String... appendXmlPath) throws IOException, ParserConfigurationException, SAXException, TransformerException {
+        File writePomFile = new File(writePomPath);
+        DocumentBuilderFactory pomDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder pomDocumentBuilderPom = pomDocumentBuilderFactory.newDocumentBuilder();
+        Document pomDocument = pomDocumentBuilderPom.parse(writePomFile);
+        Node project = pomDocument.getElementsByTagName("project").item(0);
+        Element test = pomDocument.createElement("test");
+        project.appendChild(test);
+        NamedNodeMap attributes = project.getAttributes();
+        TransformerFactory pomTransformerFactory = TransformerFactory.newInstance();
+        Transformer pomTransformer = pomTransformerFactory.newTransformer();
+        DOMSource pomDomSource = new DOMSource(pomDocument);
+        StreamResult pomStreamResult = new StreamResult(writePomFile);
+        pomTransformer.transform(pomDomSource,pomStreamResult);
+        for (String appendXml : appendXmlPath) {
+            File appendXmlFile = new File(appendXml);
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(appendXmlFile);
+            Node root = document.getElementsByTagName("root").item(0);
+            NodeList childNodes = root.getChildNodes();
+            for (int i = 0; i < childNodes.getLength(); i++) {
+                Node item = childNodes.item(i);
+                if(item.getNodeType()!=Node.ELEMENT_NODE)continue;
+                System.out.println(item.getNodeName());
+            }
+        }
+
     }
 
 
