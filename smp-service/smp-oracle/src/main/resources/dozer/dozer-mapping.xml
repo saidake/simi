@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+<!--    <configuration>-->
+<!--        <custom-converters>-->
+<!--            <converter type="com.saidake.trade.AAAconfig.dozer.GeneralConvertor" >-->
+<!--                <class-a>com.saidake.trade.domain.test.DingDong</class-a>-->
+<!--                <class-b>com.saidake.trade.domain.test.Person</class-b>-->
+<!--            </converter>-->
+<!--        </custom-converters>-->
+<!--    </configuration>-->
+    <mapping wildcard="false" map-id="dingdong">
+        <class-a>com.saidake.trade.domain.test.Person</class-a>
+        <class-b>com.saidake.trade.domain.test.DingDong</class-b>
+        <field custom-converter-id="typeConverter">
+            <a>name</a>
+            <b>tt</b>
+        </field>
+    </mapping>
+</mappings>

@@ -21,7 +21,6 @@ import java.nio.file.StandardOpenOption;
 @Slf4j
 public class StopWatchDebug {
     private static StopWatch STOP_WATCH;
-
     private static final String LOG_TITLE ="[STOP_WATCH_TASK: ";
     private static final String LOG_TITLE_START =" ] start=====================================";
     private static final String LOG_TITLE_END =  " ] end=======================================";
@@ -34,8 +33,6 @@ public class StopWatchDebug {
     //================================================================ tab bar string
     private static final String TOTAL_TIME_MILLIS_FORMAT="%9s";
     private static final String TOTAL_TIME_SECONDS_FORMAT="%9.3f";
-
-
     private static final String TASK_NAME_FORMAT="%-25s";
     private static final String TIME_MILLIS_FORMAT="%-15s";
     private static final String TIME_SECONDS_FORMAT="%-15.3f";
@@ -58,6 +55,12 @@ public class StopWatchDebug {
     public static void init(String watchId) {
         STOP_WATCH = new StopWatch(watchId);
     }
+
+    public static String initAndStart(String taskName) {
+        STOP_WATCH = new StopWatch("WATCH");
+        return start(taskName);
+    }
+
     public static String initAndStart(String watchId, String taskName) {
         STOP_WATCH = new StopWatch(watchId);
         return start(taskName);
@@ -68,7 +71,7 @@ public class StopWatchDebug {
         return LOG_TITLE + limitTaskName(taskName) + LOG_TITLE_START;
     }
     public static String restart(String taskName) {
-        STOP_WATCH.stop();
+        if(STOP_WATCH.isRunning())STOP_WATCH.stop();
         STOP_WATCH.start(taskName);
         return LOG_TITLE + limitTaskName(STOP_WATCH.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator() +
                 LOG_TITLE + limitTaskName(taskName)+ LOG_TITLE_START;
@@ -89,9 +92,7 @@ public class StopWatchDebug {
         return print;
     }
     public static String print(@Nullable boolean showLastTaskTitle) {
-        if(STOP_WATCH.isRunning()){
-            STOP_WATCH.stop();
-        }
+        if(STOP_WATCH.isRunning())STOP_WATCH.stop();
         long totalTimeMillis = STOP_WATCH.getTotalTimeMillis();
         double totalTimeSeconds = STOP_WATCH.getTotalTimeSeconds();
         String shortSummary = STOP_WATCH.getId() + ": total running time [ " + String.format(TOTAL_TIME_MILLIS_FORMAT, totalTimeMillis) + "ms / " + String.format(TOTAL_TIME_SECONDS_FORMAT, totalTimeSeconds) + "s ]";
