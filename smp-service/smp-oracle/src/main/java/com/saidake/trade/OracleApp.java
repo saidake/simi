@@ -23,6 +23,7 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 
@@ -32,6 +33,8 @@ import java.util.List;
 public class OracleApp {
     public static void main(String[] args){
         ConfigurableApplicationContext run = SpringApplication.run(OracleApp.class, args);
+        DataSource bean = run.getBean(DataSource.class);
+        System.out.println(bean);
 //        DozerBeanMapper dozerBeanMapper = run.getBean(DozerBeanMapper.class);
 //        Person person = new Person();
 //        person.setAge(23);
@@ -41,14 +44,6 @@ public class OracleApp {
 //        dingDong.setTt("ttddd");
 //        DingDong map = dozerBeanMapper.map(person, DingDong.class,"dingdong");
 //        System.out.println(map);
-
-        TestStudentRepository testStudentRepository = run.getBean(TestStudentRepository.class);
-        testStudentRepository.findFirstByStuId(5L);
-//        TestStudentEntity byStuIdOrRole3 = testStudentRepository.findFirstByStuIdOrRoleNative(5L, "normal");
-        TestStudentEntity byStuIdOrRole1 = testStudentRepository.findByStuIdOrRole(4L, "leader", PageRequest.of(0,1)).get(0);
-        TestStudentEntity byStuIdOrRole2= testStudentRepository.findByStuIdOrRole(3L, "monitor", PageRequest.of(0,1)).get(0);
-        TestStudentEntity byStuIdOrRole3 = testStudentRepository.findFirstByStuIdOrRole(4L, "leader");
-        TestStudentEntity byStuIdOrRole4= testStudentRepository.findFirstByStuIdOrRole(3L, "monitor");
 
     }
 }
