@@ -28,6 +28,10 @@ import java.util.function.UnaryOperator;
  */
 public class SmpFileUtils {
 
+    private static String REPLACE_NODE_NAME="replace";
+
+    private static String APPEND_NODE_NAME="append";
+
     /**
      * Reads a source file and write the file content as a parameter to the
      * target file.
