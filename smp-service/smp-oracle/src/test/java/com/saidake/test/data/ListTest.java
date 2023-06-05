@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class ListTest {
     public static void main(String[] args) {
+        test(2,new int[]{1,2,3,4});
         List<Integer> intlist = DataFactory.intlist();
         List<Integer> intlist2 = DataFactory.intlist();
         List<Integer> intlist3 = DataFactory.intlist();
@@ -21,5 +22,11 @@ public class ListTest {
         intlist.add(null);
         intlist.add(null);
         System.out.println(intlist);
+    }
+
+    private static void test(int a,int... list){
+        for (int i : list) {
+            System.out.println(i);
+        }
     }
 }

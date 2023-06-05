@@ -1,8 +1,8 @@
 package com.saidake.trade.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.saidake.common.core.util.data.RandomUtil;
 import com.saidake.common.log.annotation.SysLog;
+import com.saidake.trade.AAAconfig.FormBuilder;
 import com.saidake.trade.service.TestPersonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -43,6 +43,9 @@ public class TestController {
     RestTemplate restTemplate;
 
     @Autowired
+    FormBuilder formBuilder;
+
+    @Autowired
     private DiscoveryClient discoveryClient;
 
     @Autowired
@@ -69,6 +72,7 @@ public class TestController {
 //        requestOtherService();
         System.out.println("test start");
         testPersonService.test();
+//        formBuilder.logInfo();
         System.out.println("test end");
         return applicationName +" /test "+ id;
     }

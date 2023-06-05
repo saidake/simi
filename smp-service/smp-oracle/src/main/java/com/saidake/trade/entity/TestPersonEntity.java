@@ -22,7 +22,7 @@ public class TestPersonEntity {
     @Column(name = "GENDER")
     private Integer gender;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="PER_ID",referencedColumnName = "PER_ID")
     private List<TestStudentEntity> testStudentEntities;
 }

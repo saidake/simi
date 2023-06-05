@@ -2,14 +2,14 @@ package com.saidake.common.core.util.file;
 
 import jakarta.annotation.Nullable;
 import lombok.Cleanup;
-import lombok.extern.slf4j.Slf4j;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+import org.dom4j.*;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
+import org.dom4j.tree.DefaultElement;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -18,7 +18,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
 
 /**
  * The class consists exclusively of static method for reading file or
@@ -27,11 +26,10 @@ import java.util.stream.Stream;
  * @author Craig Brown
  * @since 1.0
  */
-@Slf4j
 public class SmpFileUtils {
 
     /**
-     * Read a source file and write the file content as a parameter to the
+     * Reads a source file and write the file content as a parameter to the
      * target file.
      *
      * @param readPath the path of read file
@@ -54,56 +52,219 @@ public class SmpFileUtils {
      * @param appendPath the path of read file
      * @throws IOException if there is an error reading the file.
      */
-    public static void readAndPutAllProperties(String writePath, String... appendPath) throws IOException {
+    public static void readAndPutAllProperties(String readPropertiesPath, String writePath, String... appendPath) throws IOException {
+        readAndPutAllProperties(readPropertiesPath,writePath,null,appendPath);
+    }
+    public static void readAndPutAllProperties(String readPropertiesPath, String writePath, @Nullable UnaryOperator<Properties> lambda, String... appendPath) throws IOException {
         Objects.requireNonNull(appendPath,"readPath must not be null");
         Objects.requireNonNull(writePath,"writePath must not be null");
         Properties writeProperties=new Properties();
-        writeProperties.load(new FileInputStream(writePath));
+        writeProperties.load(new FileInputStream(readPropertiesPath));
         Set<String> fileNameList=new HashSet<>();
         for (String appendPathItem : appendPath) {
             Path readPath = Paths.get(appendPathItem);
             fileNameList.add(readPath.getFileName().toString());
             Properties appendProperties=new Properties();
             appendProperties.load(new FileInputStream(appendPathItem));
+            if(lambda!=null)appendProperties=lambda.apply(appendProperties);
             writeProperties.putAll(appendProperties);
         }
         writeProperties.store(new FileOutputStream(writePath),"merge the content of "+StringUtils.join(fileNameList,", ")+" file");
     }
+    /**
+     * The append file content will be merged into the write file.
+     *
+     * @param writePropertiesPath the path of write file
+     * @param parentPath the path of read file
+     * @throws IOException if there is an error reading the file.
+     */
+    public static void readAndPutAllPropertiesFromParent(@Nullable String readPropertiesPath, String writePropertiesPath, String parentPath) throws IOException {
+        readAndPutAllPropertiesFromParent(readPropertiesPath, writePropertiesPath, parentPath, null);
+    }
+    public static void readAndPutAllPropertiesFromParent(@Nullable String readPropertiesPath, String writePropertiesPath, String parentPath, @Nullable UnaryOperator<Properties> lambda) throws IOException {
+        Objects.requireNonNull(parentPath,"parentPath must not be null");
+        Objects.requireNonNull(writePropertiesPath,"writePath must not be null");
+        Properties writeProperties=new Properties();
+        writeProperties.load(new FileInputStream(readPropertiesPath));
+        Set<String> fileNameList=new HashSet<>();
+        File parentFile = new File(parentPath);
+        if (!parentFile.exists())throw new RuntimeException("parentPath file doesn't exist");
+        if(parentFile.listFiles()==null)return;
+        for (File childFile : parentFile.listFiles()) {
+            Path readPath = Paths.get(childFile.getPath());
+            fileNameList.add(readPath.getFileName().toString());
+            Properties appendProperties=new Properties();
+            appendProperties.load(new FileInputStream(childFile.getPath()));
+            if(lambda!=null)appendProperties=lambda.apply(appendProperties);
+            writeProperties.putAll(appendProperties);
+        }
+        writeProperties.store(new FileOutputStream(writePropertiesPath),"merge the content of "+StringUtils.join(fileNameList,", ")+" file");
+    }
 
-    public static void readAndPutAllPom(String writePomPath, String... appendXmlPath) throws IOException, ParserConfigurationException, SAXException {
-        @Cleanup FileInputStream fileInputStream = new FileInputStream(writePomPath);
-        DefaultHandler defaultHandler = new DefaultHandler();
-        SAXParserFactory saxParserFactory = SAXParserFactory.newNSInstance();
-        SAXParser saxParser = saxParserFactory.newSAXParser();
-        saxParser.parse(fileInputStream,defaultHandler);
+    private static String xpathNS(String xpath){
+        if(!xpath.startsWith("/"))xpath="p:"+xpath;
+        return xpath.replaceAll("(?<=/)[A-z1-9]+","p:$0");
+    }
+
+    private static final class NameSpaceCleaner extends VisitorSupport {
+        public void visit(Document document) {
+            ((DefaultElement) document.getRootElement())
+                    .setNamespace(Namespace.NO_NAMESPACE);
+            document.getRootElement().additionalNamespaces().clear();
+        }
+        public void visit(Namespace namespace) {
+            if (namespace.getParent() != null) {
+                namespace.getParent().remove(namespace);
+            }
+        }
+        public void visit(Attribute node) {
+            if (node.toString().contains("xmlns")
+                    || node.toString().contains("xsi:")) {
+                node.getParent().remove(node);
+            }
+        }
+        public void visit(Element node) {
+            if (node instanceof DefaultElement) {
+                ((DefaultElement) node).setNamespace(Namespace.NO_NAMESPACE);
+                node.additionalNamespaces().clear();
+            }
+        }
+    }
+
+    @SneakyThrows
+    public static void readAndPutAllPom(String backupPomPath, String writePomPath, String appendXmlPath)  {
+        //A. parse file
+        SAXReader saxReader=new SAXReader();
+        HashMap pomNameSpaceMap=new HashMap();
+        Document readPomDocument = saxReader.read(backupPomPath);
+        String namespaceURI = ((DefaultElement) readPomDocument.getRootElement()).getNamespaceURI();
+        pomNameSpaceMap.put("p",namespaceURI);
+        Document appendPomDocument = saxReader.read(appendXmlPath);
+        //A. foreach replace in append.xml
+        List<Node> replaceNodeList = appendPomDocument.selectNodes("/root/replace");
+        List<Node> appendNodeList = appendPomDocument.selectNodes("/root/append");
+        for (Node replaceNode : replaceNodeList) {
+            if(replaceNode.getNodeType()!=Node.ELEMENT_NODE)continue;
+            Element replaceElement=(Element) replaceNode;
+            String replaceNodeXpath = replaceElement.attributeValue("xpath");
+            XPath replaceNodeXpathSecond = createNSXpath(pomNameSpaceMap, readPomDocument, replaceNodeXpath);
+            List<Node> pomCheckParentNodeList= replaceNodeXpathSecond.selectNodes(readPomDocument);
+            // if(!pomCheckParentNodeList.isEmpty())pomCheckParentNodeList.get(0).getParent().accept(new NameSpaceCleaner());
+            //B. foreach ele in append.xml
+            List<Element> elements = replaceElement.elements();
+            for (Element element : elements) {
+                String eleXpath = element.attributeValue("xpath");
+                String eleValue = element.attributeValue("value");
+                Element firstElement = element.elements().get(0);
+                String eleString = element.asXML();
+                //B. foreach parent elements in pom.xml to find the ele
+                for (Node pomCheckParentNode : pomCheckParentNodeList) {
+                    Element parent = pomCheckParentNode.getParent();
+                    if(pomCheckParentNode.getNodeType()!=Node.ELEMENT_NODE)continue;
+                    Element pomCheckParentElement=(Element) pomCheckParentNode;
+                    XPath eleNsXpath = createNSXpath(pomNameSpaceMap, pomCheckParentElement, eleXpath);
+                    Node pomCheck = eleNsXpath.selectSingleNode(pomCheckParentElement);
+                    if(pomCheck.getNodeType()!=Node.ELEMENT_NODE)continue;
+                    Element pomCheckElement=(Element) pomCheck;
+                    String text = pomCheckElement.getText();
+                    if(text!=null&&text.equals(eleValue)){
+                        pomCheckParentElement.accept(new NameSpaceCleaner());
+                        List<Element> parentElementList = parent.elements();
+                        DefaultElement clone = (DefaultElement)firstElement.clone();
+                        synchronizeNameSpace(clone, readPomDocument);
+                        parentElementList.add(parentElementList.indexOf(pomCheckParentNode),clone);
+                        parent.remove(pomCheckParentElement);
+                    }
+                }
+            }
+        }
+        for (Node appendNode : appendNodeList) {
+            if(appendNode.getNodeType()!=Node.ELEMENT_NODE)continue;
+            Element apppendElement=(Element) appendNode;
+            String parentXpathString = apppendElement.attributeValue("parent-xpath");
+            XPath parentXpath = createNSXpath(pomNameSpaceMap, readPomDocument, parentXpathString);
+            Node pomCheckParentNode= parentXpath.selectSingleNode(readPomDocument);
+            Element pomCheckParentElement=(Element) pomCheckParentNode;
+            Element firstElement = apppendElement.elements().get(0);
+            DefaultElement clone = (DefaultElement)firstElement.clone();
+            synchronizeNameSpace(clone, readPomDocument);
+            pomCheckParentElement.elements().add(clone);
+        }
+        @Cleanup FileWriter fileWriterJava = new FileWriter(writePomPath);
+        OutputFormat format = OutputFormat.createPrettyPrint();
+        XMLWriter xmlWriter = new XMLWriter(fileWriterJava, format);
+        xmlWriter.write( readPomDocument );
+    }
+
+    private static void synchronizeNameSpace(DefaultElement clone, Document readPomDocument) {
+        clone.setNamespace(readPomDocument.getRootElement().getNamespace());
+        for (Element element1 : clone.elements()) {
+            DefaultElement elementDefault = (DefaultElement)element1;
+            elementDefault.setNamespace(readPomDocument.getRootElement().getNamespace());
+        }
+    }
+
+    private static XPath createNSXpath(HashMap pomNameSpaceMap, Node readPomDocument, String replaceNodeXpath) {
+        XPath replaceNodeXpathSecond = readPomDocument.createXPath(xpathNS(replaceNodeXpath));
+        replaceNodeXpathSecond.setNamespaceURIs(pomNameSpaceMap);
+        return replaceNodeXpathSecond;
     }
 
 
+    /**
+     * 拼接路径和包名
+     * @param path  路径
+     * @param packageName   包名
+     * @return  拼接路径
+     */
+    public static String joinPathAndPackage(String path,String... packageName){
+        for (String name : packageName) {
+            name=name.replace(".",File.separator);
+            path=path+File.separator;
+            path=path.concat(name);
+        }
+        return path;
+    }
+
+
+    /**
+     * Join multi Path
+     * @return result path
+     */
+    public static String joinPath(String... pathList){
+        if (pathList.length==0)throw new RuntimeException("empty pathList");
+        if(pathList.length==1)return pathList[0];
+        List<String> resultList=new ArrayList<>();
+        resultList.add(pathList[0]);
+        for (int i = 1; i < pathList.length; i++) {
+            String currentItem=pathList[i];
+            if(currentItem.length()==0)continue;
+            String beforeItem=pathList[i-1];
+            Boolean isBefore=beforeItem.endsWith(File.separator);
+            Boolean isCurrent=currentItem.startsWith(File.separator);
+            if(isBefore&&isCurrent){
+                currentItem=currentItem.substring(1);
+            }else if(!isBefore&&!isCurrent){
+                currentItem=File.separator+currentItem;
+            }
+            resultList.add(currentItem);
+        }
+        return StringUtils.join(resultList.toArray());
+    }
 
 
 
     private static final String SDK_MARK_TAG="SDK_MARK_TAG";
     private static final String SDK_RETURN_MARK_TAG="SDK_RETURN_MARK_TAG";
     private static final ThreadLocal<Boolean> alreadyMarked=new ThreadLocal<>();
-
-        /**
-         * 读写文件，对每一行做操作
-         * 可选功能：根据readAndWriteTheSameFileLambda返回的内容，标记一行，向下获取信息（不写入新行），再返回之前地那一行
-         *         返回 "SDK_MARK_TAG"             标记行
-         *         返回 "SDK_RETURN_MARK_TAGxxx"  返回标记行，同时 写入 标记行 查询信息后的最终内容
-         */
-
     public static void readWriteBackupFile(String readOrWritePath, @Nullable String writePath, @Nullable String appendContent, Function<String,String> lambda) throws IOException {
         Objects.requireNonNull(readOrWritePath,"readPath must not be null");
         Objects.requireNonNull(lambda,"lambda must not be null");
         File readFile = new File(readOrWritePath);
         File writeFile;
-        //Assert.isFalse(readFile.exists(),"read file not exist");
-        //A. writePath不存在时，创建临时文件
         if(writePath==null){
             File readTempFile = File.createTempFile(readFile.getName(), ".backup");
             org.apache.commons.io.FileUtils.copyFile(readFile,readTempFile);
-            log.info("created temp file: {}",readTempFile.getPath());
             readFile=readTempFile;
             writeFile=new File(readOrWritePath);
         }else{
@@ -115,7 +276,6 @@ public class SmpFileUtils {
         if(isSameFile){
             readFile = File.createTempFile(readFile.getName(), ".backup");  // 临时读取文件
             org.apache.commons.io.FileUtils.copyFile(writeFile,readFile);
-            log.info("create temp file successfully: {}",readFile.getPath());
         }
         //A. 执行匿名函数
         try {
@@ -138,7 +298,6 @@ public class SmpFileUtils {
             }
             if(StringUtils.isNotBlank(appendContent))bufferedWriter.write(appendContent);
             if(Boolean.TRUE.equals(alreadyMarked.get())){
-                log.error("didn't return SDK_RETURN_MARK_TAG");
                 alreadyMarked.set(false);
             }
             bufferedReader.close();
@@ -149,111 +308,8 @@ public class SmpFileUtils {
         //A. 删除临时文件
         if(isSameFile&&!readFile.delete()) {
             throw new RuntimeException("delete file error: "+readFile.getPath());
-        }else{
-            log.info("delete temp file successfully: {}",readFile.getPath());
         }
     }
 
-    /**
-     * 拼接路径和包名
-     * @param path  路径
-     * @param packageName   包名
-     * @return  拼接路径
-     */
-    public static String joinPathAndPackage(String path,String packageName){
-        packageName=packageName.replace(".",File.separator);
-        path=path+File.separator;
-        return path.concat(packageName);
-    }
-
-
-    /**
-     * 拼接多路径
-     * @return
-     */
-    public static String joinPath(String... pathList){
-        if (pathList.length==0){
-            throw new RuntimeException("empty pathList");
-        };
-        if(pathList.length==1)return pathList[0];
-
-        List<String> resultList=new ArrayList<>();
-        resultList.add(pathList[0]);
-        for (int i = 1; i < pathList.length; i++) {
-            String currentItem=pathList[i];
-            if(currentItem.length()==0)continue;
-            String beforeItem=pathList[i-1];
-            Boolean isBefore=beforeItem.endsWith(File.separator);
-            Boolean isCurrent=currentItem.startsWith(File.separator);
-            if(isBefore&&isCurrent){
-                currentItem=currentItem.substring(1);
-            }else if(!isBefore&&!isCurrent){
-                currentItem=File.separator+currentItem;
-            }
-            resultList.add(currentItem);
-        }
-        return StringUtils.join(resultList.toArray());
-    }
-
-    /**
-     * 清空其他文件，除了以 excludeFileOrFolder 开头的
-     * @param sourcePath
-     * @param excludeFileOrFolder
-     */
-    public static void clearOtherFilesStartsWith(String sourcePath,String excludeFileOrFolder){
-        File source =new File(sourcePath);
-        File[] listFiles = source.listFiles();
-        assert listFiles != null;
-        for( File currentFile:listFiles){
-            if(currentFile.getName().startsWith(excludeFileOrFolder))continue;
-            try {
-                deleteFileOrDirectory(currentFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Clear other files in sourcePath except fileName starts with stringList.
-     *
-     * @param sourcePath
-     * @param stringList
-     */
-    public static void clearOtherFilesStartsWithByList(String sourcePath, List<String> stringList ){
-        File source =new File(sourcePath);
-        File[] listFiles = source.listFiles();
-        if(listFiles==null||listFiles.length==0)return;
-        for( File currentFile:listFiles){
-            if(stringList.stream().anyMatch(item->currentFile.getName().startsWith(item))){
-                continue;
-            }
-            try {
-                deleteFileOrDirectory(currentFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private static void deleteFileOrDirectory(File file) throws IOException {
-        if(file.isDirectory()){
-            try (Stream<Path> walk = Files.walk(Paths.get(file.getPath()))) {
-                walk.sorted(Comparator.reverseOrder())
-                        .forEach(SmpFileUtils::deleteDirectoryStream);
-            }
-        }else{
-            deleteDirectoryStream(Paths.get(file.getPath()));
-        }
-    }
-
-    private static void deleteDirectoryStream(Path path) {
-        try {
-            Files.delete(path);
-            System.out.printf("删除文件成功：%s%n",path.toString());
-        } catch (IOException e) {
-            System.err.printf("无法删除的路径 %s%n%s", path, e);
-        }
-    }
 
 }

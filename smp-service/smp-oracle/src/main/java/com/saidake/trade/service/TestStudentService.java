@@ -2,6 +2,7 @@ package com.saidake.trade.service;
 
 import com.saidake.trade.domain.test.TestStudentAddRequest;
 import com.saidake.trade.domain.test.TestStudentUpdateRequest;
+import com.saidake.trade.entity.TestPersonEntity;
 import com.saidake.trade.entity.TestStudentEntity;
 import com.saidake.trade.repository.TestStudentRepository;
 import com.saidake.trade.repository.TestStudentSaveLogRepository;
@@ -26,6 +27,11 @@ public class TestStudentService  {
     private TestStudentSaveLogRepository testStudentSaveLogRepository;
 
     public ResponseEntity<List<TestStudentEntity>> listHandler(Integer page, Integer limit) {
+        testStudentRepository.findFirstByStuId(5L);
+        TestStudentEntity byStuIdOrRole1 = testStudentRepository.findByStuIdOrRole(4L, "leader", PageRequest.of(0,1)).get(0);
+        TestStudentEntity byStuIdOrRole2= testStudentRepository.findByStuIdOrRole(3L, "monitor", PageRequest.of(0,1)).get(0);
+        TestStudentEntity byStuIdOrRole3 = testStudentRepository.findFirstByStuIdOrRole(4L, "leader");
+        TestStudentEntity byStuIdOrRole4= testStudentRepository.findFirstByStuIdOrRole(3L, "monitor");
         return ResponseEntity.ok(testStudentRepository.findAll(PageRequest.of(page,limit)).getContent());
     }
 

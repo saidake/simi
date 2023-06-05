@@ -50,7 +50,6 @@
         <poi.version>5.2.1</poi.version>
         <poi-ooxml.version>5.2.1</poi-ooxml.version>
         <easyexcel.version>3.2.1</easyexcel.version>
-        <dom4j.version>2.1.4</dom4j.version>
     </properties>
 
     <dependencies>
@@ -202,8 +201,8 @@
                 <version>${poi.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi-ooxml</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <version>${poi-ooxml.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
@@ -211,11 +210,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.dom4j</groupId>
-                <artifactId>dom4j</artifactId>
-                <version>${dom4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -227,7 +221,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>

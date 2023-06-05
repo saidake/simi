@@ -1,4 +1,4 @@
-db.test.drop();
+db.createCollection("test");
 db.test.insertMany(
     [{
         "entity_no":"233456",

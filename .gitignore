@@ -6,3 +6,5 @@ node_modules/
 .gradle/
 build/
 classes/
+/LOCAL.md
+/VERSION.md
