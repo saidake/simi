@@ -1,0 +1,28 @@
+project:
+  - name: smp-oracle
+    path: C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle
+    env: UAT
+    fileList:
+      # - write: src/main/resources/application-local.properties
+      #   read: /${project.name}/${project.env}
+      #   type: append-properties-folder
+      #   backup: current
+
+      # - write: src/main/resources/application-test.properties
+      #   read: /${project.name}/test.properties
+      #   type: append-properties
+      #   backup: current
+
+      # - write: src/main/resources/logback.xml
+      #   read: /${project.name}/logback.test.xml
+      #   type: replace-all
+
+      # - write: src/main/resources/application-test.properties
+      #   read: /${project.name}/test.rp
+      #   type: append-string
+      #   backup: current
+
+      - write: src/test/java/com/saidake/pom.xml
+        read: /${project.name}/pom-append.xml
+        type: pom
+        backup: current

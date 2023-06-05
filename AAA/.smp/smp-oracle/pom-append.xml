@@ -1,0 +1,18 @@
+<root>
+    <replace xpath="/project/dependencyManagement/dependencies/dependency">
+        <ele xpath="artifactId" value="maven-compiler-plugin">
+            <dependency>
+                <groupId>org.saidake.mmp</groupId>
+                <artifactId>smp</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+        </ele>
+    </replace>
+    <append parent-xpath="/project/dependencies">
+        <dependency>
+            <groupId>org.saidake.mmp</groupId>
+            <artifactId>smp</artifactId>
+            <version>baba</version>
+        </dependency>
+    </append>
+</root>
