@@ -28,21 +28,16 @@ import java.util.function.UnaryOperator;
  */
 public class SmpFileUtils {
 
-    private static String REPLACE_NODE_NAME="replace";
-
-    private static String APPEND_NODE_NAME="append";
-
     /**
      * Reads a source file and write the file content as a parameter to the
      * target file.
      *
-     * @param readPath the path of read file
+     * @param readPath the path of read file。(readPath can be exactly the same as writePath)
      * @param writePath the path of write file
      * @param lambda how to handle read strings
      * @throws IOException if there is an error reading the file.
      */
     public static void readAndWriteStringFile(String readPath, String writePath, UnaryOperator<String> lambda) throws IOException {
-        Objects.requireNonNull(readPath,"readPath must not be null");
         Objects.requireNonNull(writePath,"writePath must not be null");
         Objects.requireNonNull(lambda,"lambda must not be null");
         String readString = Files.readString(Paths.get(readPath));
@@ -52,18 +47,18 @@ public class SmpFileUtils {
     /**
      * The append file content will be merged into the write file.
      *
-     * @param writePath the path of write file
+     * @param readPropertiesPath the path of read file。(readPropertiesPath can be exactly the same as writePropertiesPath)
+     * @param writePropertiesPath the path of write file。
+     * @param lambda lambda
      * @param appendPath the path of read file
      * @throws IOException if there is an error reading the file.
      */
-    public static void readAndPutAllProperties(String readPropertiesPath, String writePath, String... appendPath) throws IOException {
-        readAndPutAllProperties(readPropertiesPath,writePath,null,appendPath);
-    }
-    public static void readAndPutAllProperties(String readPropertiesPath, String writePath, @Nullable UnaryOperator<Properties> lambda, String... appendPath) throws IOException {
+    public static void readAndPutAllProperties(@Nullable String readPropertiesPath, String writePropertiesPath, @Nullable UnaryOperator<Properties> lambda, String... appendPath) throws IOException {
         Objects.requireNonNull(appendPath,"readPath must not be null");
-        Objects.requireNonNull(writePath,"writePath must not be null");
+        Objects.requireNonNull(writePropertiesPath,"writePath must not be null");
         Properties writeProperties=new Properties();
-        writeProperties.load(new FileInputStream(readPropertiesPath));
+        @Cleanup FileInputStream fileInputStream = new FileInputStream(readPropertiesPath);
+        writeProperties.load(fileInputStream);
         Set<String> fileNameList=new HashSet<>();
         for (String appendPathItem : appendPath) {
             Path readPath = Paths.get(appendPathItem);
@@ -73,18 +68,17 @@ public class SmpFileUtils {
             if(lambda!=null)appendProperties=lambda.apply(appendProperties);
             writeProperties.putAll(appendProperties);
         }
-        writeProperties.store(new FileOutputStream(writePath),"merge the content of "+StringUtils.join(fileNameList,", ")+" file");
+        @Cleanup FileOutputStream fileOutputStream = new FileOutputStream(writePropertiesPath);
+        writeProperties.store(fileOutputStream,"merge the content of "+StringUtils.join(fileNameList,", ")+" file");
     }
     /**
      * The append file content will be merged into the write file.
      *
-     * @param writePropertiesPath the path of write file
+     * @param readPropertiesPath the path of read file。(readPropertiesPath can be exactly the same as writePropertiesPath)
+     * @param writePropertiesPath the path of write file。
      * @param parentPath the path of read file
      * @throws IOException if there is an error reading the file.
      */
-    public static void readAndPutAllPropertiesFromParent(@Nullable String readPropertiesPath, String writePropertiesPath, String parentPath) throws IOException {
-        readAndPutAllPropertiesFromParent(readPropertiesPath, writePropertiesPath, parentPath, null);
-    }
     public static void readAndPutAllPropertiesFromParent(@Nullable String readPropertiesPath, String writePropertiesPath, String parentPath, @Nullable UnaryOperator<Properties> lambda) throws IOException {
         Objects.requireNonNull(parentPath,"parentPath must not be null");
         Objects.requireNonNull(writePropertiesPath,"writePath must not be null");
@@ -202,9 +196,9 @@ public class SmpFileUtils {
 
     private static void synchronizeNameSpace(DefaultElement clone, Document readPomDocument) {
         clone.setNamespace(readPomDocument.getRootElement().getNamespace());
-        for (Element element1 : clone.elements()) {
-            DefaultElement elementDefault = (DefaultElement)element1;
-            elementDefault.setNamespace(readPomDocument.getRootElement().getNamespace());
+        for (Element elementChild : clone.elements()) {
+            DefaultElement elementDefault = (DefaultElement)elementChild;
+            synchronizeNameSpace(elementDefault, readPomDocument);
         }
     }
 

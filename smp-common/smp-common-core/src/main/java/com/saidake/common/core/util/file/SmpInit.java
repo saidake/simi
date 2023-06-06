@@ -7,12 +7,9 @@ import com.saidake.common.core.util.file.support.smyml.WriteInfo;
 import com.saidake.common.core.util.file.support.smyml.WriteTypeEnum;
 import jakarta.annotation.Nullable;
 import org.apache.commons.io.FileUtils;
-import org.xml.sax.SAXException;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,22 +30,30 @@ import java.util.regex.Pattern;
  * @author Craig Brown
  */
 public class SmpInit {
-    private static final String configPath="C:\\Users\\saidake\\Desktop\\.smp";
+    private static final String configPath=Paths.get(System.getProperty("user.home"),".smp").toString();
+    private static final String configEscapePath=configPath.replaceAll("\\\\","\\\\\\\\");
 
     private static final String SMP_CONFIG_FILE="smp.yml";
     private static final String RP_FILE_SEPARATOR="$$$";
     private static final String BACKUP_SUFFIX=".backup";
 
     public static void init() throws IOException {
+        System.out.println(configEscapePath);
         Yaml smpYml=new Yaml(new Constructor(SmpYmlProperties.class));
         String smpYamlPath = Paths.get(configPath, SMP_CONFIG_FILE).toString();
         FileInputStream fileInputStream = new FileInputStream(smpYamlPath);
         SmpYmlProperties smpYmlProperties = smpYml.loadAs(fileInputStream,SmpYmlProperties.class);
         //A.[CORE] write files
+        Map<String, Boolean> writeFileMap=new HashMap<>();
         for (ProjectInfo projectInfo : smpYmlProperties.getProject()) {
             for (WriteInfo writeInfo : projectInfo.getFileList()) {
                 String writeFilePath = Paths.get(projectInfo.getPath(), writeInfo.getWrite()).toString();
-                String backUpFilePath= createBackupFile(writeInfo.getBackup(), writeFilePath);
+                String backUpFilePath;
+                if(writeFileMap.get(writeFilePath)!=null)backUpFilePath=null; // The file has been written.
+                else {
+                    backUpFilePath= createBackupFile(writeInfo.getBackup(), writeFilePath);
+                    writeFileMap.put(writeFilePath,true);
+                }
                 String readFilePath = replaceProjectInfoString(Paths.get(configPath, writeInfo.getRead()).toString(), projectInfo);
                 handleWriteInfo(writeInfo.getType(), writeFilePath, backUpFilePath, readFilePath, projectInfo);
             }
@@ -58,19 +63,20 @@ public class SmpInit {
 
     private static void handleWriteInfo(String type, String writeFilePath, @Nullable String backUpFilePath, String readFilePath, ProjectInfo projectInfo) throws IOException {
         WriteTypeEnum writeTypeEnum = WriteTypeEnum.fromValue(type);
+        String resultReadFilePath=backUpFilePath==null?writeFilePath:backUpFilePath;
         switch (writeTypeEnum){
             case APPEND_PROPERTIES_FOLDER -> {
-                SmpFileUtils.readAndPutAllPropertiesFromParent(backUpFilePath, writeFilePath, readFilePath, properties -> replacePropertiesProjectString(projectInfo, properties));
+                SmpFileUtils.readAndPutAllPropertiesFromParent(resultReadFilePath, writeFilePath, readFilePath, properties -> replacePropertiesProjectString(projectInfo, properties));
             }
             case APPEND_PROPERTIES -> {
-                SmpFileUtils.readAndPutAllProperties(backUpFilePath, writeFilePath, properties -> replacePropertiesProjectString(projectInfo, properties), readFilePath);
+                SmpFileUtils.readAndPutAllProperties(resultReadFilePath, writeFilePath, properties -> replacePropertiesProjectString(projectInfo, properties), readFilePath);
             }
             case REPLACE_ALL -> {
                 FileUtils.writeStringToFile(new File(writeFilePath),Files.readString(Paths.get(readFilePath)), StandardCharsets.UTF_8);
             }
             case REPLACE_STRING -> {
                 Map<String, String> stringStringMap = loadRpFile(readFilePath);
-                SmpFileUtils.readAndWriteStringFile(backUpFilePath, writeFilePath, source->{
+                SmpFileUtils.readAndWriteStringFile(resultReadFilePath, writeFilePath, source->{
                     for (String keyReplace : stringStringMap.keySet()) {
                         String value = stringStringMap.get(keyReplace);
                         String valueResult = replaceProjectInfoString(value, projectInfo);
@@ -81,17 +87,16 @@ public class SmpInit {
             }
             case APPEND_STRING -> {
                 String appendString = Files.readString(Paths.get(readFilePath));
-                SmpFileUtils.readAndWriteStringFile(backUpFilePath, writeFilePath, source->source+System.lineSeparator()+appendString);
+                SmpFileUtils.readAndWriteStringFile(resultReadFilePath, writeFilePath, source->source+System.lineSeparator()+appendString);
             }
             case LINE_NUMBER -> {
                 Map<String, String> stringStringMap = loadRpFile(readFilePath);
                 final Integer[] lineNumber = {0};
-                SmpFileUtils.readWriteBackupFile(backUpFilePath, writeFilePath, null, sourceLine ->{
+                SmpFileUtils.readWriteBackupFile(resultReadFilePath, writeFilePath, null, sourceLine ->{
                     lineNumber[0]++;
                     String value = stringStringMap.get(lineNumber[0].toString());
                     if(value==null)return sourceLine+System.lineSeparator();
-                    String valueResult = replaceProjectInfoString(value, projectInfo);
-                    return valueResult;
+                    return replaceProjectInfoString(value, projectInfo);
                 });
             }
             case POM -> {
@@ -147,6 +152,6 @@ public class SmpInit {
         return path.replaceAll(Pattern.quote(projectNameRegex),projectInfo.getName())
                 .replaceAll(Pattern.quote(projectEnvRegex),projectInfo.getEnv())
                 .replaceAll(Pattern.quote(projectPathRegex),Matcher.quoteReplacement(projectInfo.getPath()))
-                .replaceAll(Pattern.quote(configPathRegex),Matcher.quoteReplacement(configPath));
+                .replaceAll(Pattern.quote(configPathRegex),Matcher.quoteReplacement(configEscapePath));
     }
 }
