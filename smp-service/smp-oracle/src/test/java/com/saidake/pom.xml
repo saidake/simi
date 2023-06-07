@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.6</version>
-        <relativePath/>
-        <!-- lookup parent from repository -->
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <packaging>pom</packaging>
     <groupId>com.saidake</groupId>
@@ -16,11 +13,13 @@
     <version>1.0</version>
     <name>smp-parent</name>
     <description>smp-parent</description>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
+
         <!--======================================================================================================= 核心 -->
         <spring-boot-dependencies.version>3.0.5</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2022.0.2</spring-cloud-dependencies.version>
@@ -51,6 +50,7 @@
         <poi-ooxml.version>5.2.1</poi-ooxml.version>
         <easyexcel.version>3.2.1</easyexcel.version>
     </properties>
+
     <dependencies>
         <!--======================================================================================================= 核心 -->
         <dependency>
@@ -73,17 +73,16 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool-all.version}</version>
         </dependency>
-        <dependency>
+    <dependency>
             <groupId>org.saidake.mmp</groupId>
             <artifactId>smp</artifactId>
             <version>baba</version>
-        </dependency>
-    </dependencies>
+        </dependency></dependencies>
+
     <dependencyManagement>
         <dependencies>
             <!--======================================================================================================= 核心 -->
-            <dependency>
-                <!--  Spring Boot依赖管理 -->
+            <dependency>                                                             <!--  Spring Boot依赖管理 -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot-dependencies.version}</version>
@@ -92,8 +91,7 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <!--  Spring Cloud 依赖管理 -->
+                <artifactId>spring-cloud-dependencies</artifactId>                   <!--  Spring Cloud 依赖管理 -->
                 <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -224,6 +222,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -236,4 +235,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

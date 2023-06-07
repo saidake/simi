@@ -3,9 +3,9 @@ package com.saidake.common.core.util.file;
 import jakarta.annotation.Nullable;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
-import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
@@ -26,6 +26,7 @@ import java.util.function.UnaryOperator;
  * @author Craig Brown
  * @since 1.0
  */
+@Slf4j
 public class SmpFileUtils {
 
     /**
@@ -131,9 +132,12 @@ public class SmpFileUtils {
 
     @SneakyThrows
     public static void readAndPutAllPom(String backupPomPath, String writePomPath, String appendXmlPath)  {
+        Objects.requireNonNull(appendXmlPath,"appendXmlPath must not be null");
+        Objects.requireNonNull(backupPomPath,"backupPomPath must not be null");
+        Objects.requireNonNull(writePomPath,"writePomPath must not be null");
         //A. parse file
         SAXReader saxReader=new SAXReader();
-        HashMap pomNameSpaceMap=new HashMap();
+        HashMap<String,String> pomNameSpaceMap=new HashMap();
         Document readPomDocument = saxReader.read(backupPomPath);
         String namespaceURI = ((DefaultElement) readPomDocument.getRootElement()).getNamespaceURI();
         pomNameSpaceMap.put("p",namespaceURI);
@@ -189,8 +193,7 @@ public class SmpFileUtils {
             pomCheckParentElement.elements().add(clone);
         }
         @Cleanup FileWriter fileWriterJava = new FileWriter(writePomPath);
-        OutputFormat format = OutputFormat.createPrettyPrint();
-        XMLWriter xmlWriter = new XMLWriter(fileWriterJava, format);
+        XMLWriter xmlWriter = new XMLWriter(fileWriterJava);
         xmlWriter.write( readPomDocument );
     }
 

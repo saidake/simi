@@ -11,7 +11,9 @@ public enum WriteTypeEnum {
     REPLACE_ALL("replace-all"),
     APPEND_STRING("append-string"),
     REPLACE_STRING("replace-string"),
-    LINE_NUMBER("line-number"),
+    LINE_REPLACE("line-replace"),
+    LINE_APPEND("line-append"),
+    JAVA_ANNOTATION("java-annotation"),
     POM("pom");
     private String value;
 

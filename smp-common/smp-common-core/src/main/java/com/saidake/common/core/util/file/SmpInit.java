@@ -16,10 +16,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +35,6 @@ public class SmpInit {
     private static final String BACKUP_SUFFIX=".backup";
 
     public static void init() throws IOException {
-        System.out.println(configEscapePath);
         Yaml smpYml=new Yaml(new Constructor(SmpYmlProperties.class));
         String smpYamlPath = Paths.get(configPath, SMP_CONFIG_FILE).toString();
         FileInputStream fileInputStream = new FileInputStream(smpYamlPath);
@@ -47,21 +43,28 @@ public class SmpInit {
         Map<String, Boolean> writeFileMap=new HashMap<>();
         for (ProjectInfo projectInfo : smpYmlProperties.getProject()) {
             for (WriteInfo writeInfo : projectInfo.getFileList()) {
+                //B. get write file path
                 String writeFilePath = Paths.get(projectInfo.getPath(), writeInfo.getWrite()).toString();
-                String backUpFilePath;
-                if(writeFileMap.get(writeFilePath)!=null)backUpFilePath=null; // The file has been written.
-                else {
+                String backUpFilePath=null;
+                if(writeFileMap.get(writeFilePath)==null){  // The file has not been written.
                     backUpFilePath= createBackupFile(writeInfo.getBackup(), writeFilePath);
                     writeFileMap.put(writeFilePath,true);
                 }
-                String readFilePath = replaceProjectInfoString(Paths.get(configPath, writeInfo.getRead()).toString(), projectInfo);
+                //B. get read file path
+                String readFilePath =null;
+                if(writeInfo.getRead()!=null){
+                    if(writeInfo.getRead().startsWith("/"))readFilePath=replaceProjectInfoString(Paths.get(configPath, writeInfo.getRead()).toString(), projectInfo);
+                    else readFilePath=replaceProjectInfoString(Paths.get(writeInfo.getRead()).toString(), projectInfo);
+                    System.out.println(readFilePath);
+                }
+                System.out.println(writeInfo.getRead());
                 handleWriteInfo(writeInfo.getType(), writeFilePath, backUpFilePath, readFilePath, projectInfo);
             }
         }
     }
 
 
-    private static void handleWriteInfo(String type, String writeFilePath, @Nullable String backUpFilePath, String readFilePath, ProjectInfo projectInfo) throws IOException {
+    private static void handleWriteInfo(String type, String writeFilePath, @Nullable String backUpFilePath, @Nullable String readFilePath, ProjectInfo projectInfo) throws IOException {
         WriteTypeEnum writeTypeEnum = WriteTypeEnum.fromValue(type);
         String resultReadFilePath=backUpFilePath==null?writeFilePath:backUpFilePath;
         switch (writeTypeEnum){
@@ -72,9 +75,11 @@ public class SmpInit {
                 SmpFileUtils.readAndPutAllProperties(resultReadFilePath, writeFilePath, properties -> replacePropertiesProjectString(projectInfo, properties), readFilePath);
             }
             case REPLACE_ALL -> {
+                Objects.requireNonNull(readFilePath,"readFilePath must not be null");
                 FileUtils.writeStringToFile(new File(writeFilePath),Files.readString(Paths.get(readFilePath)), StandardCharsets.UTF_8);
             }
             case REPLACE_STRING -> {
+                Objects.requireNonNull(readFilePath,"readFilePath must not be null");
                 Map<String, String> stringStringMap = loadRpFile(readFilePath);
                 SmpFileUtils.readAndWriteStringFile(resultReadFilePath, writeFilePath, source->{
                     for (String keyReplace : stringStringMap.keySet()) {
@@ -86,17 +91,35 @@ public class SmpInit {
                 });
             }
             case APPEND_STRING -> {
+                Objects.requireNonNull(readFilePath,"readFilePath must not be null");
                 String appendString = Files.readString(Paths.get(readFilePath));
                 SmpFileUtils.readAndWriteStringFile(resultReadFilePath, writeFilePath, source->source+System.lineSeparator()+appendString);
             }
-            case LINE_NUMBER -> {
+            case LINE_REPLACE -> {
+                Objects.requireNonNull(readFilePath,"readFilePath must not be null");
                 Map<String, String> stringStringMap = loadRpFile(readFilePath);
                 final Integer[] lineNumber = {0};
                 SmpFileUtils.readWriteBackupFile(resultReadFilePath, writeFilePath, null, sourceLine ->{
                     lineNumber[0]++;
                     String value = stringStringMap.get(lineNumber[0].toString());
                     if(value==null)return sourceLine+System.lineSeparator();
-                    return replaceProjectInfoString(value, projectInfo);
+                    return replaceProjectInfoString(value, projectInfo)+System.lineSeparator();
+                });
+            }
+            case LINE_APPEND -> {
+                Objects.requireNonNull(readFilePath,"readFilePath must not be null");
+                Map<String, String> stringStringMap = loadRpFile(readFilePath);
+                final Integer[] lineNumber = {0};
+                SmpFileUtils.readWriteBackupFile(resultReadFilePath, writeFilePath, null, sourceLine ->{
+                    lineNumber[0]++;
+                    String value = stringStringMap.get(lineNumber[0].toString());
+                    if(value==null)return sourceLine+System.lineSeparator();
+                    return sourceLine+System.lineSeparator()+replaceProjectInfoString(value, projectInfo)+System.lineSeparator();
+                });
+            }
+            case JAVA_ANNOTATION -> {
+                SmpFileUtils.readWriteBackupFile(resultReadFilePath, writeFilePath, null, sourceLine ->{
+                    return "//"+sourceLine+System.lineSeparator();
                 });
             }
             case POM -> {
