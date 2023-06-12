@@ -1,6 +1,6 @@
-#<font style="color:cyan">plugin introduction</font>
-##<font style="color:pink">smp-plugin (Plugin Integration)</font>
-###<font style="color:yellow">Smp Init</font><br/>
+#<span style="color:cyan">plugin introduction</span>
+##<span style="color:pink">smp-plugin (Plugin Integration)</span>
+###<span style="color:yellow">Smp Init</span><br/>
 Init project files by the default config file: .smp/smp.yml.
 Prerequisite:<br/>
 Include the configuration file in the user directory: ~/.smp/smp-init.yml<br/>
@@ -108,12 +108,12 @@ Even in the RP file, you can still access the env properties:<br/>
 </root>
 ```
 
-#<font style="color:cyan">service introduction</font>
-##<font style="color:pink">sdk-common</font>
+#<span style="color:cyan">service introduction</span>
+##<span style="color:pink">sdk-common</span>
 sdk-common-core (Core Components)
-##<font style="color:pink">sdk-integration (Gateway Integration)</font>
+##<span style="color:pink">sdk-integration (Gateway Integration)</span>
 sdk-eureka  [Registration Center](http://localhost:48992)
-##<font style="color:pink">sdk-service (Service Integration)</font>
+##<span style="color:pink">sdk-service (Service Integration)</span>
 sdk-mysql  [Mysql Service](http://localhost:48123/swagger-ui.html) <br/>
 sdk-oracle [Oracle Service](http://localhost:48124/swagger-ui.html) <br/>
 
