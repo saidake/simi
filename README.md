@@ -1,7 +1,7 @@
 # <span style="color:cyan">plugin introduction</span>
 ## <span style="color:pink">smp-plugin (Plugin Integration)</span>
-### <span style="color:yellow">Smp Init</span><br/>
-Init project files by the default config file: .smp/smp.yml.
+### <span style="color:yellow">Smp Init</span>
+Init project files by the default config file: .smp/smp.yml.<br/>
 Prerequisite:<br/>
 Include the configuration file in the user directory: ~/.smp/smp-init.yml<br/>
 
@@ -76,10 +76,12 @@ sourceValue$$$ReplaceValue
 ```
 Key values are separated by '$$$'
 Even in the RP file, you can still access the env properties:<br/>
-   ${project.name}   The project name of the current project. // smp-oracle<br/>
-   ${project.path}   The project path of the current project. // smp-oracle<br/>
-   ${project.env}    The ENV of the current project. // smp-oracle<br/>
-   ${smp}            The "~/.smp" configuration path<br/>
+<ul>
+   <li>${project.name}   The project name of the current project. // smp-oracle</li>
+   <li>${project.path}   The project path of the current project. // smp-oracle</li>
+   <li>${project.env}    The ENV of the current project. // smp-oracle</li>
+   <li>${smp}            The "~/.smp" configuration path</li>
+</ul>
 
 ```xml
 <root>
