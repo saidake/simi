@@ -1,16 +1,10 @@
 <idea-plugin>
     <id>org.saidake.smp-init</id>
-    <name>Smp Init</name>
-    <vendor email="scottdavisddd@gmail.com" >saidake</vendor>
+    <name>smp-init</name>
+    <vendor email="saidake@qq.com" >saidake</vendor>
 
     <description><![CDATA[
-        <a href="https://github.com/saidake/saidake-manage-project">Plugin Usage Documentation</a>
-        init project files by the default config file: .smp/smp.yml.<br>
-        <ul>
-            <li>Replace or append strings to the file you need using multiple defined formatting rules.</li>
-            <li>Generate backup files without worrying about losing source file information.</li>
-            <li>Support the insertion or replacement of labels in the specified location of pom files.</li>
-        </ul>
+        init project files.<br>
         ]]></description>
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
@@ -20,7 +14,7 @@
         <notificationGroup id="Smp Notification"
                            displayType="BALLOON"/>
     </extensions>
-    <idea-version since-build="2021.3.1" until-build="2022.*"/>
+    <idea-version since-build="2021.3" until-build="2023.*"/>
     <actions>
         <!-- Add your actions here -->
         <action id="InitProjectId" class="com.saidake.plugin.init.InitProject" text="Smp Init" icon="/icons/deer15.png">

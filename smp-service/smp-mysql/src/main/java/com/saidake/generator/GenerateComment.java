@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -34,7 +35,7 @@ public class GenerateComment {
     public static void main(String[] args) throws IOException {
         //A. 定义公共数据
         String projectRootPath = System.getProperty("user.dir");
-        String blackboard = SmpFileUtils.joinPath(projectRootPath, "sdk-service/sdk-generator/src/main/java/com/saidake/generator/blackboard.txt");
+        String blackboard = Paths.get(projectRootPath, "sdk-service/sdk-generator/src/main/java/com/saidake/generator/blackboard.txt").toString();
         File targetFile = new File(TARGET_FILE_PATH);
         File file = new File(org.apache.commons.io.FileUtils.getTempDirectory(), TEMP_FOLDER);
         org.apache.commons.io.FileUtils.copyFileToDirectory(targetFile, file);

@@ -1,4 +1,4 @@
-package com.saidake.common.core.util.file;
+package com.saidake.plugin.init.core;
 
 import jakarta.annotation.Nullable;
 import lombok.Cleanup;

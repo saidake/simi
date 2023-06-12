@@ -1,11 +1,10 @@
-package com.saidake.common.core.util.file;
+package com.saidake.plugin.init.core;
 
-import com.saidake.common.core.util.file.support.yaml.SmpYmlProperties;
-import com.saidake.common.core.util.file.support.yaml.BackupEnum;
-import com.saidake.common.core.util.file.support.yaml.ProjectInfo;
-import com.saidake.common.core.util.file.support.yaml.WriteInfo;
-import com.saidake.common.core.util.file.support.yaml.WriteTypeEnum;
-
+import com.saidake.plugin.init.core.support.SmpYmlProperties;
+import com.saidake.plugin.init.core.support.smyml.BackupEnum;
+import com.saidake.plugin.init.core.support.smyml.ProjectInfo;
+import com.saidake.plugin.init.core.support.smyml.WriteInfo;
+import com.saidake.plugin.init.core.support.smyml.WriteTypeEnum;
 
 import jakarta.annotation.Nullable;
 import lombok.experimental.UtilityClass;
