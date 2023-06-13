@@ -140,7 +140,6 @@ public class SmpXmlUtils {
         }
     }
 
-
     private static void synchronizeNameSpace(DefaultElement clone, Document readPomDocument) {
         clone.setNamespace(readPomDocument.getRootElement().getNamespace());
         for (Element elementChild : clone.elements()) {

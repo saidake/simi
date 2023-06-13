@@ -20,15 +20,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
 
-        <!--======================================================================================================= ?? -->
+        <!--======================================================================================================= 核心 -->
         <spring-boot-dependencies.version>3.0.5</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2022.0.2</spring-cloud-dependencies.version>
         <jakarta.mail.version>1.6.7</jakarta.mail.version>
-        <!--======================================================================================================= ???? -->
+        <!--======================================================================================================= 功能扩展 -->
         <libphonenumber.version>8.0.0</libphonenumber.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.0.4</springdoc-openapi-starter-webmvc-ui.version>
         <ehcache.version>3.10.0</ehcache.version>
-        <!--======================================================================================================= ???? -->
+        <!--======================================================================================================= 数据工具 -->
         <lombok.version>1.18.26</lombok.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <jasypt.version>1.9.3</jasypt.version>
@@ -38,13 +38,13 @@
         <commons-io.version>2.11.0</commons-io.version>
         <commons-codec.version>1.15</commons-codec.version>
         <dozer.version>5.5.1</dozer.version>
-        <!--======================================================================================================= ?? -->
+        <!--======================================================================================================= 安全 -->
         <jjwt.version>0.9.1</jjwt.version>
         <java-jwt.version>3.4.0</java-jwt.version>
         <bcprov-jdk15on.version>1.58</bcprov-jdk15on.version>
-        <!--======================================================================================================= ?? -->
+        <!--======================================================================================================= 日志 -->
         <log4jdbc-log4j2-jdbc4.1.version>1.16</log4jdbc-log4j2-jdbc4.1.version>
-        <!--======================================================================================================= ???? -->
+        <!--======================================================================================================= 文件处理 -->
         <fop.version>2.6</fop.version>
         <poi.version>5.2.1</poi.version>
         <poi-ooxml.version>5.2.1</poi-ooxml.version>
@@ -53,12 +53,12 @@
     </properties>
 
     <dependencies>
-        <!--======================================================================================================= ?? -->
+        <!--======================================================================================================= 核心 -->
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
         </dependency>
-        <!--======================================================================================================= ???? -->
+        <!--======================================================================================================= 数据工具 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -82,8 +82,8 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--======================================================================================================= ?? -->
-            <dependency>                                                             <!--  Spring Boot???? -->
+            <!--======================================================================================================= 核心 -->
+            <dependency>                                                             <!--  Spring Boot依赖管理 -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot-dependencies.version}</version>
@@ -92,12 +92,12 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>                   <!--  Spring Cloud ???? -->
+                <artifactId>spring-cloud-dependencies</artifactId>                   <!--  Spring Cloud 依赖管理 -->
                 <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--==================================================================================================== ????? -->
+            <!--==================================================================================================== 自定义依赖 -->
             <dependency>
                 <groupId>com.saidake</groupId>
                 <artifactId>smp-common-core</artifactId>
@@ -118,7 +118,7 @@
                 <artifactId>smp-swagger-ui</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!--======================================================================================================= ???? -->
+            <!--======================================================================================================= 项目协助 -->
             <dependency>
                 <groupId>org.jasypt</groupId>
                 <artifactId>jasypt</artifactId>
@@ -144,7 +144,7 @@
                 <artifactId>jakarta.mail</artifactId>
                 <version>${jakarta.mail.version}</version>
             </dependency>
-            <!--======================================================================================================= ???? -->
+            <!--======================================================================================================= 数据工具 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>transmittable-thread-local</artifactId>
@@ -170,7 +170,7 @@
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
             </dependency>
-            <!--======================================================================================================= ?? -->
+            <!--======================================================================================================= 安全 -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
@@ -187,13 +187,13 @@
                 <version>${bcprov-jdk15on.version}</version>
                 <scope>compile</scope>
             </dependency>
-            <!--======================================================================================================= ?? -->
+            <!--======================================================================================================= 日志 -->
             <dependency>
                 <groupId>org.bgee.log4jdbc-log4j2</groupId>
                 <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
                 <version>${log4jdbc-log4j2-jdbc4.1.version}</version>
             </dependency>
-            <!--======================================================================================================= ???? -->
+            <!--======================================================================================================= 文件处理 -->
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
@@ -222,7 +222,7 @@
                 <exclusions>
                     <exclusion>
                         <groupId>org.saidake.mmp</groupId>
-                        <artifactId>cc</artifactId>
+                        <artifactId>cddddC:\\Users\\saidake\\.smpddc</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency></dependencies>

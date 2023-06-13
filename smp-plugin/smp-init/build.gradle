@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.saidake.plugin'
-version '2021.3'
+version '1.7'
 
 repositories {
     mavenCentral()
@@ -28,11 +28,12 @@ runIde {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version = '2021.3.1'
+    updateSinceUntilBuild = false
 }
 patchPluginXml {
     changeNotes = """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      1. Fix the issue of replace all replacement failure.<br>
+      2. XML configuration files support env variables"""
 }
 test {
     useJUnitPlatform()

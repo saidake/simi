@@ -10,6 +10,7 @@ import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
 
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -38,10 +39,8 @@ public class SmpXmlUtils {
         Objects.requireNonNull(writePomPath,"writePomPath must not be null");
         //A. parse file
         SAXReader saxReader=new SAXReader();
-        HashMap<String,String> pomNameSpaceMap=new HashMap();
         Document readPomDocument = saxReader.read(backupPomPath);
-        String namespaceURI = ((DefaultElement) readPomDocument.getRootElement()).getNamespaceURI();
-        pomNameSpaceMap.put(TEMP_XMLN_PREFIX,namespaceURI);
+        HashMap<String, String> pomNameSpaceMap = createNamespaceMap(readPomDocument);
         Document appendPomDocument = saxReader.read(appendXmlPath);
         //A. foreach replace in append.xml
         List<Node> replaceNodeList = appendPomDocument.selectNodes(XML_REPLACE_XPATH);
@@ -141,7 +140,6 @@ public class SmpXmlUtils {
         }
     }
 
-
     private static void synchronizeNameSpace(DefaultElement clone, Document readPomDocument) {
         clone.setNamespace(readPomDocument.getRootElement().getNamespace());
         for (Element elementChild : clone.elements()) {
@@ -154,6 +152,30 @@ public class SmpXmlUtils {
         XPath replaceNodeXpathSecond = readPomDocument.createXPath(xpathNS(replaceNodeXpath));
         replaceNodeXpathSecond.setNamespaceURIs(pomNameSpaceMap);
         return replaceNodeXpathSecond;
+    }
+
+    public static String getXpathContent(Document document, String xpath){
+        HashMap<String, String> pomNameSpaceMap = createNamespaceMap(document);
+        XPath nsXpath = createNSXpath(pomNameSpaceMap, document, xpath);
+        return nsXpath.selectSingleNode(document).getText();
+    }
+
+    public static List<String> getXpathContentList(Document document, String xpath){
+        HashMap<String, String> pomNameSpaceMap = createNamespaceMap(document);
+        XPath nsXpath = createNSXpath(pomNameSpaceMap, document, xpath);
+        List<Node> nodes = nsXpath.selectNodes(document);
+        ArrayList<String> objects = new ArrayList<>();
+        for (Node node : nodes) {
+            objects.add(node.getText());
+        }
+        return objects;
+    }
+
+    private static HashMap<String, String> createNamespaceMap(Document document) {
+        HashMap<String,String> pomNameSpaceMap=new HashMap();
+        String namespaceURI = document.getRootElement().getNamespaceURI();
+        pomNameSpaceMap.put(TEMP_XMLN_PREFIX,namespaceURI);
+        return pomNameSpaceMap;
     }
 
 }

@@ -1,14 +1,20 @@
 <root>
-    <replace xpath="/project/dependencyManagement/dependencies/dependency">
-        <ele xpath="artifactId" value="maven-compiler-plugin">
+    <replace xpath="/project/dependencyManagement/dependencies/dependency">    <!-- The xpath of the replace tag-->
+        <ele xpath="artifactId" value="maven-compiler-plugin" append-if-not-exists="true">  <!-- Use the artifactId xpath search under dependency, and if the value is equal to 'maven-compiler-plugin', replace it.-->
             <dependency>
                 <groupId>org.saidake.mmp</groupId>
                 <artifactId>smp</artifactId>
                 <version>${lombok.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.saidake.mmp</groupId>
+                        <artifactId>cc</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </ele>
     </replace>
-    <append parent-xpath="/project/dependencies">
+    <append parent-xpath="/project/dependencies">   <!-- The xpath of the parent tag of the replace tag-->
         <dependency>
             <groupId>org.saidake.mmp</groupId>
             <artifactId>smp</artifactId>

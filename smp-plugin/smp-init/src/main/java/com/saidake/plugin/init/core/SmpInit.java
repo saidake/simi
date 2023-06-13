@@ -63,7 +63,7 @@ public class SmpInit {
                 }
                 String backUpFilePath=null;
                 if(writeFileMap.get(writeFilePath)==null){  // The file has not been written.
-                    backUpFilePath= createBackupFile(writeInfo.getBackup(), writeFilePath);
+                    backUpFilePath= createBackupFile(writeInfo.getBackup(), writeFilePath).orElse(null);
                     writeFileMap.put(writeFilePath,true);
                 }
 
@@ -99,6 +99,7 @@ public class SmpInit {
             case REPLACE_ALL : {
                 Objects.requireNonNull(readFilePath,"readFilePath must not be null");
                 FileUtils.writeStringToFile(new File(writeFilePath),Files.readString(Paths.get(readFilePath)), StandardCharsets.UTF_8);
+                break;
             }
             case REPLACE_STRING : {
                 Objects.requireNonNull(readFilePath,"readFilePath must not be null");
@@ -149,7 +150,11 @@ public class SmpInit {
                 });
                 break;
             }
-            case POM : {
+            case XML: {
+                String appendXmlBackupPath= createBackupFile(BackupEnum.CURRENT.getValue(), readFilePath).orElseThrow();
+                FileUtils.writeStringToFile(new File(readFilePath),
+                        replaceProjectInfoString(Files.readString(Paths.get(appendXmlBackupPath)),projectInfo),
+                        StandardCharsets.UTF_8);
                 SmpXmlUtils.readAndPutAllXml(backUpFilePath,writeFilePath,readFilePath);
                 break;
             }
@@ -168,12 +173,12 @@ public class SmpInit {
         return properties;
     }
 
-    private static String createBackupFile(String backupType, String writeFilePath) throws IOException {
-        String backUpFilePath=null;
+    private static Optional<String> createBackupFile(String backupType, String writeFilePath) throws IOException {
+        String backUpFilePath;
         backUpFilePath = writeFilePath.concat(BACKUP_SUFFIX);
         File backupFile = new File(backUpFilePath);
         BackupEnum backupEnum = BackupEnum.fromValue(backupType);
-        if(backupEnum==null)return null;
+        if(backupEnum==null)return Optional.empty();
         switch (backupEnum){
             case CURRENT : {
                 if(!backupFile.exists())FileUtils.copyFile(new File(writeFilePath), backupFile);
@@ -181,7 +186,7 @@ public class SmpInit {
             }
             default : throw new IllegalStateException("Unexpected value: " + backupType);
         }
-        return backUpFilePath;
+        return Optional.of(backUpFilePath);
     }
 
     private static Map<String,String> loadRpFile(String path) throws IOException {

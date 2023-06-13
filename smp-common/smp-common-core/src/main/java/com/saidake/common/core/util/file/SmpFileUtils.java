@@ -69,6 +69,7 @@ public class SmpFileUtils {
         @Cleanup FileOutputStream fileOutputStream = new FileOutputStream(writePropertiesPath);
         writeProperties.store(fileOutputStream,"merge the content of "+StringUtils.join(fileNameList,", ")+" file");
     }
+
     /**
      * The append file content will be merged into the write file.
      *
@@ -141,7 +142,7 @@ public class SmpFileUtils {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(readFile));
             BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(writeFile));
             for ( String currentLine = bufferedReader.readLine();currentLine!=null;currentLine = bufferedReader.readLine()){
-                //B. 预定义lambda
+                //B. execute lambda
                 String resultLine = lambda.apply(currentLine);
                 if(resultLine==null)continue;
                 if(SDK_MARK_TAG.equals(resultLine)){

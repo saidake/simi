@@ -1,0 +1,59 @@
+project:
+  - name: smp-oracle
+    path: C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle   # Parent project folder
+    env: UAT
+    fileList:
+      - write: src/main/resources/application-local.properties    # The relative path to write the file.
+        read: /${project.name}/${project.env}                     # Read folder.
+                                                                    # When the path starts with "/", automatically concatenate the configuration path "~/. smp"
+                                                                    # Tips: The user configuration directory for Windows is "C:\Users\<username>\.smp"
+                                                                    #   ${project.name}   The project name of the current project. // smp-oracle
+                                                                    #   ${project.path}   The project path of the current project. // smp-oracle
+                                                                    #   ${project.env}    The ENV of the current project. // smp-oracle
+                                                                    #   ${smp}            The "~/.smp" configuration path
+        type: append-properties-folder                            # Read all properties files in the directory and append them to the write property file.
+        backup: current                                           # Create a backup file in the current file directory.
+
+      - write: src/main/resources/application-test.properties     # The relative path to write the file.
+        read: /${project.name}/test.properties                    # Read property file.
+        type: append-properties                              
+        backup: current                                           
+
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback.xml
+        type: replace-all                                         # Replace all content with the read file.
+
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback-replace.rp
+        type: replace-string                                      # Replace matched content with the RP file, Please refer to the introduction of the RP file format below.
+
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback.txt
+        type: append-string                                       # Replace string with the read file.
+
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback.rp
+        type: line-replace                                        # Replace string with the RP file, The left value is the lineNumber, The right value is the replace content.(e.g. "2$$$String tt=99;")
+
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback.rp
+        type: line-append                                         # Append string with the RP file, The left value is the lineNumber, The right value is the append content.(e.g. "2$$$String tt=99;")
+
+      - write: src\main\java\com\saidake\common\core\util\file\SmpTestBackupUtils.java
+        type: java-annotation                                     # Each line of the write file will be preceded by '//'
+        backup: current                                           
+        once: true                                                # Only write once, It will determine whether it is the first write based on whether the backup file exists.
+
+      - write: src/test/resources/smp-test/pom.xml
+        read: /${project.name}/pom-append.xml
+        type: pom                                                 # Write xml file, Please refer to the introduction of the pom-append.xml file format below.
+        backup: current
+
+  - name: smp-common-core
+    path: C:\Users\saidake\Desktop\DevProject\saidake-manage-project\smp-common\smp-common-core
+    env: UAT
+    fileList:
+      - write: src\main\java\com\saidake\common\core\util\file\SmpFileBackupUtils.java
+        type: java-annotation
+        backup: current
+        once: true

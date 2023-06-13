@@ -6,7 +6,6 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.saidake.plugin.init.core.SmpInit;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,8 +26,11 @@ public class InitProject extends AnAction {
                     .createNotification(stringBuilder.toString(), NotificationType.INFORMATION)
                     .setTitle("Init project success")
                     .notify(e.getProject());
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            NotificationGroupManager.getInstance().getNotificationGroup("Smp Notification")
+                    .createNotification(ex.getMessage(), NotificationType.ERROR)
+                    .setTitle("Init project failed")
+                    .notify(e.getProject());
         }
     }
 }

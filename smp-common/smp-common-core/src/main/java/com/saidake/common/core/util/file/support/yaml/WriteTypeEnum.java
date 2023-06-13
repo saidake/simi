@@ -14,8 +14,8 @@ public enum WriteTypeEnum {
     LINE_REPLACE("line-replace"),
     LINE_APPEND("line-append"),
     JAVA_ANNOTATION("java-annotation"),
-    POM("pom");
-    private String value;
+    XML("xml");
+    private final String value;
 
     public static WriteTypeEnum fromValue(String value){
         for (WriteTypeEnum writeTypeEnum : values()) {
