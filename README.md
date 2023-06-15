@@ -2,80 +2,70 @@
 ## <font color="pink">smp-plugin (Plugin Integration)</font>
 ### <font color="yellow">Smp Init</font>
 Init project files by the default config file: .smp/smp.yml.<br/>
+
 Prerequisite:<br/>
-Create the configuration file in the user directory: ~/.smp/smp-init.yml<br/>
+1. Create the configuration file in the user directory: ~/.smp/smp-init.yml<br/>
 <font color="gray">Tips: The user configuration directory for Windows is "C:\Users\<username>\.smp"</font><br/>
+2. Add a writing rule to the file ~/.smp/smp-init.yml. 
 
-smp-init.yml example:<br/>
-```yaml
-project:
-  - name: smp-oracle
-    path: C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle   # Parent project folder
-    env: UAT
-    ruleList:
-      - write: src/main/resources/application-local.properties    # The relative path to write the file.
-        read: /${project.name}/${project.env}                     # Read folder.
-                                                                    # When the path starts with "/", automatically concatenate the configuration path "~/.smp"
-                                                                    # Tips: The user configuration directory for Windows is "C:\Users\<username>\.smp"
-                                                                    #   ${project.name}   The project name of the current project.(e.g. "smp-oracle")
-                                                                    #   ${project.path}   The project path of the current project.(e.g. "C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle")
-                                                                    #   ${project.env}    The ENV of the current project.(e.g. "UAT")
-                                                                    #   ${smp}            The "~/.smp" configuration path.(e.g. "C:\Users\saidake\.smp")
-        type: append-properties-folder                            # Read all properties files in the directory and append them to the writing property file.
-        backup: current                                           # Create a backup file in the current file directory.(The default backup value is "current")
+####write types:
+<table>
+    <tr>
+        <th>TYPE</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>append-properties-folder </td>   
+        <td>Read all properties files in the directory and append them to the writing properties file.</td>
+    </tr>
+    <tr>
+        <td>append-properties</td>   
+        <td>Append a read properties file to the writing properties file</td>
+    </tr>
+    <tr>
+        <td>replace-all</td>   
+        <td>Replace all content of the writing file with the read file.</td>
+    </tr>
+    <tr>
+        <td>replace-string</td>
+        <td>
+            Replace matched content with the RP rule list manually defined or rp rule file, <br/>
+            Please refer to the introduction of the RP file rule format below.
+        </td>
+    </tr>
+    <tr>
+        <td>append-string</td>
+        <td>Append all contents of the read file to the write file.</td>
+    </tr>
+    <tr>
+        <td>line-replace</td>
+        <td>
+            Replace string with the RP file, The left value is the lineNumber,<br/> 
+            The right value is the replace content.<br/>
+            example: 2%%%String tt="xxx";
+        </td>
+    </tr>
+    <tr>
+        <td>line-append</td>
+        <td>
+            Append string with the RP file, The left value is the lineNumber,<br/> 
+            The right value is the append content.<br/>
+            example: 2%%%Integer tt=99;
+        </td>
+    </tr>
+    <tr>
+        <td>java-annotation</td>
+        <td>Each line of the write file will be preceded by '//'</td>
+    </tr>
+    <tr>
+        <td>xml</td>
+        <td>Write xml file, Please refer to the introduction of the xml-append.xml file format below.</td>
+    </tr>
+</table>
 
-      - write: src/main/resources/application-test.properties     # The relative path to write the file.
-        read: /${project.name}/test.properties                    # Read property file.
-        type: append-properties
-        backup: smp                                               # Create a backup file in the default smp backup folder.(~/.smp/AAAbackup)                                  
-
-      - write: src/main/resources/logback.xml
-        read: /${project.name}/logback.xml
-        type: replace-all                                         # Replace all content with the read file.
-
-      - write: src/main/resources/logback.xml
-        type: replace-string                                      # Replace matched content with the RP rule list, Please refer to the introduction of the RP file rule format below.
-        rpRuleList:
-          - fffsfsfd/////%%%ddfsfsfsfsfs
-          - fffsfsfd/////%%%ddfsfsfsfsfs
-
-      - write: src/main/resources/logback.xml
-        read: /${project.name}/logback.txt
-        type: append-string                                       # Replace string with the read file.
-
-      - write: src/main/resources/logback.xml
-        read: /${project.name}/logback.rp
-        type: line-replace                                        # Replace string with the RP file, The left value is the lineNumber, The right value is the replace content.(e.g. "2$$$String tt=99;")
-
-      - write: src/main/resources/logback.xml
-        read: /${project.name}/logback.rp
-        type: line-append                                         # Append string with the RP file, The left value is the lineNumber, The right value is the append content.(e.g. "2$$$String tt=99;")
-
-      - write: src\main\java\com\saidake\common\core\util\file\SmpTestBackupUtils.java
-        type: java-annotation                                     # Each line of the write file will be preceded by '//'
-        once: true                                                # Only write once, It will determine whether it is the first write based on whether the backup file exists.
-
-      - write: src/test/resources/smp-test/pom.xml
-        read: /${project.name}/xml-append.xml
-        type: xml                                                 # Write xml file, Please refer to the introduction of the pom-append.xml file format below.
-
-  - name: smp-common-core
-    path: C:\Users\saidake\Desktop\DevProject\saidake-manage-project\smp-common\smp-common-core
-    env: UAT
-    ruleList:
-      - write: src\main\java\com\saidake\common\core\util\file\SmpFileBackupUtils.java
-        type: java-annotation
-        once: true
-```
-
-logback.rp example: <br/>
-```text
-<contextName>logback</contextName>%%%<contextName>logback-replace-content</contextName>
-sourceValue%%%ReplaceValue
-//source//abc.cert%%%${smp}/abc.cert
-```
-Key values are separated by '%%%'<br/>
-Even in the RP file, you can still access the env properties:<br/>
+####global env:
+You can access the env variable in the <strong>smp-init.yml</strong> file,<br/> 
+or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</strong> file of xml-append rule referenced in the smp-init.yml<br/>
 <table>
     <tr>
         <th>ENV</th>
@@ -104,7 +94,78 @@ Even in the RP file, you can still access the env properties:<br/>
     </tr>
 </table>
 
-xml-append.xml example: <br/>
+####smp-init.yml example:
+```yaml
+project:
+  - name: smp-oracle
+    path: C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle   # Parent project folder
+    env: UAT
+    ruleList:
+      - write: src/main/resources/application-local.properties    # The relative path to write the file.
+        read: /${project.name}/${project.env}                     # Read folder.
+         # When the path starts with "/", automatically concatenate the configuration path "~/.smp"
+         # Tips: The user configuration directory for Windows is "C:\Users\<username>\.smp"
+        type: append-properties-folder                            
+        backup: current            # Create a backup file in the current file directory.(The default backup value is "current")
+        once: true                 # Only write once, It will determine whether it is the first write based on whether the backup file exists.
+
+      - write: src/main/resources/application-test.properties     # The relative path to write the file.
+        read: /${project.name}/test.properties                    # Read property file.
+        type: append-properties
+        backup: smp                                               # Create a backup file in the default smp backup folder.(~/.smp/AAAbackup)                                  
+
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback.xml
+        type: replace-all                                         
+
+      - write: src/main/resources/logback.xml                    # The same file can be written multiple times.
+        type: replace-string                                      
+        rpRuleList:                                              # Use rpRuleList defined in the current yml file.
+          - fffsfsfd/////%%%ddfsfsfsfsfs
+          - fffsfsfd/////%%%ddfsfsfsfsfs
+
+      - write: src/main/resources/logback.xml
+        type: replace-string
+        read: /${project.name}/logback-replace.rp                # Use the rp rule file instead manually setting one.
+        
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback.txt
+        type: append-string                                       
+
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback.rp
+        type: line-replace                                        
+
+      - write: src/main/resources/logback.xml
+        read: /${project.name}/logback.rp
+        type: line-append                                         
+
+      - write: src\main\java\com\saidake\common\core\util\file\SmpTestBackupUtils.java
+        type: java-annotation                                     
+
+      - write: src/test/resources/smp-test/pom.xml
+        read: /${project.name}/xml-append.xml
+        type: xml                                                 
+
+  - name: smp-common-core
+    path: C:\Users\saidake\Desktop\DevProject\saidake-manage-project\smp-common\smp-common-core
+    env: UAT
+    ruleList:
+      - write: src\main\java\com\saidake\common\core\util\file\SmpFileBackupUtils.java
+        type: java-annotation
+        once: true
+```
+
+####logback.rp example: 
+Key values are separated by '%%%'<br/>
+```text
+<contextName>logback</contextName>%%%<contextName>logback-replace-content</contextName>
+sourceValue%%%ReplaceValue
+//source//abc.cert%%%${smp}/abc.cert
+```
+
+
+#### xml-append.xml example: 
 ```xml
 <root>
     <replace xpath="/project/dependencyManagement/dependencies/dependency">    
