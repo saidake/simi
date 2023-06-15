@@ -11,6 +11,8 @@ import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
 
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.*;
 
 @UtilityClass
@@ -32,6 +34,19 @@ public class SmpXmlUtils {
     private static final String XML_APPEND_ATTRIBUTE_PARENT_XPATH="parent-xpath";
 
     @SneakyThrows
+    public static void readAndPutAllXml(String backupPomPath, String writePomPath, Reader reader)  {
+        Objects.requireNonNull(reader,"reader must not be null");
+        Objects.requireNonNull(backupPomPath,"backupPomPath must not be null");
+        Objects.requireNonNull(writePomPath,"writePomPath must not be null");
+        //A. parse file
+        SAXReader saxReader=new SAXReader();
+        Document readPomDocument = saxReader.read(backupPomPath);
+        Optional<HashMap<String, String>> pomNameSpaceMap = createNamespaceMap(readPomDocument);
+        Document appendPomDocument = saxReader.read(reader);
+        //A. foreach replace in append.xml
+        handleAppendXml(writePomPath, readPomDocument, pomNameSpaceMap, appendPomDocument);
+    }
+    @SneakyThrows
     public static void readAndPutAllXml(String backupPomPath, String writePomPath, String appendXmlPath)  {
         Objects.requireNonNull(appendXmlPath,"appendXmlPath must not be null");
         Objects.requireNonNull(backupPomPath,"backupPomPath must not be null");
@@ -42,6 +57,10 @@ public class SmpXmlUtils {
         Optional<HashMap<String, String>> pomNameSpaceMap = createNamespaceMap(readPomDocument);
         Document appendPomDocument = saxReader.read(appendXmlPath);
         //A. foreach replace in append.xml
+        handleAppendXml(writePomPath, readPomDocument, pomNameSpaceMap, appendPomDocument);
+    }
+
+    private static void handleAppendXml(String writePomPath, Document readPomDocument, Optional<HashMap<String, String>> pomNameSpaceMap, Document appendPomDocument) throws IOException {
         List<Node> replaceNodeList = appendPomDocument.selectNodes(XML_REPLACE_XPATH);
         List<Node> appendNodeList = appendPomDocument.selectNodes(XML_APPEND_XPATH);
         for (Node replaceNode : replaceNodeList) {
@@ -108,7 +127,7 @@ public class SmpXmlUtils {
         }
         @Cleanup FileWriter fileWriterJava = new FileWriter(writePomPath);
         XMLWriter xmlWriter = new XMLWriter(fileWriterJava);
-        xmlWriter.write( readPomDocument );
+        xmlWriter.write(readPomDocument);
     }
 
     private static String xpathNS(String xpath){

@@ -16,6 +16,7 @@ import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -68,7 +69,6 @@ public class SmpInit {
                 String backUpFilePath=null;
                 if(writeFileMap.get(writeFilePath)==null){  // The file has not been written.
                     backUpFilePath= createBackupFile(writeInfo.getBackup(), writeFilePath);
-                    writeFileMap.put(writeFilePath,true);
                 }
 
                 //B. get read file path
@@ -77,7 +77,8 @@ public class SmpInit {
                     if(writeInfo.getRead().startsWith("/"))readFilePath=replaceProjectInfoString(Paths.get(configPath, writeInfo.getRead()).toString(), projectInfo);
                     else readFilePath=replaceProjectInfoString(Paths.get(writeInfo.getRead()).toString(), projectInfo);
                 }
-                handleWriteInfo(writeInfo, writeFilePath, backUpFilePath, readFilePath, projectInfo, writeFileMap.get(writeFilePath)!=null);
+                handleWriteInfo(writeInfo, writeFilePath, backUpFilePath, readFilePath, projectInfo, Boolean.TRUE.equals(writeFileMap.get(writeFilePath)));
+                writeFileMap.put(writeFilePath,true);
                 currentProjectWriteFileSet.add(writeFileName);
             }
             resultProjectWriteFileMap.put(projectInfo.getName(),currentProjectWriteFileSet);
@@ -90,6 +91,7 @@ public class SmpInit {
     private static void handleWriteInfo(WriteInfo writeInfo, String writeFilePath, String backUpFilePath, @Nullable String readFilePath, ProjectInfo projectInfo, boolean isWriteSameFile) throws IOException {
         WriteTypeEnum writeTypeEnum = WriteTypeEnum.fromValue(writeInfo.getType()).orElseThrow(()->new IllegalArgumentException("The type of ruleList must not be null"));
         String resultReadFilePath=isWriteSameFile?writeFilePath:backUpFilePath;
+        if(isWriteSameFile)log.info("write the same file: {}",writeFilePath);
         switch (writeTypeEnum){
             case APPEND_PROPERTIES_FOLDER : {
                 SmpFileUtils.readAndPutAllPropertiesFromParent(resultReadFilePath, writeFilePath, readFilePath, properties -> replacePropertiesProjectString(projectInfo, properties));
@@ -101,7 +103,6 @@ public class SmpInit {
             }
             case REPLACE_STRING : {
                 Map<String, String> keyValueMap =writeInfo.getRpRuleList()!=null?loadRpFile(writeInfo.getRpRuleList()):loadRpFile(readFilePath);
-                Objects.requireNonNull(readFilePath,"readFilePath must not be null");
                 SmpFileUtils.readAndWriteStringFile(resultReadFilePath, writeFilePath, source->{
                     for (String keyReplace : keyValueMap.keySet()) {
                         String value = keyValueMap.get(keyReplace);
@@ -142,7 +143,6 @@ public class SmpInit {
                 });
                 break;
             }
-
             // The read file is not necessary.
             case JAVA_ANNOTATION : {
                 SmpFileUtils.readWriteBackupFile(resultReadFilePath, writeFilePath, null, sourceLine ->"//"+sourceLine+System.lineSeparator());
@@ -156,11 +156,11 @@ public class SmpInit {
                 break;
             }
             case XML: {
-                String appendXmlBackupPath= createBackupFile(BackupEnum.CURRENT.getValue(), readFilePath);
-                FileUtils.writeStringToFile(new File(readFilePath),
-                        replaceProjectInfoString(Files.readString(Paths.get(appendXmlBackupPath)),projectInfo),
-                        StandardCharsets.UTF_8);
-                SmpXmlUtils.readAndPutAllXml(backUpFilePath,writeFilePath,readFilePath);
+                SmpXmlUtils.readAndPutAllXml(backUpFilePath,writeFilePath,
+                        new StringReader(
+                            replaceProjectInfoString(Files.readString(Paths.get(readFilePath)),projectInfo)
+                        )
+                );
                 break;
             }
             default : throw new IllegalStateException("Unexpected value: " + writeInfo.getType());
@@ -248,7 +248,7 @@ public class SmpInit {
         for (String property : rpRuleList) {
             int separatorIndex = property.indexOf(Matcher.quoteReplacement(RP_FILE_SEPARATOR));
             if(separatorIndex==-1)throw new IllegalArgumentException("rp rule must contains separator: "+ RP_FILE_SEPARATOR);
-            resultMap.put(property.substring(0,separatorIndex),property.substring(separatorIndex+1));
+            resultMap.put(property.substring(0,separatorIndex),property.substring(separatorIndex+3));
         }
         return resultMap;
     }

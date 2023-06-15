@@ -36,7 +36,7 @@ import java.util.stream.Stream;
  */
 @Slf4j
 public class SmpFileBackupUtils {
-    private static final Log logger = LogFactory.getLog(SpringApplication.class);
+    //private static final Log logger = LogFactory.getLog(SpringApplication.class);
 
     private static String REPLACE_NODE_NAME="replace";
     private static String APPEND_NODE_NAME="append";
@@ -138,10 +138,10 @@ public class SmpFileBackupUtils {
     private static final ThreadLocal<Boolean> alreadyMarked=new ThreadLocal<>();
 
         /**
-         * 读写文件，对�?一行�?��?作
-         * �?�选功能：根�?�readAndWriteTheSameFileLambda返回的内容，标记一行，�?�下获�?�信�?�（�?写入新行），�?返回之�?地那一行
+         * 读写文件，对每一行做操作
+         * 可选功能：根据readAndWriteTheSameFileLambda返回的内容，标记一行，向下获取信息（不写入新行），再返回之前地那一行
          *         返回 "SDK_MARK_TAG"             标记行
-         *         返回 "SDK_RETURN_MARK_TAGxxx"  返回标记行，�?�时 写入 标记行 查询信�?��?�的最终内容
+         *         返回 "SDK_RETURN_MARK_TAGxxx"  返回标记行，同时 写入 标记行 查询信息后的最终内容
          */
 
     public static void readWriteBackupFile(String readOrWritePath, @Nullable String writePath, @Nullable String appendContent, Function<String,String> lambda) throws IOException {
@@ -150,7 +150,7 @@ public class SmpFileBackupUtils {
         File readFile = new File(readOrWritePath);
         File writeFile;
         //Assert.isFalse(readFile.exists(),"read file not exist");
-        //A. writePath�?存在时，创建临时文件
+        //A. writePath不存在时，创建临时文件
         if(writePath==null){
             File readTempFile = File.createTempFile(readFile.getName(), ".backup");
             org.apache.commons.io.FileUtils.copyFile(readFile,readTempFile);
@@ -160,15 +160,15 @@ public class SmpFileBackupUtils {
         }else{
             writeFile = new File(writePath);
         }
-        //A. 公共数�?�
+        //A. 公共数据
         boolean isSameFile= readOrWritePath.equals(writePath);
         //A. 创建临时文件
         if(isSameFile){
-            readFile = File.createTempFile(readFile.getName(), ".backup");  // 临时读�?�文件
+            readFile = File.createTempFile(readFile.getName(), ".backup");  // 临时读取文件
             org.apache.commons.io.FileUtils.copyFile(writeFile,readFile);
             log.info("create temp file successfully: {}",readFile.getPath());
         }
-        //A. 执行匿�??函数
+        //A. 执行匿名函数
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(readFile));
             BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(writeFile));
@@ -206,9 +206,9 @@ public class SmpFileBackupUtils {
     }
 
     /**
-     * 拼接路径和包�??
+     * 拼接路径和包名
      * @param path  路径
-     * @param packageName   包�??
+     * @param packageName   包名
      * @return  拼接路径
      */
     public static String joinPathAndPackage(String path,String packageName){
@@ -301,7 +301,7 @@ public class SmpFileBackupUtils {
     private static void deleteDirectoryStream(Path path) {
         try {
             Files.delete(path);
-            System.out.printf("删除文件�?功：%s%n",path.toString());
+            System.out.printf("删除文件成功：%s%n",path.toString());
         } catch (IOException e) {
             System.err.printf("无法删除的路径 %s%n%s", path, e);
         }
