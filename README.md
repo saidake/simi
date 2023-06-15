@@ -6,9 +6,10 @@ Init project files by the default config file: .smp/smp.yml.<br/>
 Prerequisite:<br/>
 1. Create the configuration file in the user directory: ~/.smp/smp-init.yml<br/>
 <font color="gray">Tips: The user configuration directory for Windows is "C:\Users\<username>\.smp"</font><br/>
-2. Add a writing rule to the file ~/.smp/smp-init.yml. 
-
-####write types:
+2. Add a writing rule to the file ~/.smp/smp-init.yml.<br/>
+<font color="gray">Tips: For the first usage, you can try adding only one rule in the ruleList, and then executing the plugin.</font><br/>
+3. Execute the plugin in the intellij idea menu: <em>Tools / Smp Init</em>, and then you can see the execution result prompt in the lower right corner. 
+#### write types:
 <table>
     <tr>
         <th>TYPE</th>
@@ -63,7 +64,7 @@ Prerequisite:<br/>
     </tr>
 </table>
 
-####global env:
+#### global env:
 You can access the env variable in the <strong>smp-init.yml</strong> file,<br/> 
 or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</strong> file of xml-append rule referenced in the smp-init.yml<br/>
 <table>
@@ -94,7 +95,7 @@ or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</
     </tr>
 </table>
 
-####smp-init.yml example:
+#### smp-init.yml example:
 ```yaml
 project:
   - name: smp-oracle
@@ -106,27 +107,27 @@ project:
          # When the path starts with "/", automatically concatenate the configuration path "~/.smp"
          # Tips: The user configuration directory for Windows is "C:\Users\<username>\.smp"
         type: append-properties-folder                            
-        backup: current            # Create a backup file in the current file directory.(The default backup value is "current")
-        once: true                 # Only write once, It will determine whether it is the first write based on whether the backup file exists.
+        backup: current   # Create a backup file in the current file directory.(The default backup value is "current")
+        once: true        # Only write once, It will determine whether it is the first write based on whether the backup file exists.
 
       - write: src/main/resources/application-test.properties     # The relative path to write the file.
-        read: /${project.name}/test.properties                    # Read property file.
+        read: /${project.name}/test.properties                   # Read property file.
         type: append-properties
-        backup: smp                                               # Create a backup file in the default smp backup folder.(~/.smp/AAAbackup)                                  
+        backup: smp             # Create a backup file in the default smp backup folder.(~/.smp/AAAbackup)                                  
 
       - write: src/main/resources/logback.xml
         read: /${project.name}/logback.xml
         type: replace-all                                         
 
-      - write: src/main/resources/logback.xml                    # The same file can be written multiple times.
+      - write: src/main/resources/logback.xml       # The same file can be written multiple times.
         type: replace-string                                      
-        rpRuleList:                                              # Use rpRuleList defined in the current yml file.
+        rpRuleList:                                 # Use rpRuleList defined in the current yml file.
           - fffsfsfd/////%%%ddfsfsfsfsfs
           - fffsfsfd/////%%%ddfsfsfsfsfs
 
       - write: src/main/resources/logback.xml
         type: replace-string
-        read: /${project.name}/logback-replace.rp                # Use the rp rule file instead manually setting one.
+        read: /${project.name}/logback-replace.rp   # Use the rp rule file instead manually setting one.
         
       - write: src/main/resources/logback.xml
         read: /${project.name}/logback.txt
@@ -156,7 +157,7 @@ project:
         once: true
 ```
 
-####logback.rp example: 
+#### logback.rp example: 
 Key values are separated by '%%%'<br/>
 ```text
 <contextName>logback</contextName>%%%<contextName>logback-replace-content</contextName>
