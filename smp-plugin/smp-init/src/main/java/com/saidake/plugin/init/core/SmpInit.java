@@ -20,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,10 +36,11 @@ import java.util.regex.Pattern;
 @UtilityClass
 public class SmpInit {
     private static final String configPath=Paths.get(System.getProperty("user.home"),".smp").toString();
+    private static final String backupPath=Paths.get(configPath,"AAAbackup").toString();
     private static final String configEscapePath=configPath.replaceAll("\\\\","\\\\\\\\");
 
     private static final String SMP_CONFIG_FILE="smp-init.yml";
-    private static final String RP_FILE_SEPARATOR="$$$";
+    private static final String RP_FILE_SEPARATOR="%%%";
     private static final String BACKUP_SUFFIX=".backup";
 
     public static Map<String,Set<String>> init() throws IOException {
@@ -49,10 +52,11 @@ public class SmpInit {
         SmpYmlProperties smpYmlProperties = smpYml.loadAs(fileInputStream,SmpYmlProperties.class);
         //A.[CORE] write files
         Map<String, Boolean> writeFileMap=new HashMap<>();
+        Map<String, Boolean> backupFileMap=new HashMap<>();
         for (ProjectInfo projectInfo : smpYmlProperties.getProject()) {
             log.info("[START] project : {} ==============================",projectInfo.getName());
             Set<String> currentProjectWriteFileSet=new HashSet<>();
-            for (WriteInfo writeInfo : projectInfo.getFileList()) {
+            for (WriteInfo writeInfo : projectInfo.getRuleList()) {
                 //B. get write file path
                 Path writeFilePathObj = Paths.get(projectInfo.getPath(), writeInfo.getWrite());
                 String writeFileName = writeFilePathObj.getFileName().toString();
@@ -63,7 +67,7 @@ public class SmpInit {
                 }
                 String backUpFilePath=null;
                 if(writeFileMap.get(writeFilePath)==null){  // The file has not been written.
-                    backUpFilePath= createBackupFile(writeInfo.getBackup(), writeFilePath).orElse(null);
+                    backUpFilePath= createBackupFile(writeInfo.getBackup(), writeFilePath);
                     writeFileMap.put(writeFilePath,true);
                 }
 
@@ -73,7 +77,7 @@ public class SmpInit {
                     if(writeInfo.getRead().startsWith("/"))readFilePath=replaceProjectInfoString(Paths.get(configPath, writeInfo.getRead()).toString(), projectInfo);
                     else readFilePath=replaceProjectInfoString(Paths.get(writeInfo.getRead()).toString(), projectInfo);
                 }
-                handleWriteInfo(writeInfo.getType(), writeFilePath, backUpFilePath, readFilePath, projectInfo);
+                handleWriteInfo(writeInfo, writeFilePath, backUpFilePath, readFilePath, projectInfo, writeFileMap.get(writeFilePath)!=null);
                 currentProjectWriteFileSet.add(writeFileName);
             }
             resultProjectWriteFileMap.put(projectInfo.getName(),currentProjectWriteFileSet);
@@ -83,10 +87,9 @@ public class SmpInit {
     }
 
 
-    private static void handleWriteInfo(String type, String writeFilePath, @Nullable String backUpFilePath, @Nullable String readFilePath, ProjectInfo projectInfo) throws IOException {
-        WriteTypeEnum writeTypeEnum = WriteTypeEnum.fromValue(type);
-        assert writeTypeEnum!=null;
-        String resultReadFilePath=backUpFilePath==null?writeFilePath:backUpFilePath;
+    private static void handleWriteInfo(WriteInfo writeInfo, String writeFilePath, String backUpFilePath, @Nullable String readFilePath, ProjectInfo projectInfo, boolean isWriteSameFile) throws IOException {
+        WriteTypeEnum writeTypeEnum = WriteTypeEnum.fromValue(writeInfo.getType()).orElseThrow(()->new IllegalArgumentException("The type of ruleList must not be null"));
+        String resultReadFilePath=isWriteSameFile?writeFilePath:backUpFilePath;
         switch (writeTypeEnum){
             case APPEND_PROPERTIES_FOLDER : {
                 SmpFileUtils.readAndPutAllPropertiesFromParent(resultReadFilePath, writeFilePath, readFilePath, properties -> replacePropertiesProjectString(projectInfo, properties));
@@ -96,17 +99,12 @@ public class SmpInit {
                 SmpFileUtils.readAndPutAllProperties(resultReadFilePath, writeFilePath, properties -> replacePropertiesProjectString(projectInfo, properties), readFilePath);
                 break;
             }
-            case REPLACE_ALL : {
-                Objects.requireNonNull(readFilePath,"readFilePath must not be null");
-                FileUtils.writeStringToFile(new File(writeFilePath),Files.readString(Paths.get(readFilePath)), StandardCharsets.UTF_8);
-                break;
-            }
             case REPLACE_STRING : {
+                Map<String, String> keyValueMap =writeInfo.getRpRuleList()!=null?loadRpFile(writeInfo.getRpRuleList()):loadRpFile(readFilePath);
                 Objects.requireNonNull(readFilePath,"readFilePath must not be null");
-                Map<String, String> stringStringMap = loadRpFile(readFilePath);
                 SmpFileUtils.readAndWriteStringFile(resultReadFilePath, writeFilePath, source->{
-                    for (String keyReplace : stringStringMap.keySet()) {
-                        String value = stringStringMap.get(keyReplace);
+                    for (String keyReplace : keyValueMap.keySet()) {
+                        String value = keyValueMap.get(keyReplace);
                         String valueResult = replaceProjectInfoString(value, projectInfo);
                         source=source.replaceAll(Pattern.quote(keyReplace), Matcher.quoteReplacement(valueResult));
                     }
@@ -144,21 +142,28 @@ public class SmpInit {
                 });
                 break;
             }
+
+            // The read file is not necessary.
             case JAVA_ANNOTATION : {
-                SmpFileUtils.readWriteBackupFile(resultReadFilePath, writeFilePath, null, sourceLine ->{
-                    return "//"+sourceLine+System.lineSeparator();
-                });
+                SmpFileUtils.readWriteBackupFile(resultReadFilePath, writeFilePath, null, sourceLine ->"//"+sourceLine+System.lineSeparator());
+                break;
+            }
+
+            // The same read file is not necessary.
+            case REPLACE_ALL : {
+                Objects.requireNonNull(readFilePath,"readFilePath must not be null");
+                FileUtils.writeStringToFile(new File(writeFilePath),Files.readString(Paths.get(readFilePath)), StandardCharsets.UTF_8);
                 break;
             }
             case XML: {
-                String appendXmlBackupPath= createBackupFile(BackupEnum.CURRENT.getValue(), readFilePath).orElseThrow();
+                String appendXmlBackupPath= createBackupFile(BackupEnum.CURRENT.getValue(), readFilePath);
                 FileUtils.writeStringToFile(new File(readFilePath),
                         replaceProjectInfoString(Files.readString(Paths.get(appendXmlBackupPath)),projectInfo),
                         StandardCharsets.UTF_8);
                 SmpXmlUtils.readAndPutAllXml(backUpFilePath,writeFilePath,readFilePath);
                 break;
             }
-            default : throw new IllegalStateException("Unexpected value: " + type);
+            default : throw new IllegalStateException("Unexpected value: " + writeInfo.getType());
         }
         log.info("write file completed: {}",writeFilePath);
     }
@@ -173,33 +178,80 @@ public class SmpInit {
         return properties;
     }
 
-    private static Optional<String> createBackupFile(String backupType, String writeFilePath) throws IOException {
-        String backUpFilePath;
-        backUpFilePath = writeFilePath.concat(BACKUP_SUFFIX);
-        File backupFile = new File(backUpFilePath);
-        BackupEnum backupEnum = BackupEnum.fromValue(backupType);
-        if(backupEnum==null)return Optional.empty();
+
+    private static Optional<Object> createBackupFile(Map<String, Boolean> backupFileMap, String backupType, String writeFilePath) throws IOException {
+        if(backupType==null)return Optional.empty();
+        BackupEnum backupEnum = BackupEnum.fromValue(backupType).orElseThrow(()->new IllegalArgumentException("backup type must not be null: "+writeFilePath));
         switch (backupEnum){
             case CURRENT : {
+                String backUpFilePath = writeFilePath.concat(BACKUP_SUFFIX);
+                File backupFile = new File(backUpFilePath);
                 if(!backupFile.exists())FileUtils.copyFile(new File(writeFilePath), backupFile);
-                break;
+                return Optional.of(backUpFilePath);
+            }
+            case SMP: {
+                String backUpFilePath = Paths.get(backupPath,Paths.get(writeFilePath.concat(BACKUP_SUFFIX)).getFileName().toString()).toString();
+                File backupFile = new File(backUpFilePath);
+                if(!backupFile.exists())FileUtils.copyFile(new File(writeFilePath), backupFile);
+                return Optional.of(backUpFilePath);
             }
             default : throw new IllegalStateException("Unexpected value: " + backupType);
         }
-        return Optional.of(backUpFilePath);
     }
 
+
+    private static String createBackupFile(String backupType, String writeFilePath) throws IOException {
+        BackupEnum backupEnum = BackupEnum.fromValue(backupType).orElseThrow(()->new IllegalArgumentException("backup type must not be null: "+writeFilePath));
+        switch (backupEnum){
+            case SMP: {
+                String backUpFilePath = Paths.get(backupPath,Paths.get(writeFilePath.concat("-"+encryptString(writeFilePath)).concat(BACKUP_SUFFIX)).getFileName().toString()).toString();
+                File backupFile = new File(backUpFilePath);
+                if(!backupFile.exists())FileUtils.copyFile(new File(writeFilePath), backupFile);
+                return backUpFilePath;
+            }
+            case CURRENT : {
+                String backUpFilePath = writeFilePath.concat(BACKUP_SUFFIX);
+                File backupFile = new File(backUpFilePath);
+                if(!backupFile.exists())FileUtils.copyFile(new File(writeFilePath), backupFile);
+                return backUpFilePath;
+            }
+            default : throw new IllegalStateException("Unexpected value: " + backupType);
+        }
+    }
+
+    public static String encryptString(String str)  {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("MD5 encrypt error");
+        }
+        md.update(str.getBytes());
+        byte[] bt = md.digest();
+        if(bt.length<6)throw new IllegalArgumentException("md5 error: "+str);
+        return  "" + Character.forDigit(bt[0] & 15, 16)
+                + Character.forDigit((bt[1] & 240) >> 4, 16)
+                + Character.forDigit(bt[3] & 15, 16)
+                + Character.forDigit((bt[4] & 240) >> 4, 16)
+                + Character.forDigit(bt[5] & 15, 16);
+    }
+
+
     private static Map<String,String> loadRpFile(String path) throws IOException {
-        List<String> properties = Files.readAllLines(Paths.get(path));
+        List<String> rpRuleList = Files.readAllLines(Paths.get(path));
+        return loadRpFile(rpRuleList);
+    }
+
+
+    private static Map<String,String> loadRpFile(List<String> rpRuleList) {
         Map<String, String> resultMap=new HashMap<>();
-        for (String property : properties) {
-            String[] split = property.split(Matcher.quoteReplacement(RP_FILE_SEPARATOR));
-            if(split.length!=2)throw new RuntimeException("RP file properties error");
-            resultMap.put(split[0],split[1]);
+        for (String property : rpRuleList) {
+            int separatorIndex = property.indexOf(Matcher.quoteReplacement(RP_FILE_SEPARATOR));
+            if(separatorIndex==-1)throw new IllegalArgumentException("rp rule must contains separator: "+ RP_FILE_SEPARATOR);
+            resultMap.put(property.substring(0,separatorIndex),property.substring(separatorIndex+1));
         }
         return resultMap;
     }
-
 
     private static String replaceProjectInfoString(String path, ProjectInfo projectInfo){
         String projectNameRegex="${project.name}";

@@ -12,7 +12,7 @@ project:
   - name: smp-oracle
     path: C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle   # Parent project folder
     env: UAT
-    fileList:
+    ruleList:
       - write: src/main/resources/application-local.properties    # The relative path to write the file.
         read: /${project.name}/${project.env}                     # Read folder.
                                                                     # When the path starts with "/", automatically concatenate the configuration path "~/.smp"
@@ -22,20 +22,22 @@ project:
                                                                     #   ${project.env}    The ENV of the current project.(e.g. "UAT")
                                                                     #   ${smp}            The "~/.smp" configuration path.(e.g. "C:\Users\saidake\.smp")
         type: append-properties-folder                            # Read all properties files in the directory and append them to the writing property file.
-        backup: current                                           # Create a backup file in the current file directory.
+        backup: current                                           # Create a backup file in the current file directory.(The default backup value is "current")
 
       - write: src/main/resources/application-test.properties     # The relative path to write the file.
         read: /${project.name}/test.properties                    # Read property file.
-        type: append-properties                              
-        backup: current                                           
+        type: append-properties
+        backup: smp                                               # Create a backup file in the default smp backup folder.(~/.smp/AAAbackup)                                  
 
       - write: src/main/resources/logback.xml
         read: /${project.name}/logback.xml
         type: replace-all                                         # Replace all content with the read file.
 
       - write: src/main/resources/logback.xml
-        read: /${project.name}/logback-replace.rp
-        type: replace-string                                      # Replace matched content with the RP file, Please refer to the introduction of the RP file format below.
+        type: replace-string                                      # Replace matched content with the RP rule list, Please refer to the introduction of the RP file rule format below.
+        rpRuleList:
+          - fffsfsfd/////%%%ddfsfsfsfsfs
+          - fffsfsfd/////%%%ddfsfsfsfsfs
 
       - write: src/main/resources/logback.xml
         read: /${project.name}/logback.txt
@@ -51,56 +53,68 @@ project:
 
       - write: src\main\java\com\saidake\common\core\util\file\SmpTestBackupUtils.java
         type: java-annotation                                     # Each line of the write file will be preceded by '//'
-        backup: current                                           
         once: true                                                # Only write once, It will determine whether it is the first write based on whether the backup file exists.
 
       - write: src/test/resources/smp-test/pom.xml
         read: /${project.name}/xml-append.xml
         type: xml                                                 # Write xml file, Please refer to the introduction of the pom-append.xml file format below.
-        backup: current
 
   - name: smp-common-core
     path: C:\Users\saidake\Desktop\DevProject\saidake-manage-project\smp-common\smp-common-core
     env: UAT
-    fileList:
+    ruleList:
       - write: src\main\java\com\saidake\common\core\util\file\SmpFileBackupUtils.java
         type: java-annotation
-        backup: current
         once: true
 ```
 
 logback.rp example: <br/>
 ```text
-<contextName>logback</contextName>$$$<contextName>logback-replace-content</contextName>
-sourceValue$$$ReplaceValue
-//source//abc.cert$$$${smp}/abc.cert
+<contextName>logback</contextName>%%%<contextName>logback-replace-content</contextName>
+sourceValue%%%ReplaceValue
+//source//abc.cert%%%${smp}/abc.cert
 ```
-Key values are separated by '$$$'<br/>
+Key values are separated by '%%%'<br/>
 Even in the RP file, you can still access the env properties:<br/>
 <table>
     <tr>
+        <th>ENV</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    <tr>
         <td>${project.name}</td>   
-        <td>The project name of the current project.(e.g. "smp-oracle")</td>
+        <td>The project name of the current project.</td>
+        <td>smp-oracle</td>
     </tr>
     <tr>
         <td>${project.path}</td>   
-        <td>The project path of the current project.(e.g. "C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle")</td>
+        <td>The project path of the current project.</td>
+        <td>C:\\Users\\&lt;username&gt;\\Desktop\\saidake-manage-project\\smp-service\\smp-oracle</td>
     </tr>
     <tr>
         <td>${project.env} </td>   
-        <td>The ENV of the current project.(e.g. "UAT")</td>
+        <td>The ENV of the current project.</td>
+        <td>UAT</td>
     </tr>
     <tr>
-        <td>${smp}         </td>   
-        <td>The "~/.smp" configuration path.(e.g. "C:\Users\saidake\.smp")</td></tr>
+        <td>${smp}         </td>
+        <td>The "~/.smp" configuration path.</td>
+        <td>C:\\Users\\&lt;username&gt;\\.smp</td>
     </tr>
 </table>
 
 xml-append.xml example: <br/>
 ```xml
 <root>
-    <replace xpath="/project/dependencyManagement/dependencies/dependency">    <!-- The xpath of the replace tag-->
-        <ele xpath="artifactId" value="maven-compiler-plugin" append-if-not-exists="true">  <!-- Use the artifactId xpath search under dependency, and if the value is equal to 'maven-compiler-plugin', replace it.-->
+    <replace xpath="/project/dependencyManagement/dependencies/dependency">    
+        <!-- The xpath of the replace tag-->
+        <ele xpath="artifactId" xpath-value="maven-compiler-plugin" append-if-not-exists="true"
+        custom1="xxx" custom2="xxx" 
+        >  
+            <!-- Use the artifactId xpath search under dependency, and if the value is equal to 'maven-compiler-plugin', replace it.-->
+            <!-- In addition to these three setting attributes, other attributes will be added to the discovered replacement element. -->
+            <!-- The attributes custom1, custom2 will be added to the element "dependency"-->
             <dependency>
                 <groupId>org.saidake.mmp</groupId>
                 <artifactId>smp</artifactId>
@@ -114,7 +128,8 @@ xml-append.xml example: <br/>
             </dependency>
         </ele>
     </replace>
-    <append parent-xpath="/project/dependencies">   <!-- The xpath of the parent tag of the replace tag-->
+    <append parent-xpath="/project/dependencies">   
+        <!-- The xpath of the parent tag of the replace tag-->
         <dependency>
             <groupId>org.saidake.mmp</groupId>
             <artifactId>smp</artifactId>

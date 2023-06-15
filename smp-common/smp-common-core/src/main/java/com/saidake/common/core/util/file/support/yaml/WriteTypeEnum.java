@@ -3,6 +3,8 @@ package com.saidake.common.core.util.file.support.yaml;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Optional;
+
 @Getter
 @AllArgsConstructor
 public enum WriteTypeEnum {
@@ -17,10 +19,10 @@ public enum WriteTypeEnum {
     XML("xml");
     private final String value;
 
-    public static WriteTypeEnum fromValue(String value){
+    public static Optional<WriteTypeEnum> fromValue(String value){
         for (WriteTypeEnum writeTypeEnum : values()) {
-            if(writeTypeEnum.getValue().equals(value))return writeTypeEnum;
+            if(writeTypeEnum.getValue().equals(value))return Optional.of(writeTypeEnum);
         }
-        return null;
+        return Optional.empty();
     }
 }

@@ -9,6 +9,5 @@ public class ProjectInfo {
     private String name;
     private String path;
     private String env;
-    private List<WriteInfo> fileList;
-
+    private List<WriteInfo> ruleList;
 }

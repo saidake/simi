@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.saidake.plugin'
-version '1.8'
+version '1.9'
 
 repositories {
     mavenCentral()
@@ -32,8 +32,8 @@ intellij {
 }
 patchPluginXml {
     changeNotes = """
-      1. Fix the issue of replace all replacement failure.<br>
-      2. XML configuration files support env variables"""
+      1. The file xml-append.xml can add attributes to the target element. <br>
+      2. The file smp-init.yml support field rpRuleList."""
 }
 test {
     useJUnitPlatform()

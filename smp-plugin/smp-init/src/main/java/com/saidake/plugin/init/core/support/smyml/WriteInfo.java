@@ -1,16 +1,15 @@
 package com.saidake.plugin.init.core.support.smyml;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class WriteInfo {
     private String write;
     private String read;
     private String type;
-    private String backup;
+    private String backup=BackupEnum.CURRENT.getValue();
     private Boolean once;
+    private List<String> rpRuleList;
 }

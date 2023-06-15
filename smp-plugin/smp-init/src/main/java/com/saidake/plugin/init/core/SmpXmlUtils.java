@@ -1,5 +1,6 @@
 package com.saidake.plugin.init.core;
 
+import jakarta.annotation.Nullable;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -10,14 +11,12 @@ import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
 
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @UtilityClass
 @Slf4j
 public class SmpXmlUtils {
+
     /**
      * A temporary prefix for xmln xmls file to locate namespace.
      */
@@ -27,7 +26,7 @@ public class SmpXmlUtils {
     private static final String XML_REPLACE_XPATH ="/root/replace";
     private static final String XML_REPLACE_ATTRIBUTE_XPATH="xpath";
     private static final String XML_REPLACE_ELE_ATTRIBUTE_XPATH="xpath";
-    private static final String XML_REPLACE_ELE_ATTRIBUTE_VALUE="value";
+    private static final String XML_REPLACE_ELE_ATTRIBUTE_VALUE="xpath-value";
     private static final String XML_REPLACE_ELE_ATTRIBUTE_APPEND_IF_NOT_EXISTS="append-if-not-exists";
     private static final String XML_APPEND_XPATH ="/root/append";
     private static final String XML_APPEND_ATTRIBUTE_PARENT_XPATH="parent-xpath";
@@ -40,7 +39,7 @@ public class SmpXmlUtils {
         //A. parse file
         SAXReader saxReader=new SAXReader();
         Document readPomDocument = saxReader.read(backupPomPath);
-        HashMap<String, String> pomNameSpaceMap = createNamespaceMap(readPomDocument);
+        Optional<HashMap<String, String>> pomNameSpaceMap = createNamespaceMap(readPomDocument);
         Document appendPomDocument = saxReader.read(appendXmlPath);
         //A. foreach replace in append.xml
         List<Node> replaceNodeList = appendPomDocument.selectNodes(XML_REPLACE_XPATH);
@@ -49,8 +48,7 @@ public class SmpXmlUtils {
             if(replaceNode.getNodeType()!=Node.ELEMENT_NODE)continue;
             Element replaceElement=(Element) replaceNode;
             String attributeReplaceXpath = replaceElement.attributeValue(XML_REPLACE_ATTRIBUTE_XPATH);
-            XPath replaceNodeXpathSecond = createNSXpath(pomNameSpaceMap, readPomDocument, attributeReplaceXpath);
-            List<Node> pomCheckParentNodeList= replaceNodeXpathSecond.selectNodes(readPomDocument);
+            List<Node> pomCheckParentNodeList = selectNodeListWithNSXpath(pomNameSpaceMap.orElse(null), readPomDocument, attributeReplaceXpath);
             //B. foreach ele in append.xml
             List<Element> elements = replaceElement.elements();
             for (Element element : elements) {
@@ -63,8 +61,7 @@ public class SmpXmlUtils {
                     Element parent = pomCheckParentNode.getParent();
                     if(pomCheckParentNode.getNodeType()!=Node.ELEMENT_NODE)continue;
                     Element pomCheckParentElement=(Element) pomCheckParentNode;
-                    XPath eleNsXpath = createNSXpath(pomNameSpaceMap, pomCheckParentElement, eleXpath);
-                    Node pomCheck = eleNsXpath.selectSingleNode(pomCheckParentElement);
+                    Node pomCheck =  selectSingleNodeListWithNSXpath(pomNameSpaceMap.orElse(null), pomCheckParentElement, eleXpath);
                     if(pomCheck.getNodeType()!=Node.ELEMENT_NODE)continue;
                     Element pomCheckElement=(Element) pomCheck;
                     String text = pomCheckElement.getText();
@@ -74,6 +71,14 @@ public class SmpXmlUtils {
                         List<Element> parentElementList = parent.elements();
                         DefaultElement clone = (DefaultElement)firstElement.clone();
                         synchronizeNameSpace(clone, readPomDocument);
+                        //C. append attributes to the pomCheckElement
+                        for (Attribute attribute : element.attributes()) {
+                            if(XML_REPLACE_ELE_ATTRIBUTE_XPATH.equals(attribute.getName())
+                                    ||XML_REPLACE_ELE_ATTRIBUTE_VALUE.equals(attribute.getName())
+                                    || XML_REPLACE_ELE_ATTRIBUTE_APPEND_IF_NOT_EXISTS.equals(attribute.getName())
+                            )continue;
+                            clone.addAttribute(attribute.getName(),attribute.getValue());
+                        }
                         parentElementList.add(parentElementList.indexOf(pomCheckParentNode),clone);
                         parent.remove(pomCheckParentElement);
                     }
@@ -81,8 +86,7 @@ public class SmpXmlUtils {
                 //B. append if element does not exists
                 if(!findTargetEle&&"true".equals(element.attributeValue(XML_REPLACE_ELE_ATTRIBUTE_APPEND_IF_NOT_EXISTS))){
                     String attributeReplaceParentXpath = attributeReplaceXpath.replaceAll("/+[A-z1-9]+$", "");
-                    XPath attributeReplaceParentXpathObject = createNSXpath(pomNameSpaceMap, readPomDocument, attributeReplaceParentXpath);
-                    Element attributeReplaceParentNode = (Element)attributeReplaceParentXpathObject.selectSingleNode(readPomDocument);
+                    Element attributeReplaceParentNode =   (Element)selectSingleNodeListWithNSXpath(pomNameSpaceMap.orElse(null), readPomDocument, attributeReplaceParentXpath);
                     Element elementFirst = element.elements().get(0);
                     DefaultElement clone = (DefaultElement)elementFirst.clone();
                     synchronizeNameSpace(clone, readPomDocument);
@@ -95,8 +99,7 @@ public class SmpXmlUtils {
             if(appendNode.getNodeType()!=Node.ELEMENT_NODE)continue;
             Element appendElement=(Element) appendNode;
             String parentXpathString = appendElement.attributeValue(XML_APPEND_ATTRIBUTE_PARENT_XPATH);
-            XPath parentXpath = createNSXpath(pomNameSpaceMap, readPomDocument, parentXpathString);
-            Node pomCheckParentNode= parentXpath.selectSingleNode(readPomDocument);
+            Node pomCheckParentNode =  selectSingleNodeListWithNSXpath(pomNameSpaceMap.orElse(null), readPomDocument, parentXpathString);
             Element pomCheckParentElement=(Element) pomCheckParentNode;
             Element elementFirst = appendElement.elements().get(0);
             DefaultElement clone = (DefaultElement)elementFirst.clone();
@@ -107,8 +110,6 @@ public class SmpXmlUtils {
         XMLWriter xmlWriter = new XMLWriter(fileWriterJava);
         xmlWriter.write( readPomDocument );
     }
-
-
 
     private static String xpathNS(String xpath){
         if(!xpath.startsWith("/"))xpath= TEMP_XMLN_TAG_PREFIX +xpath;
@@ -141,6 +142,7 @@ public class SmpXmlUtils {
     }
 
     private static void synchronizeNameSpace(DefaultElement clone, Document readPomDocument) {
+        if(readPomDocument.getRootElement().getNamespace()==null)return;
         clone.setNamespace(readPomDocument.getRootElement().getNamespace());
         for (Element elementChild : clone.elements()) {
             DefaultElement elementDefault = (DefaultElement)elementChild;
@@ -148,34 +150,28 @@ public class SmpXmlUtils {
         }
     }
 
-    private static XPath createNSXpath(HashMap pomNameSpaceMap, Node readPomDocument, String replaceNodeXpath) {
+    private static Node selectSingleNodeListWithNSXpath(@Nullable HashMap<String, String> pomNameSpaceMap, Node readPomDocument, String replaceNodeXpath) {
+        if(pomNameSpaceMap==null)return readPomDocument.selectSingleNode(replaceNodeXpath);
         XPath replaceNodeXpathSecond = readPomDocument.createXPath(xpathNS(replaceNodeXpath));
         replaceNodeXpathSecond.setNamespaceURIs(pomNameSpaceMap);
-        return replaceNodeXpathSecond;
+        return replaceNodeXpathSecond.selectSingleNode(readPomDocument);
     }
 
-    public static String getXpathContent(Document document, String xpath){
-        HashMap<String, String> pomNameSpaceMap = createNamespaceMap(document);
-        XPath nsXpath = createNSXpath(pomNameSpaceMap, document, xpath);
-        return nsXpath.selectSingleNode(document).getText();
+    private static List<Node> selectNodeListWithNSXpath(@Nullable HashMap<String, String> pomNameSpaceMap, Node readPomDocument, String replaceNodeXpath) {
+        if(pomNameSpaceMap==null)return readPomDocument.selectNodes(replaceNodeXpath);
+        XPath replaceNodeXpathSecond = readPomDocument.createXPath(xpathNS(replaceNodeXpath));
+        replaceNodeXpathSecond.setNamespaceURIs(pomNameSpaceMap);
+        return replaceNodeXpathSecond.selectNodes(readPomDocument);
     }
 
-    public static List<String> getXpathContentList(Document document, String xpath){
-        HashMap<String, String> pomNameSpaceMap = createNamespaceMap(document);
-        XPath nsXpath = createNSXpath(pomNameSpaceMap, document, xpath);
-        List<Node> nodes = nsXpath.selectNodes(document);
-        ArrayList<String> objects = new ArrayList<>();
-        for (Node node : nodes) {
-            objects.add(node.getText());
-        }
-        return objects;
-    }
 
-    private static HashMap<String, String> createNamespaceMap(Document document) {
+    private static Optional<HashMap<String, String>> createNamespaceMap(Document document) {
         HashMap<String,String> pomNameSpaceMap=new HashMap();
         String namespaceURI = document.getRootElement().getNamespaceURI();
+        if(namespaceURI==null)return Optional.empty();
         pomNameSpaceMap.put(TEMP_XMLN_PREFIX,namespaceURI);
-        return pomNameSpaceMap;
+        return Optional.of(pomNameSpaceMap);
     }
+
 
 }
