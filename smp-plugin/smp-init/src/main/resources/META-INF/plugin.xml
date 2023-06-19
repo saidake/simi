@@ -26,9 +26,21 @@
     <idea-version since-build="213.5744.223" until-build="231.*"/>
     <actions>
         <!-- Add your actions here -->
-        <action id="InitProjectId" class="com.saidake.plugin.init.InitProject" text="Smp Init" icon="/icons/deer15.png">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl F10"/>
-        </action>
+<!--        <action id="InitProjectId" class="com.saidake.plugin.init.InitGroup" text="Smp Init" icon="/icons/deer15.png">-->
+<!--            <add-to-group group-id="ToolsMenu" anchor="last"/>-->
+<!--            <keyboard-shortcut keymap="$default" first-keystroke="ctrl F10"/>-->
+<!--        </action>-->
+        <group
+                id="com.saidake.plugin.init.InitGroup"
+                class="com.saidake.plugin.init.InitGroup"
+                popup="true"
+                text="Smp Init"
+                description="SMP init project action"
+                icon="/icons/deer15.png">
+            <add-to-group
+                    group-id="ToolsMenu"
+                    anchor="first"/>
+        </group>
+
     </actions>
 </idea-plugin>

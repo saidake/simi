@@ -8,6 +8,8 @@ import java.util.List;
 public class ProjectInfo {
     private String name;
     private String path;
-    private String env;
+    private List<String> envList;
+    private String defaultEnv;
+    private Boolean pomProjectNameCheck;
     private List<WriteInfo> ruleList;
 }

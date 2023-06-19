@@ -5,11 +5,19 @@ import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.saidake.plugin.init.core.SmpInit;
+import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.Map;
 import java.util.Set;
 
-public class InitProject extends AnAction {
+public class EnvAction extends AnAction {
+
+    public EnvAction(@Nullable  String text,
+                     @Nullable  String description,
+                     @Nullable Icon icon) {
+        super(text,description,icon);
+    }
 
     @Override
     public void actionPerformed(AnActionEvent e) {
