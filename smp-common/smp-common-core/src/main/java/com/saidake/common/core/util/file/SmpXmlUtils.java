@@ -34,13 +34,13 @@ public class SmpXmlUtils {
     private static final String XML_APPEND_ATTRIBUTE_PARENT_XPATH="parent-xpath";
 
     @SneakyThrows
-    public static void readAndPutAllXml(String backupPomPath, String writePomPath, Reader reader)  {
+    public static void readAndPutAllXml(String readPomPath, String writePomPath, Reader reader)  {
         Objects.requireNonNull(reader,"reader must not be null");
-        Objects.requireNonNull(backupPomPath,"backupPomPath must not be null");
+        Objects.requireNonNull(readPomPath,"backupPomPath must not be null");
         Objects.requireNonNull(writePomPath,"writePomPath must not be null");
         //A. parse file
         SAXReader saxReader=new SAXReader();
-        Document readPomDocument = saxReader.read(backupPomPath);
+        Document readPomDocument = saxReader.read(readPomPath);
         Optional<HashMap<String, String>> pomNameSpaceMap = createNamespaceMap(readPomDocument);
         Document appendPomDocument = saxReader.read(reader);
         //A. foreach replace in append.xml

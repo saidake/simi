@@ -12,4 +12,6 @@ public class WriteInfo {
     private String backup=BackupEnum.CURRENT.getValue();
     private Boolean once;
     private List<String> rpRuleList;
+
+    private List<String> activeEnvList;
 }

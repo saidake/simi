@@ -11,6 +11,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class FileTest {
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, TransformerException, NoSuchAlgorithmException {
-        SmpInit.init();
+        //SmpInit.init();
     }
 }

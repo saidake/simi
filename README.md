@@ -100,8 +100,12 @@ or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</
 ```yaml
 project:
   - name: smp-oracle
+    enable: true
     path: C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle   # Parent project folder
-    env: UAT
+    envList: UAT,DEV,PROD
+    defaultEnv: UAT
+    pomProjectNameCheck: true         # when executing this path,  check whether Maven project name is project name based on the pom file.
+                                      # At this point, then project.path is optional.
     ruleList:
       - write: src/main/resources/application-local.properties    # The relative path to write the file.
         read: /${project.name}/${project.env}                     # Read folder.
@@ -111,10 +115,11 @@ project:
         backup: current   # Create a backup file in the current file directory.(The default backup value is "current")
         once: true        # Only write once, It will determine whether it is the first write based on whether the backup file exists.
 
-      - write: src/main/resources/application-test.properties     # The relative path to write the file.
+      - write: src/main/resources/application-dev.properties     # The relative path to write the file.
         read: /${project.name}/test.properties                   # Read property file.
         type: append-properties
         backup: smp             # Create a backup file in the default smp backup folder.(~/.smp/AAAbackup)                                  
+        activeEnvList: DEV,UAT             # It takes effect in the DEV and UAT environment and defaults to all environments.
 
       - write: src/main/resources/logback.xml
         read: /${project.name}/logback.xml
@@ -122,7 +127,7 @@ project:
 
       - write: src/main/resources/logback.xml       # The same file can be written multiple times.
         type: replace-string                                      
-        rpRuleList:                                 # Use rpRuleList defined in the current yml file.
+        rpRuleList:                                 # Use rpRuleList instead of rp file.(it is valid anywhere an RP file is used)
           - fffsfsfd/////%%%ddfsfsfsfsfs
           - fffsfsfd/////%%%ddfsfsfsfsfs
 
@@ -158,7 +163,7 @@ project:
         once: true
 ```
 
-#### logback.rp example: 
+#### RP rul file(.rp) example: 
 Key values are separated by '%%%'<br/>
 ```text
 <contextName>logback</contextName>%%%<contextName>logback-replace-content</contextName>
@@ -166,8 +171,7 @@ sourceValue%%%ReplaceValue
 //source//abc.cert%%%${smp}/abc.cert
 ```
 
-
-#### xml-append.xml example: 
+#### XML rule file(.xml) example: 
 ```xml
 <root>
     <replace xpath="/project/dependencyManagement/dependencies/dependency">    
