@@ -5,7 +5,7 @@ Init project files by the default config file: .smp/smp.yml.<br/>
 
 Prerequisite:<br/>
 1. Create the configuration file in the user directory: ~/.smp/smp-init.yml<br/>
-<font color="gray">Tips: The user configuration directory for Windows is "C:\Users\\<username>\\.smp"</font><br/>
+<font color="gray">Tips: The user configuration directory for Windows is "C:\\Users\\\<username>\\\.smp"</font><br/>
 2. Add a writing rule to the file ~/.smp/smp-init.yml.<br/>
    <font color="gray">Tips: For the first usage, you can try adding only one rule in the ruleList, and then executing the plugin.</font><br/>
    <font color="gray">Try the simplest java-annotation type to add "//" before each line in your read file.</font><br/>
