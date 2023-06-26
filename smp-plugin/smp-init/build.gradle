@@ -34,8 +34,8 @@ intellij {
 }
 patchPluginXml {
     changeNotes = """
-      1. The file xml-append.xml can add attributes to the target element. <br>
-      2. The file smp-init.yml support field rpRuleList."""
+      1. can specify current env in smp-init.xml now. <br>
+      2. can append new attributes when modifing xml file."""
 }
 test {
     useJUnitPlatform()
