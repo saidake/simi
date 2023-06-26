@@ -156,7 +156,8 @@ project:
 
   - name: smp-common-core
     path: C:\Users\saidake\Desktop\DevProject\saidake-manage-project\smp-common\smp-common-core
-    env: UAT
+    envList: UAT,DEV,PROD
+    defaultEnv: UAT
     ruleList:
       - write: src\main\java\com\saidake\common\core\util\file\SmpFileBackupUtils.java
         type: java-annotation
