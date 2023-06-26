@@ -8,3 +8,5 @@ build/
 classes/
 /LOCAL.md
 /VERSION.md
+
+gradle/wrapper

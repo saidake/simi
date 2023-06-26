@@ -12,9 +12,8 @@
     <dependencies>
         <dependency>
             <groupId>com.saidake</groupId>
-            <artifactId>smp-common-core</artifactId>
+            <artifactId>smp-common-util</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

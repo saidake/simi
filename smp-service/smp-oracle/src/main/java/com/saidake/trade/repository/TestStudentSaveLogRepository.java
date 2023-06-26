@@ -2,7 +2,7 @@ package com.saidake.trade.repository;
 
 import com.saidake.trade.entity.TestPersonEntity;
 import com.saidake.trade.entity.TestStudentEntity;
-import com.saidake.common.core.util.data.RandomUtil;
+import com.saidake.common.util.data.RandomUtil;
 import org.springframework.stereotype.Repository;
 
 import jakarta.annotation.Resource;

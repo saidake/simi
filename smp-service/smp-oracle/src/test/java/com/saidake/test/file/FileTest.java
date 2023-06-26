@@ -1,7 +1,6 @@
 package com.saidake.test.file;
 
 
-import com.saidake.common.core.util.file.SmpInit;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

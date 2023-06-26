@@ -15,7 +15,7 @@
         <!--==================================================================================================== 自定义 -->
         <dependency>
             <groupId>com.saidake</groupId>
-            <artifactId>smp-common-core</artifactId>
+            <artifactId>smp-common-util</artifactId>
         </dependency>
         <dependency>
             <groupId>com.saidake</groupId>
@@ -57,6 +57,10 @@
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
         <!--======================================================================================================= 数据工具 -->
         <dependency>

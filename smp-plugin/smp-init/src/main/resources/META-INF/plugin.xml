@@ -17,7 +17,6 @@
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
-
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="Smp Notification"
                            displayType="BALLOON"/>
@@ -41,6 +40,5 @@
                     group-id="ToolsMenu"
                     anchor="first"/>
         </group>
-
     </actions>
 </idea-plugin>

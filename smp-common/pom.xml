@@ -12,8 +12,9 @@
     <artifactId>smp-common</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>smp-common-core</module>
+        <module>smp-common-util</module>
         <module>smp-common-log</module>
+        <module>smp-common-thread</module>
     </modules>
 
 </project>

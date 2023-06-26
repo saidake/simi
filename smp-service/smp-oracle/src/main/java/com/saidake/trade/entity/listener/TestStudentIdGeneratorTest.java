@@ -1,6 +1,6 @@
 package com.saidake.trade.entity.listener;
 
-import com.saidake.common.core.util.data.RandomUtil;
+import com.saidake.common.util.data.RandomUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;

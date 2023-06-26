@@ -21,6 +21,10 @@
             <groupId>com.saidake</groupId>
             <artifactId>smp-common-log</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.saidake</groupId>
+            <artifactId>smp-common-thread</artifactId>
+        </dependency>
         <!--======================================================================================================= 核心 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

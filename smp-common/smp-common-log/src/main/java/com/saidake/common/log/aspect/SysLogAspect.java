@@ -1,7 +1,7 @@
 package com.saidake.common.log.aspect;
 
 import cn.hutool.core.util.StrUtil;
-import com.saidake.common.core.util.app.SpringContextUtil;
+import com.saidake.common.util.app.SpringContextUtil;
 import com.saidake.common.log.entity.SysLog;
 import com.saidake.common.log.event.SysLogEvent;
 import com.saidake.common.log.util.LogTypeEnum;

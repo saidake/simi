@@ -17,7 +17,7 @@ public class ListTest {
         lists.add(intlist);
         lists.add(intlist2);
         lists.add(intlist3);
-        System.out.println(Lists.partition(lists,0));
+        //flat map
         System.out.println(lists.stream().flatMap(List::stream).collect(Collectors.toList()));;
         intlist.add(null);
         intlist.add(null);

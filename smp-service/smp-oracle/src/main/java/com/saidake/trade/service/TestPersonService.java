@@ -1,19 +1,16 @@
 package com.saidake.trade.service;
 
-import com.saidake.common.core.util.data.RandomUtil;
+import com.saidake.common.util.data.RandomUtil;
 import com.saidake.trade.entity.StudentRoleEnum;
 import com.saidake.trade.entity.TestPersonEntity;
 import com.saidake.trade.entity.TestStudentEntity;
 import com.saidake.trade.repository.TestPersonRepository;
 import com.saidake.trade.repository.TestStudentRepository;
-import jakarta.transaction.TransactionManager;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 
 import java.util.List;

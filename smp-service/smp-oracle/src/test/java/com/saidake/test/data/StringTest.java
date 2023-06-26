@@ -7,6 +7,7 @@ import java.io.IOException;
 public class StringTest {
     private static final String test="abcdefg";
     public static void main(String[] args) throws IOException {
+        System.out.println("a"+null+"b");
         Integer a=9;
         Long b=8L;
         System.out.println(test.substring(0,-1));
