@@ -1,5 +1,6 @@
 package com.saidake.common.util.file;
 
+import com.saidake.common.util.SmpAssert;
 import jakarta.annotation.Nullable;
 import lombok.Cleanup;
 import lombok.experimental.UtilityClass;
@@ -36,8 +37,8 @@ public class SmpFileUtils {
      * @throws IOException if there is an error reading the file.
      */
     public static void readAndWriteStringFile(String readPath, String writePath, UnaryOperator<String> lambda) throws IOException {
-        Objects.requireNonNull(writePath,"writePath must not be null");
-        Objects.requireNonNull(lambda,"lambda must not be null");
+        SmpAssert.notNull(writePath,"writePath must not be null");
+        SmpAssert.notNull(lambda,"lambda must not be null");
         String readString = Files.readString(Paths.get(readPath));
         Files.writeString(Paths.get(writePath),lambda.apply(readString), StandardCharsets.UTF_8);
     }
@@ -52,8 +53,8 @@ public class SmpFileUtils {
      * @throws IOException if there is an error reading the file.
      */
     public static void readAndPutAllProperties(@Nullable String readPropertiesPath, String writePropertiesPath, @Nullable UnaryOperator<Properties> lambda, String... appendPath) throws IOException {
-        Objects.requireNonNull(appendPath,"readPath must not be null");
-        Objects.requireNonNull(writePropertiesPath,"writePath must not be null");
+        SmpAssert.notNull(appendPath,"readPath must not be null");
+        SmpAssert.notNull(writePropertiesPath,"writePath must not be null");
         Properties writeProperties=new Properties();
         @Cleanup FileInputStream fileInputStream = new FileInputStream(readPropertiesPath);
         writeProperties.load(fileInputStream);
@@ -79,13 +80,13 @@ public class SmpFileUtils {
      * @throws IOException if there is an error reading the file.
      */
     public static void readAndPutAllPropertiesFromParent(@Nullable String readPropertiesPath, String writePropertiesPath, String parentPath, @Nullable UnaryOperator<Properties> lambda) throws IOException {
-        Objects.requireNonNull(parentPath,"parentPath must not be null");
-        Objects.requireNonNull(writePropertiesPath,"writePath must not be null");
+        SmpAssert.notNull(parentPath,"parentPath must not be null");
+        SmpAssert.notNull(writePropertiesPath,"writePath must not be null");
         Properties writeProperties=new Properties();
         writeProperties.load(new FileInputStream(readPropertiesPath));
         Set<String> fileNameList=new HashSet<>();
         File parentFile = new File(parentPath);
-        if (!parentFile.exists())throw new RuntimeException("parentPath file doesn't exist");
+        SmpAssert.isTrue(parentFile.exists(),"parentPath file doesn't exist: "+parentPath);
         if(parentFile.listFiles()==null)return;
         for (File childFile : parentFile.listFiles()) {
             Path readPath = Paths.get(childFile.getPath());
@@ -118,8 +119,8 @@ public class SmpFileUtils {
     private static final String SDK_RETURN_MARK_TAG="SDK_RETURN_MARK_TAG";
     private static final ThreadLocal<Boolean> alreadyMarked=new ThreadLocal<>();
     public static void readWriteBackupFile(String readOrWritePath, @Nullable String writePath, @Nullable String appendContent, Function<String,String> lambda) throws IOException {
-        Objects.requireNonNull(readOrWritePath,"readPath must not be null");
-        Objects.requireNonNull(lambda,"lambda must not be null");
+        SmpAssert.notNull(readOrWritePath,"readPath must not be null");
+        SmpAssert.notNull(lambda,"lambda must not be null");
         File readFile = new File(readOrWritePath);
         File writeFile;
         if(writePath==null){

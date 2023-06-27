@@ -11,7 +11,6 @@ import com.saidake.common.util.file.support.yaml.SmpYmlProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.FileNotFoundException;
 import java.util.Iterator;
 
 public class InitGroup extends DefaultActionGroup {
@@ -35,7 +34,7 @@ public class InitGroup extends DefaultActionGroup {
                 }
             }
             return envActionList;
-        } catch (FileNotFoundException ex) {
+        } catch (Exception ex) {
             NotificationGroupManager.getInstance().getNotificationGroup("Smp Notification")
                     .createNotification(ex.getMessage(), NotificationType.ERROR)
                     .setTitle("Init project failed")

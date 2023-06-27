@@ -9,6 +9,7 @@ import com.saidake.common.util.file.support.yaml.ProjectInfo;
 import com.saidake.common.util.file.support.yaml.WriteInfo;
 import com.saidake.common.util.file.support.yaml.WriteTypeEnum;
 
+import lombok.AllArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -95,40 +96,27 @@ public class SmpInit {
 
     private static void handleWriteInfo(WriteInfo writeInfo, String writeFilePath, String backUpFilePath, ProjectInfo projectInfo,
                                         boolean isWriteSameFile, String currentEnv, String projectPath) throws IOException {
+        PathReplacer pathReplacer = new PathReplacer(projectInfo.getName(), projectPath, currentEnv);
         //A. get readFilePath from writeInfo
         String readFilePath =null;
         if(writeInfo.getRead()!=null){
             //B. join project path and read path.
-            if(writeInfo.getRead().startsWith("/"))readFilePath= replaceProjectInfoString(
-                    Paths.get(configPath, writeInfo.getRead()).toString(),
-                    projectInfo.getName(),
-                    projectPath,
-                    currentEnv
-            );
-            else readFilePath=replaceProjectInfoString(
-                    Paths.get(writeInfo.getRead()).toString(),
-                    projectInfo.getName(),
-                    projectPath,
-                    currentEnv
-            );
+            if(writeInfo.getRead().startsWith("/"))readFilePath= pathReplacer.replace(Paths.get(configPath, writeInfo.getRead()).toString());
+            else readFilePath=pathReplacer.replace(
+                    Paths.get(writeInfo.getRead()).toString());
         }
+        log.info("result read path: {}",readFilePath);
         //A. write type
         WriteTypeEnum writeTypeEnum = WriteTypeEnum.fromValue(writeInfo.getType()).orElseThrow(()->new IllegalArgumentException("The type of ruleList must not be null"));
         String resultBackupFilePath=isWriteSameFile?writeFilePath:backUpFilePath;
         if(isWriteSameFile)log.info("write the same file: {}",writeFilePath);
         switch (writeTypeEnum){
             case APPEND_PROPERTIES_FOLDER : {
-                SmpFileUtils.readAndPutAllPropertiesFromParent(resultBackupFilePath, writeFilePath, readFilePath, properties ->
-                        replacePropertiesProjectString(
-                                properties,
-                                projectInfo.getName(),
-                                projectPath,
-                                currentEnv));
+                SmpFileUtils.readAndPutAllPropertiesFromParent(resultBackupFilePath, writeFilePath, readFilePath, pathReplacer::replaceProperties);
                 break;
             }
             case APPEND_PROPERTIES : {
-                SmpFileUtils.readAndPutAllProperties(resultBackupFilePath, writeFilePath, properties ->
-                        replacePropertiesProjectString(properties,projectInfo.getName(),projectPath,currentEnv), readFilePath);
+                SmpFileUtils.readAndPutAllProperties(resultBackupFilePath, writeFilePath, pathReplacer::replaceProperties, readFilePath);
                 break;
             }
             case REPLACE_STRING : {
@@ -136,7 +124,7 @@ public class SmpInit {
                 SmpFileUtils.readAndWriteStringFile(resultBackupFilePath, writeFilePath, source->{
                     for (String keyReplace : keyValueMap.keySet()) {
                         String value = keyValueMap.get(keyReplace);
-                        String valueResult = replaceProjectInfoString(value, projectInfo.getName(),projectPath, currentEnv);
+                        String valueResult = pathReplacer.replace(value);
                         source=source.replaceAll(Pattern.quote(keyReplace), Matcher.quoteReplacement(valueResult));
                     }
                     return source;
@@ -157,7 +145,7 @@ public class SmpInit {
                     lineNumber[0]++;
                     String value = keyValueMap.get(lineNumber[0].toString());
                     if(value==null)return sourceLine+System.lineSeparator();
-                    return replaceProjectInfoString(value, projectInfo.getName(),projectPath, currentEnv)+System.lineSeparator();
+                    return pathReplacer.replace(value)+System.lineSeparator();
                 });
                 break;
             }
@@ -169,7 +157,7 @@ public class SmpInit {
                     lineNumber[0]++;
                     String value = keyValueMap.get(lineNumber[0].toString());
                     if(value==null)return sourceLine+System.lineSeparator();
-                    return sourceLine+System.lineSeparator()+replaceProjectInfoString(value, projectInfo.getName(),projectPath,currentEnv)+System.lineSeparator();
+                    return sourceLine+System.lineSeparator()+pathReplacer.replace(value)+System.lineSeparator();
                 });
                 break;
             }
@@ -188,7 +176,7 @@ public class SmpInit {
             case XML: {
                 SmpXmlUtils.readAndPutAllXml(backUpFilePath,writeFilePath,
                         new StringReader(
-                                replaceProjectInfoString(Files.readString(Paths.get(readFilePath)),projectInfo.getName(),projectPath, currentEnv)
+                                pathReplacer.replace(Files.readString(Paths.get(readFilePath)))
                         )
                 );
                 break;
@@ -198,15 +186,6 @@ public class SmpInit {
         log.info("write file completed: {}",writeFilePath);
     }
 
-
-
-    private static Properties replacePropertiesProjectString(Properties properties,String projectName,String projectPath, String currentEnv) {
-        properties.forEach((key, value)->{
-            value=replaceProjectInfoString((String)value, projectName,projectPath,currentEnv);
-            properties.setProperty((String)key, (String)value);
-        });
-        return properties;
-    }
 
 
     private static Optional<Object> createBackupFile(Map<String, Boolean> backupFileMap, String backupType, String writeFilePath) throws IOException {
@@ -283,14 +262,30 @@ public class SmpInit {
         return resultMap;
     }
 
-    private static String replaceProjectInfoString(String path, String projectName,String projectPath, String currentEnv){
-        String projectNameRegex="${project.name}";
-        String projectEnvRegex="${project.env}";
-        String projectPathRegex="${project.path}";
-        String configPathRegex="${smp}";
-        return path.replaceAll(Pattern.quote(projectNameRegex),projectName)
-                .replaceAll(Pattern.quote(projectEnvRegex),currentEnv)
-                .replaceAll(Pattern.quote(projectPathRegex),Matcher.quoteReplacement(projectPath))
-                .replaceAll(Pattern.quote(configPathRegex),Matcher.quoteReplacement(configEscapePath));
+
+    @AllArgsConstructor
+    static final class PathReplacer {
+        private final String projectName;
+        private final String projectPath;
+        private final String currentEnv;
+        private String replace(String path){
+            String projectNameRegex="${project.name}";
+            String projectEnvRegex="${project.env}";
+            String projectPathRegex="${project.path}";
+            String configPathRegex="${smp}";
+            return path.replaceAll(Pattern.quote(projectNameRegex),projectName)
+                    .replaceAll(Pattern.quote(projectEnvRegex),currentEnv)
+                    .replaceAll(Pattern.quote(projectPathRegex),Matcher.quoteReplacement(projectPath))
+                    .replaceAll(Pattern.quote(configPathRegex),Matcher.quoteReplacement(configEscapePath));
+        }
+        private  Properties replaceProperties(Properties properties) {
+            properties.forEach((key, value)->{
+                value=this.replace((String)value);
+                properties.setProperty((String)key, (String)value);
+            });
+            return properties;
+        }
     }
+
+
 }
