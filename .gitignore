@@ -3,10 +3,10 @@ node_modules/
 .idea/
 *.iml
 /AAAlogs/
+/logs/
 .gradle/
 build/
 classes/
-/LOCAL.md
 /VERSION.md
 
-gradle/wrapper
+gradle/wrapper/
