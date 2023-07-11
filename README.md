@@ -1,12 +1,12 @@
 # <font color="cyan">plugin introduction</font>
-## <font color="pink">smp-plugin (Plugin Integration)</font>
-### <font color="yellow">Smp Init</font>
+## <font color="pink">simi-plugin (Plugin Integration)</font>
+### <font color="yellow">Simi Init</font>
 Init project files by the default config file: .smp/smp.yml.<br/>
 
 Prerequisite:<br/>
-1. Create the configuration file in the user directory: ~/.smp/smp-init.yml<br/>
+1. Create the configuration file in the user directory: ~/.smp/simi-init.yml<br/>
 <font color="gray">Tips: The user configuration directory for Windows is "C:\\Users\\\<username>\\\.smp"</font><br/>
-2. Add a writing rule to the file ~/.smp/smp-init.yml.<br/>
+2. Add a writing rule to the file ~/.smp/simi-init.yml.<br/>
    <font color="gray">Tips: For the first usage, you can try adding only one rule in the ruleList, and then executing the plugin.</font><br/>
    <font color="gray">Try the simplest java-annotation type to add "//" before each line in your read file.</font><br/>
 3. Execute the plugin in the intellij idea menu: <em>Tools / Smp Init</em>, and then you can see the execution result prompt in the lower right corner. 
@@ -66,8 +66,8 @@ Prerequisite:<br/>
 </table>
 
 #### global env:
-You can access the env variable in the <strong>smp-init.yml</strong> file,<br/> 
-or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</strong> file of xml-append rule referenced in the smp-init.yml<br/>
+You can access the env variable in the <strong>simi-init.yml</strong> file,<br/> 
+or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</strong> file of xml-append rule referenced in the simi-init.yml<br/>
 <table>
     <tr>
         <th>ENV</th>
@@ -77,12 +77,12 @@ or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</
     <tr>
         <td>${project.name}</td>   
         <td>The project name of the current project.</td>
-        <td>smp-oracle</td>
+        <td>simi-oracle</td>
     </tr>
     <tr>
         <td>${project.path}</td>   
         <td>The project path of the current project.</td>
-        <td>C:\\Users\\&lt;username&gt;\\Desktop\\saidake-manage-project\\smp-service\\smp-oracle</td>
+        <td>C:\\Users\\&lt;username&gt;\\Desktop\\simi\\simi-service\\simi-oracle</td>
     </tr>
     <tr>
         <td>${project.env} </td>   
@@ -96,12 +96,12 @@ or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</
     </tr>
 </table>
 
-#### smp-init.yml example:
+#### simi-init.yml example:
 ```yaml
 project:
-  - name: smp-oracle
+  - name: simi-oracle
     enable: true
-    path: C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle   # Parent project folder
+    path: C:\\Users\\saidake\\Desktop\\DevProject\\simi\\simi-service\\simi-oracle   # Parent project folder
     envList: UAT,DEV,PROD
     defaultEnv: UAT
     pomProjectNameCheck: true         # when executing this path,  check whether Maven project name is project name based on the pom file.
@@ -150,12 +150,12 @@ project:
       - write: src\main\java\com\saidake\common\core\util\file\SmpTestBackupUtils.java
         type: java-annotation                                     
 
-      - write: src/test/resources/smp-test/pom.xml
+      - write: src/test/resources/simi-test/pom.xml
         read: /${project.name}/xml-append.xml
         type: xml                                                 
 
-  - name: smp-common-core
-    path: C:\Users\saidake\Desktop\DevProject\saidake-manage-project\smp-common\smp-common-core
+  - name: simi-common-core
+    path: C:\Users\saidake\Desktop\DevProject\simi\simi-common\simi-common-core
     envList: UAT,DEV,PROD
     defaultEnv: UAT
     ruleList:

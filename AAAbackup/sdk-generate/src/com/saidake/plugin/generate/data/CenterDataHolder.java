@@ -1,4 +1,4 @@
-package com.saidake.plugin.generate.data;
+package com.simi.plugin.generate.data;
 
 public class CenterDataHolder {
 }

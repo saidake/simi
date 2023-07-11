@@ -1,15 +1,15 @@
 project:
-  - name: smp-oracle
-    path: C:\\Users\\saidake\\Desktop\\DevProject\\saidake-manage-project\\smp-service\\smp-oracle   # Parent project folder
+  - name: simi-oracle
+    path: C:\\Users\\saidake\\Desktop\\DevProject\\simi\\simi-service\\simi-oracle   # Parent project folder
     env: UAT
     fileList:
       - write: src/main/resources/application-local.properties    # The relative path to write the file.
         read: /${project.name}/${project.env}                     # Read folder.
                                                                     # When the path starts with "/", automatically concatenate the configuration path "~/. smp"
                                                                     # Tips: The user configuration directory for Windows is "C:\Users\<username>\.smp"
-                                                                    #   ${project.name}   The project name of the current project. // smp-oracle
-                                                                    #   ${project.path}   The project path of the current project. // smp-oracle
-                                                                    #   ${project.env}    The ENV of the current project. // smp-oracle
+                                                                    #   ${project.name}   The project name of the current project. // simi-oracle
+                                                                    #   ${project.path}   The project path of the current project. // simi-oracle
+                                                                    #   ${project.env}    The ENV of the current project. // simi-oracle
                                                                     #   ${smp}            The "~/.smp" configuration path
         type: append-properties-folder                            # Read all properties files in the directory and append them to the write property file.
         backup: current                                           # Create a backup file in the current file directory.
@@ -44,13 +44,13 @@ project:
         backup: current                                           
         once: true                                                # Only write once, It will determine whether it is the first write based on whether the backup file exists.
 
-      - write: src/test/resources/smp-test/pom.xml
+      - write: src/test/resources/simi-test/pom.xml
         read: /${project.name}/pom-append.xml
         type: pom                                                 # Write xml file, Please refer to the introduction of the pom-append.xml file format below.
         backup: current
 
-  - name: smp-common-core
-    path: C:\Users\saidake\Desktop\DevProject\saidake-manage-project\smp-common\smp-common-core
+  - name: simi-common-core
+    path: C:\Users\saidake\Desktop\DevProject\simi\simi-common\simi-common-core
     env: UAT
     fileList:
       - write: src\main\java\com\saidake\common\core\util\file\SmpFileBackupUtils.java

@@ -4,20 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.saidake</groupId>
-        <artifactId>smp-parent</artifactId>
+        <groupId>com.simi</groupId>
+        <artifactId>simi-parent</artifactId>
         <version>1.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>saidake-manage-project</artifactId>
+    <artifactId>simi</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
 
     <modules>
-        <module>smp-service</module>
-        <module>smp-common</module>
-        <module>smp-gateway</module>
-        <module>smp-config</module>
-        <module>smp-custom</module>
+        <module>simi-service</module>
+        <module>simi-common</module>
+        <module>simi-gateway</module>
+        <module>simi-config</module>
+        <module>simi-custom</module>
     </modules>
 </project>

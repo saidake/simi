@@ -20,7 +20,7 @@ setlocal enabledelayedexpansion
 :://START//============================================================================================================================= bluetooth-app env
 set PROJECT_ROOT="D:\Desktop\DevProject\bluetooth-app"
 :: Script path for remote execution (under the current directory by default)
-set SERVER_BASH_PATH="D:\Desktop\DevProject\saidake-manage-project\sdk-deploy-server.sh"
+set SERVER_BASH_PATH="D:\Desktop\DevProject\simi\sdk-deploy-server.sh"
 :: Name of script executed remotely (copy to remote home path)
 set SERVER_BASH_NAME=sdk-deploy-server.sh
 :: Local jar packaging location, copy this path to the server

@@ -9,7 +9,7 @@ pipeline {
                 echo 'xxx ${SYSTEM_PARA} ${env.BUILD_ID} '
             }
      }
-     stage('Sonar扫描') {
+     stage('Sonar scan') {
             steps {
                  echo 'xxx'
             }

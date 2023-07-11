@@ -1,4 +1,4 @@
-package com.saidake.plugin.generate.window;
+package com.simi.plugin.generate.window;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;

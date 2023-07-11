@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.simi.plugin.generate.window.ControllerWindow">
+  <grid id="27dc6" binding="mainPanel" layout-manager="FormLayout">
+    <rowspec value="center:d:grow"/>
+    <colspec value="fill:d:grow"/>
+    <constraints>
+      <xy x="20" y="20" width="569" height="833"/>
+    </constraints>
+    <properties>
+      <autoscrolls value="true"/>
+      <enabled value="false"/>
+      <focusCycleRoot value="false"/>
+      <focusTraversalPolicyProvider value="false"/>
+      <toolTipText value=""/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <scrollpane id="615d" binding="scrollPane">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <autoscrolls value="true"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="cebba" class="javax.swing.JTree" binding="tree">
+            <constraints/>
+            <properties>
+              <autoscrolls value="true"/>
+              <focusCycleRoot value="false"/>
+              <focusable value="true"/>
+              <largeModel value="false"/>
+              <requestFocusEnabled value="false"/>
+              <rootVisible value="true"/>
+              <scrollsOnExpand value="true"/>
+              <verifyInputWhenFocusTarget value="true"/>
+            </properties>
+            <clientProperties>
+              <JTree.lineStyle class="java.lang.String" value=""/>
+            </clientProperties>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>
