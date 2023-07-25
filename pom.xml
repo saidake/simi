@@ -14,10 +14,11 @@
     <version>1.0</version>
 
     <modules>
-        <module>simi-service</module>
+        <module>simi-test</module>
         <module>simi-common</module>
         <module>simi-gateway</module>
         <module>simi-config</module>
         <module>simi-custom</module>
+        <module>simi-service</module>
     </modules>
 </project>

@@ -1,0 +1,30 @@
+spring:
+  jpa:
+    database: oracle
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: smp
+    password: smp
+    hikari:
+      connection-timeout: 10000       #default 30 seconds
+      validation-timeout: 3000       # The maximum time for connecting the tested activity, default 5 seconds.
+      idle-timeout: 60000              #  Maximum allowed idle time in the Connection pool, default 10 mimutes.
+      max-lifetime: 60000             #   The lifespan of a connection (in milliseconds) is released if it is not used after a timeout, default 30 minutes.
+      maximum-pool-size: 10         #The maximum number of connections allowed in the Connection pool, including idle and active connections, default 10
+      minimum-idle: 5                   #  The minimum number of free connections allowed in the Connection pool, default 10
+      pool-name: SmpHikariPoolDDD      # Set connection pool name, defulat automatic generation.
+      connection-test-query: select 1 from dual     #   Test coneciton query.   Using the JDBC4 <code>Connection.isValid()</code> method
+       # to test connection validity can be more efficient on some databases and is recommended.
+  data:
+    mongodb:
+      uri: mongodb://smp:smp@localhost:27017/admin
+springdoc:
+  show-actuator: true
+  enable-javadoc: true
+  swagger-ui:
+    doc-expansion: none

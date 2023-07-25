@@ -1,0 +1,26 @@
+server:
+  port: 48120
+spring:
+  application:
+    name: simi-trade
+  profiles:
+    active: dev
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    jmx:
+      exposure:
+        include: "*"
+#=============================================================================================================== 文件
+qihuo:
+  simulate:
+    account-info-path: D:\Desktop\OneDrive\STOCK.xlsx
+  day:
+    sr: ${BASEDIR}\assets\day\28#SR2305.day
+fxcm:
+  account-info-path: C:\Users\saidake\AppData\Local\Temp\FxtsReportsTmp  # 获取福汇导出的账号交易数据 目录

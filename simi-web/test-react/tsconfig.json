@@ -1,8 +1,0 @@
-{
-    "compilerOptions": {
-        // The usual
-    },
-    "references": [
-        { "path": "./src" }
-    ]
-}

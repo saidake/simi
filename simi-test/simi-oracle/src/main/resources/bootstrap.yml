@@ -1,0 +1,17 @@
+server:
+  port: 48124
+
+spring:
+  application:
+    name: sdk-oracle
+  devtools:
+    restart:
+      enabled: true                                  #热部署生效
+    add-properties: false
+  freemarker:
+    cache: false
+eureka:
+  client:
+    enabled: false
+    service-url:
+      defaultZone: http://127.0.0.1:48992/eureka/       #将消费者userservice注册到eureka注册中心，可多个（配合注册中心时，此配置必须移到bootstrap.yml中）

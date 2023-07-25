@@ -1,0 +1,12 @@
+server:
+  port: 48993
+spring:
+  application:
+    name: simi-cloud
+  cloud:
+    gateway:
+      routes:
+        - id: simi-oracle
+          uri: http://127.0.0.1:48124
+          predicates:
+            - Path=/simioracle/**
