@@ -1,4 +1,4 @@
-package com.simi.service.trade.domain.fuhui;
+package com.simi.service.trade.domain;
 
 import lombok.Data;
 

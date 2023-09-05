@@ -1,7 +1,7 @@
-package com.simi.service.trade.controller.foreignExchange;
+package com.simi.service.trade.controller;
 
-import com.simi.service.trade.domain.fuhui.Account;
-import com.simi.service.trade.domain.fuhui.AccountResponse;
+import com.simi.service.trade.domain.Account;
+import com.simi.service.trade.domain.AccountResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -29,21 +29,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 @RestController
+
 @Tag(name = "FXCM")
 @Slf4j
 @RequestMapping("fxcm")
 public class FxcmController {
 
     @Value("${fxcm.account-info-path}")
-    private String fuhuiDirectory;
+    private String fxcmDirectory;
 
     @GetMapping("/account")
     @Operation(description = "获取账号交易历史信息")
     public ResponseEntity<AccountResponse> getAccountInfo() throws IOException, SAXException, ParserConfigurationException, XPathExpressionException {
         // remove error char
-        File file = new File(fuhuiDirectory);
+        File file = new File(fxcmDirectory);
         File[] files = file.listFiles();
         assert files != null;
         File fuhuiFile=files[0];

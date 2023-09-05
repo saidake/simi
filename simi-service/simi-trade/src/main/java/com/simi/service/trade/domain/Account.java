@@ -1,4 +1,4 @@
-package com.simi.service.trade.domain.fuhui;
+package com.simi.service.trade.domain;
 
 import lombok.Data;
 
@@ -14,7 +14,6 @@ public class Account {
 
     //成交量：1000
     String turnover;
-
 
     //买进：1.0007200000000001
     String purchasePrice;

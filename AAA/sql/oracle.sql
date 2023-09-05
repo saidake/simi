@@ -35,17 +35,10 @@ create table SYS_LOG(
     EXCEPTION VARCHAR2(30) NULL
 );
 ------------------------------------------------------------------------------ CRON
-create table CRON(
-                     CRON_ID NUMBER PRIMARY KEY,
-                     CRON VARCHAR2(30) NULL,
-                     CRON_NAME VARCHAR2(30) NULL,
-                     EXECUTE_TIME TIMESTAMP(6)  NULL,
-                     EXECUTE_BY VARCHAR2(30) NULL,
-                     LOCKED NUMBER(1) NULL,
-                     ISRT_DT TIMESTAMP(6) DEFAULT SYSTIMESTAMP NOT NULL
+create table SYS_LOG(
+    LOG_ID NUMBER PRIMARY KEY,
+    EXCEPTION VARCHAR2(30) NULL
 );
-insert into CRON(CRON_ID,CRON,CRON_NAME) values(1,'0 0 1 * * Sun','CLEAR_SYS_LOG');
-insert into CRON(CRON_ID,CRON,CRON_NAME) values(2,'0 12 16 * * Mon','CLEAR_SYS_LOG');
 
 
 commit;

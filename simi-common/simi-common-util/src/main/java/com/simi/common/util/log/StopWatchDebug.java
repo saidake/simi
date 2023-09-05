@@ -10,6 +10,10 @@ import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -20,6 +24,8 @@ import java.nio.file.StandardOpenOption;
  */
 @Slf4j
 public class StopWatchDebug {
+    private static Map<String,Integer> taskNameTimeMap=new HashMap<>();
+
     private static StopWatch STOP_WATCH;
     private static final String LOG_TITLE ="[STOP_WATCH_TASK: ";
     private static final String LOG_TITLE_START =" ] start=====================================";
@@ -33,7 +39,8 @@ public class StopWatchDebug {
     //================================================================ tab bar string
     private static final String TOTAL_TIME_MILLIS_FORMAT="%9s";
     private static final String TOTAL_TIME_SECONDS_FORMAT="%9.3f";
-    private static final String TASK_NAME_FORMAT="%-25s";
+    private static final String TASK_NAME_FORMAT="%-50s";
+    private static final String TASK_EXECUTION_NUMBER_FORMAT="%-5s";
     private static final String TIME_MILLIS_FORMAT="%-15s";
     private static final String TIME_SECONDS_FORMAT="%-15.3f";
     private static final String TIME_PERCENT_FORMAT="%6.2f%%   ";
@@ -44,6 +51,7 @@ public class StopWatchDebug {
      */
     private static final String TITLE_TIME_PERCENT_FORMAT="%-10s";
     private static final String TITLE_TAB_BAR="|" + String.format(TASK_NAME_FORMAT,"TaskName")
+            + "|"+String.format(TASK_EXECUTION_NUMBER_FORMAT,"times")
             + "|"+String.format(TIME_MILLIS_FORMAT,"ms")
             + "|"+String.format(TIME_MILLIS_FORMAT,"s")
             + "|"+String.format(TITLE_TIME_PERCENT_FORMAT,"%")
@@ -87,12 +95,14 @@ public class StopWatchDebug {
     }
 
     public static String printFile(String filepath) throws IOException {
+        StopWatchDebug.taskNameTimeMap.clear();
         String print = print(false);
         Files.writeString(Path.of(filepath), System.lineSeparator()+print, StandardOpenOption.APPEND);
         return print;
     }
     public static String print(@Nullable boolean showLastTaskTitle) {
         if(STOP_WATCH.isRunning())STOP_WATCH.stop();
+        StopWatchDebug.taskNameTimeMap.clear();
         long totalTimeMillis = STOP_WATCH.getTotalTimeMillis();
         double totalTimeSeconds = STOP_WATCH.getTotalTimeSeconds();
         String shortSummary = STOP_WATCH.getId() + ": total running time [ " + String.format(TOTAL_TIME_MILLIS_FORMAT, totalTimeMillis) + "ms / " + String.format(TOTAL_TIME_SECONDS_FORMAT, totalTimeSeconds) + "s ]";
@@ -109,8 +119,11 @@ public class StopWatchDebug {
         sb.append('\n');
         sb.append(TITLE_TAB_BAR).append(System.lineSeparator());
         for (StopWatch.TaskInfo task : STOP_WATCH.getTaskInfo()) {
+            Integer times = StopWatchDebug.taskNameTimeMap.merge(task.getTaskName(), 1, (key, value) -> ++value);
             sb.append("|")
                     .append(String.format(TASK_NAME_FORMAT, task.getTaskName()));
+            sb.append("|")
+                    .append(String.format(TASK_EXECUTION_NUMBER_FORMAT, times));
             sb.append("|")
                     .append(String.format(TIME_MILLIS_FORMAT, task.getTimeMillis()));
             sb.append("|")
@@ -125,5 +138,9 @@ public class StopWatchDebug {
     }
     public static String print() {
         return print(true);
+    }
+
+    private static String addTaskNameIndex(String taskName){
+        return taskName+"["+taskNameTimeMap.get(taskName)+"]";
     }
 }

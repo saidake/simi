@@ -1,11 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, {Suspense} from "react";
 
-import ToTalPage from "@pages/qihuo/TotalPage";
-import BaseLayout from "./layout/BaseLayout";
-
+import BasicPage from "@/pages/BasicPage";
 const App: React.FC<any> = () => {
   return (
-   <BaseLayout />
+   <BasicPage/>
   );
 };
 
