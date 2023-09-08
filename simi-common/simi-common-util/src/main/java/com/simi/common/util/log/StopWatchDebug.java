@@ -28,7 +28,8 @@ public class StopWatchDebug {
     private static final Map<String, List<Long>> taskDurationMap =new HashMap<>();
     private static StopWatch stopWatch;
 
-    private static final Map<String, Long> asyncTaskDurationMap =new HashMap<>();
+    private static final Map<String, Map<Integer,Long>> asyncTaskTimesDurationMap =new HashMap<>();
+    private static final Map<String, Integer> asyncTaskTimesMap =new HashMap<>();
     private static StopWatch asyncStopWatch;
     //============================================================================================ duration time suffix
     private static final String ASYNC_DURATION_START_SUFFIX="-async-start";
@@ -152,9 +153,25 @@ public class StopWatchDebug {
         if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)||taskName.endsWith(ASYNC_DURATION_END_SUFFIX)) {
             asyncStopWatch.start(taskName);
             startString=LOG_TITLE + limitTaskName(taskName) + LOG_TITLE_START;
-        };
-        if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)||taskName.endsWith(ASYNC_DURATION_END_SUFFIX)){
-            asyncTaskDurationMap.merge(getAsyncDurationRealTaskName(taskName),System.currentTimeMillis(),(oldValue,value)->value-oldValue);
+            String asyncDurationRealTaskName = getAsyncDurationRealTaskName(taskName);
+            Integer times = asyncTaskTimesMap.get(asyncDurationRealTaskName);
+            Map<Integer, Long> timesDurationMap = asyncTaskTimesDurationMap.computeIfAbsent(asyncDurationRealTaskName, key -> new LinkedHashMap<>());
+            if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)){
+                int timesAbs = times == null ? 1 : Math.abs(times) + 1;
+                timesDurationMap.put(timesAbs,System.currentTimeMillis());
+                asyncTaskTimesMap.put(asyncDurationRealTaskName, timesAbs);
+            }
+            if(taskName.endsWith(ASYNC_DURATION_END_SUFFIX)){
+                Assert.isTrue(times!=null&&times>0,"asynchronous end times error");
+                timesDurationMap.compute(times,(key,oldValue)->{
+                    Assert.notNull(oldValue,"asynchronous end task error");
+                    return System.currentTimeMillis()-oldValue;
+                });
+                asyncTaskTimesMap.put(asyncDurationRealTaskName,-times);
+            }
+
+
+
         }
         return endString==null?startString: endString +System.lineSeparator()+ startString;
     }
@@ -191,8 +208,8 @@ public class StopWatchDebug {
         return restart(taskName+(longs==null||longs.size()%2==0?DURATION_START_SUFFIX:DURATION_END_SUFFIX));
     }
     public static String asyncDuration(String taskName) {
-        Long millis = asyncTaskDurationMap.get(taskName);
-        return asyncRestart(taskName+(millis==null?ASYNC_DURATION_START_SUFFIX:ASYNC_DURATION_END_SUFFIX));
+        Integer times = asyncTaskTimesMap.get(taskName);
+        return asyncRestart(taskName+(times==null||times<0?ASYNC_DURATION_START_SUFFIX:ASYNC_DURATION_END_SUFFIX));
     }
 
     public static String durationEndPrint(String taskName) {
@@ -304,7 +321,14 @@ public class StopWatchDebug {
             String taskName = task.getTaskName();
             String durationRealTaskName = getAsyncDurationRealTaskName(taskName);
             Integer times = asyncTaskNameTimesMap.merge(taskName, 1, (oldValue, value) -> ++oldValue);
-            Long durationByStart= taskName.endsWith(ASYNC_DURATION_START_SUFFIX)?asyncTaskDurationMap.get(durationRealTaskName):null;
+            Long durationByStart=null;
+            if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)){
+                Map<Integer, Long> timesDurationMap = asyncTaskTimesDurationMap.get(durationRealTaskName);
+                Assert.notNull(timesDurationMap,"asynchronous millis null exception");
+                Long duration = timesDurationMap.get(times);
+                Assert.notNull(duration,"asynchronous duration null exception");
+                durationByStart=duration;
+            }
             //B. content string
             sb.append("|")
                     .append(String.format(TASK_NAME_VALUE_FORMAT, taskName));
@@ -468,6 +492,15 @@ public class StopWatchDebug {
                 }
             }
             System.out.println(StopWatchDebug.asyncDuration("async1"));
+            System.out.println(StopWatchDebug.asyncDuration("async1"));
+            for (int i = 0; i < 30; i++) {
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(StopWatchDebug.asyncDuration("async1"));
         });
         System.out.println(StopWatchDebug.duration("test3",3));
         System.out.println(StopWatchDebug.duration("test22",2));
@@ -475,6 +508,15 @@ public class StopWatchDebug {
             Thread.sleep(10);
         }
         CompletableFuture<Void> voidCompletableFuture2 = CompletableFuture.runAsync(() -> {
+            System.out.println(StopWatchDebug.asyncDuration("async2"));
+            for (int i = 0; i < 30; i++) {
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(StopWatchDebug.asyncDuration("async2"));
             System.out.println(StopWatchDebug.asyncDuration("async2"));
             for (int i = 0; i < 30; i++) {
                 try {
