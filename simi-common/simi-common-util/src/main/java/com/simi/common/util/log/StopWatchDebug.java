@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 
 /**
@@ -63,7 +64,11 @@ public class StopWatchDebug {
     private static final String TASK_LEVEL_EMPTY_STRING=" ".repeat(6);
     private static final String TASK_EXECUTION_NUMBER_VALUE_FORMAT ="%-6d";
     private static final String TIME_MILLIS_VALUE_FORMAT ="%-15d";
+    private static final String TIME_MILLIS_VALUE_EMPTY_STRING =" ".repeat(15);
+
     private static final String TIME_SECONDS_VALUE_FORMAT ="%-15.3f";
+    private static final String TIME_SECONDS_VALUE_EMPTY_STRING =" ".repeat(15);
+
     private static final String TIME_DURATION_MILLIS_VALUE_FORMAT ="%-15d";
     private static final String TIME_DURATION_TIME_EMPTY_STRING=" ".repeat(15);
     private static final String TIME_PERCENT_VALUE_FORMAT ="%6.2f%%   ";
@@ -139,19 +144,19 @@ public class StopWatchDebug {
     public static String asyncRestart(String taskName) {
         String startString=null;
         String endString=null;
-        if(stopWatch ==null) stopWatch = new StopWatch("StopWatch");
+        if(asyncStopWatch ==null) asyncStopWatch = new StopWatch("AsyncStopWatch");
         if(asyncStopWatch.isRunning()){
             asyncStopWatch.stop();
             endString=LOG_TITLE + limitTaskName(asyncStopWatch.getLastTaskName()) + LOG_TITLE_END;
         }
         if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)||taskName.endsWith(ASYNC_DURATION_END_SUFFIX)) {
-            stopWatch.start(taskName);
+            asyncStopWatch.start(taskName);
             startString=LOG_TITLE + limitTaskName(taskName) + LOG_TITLE_START;
         };
-        if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)){
-            asyncTaskDurationMap.merge(getAsyncDurationRealTaskName(ASYNC_DURATION_START_SUFFIX),System.currentTimeMillis(),(key,value)->System.currentTimeMillis()-value);
+        if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)||taskName.endsWith(ASYNC_DURATION_END_SUFFIX)){
+            asyncTaskDurationMap.merge(getAsyncDurationRealTaskName(taskName),System.currentTimeMillis(),(oldValue,value)->value-oldValue);
         }
-        return endString + startString;
+        return endString==null?startString: endString +System.lineSeparator()+ startString;
     }
     public static String stopAndGetTitle() {
         stop();
@@ -212,13 +217,18 @@ public class StopWatchDebug {
     }
     public static String print(@Nullable boolean showLastTaskTitle,@Nullable Integer limitLevel) {
         if(stopWatch.isRunning())stop();
+        if(asyncStopWatch.isRunning())asyncStopWatch.stop();
         //A. define common data
         long totalTimeMillis = stopWatch.getTotalTimeMillis();
         double totalTimeSeconds = stopWatch.getTotalTimeSeconds();
         StringBuilder sb;
         //A. header string
         String taskHeader = stopWatch.getId() + ": total running time [ " + String.format(TOTAL_TIME_MILLIS_FORMAT, totalTimeMillis) + "ms / " + String.format(TOTAL_TIME_SECONDS_FORMAT, totalTimeSeconds) + "s ]";
-        if(showLastTaskTitle)sb=new StringBuilder(LOG_TITLE + limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END+ System.lineSeparator());
+        if(showLastTaskTitle){
+            String taskEndString = LOG_TITLE + limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
+            String asyncTaskEndString = LOG_TITLE + limitTaskName(asyncStopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
+            sb=new StringBuilder(taskEndString+asyncTaskEndString);
+        }
         else sb=new StringBuilder();
         sb.append(TITLE_DIVIDER).append(System.lineSeparator());
         sb.append(taskHeader);
@@ -231,7 +241,7 @@ public class StopWatchDebug {
         //A. traverse taskInfo list
         for (StopWatch.TaskInfo task : stopWatch.getTaskInfo()) {
             String taskName = task.getTaskName();
-            Integer times = taskNameTimesMap.merge(taskName, 1, (key, value) -> ++value);
+            Integer times = taskNameTimesMap.merge(taskName, 1, (oldValue, value) -> ++oldValue);
             String durationRealTaskName = getDurationRealTaskName(taskName);
             Integer level = StopWatchDebug.taskNameLevelMap.get(durationRealTaskName);
             if(limitLevel!=null&&level!=null&&level>limitLevel)continue;
@@ -288,12 +298,13 @@ public class StopWatchDebug {
             sb.append(System.lineSeparator());
         }
 
+
         Map<String,Integer> asyncTaskNameTimesMap =new HashMap<>();
         for (StopWatch.TaskInfo task : asyncStopWatch.getTaskInfo()) {
             String taskName = task.getTaskName();
             String durationRealTaskName = getAsyncDurationRealTaskName(taskName);
-            Integer times = asyncTaskNameTimesMap.merge(taskName, 1, (key, value) -> ++value);
-            Long durationByStart=asyncTaskDurationMap.get(durationRealTaskName);
+            Integer times = asyncTaskNameTimesMap.merge(taskName, 1, (oldValue, value) -> ++oldValue);
+            Long durationByStart= taskName.endsWith(ASYNC_DURATION_START_SUFFIX)?asyncTaskDurationMap.get(durationRealTaskName):null;
             //B. content string
             sb.append("|")
                     .append(String.format(TASK_NAME_VALUE_FORMAT, taskName));
@@ -302,9 +313,9 @@ public class StopWatchDebug {
             sb.append("|")
                     .append(String.format(TASK_EXECUTION_NUMBER_VALUE_FORMAT, times));
             sb.append("|")
-                    .append(String.format(TIME_MILLIS_VALUE_FORMAT, task.getTimeMillis()));
+                    .append(TIME_MILLIS_VALUE_EMPTY_STRING);
             sb.append("|")
-                    .append(String.format(TIME_SECONDS_VALUE_FORMAT, task.getTimeSeconds()));
+                    .append(TIME_SECONDS_VALUE_EMPTY_STRING);
             sb.append("|")
                     .append(durationByStart!=null?String.format(TIME_DURATION_MILLIS_VALUE_FORMAT, durationByStart):TIME_DURATION_TIME_EMPTY_STRING);
             sb.append("|")
@@ -447,18 +458,41 @@ public class StopWatchDebug {
         for (int i = 0; i < 10; i++) {
             Thread.sleep(10);
         }
+        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
+            System.out.println(StopWatchDebug.asyncDuration("async1"));
+            for (int i = 0; i < 30; i++) {
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(StopWatchDebug.asyncDuration("async1"));
+        });
         System.out.println(StopWatchDebug.duration("test3",3));
         System.out.println(StopWatchDebug.duration("test22",2));
         for (int i = 0; i < 30; i++) {
             Thread.sleep(10);
         }
+        CompletableFuture<Void> voidCompletableFuture2 = CompletableFuture.runAsync(() -> {
+            System.out.println(StopWatchDebug.asyncDuration("async2"));
+            for (int i = 0; i < 30; i++) {
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(StopWatchDebug.asyncDuration("async2"));
+        });
         System.out.println(StopWatchDebug.duration("test22",2));
         System.out.println(StopWatchDebug.duration("test33",3));
         for (int i = 0; i < 10; i++) {
             Thread.sleep(10);
         }
         System.out.println(StopWatchDebug.duration("test33",3));
-
+        voidCompletableFuture.join();
+        voidCompletableFuture2.join();
         System.out.println(StopWatchDebug.print());
     }
 }
