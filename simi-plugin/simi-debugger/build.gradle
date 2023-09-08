@@ -1,0 +1,23 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.7.3'
+    id 'java'
+}
+
+group 'com.saidake.plugin'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version = '2021.3.1'
+    updateSinceUntilBuild = false
+}
+patchPluginXml {
+    changeNotes = """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}

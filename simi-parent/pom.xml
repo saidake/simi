@@ -47,6 +47,7 @@
         <log4jdbc-log4j2-jdbc4.1.version>1.16</log4jdbc-log4j2-jdbc4.1.version>
         <slf4j-api.version>2.0.7</slf4j-api.version>
         <!--======================================================================================================= 文件处理 -->
+        <pdfbox.version>2.0.26</pdfbox.version>
         <fop.version>2.6</fop.version>
         <poi.version>5.2.1</poi.version>
         <poi-ooxml.version>5.2.1</poi-ooxml.version>
@@ -201,7 +202,12 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j-api.version}</version>
             </dependency>
-            <!--======================================================================================================= 文件处理 -->
+            <!--======================================================================================================= File Processing -->
+            <dependency>
+                <groupId>org.apache.pdfbox</groupId>
+                <artifactId>pdfbox</artifactId>
+                <version>${pdfbox.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>
                 <artifactId>fop</artifactId>
