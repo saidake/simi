@@ -14,7 +14,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
-
 /**
  * Extension for detecting the runtime of program fragments.
  *
@@ -446,6 +445,10 @@ public class StopWatchDebug {
     private static void clearSessionMap(){
         taskNameLevelMap.clear();
         taskDurationMap.clear();
+        asyncTaskTimesMap.clear();
+        asyncTaskTimesDurationMap.clear();
+        asyncStopWatch=null;
+        stopWatch=null;
     }
     private static String limitTaskName(String target) {
         return String.format(TITLE_TASK_FORMAT,target);
@@ -462,6 +465,11 @@ public class StopWatchDebug {
 
     //======================================================================================================= Data Utils
     public static void main(String[] args) throws InterruptedException {
+        printTest();
+        printTest();
+    }
+
+    private static void printTest() throws InterruptedException {
         System.out.println(StopWatchDebug.initAndStart("one"));
         System.out.println(StopWatchDebug.duration("test1",1));
         for (int i = 0; i < 100; i++) {
