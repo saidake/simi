@@ -10,4 +10,5 @@ simi-cloud  [Registration Center](http://localhost:48993)
 simi-trade [Oracle Service](http://localhost:48120/swagger-ui.html) <br/>
 simi-mysql  [Mysql Service](http://localhost:48123/swagger-ui.html) <br/>
 simi-oracle [Oracle Service](http://localhost:48124/swagger-ui.html) <br/>
+simi-nodb   [Nodb Service](http://localhost:48125/swagger-ui.html) <br/>
 

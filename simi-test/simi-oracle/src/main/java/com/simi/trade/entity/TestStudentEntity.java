@@ -24,5 +24,5 @@ public class TestStudentEntity {
     private String className;
 
     @Column(name = "ROLE")
-    private StudentRoleEnum role;
+    private String role;
 }

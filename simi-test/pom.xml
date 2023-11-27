@@ -16,8 +16,7 @@
         <module>simi-mysql</module>
         <module>simi-oracle</module>
         <module>simi-mongo</module>
-        <module>simi-thread</module>
-        <module>simi-empty</module>
+        <module>simi-nodb</module>
     </modules>
 
     <build>

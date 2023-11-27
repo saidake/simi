@@ -56,4 +56,10 @@ public class TestStudentController {
     public ResponseEntity deleteRequest(@PathVariable Long id) {
         return testStudentService.deleteHandler(id);
     }
+
+    @Operation(description = "Association Deletion")
+    @DeleteMapping("/ass/{id}")
+    public ResponseEntity<String> deleteAssociation(@PathVariable Long id) {
+        return testStudentService.deleteByPerId(id);
+    }
 }

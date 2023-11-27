@@ -7,9 +7,9 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:orcl
-    username: smp
-    password: smp
+    url: jdbc:oracle:thin:@127.0.0.1:1521:xe
+    username: c##simi
+    password: simi
     hikari:
       connection-timeout: 10000       #default 30 seconds
       validation-timeout: 3000       # The maximum time for connecting the tested activity, default 5 seconds.
@@ -20,9 +20,6 @@ spring:
       pool-name: SmpHikariPoolDDD      # Set connection pool name, defulat automatic generation.
       connection-test-query: select 1 from dual     #   Test coneciton query.   Using the JDBC4 <code>Connection.isValid()</code> method
        # to test connection validity can be more efficient on some databases and is recommended.
-  data:
-    mongodb:
-      uri: mongodb://smp:smp@localhost:27017/admin
 springdoc:
   show-actuator: true
   enable-javadoc: true

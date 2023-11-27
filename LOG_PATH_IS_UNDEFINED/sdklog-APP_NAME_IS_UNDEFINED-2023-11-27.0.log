@@ -1,0 +1,72 @@
+2023-11-27 11:02:27.819 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.c.c.client.ConfigServicePropertySourceLocator - Fetching config from server at : http://localhost:8888
+2023-11-27 11:02:27.822 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.c.c.client.ConfigServicePropertySourceLocator - Exception on Url - http://localhost:8888:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: no further information. Will be trying the next url if available
+2023-11-27 11:02:27.822 - APP_NAME_IS_UNDEFINED - WARN  --- [restartedMain] o.s.c.c.client.ConfigServicePropertySourceLocator - Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: no further information
+2023-11-27 11:02:27.823 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] com.simi.trade.OracleApp - No active profile set, falling back to 1 default profile: "default"
+2023-11-27 11:02:28.293 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-27 11:02:28.294 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 0 ms. Found 0 JPA repository interfaces.
+2023-11-27 11:02:28.357 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=65377677-f53a-3d8b-9663-e294fbfaf9e7
+2023-11-27 11:02:28.413 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2023-11-27 11:02:28.414 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-11-27 11:02:28.414 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-11-27 11:02:28.447 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.a.c.c.ContainerBase.[Tomcat-2].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-11-27 11:02:28.448 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 622 ms
+2023-11-27 11:02:28.498 - APP_NAME_IS_UNDEFINED - WARN  --- [restartedMain] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2023-11-27 11:02:28.498 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2023-11-27 11:02:28.510 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-11-27 11:02:28.518 - APP_NAME_IS_UNDEFINED - ERROR --- [restartedMain] o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2023-11-27 11:02:30.186 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.c.c.client.ConfigServicePropertySourceLocator - Fetching config from server at : http://localhost:8888
+2023-11-27 11:02:30.189 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.c.c.client.ConfigServicePropertySourceLocator - Exception on Url - http://localhost:8888:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: no further information. Will be trying the next url if available
+2023-11-27 11:02:30.189 - APP_NAME_IS_UNDEFINED - WARN  --- [restartedMain] o.s.c.c.client.ConfigServicePropertySourceLocator - Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: no further information
+2023-11-27 11:02:30.189 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] com.simi.trade.OracleApp - No active profile set, falling back to 1 default profile: "default"
+2023-11-27 11:02:30.676 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-27 11:02:30.677 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 0 ms. Found 0 JPA repository interfaces.
+2023-11-27 11:02:30.743 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.springframework.cloud.context.scope.GenericScope - BeanFactory id=65377677-f53a-3d8b-9663-e294fbfaf9e7
+2023-11-27 11:02:30.827 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2023-11-27 11:02:30.828 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-11-27 11:02:30.828 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-11-27 11:02:30.862 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.a.c.c.ContainerBase.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-11-27 11:02:30.862 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 670 ms
+2023-11-27 11:02:30.922 - APP_NAME_IS_UNDEFINED - WARN  --- [restartedMain] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2023-11-27 11:02:30.923 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2023-11-27 11:02:30.934 - APP_NAME_IS_UNDEFINED - INFO  --- [restartedMain] o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-11-27 11:02:30.945 - APP_NAME_IS_UNDEFINED - ERROR --- [restartedMain] o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+

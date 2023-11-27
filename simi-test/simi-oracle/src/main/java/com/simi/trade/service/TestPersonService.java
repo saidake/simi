@@ -8,7 +8,6 @@ import com.simi.trade.repository.TestPersonRepository;
 import com.simi.trade.repository.TestStudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -20,8 +19,7 @@ import java.util.List;
 public class TestPersonService {
     @Autowired
     TestPersonRepository testPersonRepository;
-    @Autowired
-    MongoOperations mongoOperations;
+
     @Autowired
     PlatformTransactionManager platformTransactionManager;
 
@@ -40,7 +38,6 @@ public class TestPersonService {
         System.out.println("first test line");
         TestStudentEntity testStudentEntity = new TestStudentEntity();
         testStudentEntity.setPerId(firstByPerId.getPerId());
-        testStudentEntity.setRole(StudentRoleEnum.MONITOR);
         testStudentEntity.setClassName("lala");
         //testStudentEntity.setStuId(RandomUtil.getRandomLong(1000L,20000L));
         List<TestStudentEntity> testStudentEntities1 = firstByPerId.getTestStudentEntities();
@@ -62,7 +59,6 @@ public class TestPersonService {
         System.out.println("first test line");
         TestStudentEntity testStudentEntity = new TestStudentEntity();
         testStudentEntity.setPerId(firstByPerId.getPerId());
-        testStudentEntity.setRole(StudentRoleEnum.NORMAL);
         testStudentEntity.setClassName("lala");
         testStudentEntity.setStuId(RandomUtil.getRandomLong(1000L,20000L));
         testStudentRepository.save(testStudentEntity);

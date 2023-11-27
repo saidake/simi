@@ -23,3 +23,5 @@ qihuo:
     sr: ${BASEDIR}\assets\day\28#SR2305.day
 fuhui:
   account-info-path: C:\Users\saidake\AppData\Local\Temp\FxtsReportsTmp  # 获取福汇导出的账号交易数据 目录
+server:
+  port: 48124

@@ -34,11 +34,6 @@ create table SYS_LOG(
     LOG_ID NUMBER PRIMARY KEY,
     EXCEPTION VARCHAR2(30) NULL
 );
------------------------------------------------------------------------------- CRON
-create table SYS_LOG(
-    LOG_ID NUMBER PRIMARY KEY,
-    EXCEPTION VARCHAR2(30) NULL
-);
 
 
 commit;
