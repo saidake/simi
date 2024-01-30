@@ -1,5 +1,6 @@
 package com.simi.common.util.file;
 
+import cn.hutool.core.lang.Assert;
 import com.simi.common.util.SmpAssert;
 import com.simi.common.util.file.support.InitCallback;
 import com.simi.common.util.file.support.InitException;
@@ -37,11 +38,12 @@ import java.util.regex.Pattern;
 @Slf4j
 @UtilityClass
 public class SmpInit {
+
     private static final String configPath=Paths.get(System.getProperty("user.home"),".smp").toString();
     private static final String backupPath=Paths.get(configPath,"AAAbackup").toString();
     private static final String configEscapePath=configPath.replaceAll("\\\\","\\\\\\\\");
 
-    private static final String SMP_CONFIG_FILE="simi-init.yml";
+    private static final String SMP_CONFIG_FILE="smp-init.yml";
     private static final String RP_FILE_SEPARATOR="%%%";
     private static final String BACKUP_SUFFIX=".backup";
 
@@ -67,7 +69,7 @@ public class SmpInit {
             for (WriteInfo writeInfo : projectInfo.getRuleList()) {
                 if(writeInfo.getActiveEnvList()!=null&&!writeInfo.getActiveEnvList().contains(env))continue;
                 //B. get writeFilePath or backupFilePath
-                String projectPath=projectInfo.getPomProjectNameCheck()?pomCheckProjectPath:projectInfo.getPath();
+                String projectPath=projectInfo.getPomProjectNameCheck()!=null?pomCheckProjectPath:projectInfo.getPath();
                 SmpAssert.notNull(projectPath,"project.path must not be null: "+projectInfo.getName());
                 Path writeFilePathObj = Paths.get(projectPath, writeInfo.getWrite());
                 String writeFileName = writeFilePathObj.getFileName().toString();

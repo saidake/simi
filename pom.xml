@@ -20,5 +20,7 @@
         <module>simi-config</module>
         <module>simi-custom</module>
         <module>simi-service</module>
+        <module>simi-jar</module>
+        <module>simi-plugin</module>
     </modules>
 </project>

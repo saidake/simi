@@ -6,9 +6,11 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.*;
+import org.dom4j.dom.DOMText;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
+import org.dom4j.tree.DefaultText;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,6 +34,7 @@ public class SmpXmlUtils {
     private static final String XML_REPLACE_ELE_ATTRIBUTE_APPEND_IF_NOT_EXISTS="append-if-not-exists";
     private static final String XML_APPEND_XPATH ="/root/append";
     private static final String XML_APPEND_ATTRIBUTE_PARENT_XPATH="parent-xpath";
+    private static final String XML_APPEND_ATTRIBUTE_POSITION="position";
 
     @SneakyThrows
     public static void readAndPutAllXml(String backupPomPath, String writePomPath, Reader reader)  {
@@ -63,6 +66,7 @@ public class SmpXmlUtils {
     private static void handleAppendXml(String writePomPath, Document readPomDocument, Optional<HashMap<String, String>> pomNameSpaceMap, Document appendPomDocument) throws IOException {
         List<Node> replaceNodeList = appendPomDocument.selectNodes(XML_REPLACE_XPATH);
         List<Node> appendNodeList = appendPomDocument.selectNodes(XML_APPEND_XPATH);
+        //A. replace nodes
         for (Node replaceNode : replaceNodeList) {
             if(replaceNode.getNodeType()!=Node.ELEMENT_NODE)continue;
             Element replaceElement=(Element) replaceNode;
@@ -114,16 +118,26 @@ public class SmpXmlUtils {
                 }
             }
         }
+        //A. append nodes
         for (Node appendNode : appendNodeList) {
+            //B. check append node
             if(appendNode.getNodeType()!=Node.ELEMENT_NODE)continue;
             Element appendElement=(Element) appendNode;
+            //B. find parent node
             String parentXpathString = appendElement.attributeValue(XML_APPEND_ATTRIBUTE_PARENT_XPATH);
+            String position = appendElement.attributeValue(XML_APPEND_ATTRIBUTE_POSITION);
             Node pomCheckParentNode =  selectSingleNodeListWithNSXpath(pomNameSpaceMap.orElse(null), readPomDocument, parentXpathString);
             Element pomCheckParentElement=(Element) pomCheckParentNode;
             Element elementFirst = appendElement.elements().get(0);
             DefaultElement clone = (DefaultElement)elementFirst.clone();
             synchronizeNameSpace(clone, readPomDocument);
-            pomCheckParentElement.elements().add(clone);
+            //B. add append node
+            if(position!=null&& position.equals("top")){
+                pomCheckParentElement.elements().add(0,clone);
+            }else{
+                pomCheckParentElement.elements().add(clone);
+                pomCheckParentElement.add(new DOMText(System.lineSeparator()));
+            }
         }
         @Cleanup FileWriter fileWriterJava = new FileWriter(writePomPath);
         XMLWriter xmlWriter = new XMLWriter(fileWriterJava);
