@@ -7,9 +7,10 @@ import java.util.List;
 @Data
 public class ProjectInfo {
     private String name;
+    private boolean enable=true;
     private String path;
     private StringList envList;
     private String defaultEnv;
-    private Boolean pomProjectNameCheck;
+    private boolean pomProjectNameCheck;
     private List<WriteInfo> ruleList;
 }
