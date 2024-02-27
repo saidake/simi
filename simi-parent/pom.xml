@@ -56,12 +56,12 @@
     </properties>
 
     <dependencies>
-        <!--======================================================================================================= 核心 -->
+        <!--======================================================================================================= Core -->
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
         </dependency>
-        <!--======================================================================================================= 数据工具 -->
+        <!--======================================================================================================= Data Utils -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -100,6 +100,11 @@
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-common-util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.simi</groupId>
+                <artifactId>simi-common-test</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

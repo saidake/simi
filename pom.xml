@@ -21,5 +21,6 @@
         <module>simi-custom</module>
         <module>simi-service</module>
         <module>simi-jar</module>
+        <module>simi-common/simi-common-test</module>
     </modules>
 </project>
