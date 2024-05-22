@@ -20,7 +20,9 @@
         <module>simi-config</module>
         <module>simi-custom</module>
         <module>simi-service</module>
-        <module>simi-jar</module>
+        <module>simi-app</module>
         <module>simi-common/simi-common-test</module>
+        <module>simi-app/simi-sgz</module>
+        <module>simi-app/simi-memory-management</module>
     </modules>
 </project>

@@ -1,0 +1,1 @@
+* [simi-sgz] sgz game script

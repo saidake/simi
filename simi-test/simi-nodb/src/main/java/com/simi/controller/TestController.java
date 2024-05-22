@@ -1,9 +1,13 @@
 package com.simi.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.simi.AAAconfig.bean.PrototypeBean;
+import com.simi.AAAconfig.bean.SingletonBean;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +25,10 @@ import java.util.concurrent.CompletableFuture;
 public class TestController {
 
 
+
+    @Autowired
+    SingletonBean singletonBean;
+
     @Value("${spring.application.name:}")
     private String applicationName;
 
@@ -37,13 +45,17 @@ public class TestController {
     public String getTest(@RequestParam(required = false) Integer id,
                           @RequestParam(required = false) String str
     ) throws TestFirstException, TestSecondException {
+        PrototypeBean prototypeBean = singletonBean.getPrototypeBean().getObject();
+        log.info("singletonBean.getPrototypeBean() - {}",prototypeBean.hashCode());
         log.info("id："+id);
         if(id!=null&&id==2){
             throw new TestFirstException();
         }else if(id!=null&&id==3){
             throw new TestSecondException();
+        }else if(id!=null){
+            prototypeBean.setAge(id);
         }
-        return applicationName +" /test "+ id;
+        return applicationName +" /test "+ prototypeBean;
     }
 
     /**
@@ -73,7 +85,7 @@ public class TestController {
     @PostMapping("/testFormData")
     public String getTestObj(@RequestParam("fileName") String fileName, @RequestPart("file") MultipartFile file) throws TestFirstException, TestSecondException, IOException {
         log.info("fileName: {}",fileName);
-        log.info("file: {}",file.getBytes().length);
+        log.info("file: {}",String.valueOf(file.getBytes().length));
         log.info("file: {}",file.getContentType());
         return fileName;
     }

@@ -5,15 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.simi</groupId>
-        <artifactId>simi</artifactId>
+        <artifactId>simi-common</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>simi-jar</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>simi-initializer-jar</module>
-    </modules>
+    <artifactId>simi-common-simulator</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

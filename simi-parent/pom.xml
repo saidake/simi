@@ -99,6 +99,11 @@
             <!--==================================================================================================== custom dep -->
             <dependency>
                 <groupId>com.simi</groupId>
+                <artifactId>simi-common-simulator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.simi</groupId>
                 <artifactId>simi-common-util</artifactId>
                 <version>${project.version}</version>
             </dependency>

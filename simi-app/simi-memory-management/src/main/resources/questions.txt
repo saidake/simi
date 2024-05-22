@@ -1,0 +1,41 @@
+1.	What is JDK?
+2.	What does the JDK include?
+1.	What is JRE?
+2.	What does the JRE include?
+1.	What's JVM?
+2.	When is the virtual machine instantiated?
+3.	Is virtual machine data shared?
+1.	What components does the JVM consist of?
+2.	Compilation process
+3.	Dynamic compilation (refers to compiling at runtime)
+4.	What’s the difference between interpreter and JIT compiler? (google)
+1.	Portability
+2.	JVM type
+1.	What is PC Register? (google ai)
+2.	When is the PC Register created?
+3.	What is contained in the PC register?
+4.	PC register Exception
+1.	What's Method Area?
+2.	When is the Method Area created?
+3.	What is contained in the Method Area?
+4.	How is the Method Area implemented?
+5.	What's the difference between metaspace and method area in jvm?
+1.	Is the size of the Method Area fixed?
+2.	Method Area Exception
+1.	What's the Run-Time constant Pool?
+2.	When is the Run-Time Constant Pool constructed?
+3.	What is contained in the Run-Time Constant Pool?
+1.	The following exceptional condition is associated with the construction of the run-time constant pool for a class or interface:
+1.	What is Java Heap?
+2.	When is the Heap created?
+3.	What is contained in Java Heap?
+4.	Is the Java Heap algorithm fixed?
+5.	String Pool
+1.	Is the size of Java Heap fixed?
+2.	Java Heap Exception
+1.	What's the Escape Analysis?
+2.	How is the Escape Analysis performed?
+3.	How many types of Object Escape are there?
+4.	How many types of optimization are there in escape analysis?
+1.	What's the Thread Local Allocation Buffer in jvm?
+1.	What's Java Virtual Machine Stack?

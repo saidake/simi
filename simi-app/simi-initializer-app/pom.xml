@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.simi</groupId>
-        <artifactId>simi-jar</artifactId>
+        <artifactId>simi-app</artifactId>
         <version>1.0</version>
     </parent>
     <packaging>jar</packaging>
-    <artifactId>simi-initializer-jar</artifactId>
+    <artifactId>simi-initializer-app</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
