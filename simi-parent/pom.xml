@@ -21,15 +21,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
 
-        <!--======================================================================================================= 核心 -->
+        <!--======================================================================================================= Core -->
         <spring-boot-dependencies.version>3.0.5</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2022.0.2</spring-cloud-dependencies.version>
         <jakarta.mail.version>1.6.7</jakarta.mail.version>
-        <!--======================================================================================================= 功能扩展 -->
+        <!--======================================================================================================= Features -->
         <libphonenumber.version>8.0.0</libphonenumber.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.0.4</springdoc-openapi-starter-webmvc-ui.version>
         <ehcache.version>3.10.0</ehcache.version>
-        <!--======================================================================================================= 数据工具 -->
+        <!--======================================================================================================= Data Utils -->
         <lombok.version>1.18.26</lombok.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <jasypt.version>1.9.3</jasypt.version>
@@ -39,14 +39,14 @@
         <commons-io.version>2.11.0</commons-io.version>
         <commons-codec.version>1.15</commons-codec.version>
         <dozer.version>5.5.1</dozer.version>
-        <!--======================================================================================================= 安全 -->
+        <!--======================================================================================================= Security -->
         <jjwt.version>0.9.1</jjwt.version>
         <java-jwt.version>3.4.0</java-jwt.version>
         <bcprov-jdk15on.version>1.58</bcprov-jdk15on.version>
-        <!--======================================================================================================= 日志 -->
+        <!--======================================================================================================= Logging -->
         <log4jdbc-log4j2-jdbc4.1.version>1.16</log4jdbc-log4j2-jdbc4.1.version>
         <slf4j-api.version>2.0.7</slf4j-api.version>
-        <!--======================================================================================================= 文件处理 -->
+        <!--======================================================================================================= File handler -->
         <pdfbox.version>2.0.26</pdfbox.version>
         <fop.version>2.6</fop.version>
         <poi.version>5.2.1</poi.version>

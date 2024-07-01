@@ -74,14 +74,17 @@ public class March {
 //        pumpkinMarch(robot,2,1,11,1);
 //        pumpkinMarch(robot,1,1,11,2);
 //        durianMarch(robot,2,1,11,1);
-//        durianMarch(robot,1,1,11,2);
         //====================================  march to red point
-        pineappleMarch(robot,1,2,11);
-        pumpkinMarch(robot,1,1,11);
-        Thread.sleep(10000);
-        pumpkinMarch(robot,1,1,11);
-        Thread.sleep(3000);
-        pineappleMarch(robot,1,1,11);
+        pineappleMarch(robot,1,1,11); // 刘备
+        pineappleMarch(robot,1,1,11); // 张辽  01:05
+        pumpkinMarch(robot,1,1,11);  // 甘宁
+        pumpkinMarch(robot,1,1,11);  // 曹操  01:02
+//        durianMarch(robot,1,1,11);    // 黄忠
+//        durianMarch(robot,1,1,11);    // 程昱
+//        Thread.sleep(10000);
+//        pumpkinMarch(robot,1,1,11);
+//        Thread.sleep(3000);
+//        pineappleMarch(robot,1,1,11);
         //retreat(robot);
         //====================================  go back
 //        pineappleStopAndMarchToMark(robot,1,1,11,2);

@@ -21,8 +21,5 @@
         <module>simi-custom</module>
         <module>simi-service</module>
         <module>simi-app</module>
-        <module>simi-common/simi-common-test</module>
-        <module>simi-app/simi-sgz</module>
-        <module>simi-app/simi-memory-management</module>
     </modules>
 </project>

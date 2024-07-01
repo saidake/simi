@@ -1,20 +1,28 @@
 package com.simi.memory;
 
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFHeader;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Random;
 
 public class Questions {
     public static void main(String[] args) throws IOException {
-        List<String> stringList = Files.readAllLines(Path.of("C:\\Users\\simi\\Desktop\\DevProject\\simi\\simi-app\\simi-memory-management\\src\\main\\resources\\Java.txt"));
-        Random random = new Random();
-        String s;
-        do{
-            int i=random.nextInt(stringList.size());
-            s= stringList.get(i);
-        }while(!s.matches("^\\s*?[1-9]\\.\\s*?.*?"));
-        System.out.println(s);
+        FileInputStream fis = new FileInputStream(new File("C:\\Users\\simi\\Desktop\\OneDrive\\AAAMemory\\AAD--Memory.docx"));
+        XWPFDocument document = new XWPFDocument(fis);
+
+        // 读取文档的标题
+        for (XWPFParagraph para : document.getParagraphs()) {
+            if (para.getStyle() != null && para.getStyle().startsWith("Heading")) {
+                // 获取标题级别
+                int level = Integer.parseInt(para.getStyle().substring("Heading".length()));
+                // 打印标题内容和级别
+                System.out.println("Level " + level + ": " + para.getText());
+            }
+        }
+
+        fis.close();
     }
 }

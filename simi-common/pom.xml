@@ -16,6 +16,7 @@
         <module>simi-common-log</module>
         <module>simi-common-thread</module>
         <module>simi-common-simulator</module>
+        <module>simi-common-test</module>
     </modules>
 
 </project>
