@@ -1,0 +1,43 @@
+eureka.server.enable-self-preservation=<boolean>
+    Enables or disables the self-preservation mode, which helps the server to remain operational in case of network issues by not expiring instances quickly.
+        eureka.server.enable-self-preservation=true
+eureka.server.eviction-interval-timer-in-ms=<milliseconds>
+    Specifies the interval (in milliseconds) at which the server checks for expired instances and removes them from the registry.
+        eureka.server.eviction-interval-timer-in-ms=60000
+eureka.instance.lease-renewal-interval-in-seconds=<seconds>
+    Specifies the interval (in seconds) at which the client sends heartbeats to the server to indicate that it is still alive.
+        eureka.instance.lease-renewal-interval-in-seconds=30
+eureka.instance.lease-expiration-duration-in-seconds=<seconds>
+    Specifies the duration (in seconds) after which the server expires the instance if no heartbeats are received.
+        eureka.instance.lease-expiration-duration-in-seconds=90
+eureka.instance.prefer-ip-address=<boolean>
+    If true, the Eureka Server will use the IP address instead of the hostname for registration.
+        eureka.instance.prefer-ip-address=true
+eureka.client.service-url.defaultZone=<URL>
+    Specifies the list of Eureka servers to which this server will connect. Useful in a multi-zone setup.
+        eureka.client.service-url.defaultZone=http://peer1:8761/eureka/,http://peer2:8761/eureka/
+eureka.client.availability-zones=<zone-list>
+    Configures the availability zones for the Eureka server.
+        eureka.client.availability-zones.default=zone1,zone2
+eureka.client.initial-instance-info-replication-interval-seconds=<seconds>
+    Interval (in seconds) at which the Eureka server replicates initial instance information to peer servers.
+        eureka.client.initial-instance-info-replication-interval-seconds=40
+eureka.client.registry-fetch-interval-seconds=<seconds>
+    Frequency (in seconds) at which the client fetches the registry information from the server.
+        eureka.client.registry-fetch-interval-seconds=30
+eureka.client.registry-refresh-single-vip-address=<VIP-address>
+    VIP address for the registry refresh.
+        eureka.client.registry-refresh-single-vip-address=my-vip-address
+Security Configuration
+eureka.server.enable-basic-auth=<boolean>
+    Enable basic authentication for Eureka server endpoints.
+        eureka.server.enable-basic-auth=true
+eureka.client.basic-auth-username=<username>
+    Username for basic authentication.
+        eureka.client.basic-auth-username=user
+eureka.client.basic-auth-password=<password>
+    Password for basic authentication.
+        eureka.client.basic-auth-password=pass
+eureka.dashboard.path=<path>
+Customizes the path to the Eureka dashboard.
+eureka.dashboard.path=/custom-eureka
