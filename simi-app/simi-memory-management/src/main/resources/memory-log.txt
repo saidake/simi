@@ -1,72 +1,57 @@
-[ 90 ] Java = Core 【核爆】[3] -> 转生者（被X降伏）[3] -> 公交车 
-[ 40 ] Java = Concept 【书本】[10] -> 管子（掉进）[6] -> 屁股（坐碎） 
-[ 40 ] Java = Concept 【书本】[10] -> 管子（掉进）[6] -> 屁股（坐碎） 
-[ 151 ] SpringBoot = Concept 【书本】[2] -> 屎 -> 迪奥 
-[ 23 ] Java = Concept 【书本】[10] -> 垃圾车（回收）[7] -> 树根（下面埋藏了一个X） 
-[ 121 ] Java = java.base 【基友】[2] -> 工具箱 [2] -> 铜人  [6] -> 线（被X砍断）[3] -> 栅栏（看灯过马路） 
-[ 172 ] ProjectDesign = Design Patterns【设计师】[4] -> 原子弹（炸死）[5] -> 德古拉（被打成了） 
-[ 20 ] Java = Concept 【书本】[10] -> 骨人（跳进）[4] -> 喵喵 -> 按钮人 
-[ 185 ] ProjectDesign = Design Patterns【设计师】[4] -> 骨人（拿起）[7] -> 桥（上降临了） 
-[ 194 ] ProjectDesign = Design Patterns【设计师】[4] -> 刑具 [10] -> 棺材（钻出来一个） 
-[ 25 ] Java = Concept 【书本】[10] -> 垃圾车（回收）[7] -> 终结者（衰老成了） 
-[ 176 ] ProjectDesign = Design Patterns【设计师】[4] -> 创始人（重生为）[5] -> 工厂（制作X） 
-[ 72 ] Java = Concept 【书本】[10] -> 装载车（撞碎）[2] -> 链子 [3] -> 链子（绑起来）  
-[ 144 ] SpringBoot = Concept 【书本】[2] -> 屁股（拉出了） -> 雷电（劈死） 
-[ 24 ] Java = Concept 【书本】[10] -> 垃圾车（回收）[7] -> 尸体（变身为） 
-[ 63 ] Java = Concept 【书本】[10] -> 锁（锁住）[2] -> 甲壳郎 [4] -> 偏头怪（举起） 
-[ 20 ] Java = Concept 【书本】[10] -> 骨人（跳进）[4] -> 喵喵 -> 按钮人 
-[ 86 ] Java = Core 【核爆】[3] -> 肠道虫（寄生在X体内）[4] -> 羊肉串 
-[ 50 ] Java = Concept 【书本】[10] -> 线（钻进）[5] -> 线球 
-[ 186 ] ProjectDesign = Design Patterns【设计师】[4] -> 骨人（拿起）[7] -> 观音（赐予了） 
-[ 86 ] Java = Core 【核爆】[3] -> 肠道虫（寄生在X体内）[4] -> 羊肉串 
-[ 103 ] Java = Features 【特色店】 -> 雷电 -> 骨人 [3] -> 雪糕队 
-[ 20 ] Java = Concept 【书本】[10] -> 骨人（跳进）[4] -> 喵喵 -> 魔方 
-[ 83 ] Java = Core 【核爆】[3] -> 肠道虫（寄生在X体内）[4] -> 原始人（找到） 
-[ 186 ] ProjectDesign = Design Patterns【设计师】[4] -> 骨人（拿起）[7] -> 观音（赐予了） 
-[ 182 ] ProjectDesign = Design Patterns【设计师】[4] -> 骨人（拿起）[7] -> 代理人（拿了一个X） 
-[ 141 ] SpringBoot = Concept 【书本】[2] -> 游泳圈（被X压坏了） -> 臭鸡蛋 
-[ 176 ] ProjectDesign = Design Patterns【设计师】[4] -> 创始人（重生为）[5] -> 单身汉（进入X工作了） 
-[ 28 ] Java = Concept 【书本】[10] -> 垃圾车（回收）[7] -> 选美 
-[ 73 ] Java = Concept 【书本】[10] -> 装载车（撞碎）[2] -> 链子 [3] -> 畜生 
-[ 24 ] Java = Concept 【书本】[10] -> 垃圾车（回收）[7] -> 尸体（变身为） 
-[ 196 ] ProjectDesign = Design Patterns【设计师】[4] -> 刑具 [10] -> 调解人（拿出了一个） 
-[ 4 ] Java = Concept 【书本】[10] -> 树环（袭击）[3] -> 运动员（踢死） 
-[ 28 ] Java = Concept 【书本】[10] -> 垃圾车（回收）[7] -> 选美 
-[ 50 ] Java = Concept 【书本】[10] -> 线（钻进）[5] -> 线圈 
-[ 78 ] Java = Concept 【书本】[10] -> 标准纸 [3] -> 纸碗（召唤） 
-[ 77 ] Java = Concept 【书本】[10] -> 标准纸 [3] -> 书本（折成） 
-[ 60 ] Java = Concept 【书本】[10] -> 锁（锁住）[2] -> 公交车（坐满了）[9] -> 终结者（坐到上） 
-[ 28 ] Java = Concept 【书本】[10] -> 垃圾车（回收）[7] -> 选美 
-[ 37 ] Java = Concept 【书本】[10] -> 收集机器人（捡起）[9] -> 佐助（施法召唤） 
-[ 22 ] Java = Concept 【书本】[10] -> 垃圾车（回收）[7] -> 书本（放在上） 
-[ 41 ] Java = Concept 【书本】[10] -> 管子（掉进）[6] -> 模特（冒出） 
-[ 47 ] Java = Concept 【书本】[10] -> 线（钻进）[5] -> 新生儿（钻进怀里） 
-[ 130 ] SpringBoot = Concept 【书本】[2] -> 容器盒子（装下了）[3] -> 梦魇 
-[ 79 ] Java = Concept 【书本】[10] -> 标准纸 [3] -> 纸龙 
-[ 41 ] Java = Concept 【书本】[10] -> 管子（掉进）[6] -> 模特（冒出） 
-[ 66 ] Java = Concept 【书本】[10] -> 锁（锁住）[2] -> 甲壳郎 [4] -> 女优 
-[ 195 ] ProjectDesign = Design Patterns【设计师】[4] -> 原子弹（炸死）[5] -> 泥马（和X决斗） 
-[ 196 ] ProjectDesign = Design Patterns【设计师】[4] -> 原子弹（炸死）[5] -> 德古拉（被打成了） 
-[ 34 ] Java = Concept 【书本】[10] -> 收集机器人（捡起）[9] -> 草地（堆满了） 
-[ 161 ] SpringBoot = Concept 【书本】[2] -> 坂本 -> 剑（斩断了X） 
-[ 215 ] SpringBoot = Third Party Package【伞】 -> 竖锯 -> 姐姐 -> 工人 
-[ 16 ] Java = Concept 【书本】[10] -> 骨人（跳进）[4] -> 弓箭（射下） -> 内存条 
-[ 37 ] Java = Concept 【书本】[10] -> 收集机器人（捡起）[9] -> 佐助（施法召唤） 
-[ 15 ] Java = Concept 【书本】[10] -> 骨人（跳进）[4] -> 弓箭（射下） -> 泳池（浸泡） 
-[ 37 ] Java = Concept 【书本】[10] -> 收集机器人（捡起）[9] -> 佐助（施法召唤） 
-[ 151 ] SpringBoot = Concept 【书本】[2] -> 屎（装进了） -> 雕 
-[ 75 ] Java = Concept 【书本】[10] -> 镜子（照着标准复原） -> 书本 
-[ 130 ] SpringBoot = Concept 【书本】[11] -> 容器盒子（装下了）[3] -> 梦魇 
-[ 291 ] DataBase = Oracle 【欧泡果奶】 -> 核弹（炸碎了） -> 	骷髅 
-[ 86 ] Java = Core 【核爆】[3] -> 肠道虫（寄生在X体内）[4] -> 羊肉串 
-[ 57 ] Java = Concept 【书本】[10] -> 锁（锁住）[2] -> 公交车（坐满了）[9] -> 重生者（暴毙成） 
-[ 238 ] ProjectDesign = Design Patterns【设计师】[4] -> 骨人（拿起）[7] -> 香囊 
-[ 157 ] SpringBoot = Concept 【书本】[11] -> 路飞（和X决斗） -> 滤嘴 
-[ 205 ] SpringBoot = org.springframework.boot 【启动器】 -> 蜘蛛网 -> 蛇 -> 拉拉队 -> 触手 
-[ 144 ] SpringBoot = Concept 【书本】[11] -> 屁股（拉出了） -> 魔法书（召唤） 
-[ 173 ] SpringBoot = org.springframework（spring）【春药】 -> 豆子（射向） -> 工厂 -> 主任 -> 注射器 
-[ 79 ] Java = Concept 【书本】[10] -> 标准纸 [3] -> 龙 
-[ 89 ] Java = Core 【核爆】[3] -> 转生者（被X降伏）[3] -> 窄面（拼成了） 
-[ 186 ] SpringBoot = org.springframework（spring）【春药】 -> 上坡 -> 猪人 -> 猪老二 -> 豆子 
-[ 73 ] Java = Concept 【书本】[10] -> 装载车（撞碎）[2] -> 链子 [3] -> 畜生  
-[ 255 ] Internet = Network Model 【模特】 -> 藕粉（撒到X上） -> 武大郎（拿起了） -> WIFI 
+BlockingQueue - 7【叔祖用上了链子，叛党死了】 
+ProjectDesign = Design Patterns【设计师-窗口】 -> 骨人（拿起）[7] -> 混合物（用建造了一个） 
+Java = Concept 【书本-高台】  =  线（钻进）[5]  =  线圈 
+Java = java.base 【基友-大厅】  =  工具箱   =  原子弹（里钻出一个） 
+Java = java.base 【基友-大厅】
+Java = java.base 【基友-大厅】  =  狼人（拿起）  =  核弹（炸伤了） 
+Java = java.base 【基友-大厅】
+DataBase = Mysql【麦子-柱子】  =  齿轮（击碎了）  =  奴隶 
+ReentrantLock【天平好玩，菩萨显灵，我想再试试】  =  桶子（炸飞到上） 
+Java = java.base 【基友-大厅】  =  工具箱   =  雷电（劈黑了）[2-2] 
+DataBase = Kafka【卡片-面包店】  =  核弹  =  书本 
+ProjectDesign = Design Patterns【设计师-窗口】  =  原子弹（炸死）[5]  =  重楼（拿出了） 
+ProjectDesign = Design Patterns【设计师-窗口】  =  刑具 [10]  =  偷窥男（猥亵了） 
+Java = Concept 【书本-高台】  =  收集机器人（捡起）  =  夏天 
+Java = Concept 【书本-高台】  =  锁（锁住）[2]  =  公交车（坐满了）[9] 
+SpringBoot = Third Party Package【伞-机甲站台】  =  竖锯（切断了）  =  麦子（撒到他的X上） 
+Java = Concept 【书本-高台】  =  装载车（撞碎）[2]  =  链子 [3]  =  畜生  
+Java = java.base 【基友-大厅】  =  工具箱   =  雷电（劈黑了）[2-2] 
+SpringBoot = Concept 【书本-椅子】  =  路飞（和X决斗）  =  滤嘴 
+ProjectDesign = Design Patterns【设计师-窗口】  =  骨人（拿起）[7]  =  适配器（制造出了） 
+ProjectDesign = Design Patterns【设计师-窗口】  =  刑具 [10]  =  偷窥男（猥亵了） 
+SpringBoot = Third Party Package【伞-机甲站台】  =  服务器  =  祖国人 
+SpringBoot = Third Party Package【伞-机甲站台】  =  服务器  =  卡车（撞到了） 
+SpringBoot = org.springframework（spring）【春药-广告牌】  =  屎  =  兰姐 
+Java = Concept 【书本-高台】  =  树环（袭击）  =  机器人[3-4-2] 
+Config = Java Environment【茶杯头-黑房】  =  工具箱（抓了一个）  =  名刀 
+SpringBoot = Third Party Package【伞-机甲站台】  =  服务器  =  公交车（掉了一堆） 
+SpringBoot = org.springframework.boot 【启动器-机械臂】  =  齿轮  =  注射器 
+DataBase = Oracle 【欧泡果奶-小卖铺】  =  核弹（炸碎了）  =  	骷髅 
+DataBase = Concept 【书本-雕像】  =  浣熊（逃到了X里）  =  核弹 
+DataBase = Concept 【书本-雕像】  =  浣熊（逃到了X里）  =  叶问 [75] 
+Java = Core 【核爆-火堆】  =  操作员   =  同性恋（被X劈死了）  
+ProjectDesign = Design Patterns【设计师-窗口】  =  骨人（拿起）[7]  =  代理人（拿了一个X） 
+SpringBoot = Third Party Package【伞-机甲站台】  =  竖锯（切断了）  =  黑鬼（抓了一把） 
+SpringBoot = Concept 【书本-椅子】  =  盒子（被X抢走了）  =  豆子 
+Java = Core 【核爆-火堆】  =  操作员   =  雷电 
+Java = Concept 【书本-高台】  =  管子（掉进）[6]  =  零基佬（抱住） 
+SpringBoot = org.springframework（spring）【春药-广告牌】  =  幻境（里制造出了一颗X）  =  管理员 
+ProjectDesign = Design Patterns【设计师-窗口】  =  刑具 [10]  =  游客 
+SpringBoot = org.springframework（spring）【春药-广告牌】  =  屎  =  兰姐 
+SpringBoot = Concept 【书本-椅子】  =  服务器（电到了）   =  杰克（追杀） 
+Java = Concept 【书本-高台】  =  线（钻进）[5]  =  新生儿（钻进怀里） 
+Java = Concept 【书本-高台】  =  装载车（撞碎）[2]  =  链子 [3]  =  链子（绑起来）     
+Java = Core 【核爆-火堆】  =  转生者（被X降伏）  =  宽面（削成了） 
+Java = java.base 【基友-大厅】  =  狼人（拿起）  =  线圈（钻出了一只X） 
+Java = java.base 【基友-大厅】  =  狼人（拿起）  =  线圈（钻出了一只X） 
+Java = java.base 【基友-大厅】  =  狼人（拿起）  =  线圈（钻出了一只X） 
+DataBase = Zookeeper【动物-聊天室】  =  核弹（掉下了一个）  =  弓箭 
+SpringBoot = Third Party Package【伞-机甲站台】  =  核弹（炸碎）  =  安全员 
+SpringBoot = org.springframework（spring）【春药-广告牌】  =  计时器（掉到了X上）  =  公公（钻进了） 
+Java = Concept 【书本-高台】  =  管子（掉进）[6]  =  屁股（贴上） 
+Java = Core 【核爆-火堆】  =  操作员   =  关银屏（爱上了） 
+SpringBoot = Concept 【书本-椅子】  =  服务器（电到了）   =  微软公司 
+Java = java.base 【基友-大厅】  =  工具箱   =  日志（吹到了X上了） 
+Java = Concept 【书本-高台】  =  装载车（撞碎）[2]  =  链子 [3] 
+Java = java.base 【基友-大厅】  =  狼人（拿起）  =  镜子 [1] 
+Java = Concept 【书本-高台】  =  标准纸 [3]  =  龙 

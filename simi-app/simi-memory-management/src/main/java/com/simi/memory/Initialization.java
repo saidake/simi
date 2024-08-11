@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Initialization {
+    public static final String SEPARATOR=" = ";
     public static void main(String[] args) throws IOException {
         FileInputStream fis = new FileInputStream(new File("C:\\Users\\simi\\Desktop\\OneDrive\\AAAMemory\\AAD--Memory.docx"));
         FileOutputStream fos = new FileOutputStream("C:\\Users\\simi\\Desktop\\DevProject\\simi\\simi-app\\simi-memory-management\\src\\main\\resources\\line-numbers.txt");
@@ -19,11 +20,10 @@ public class Initialization {
         Deque<String> titleList = new LinkedList<>();
         Deque<Integer> levelList = new LinkedList<>();
         // 读取文档的标题
-        int lineNumber = 0;
+//        int lineNumber = 0;
         for (XWPFParagraph para : document.getParagraphs()) {
             if (para.getStyle() != null && para.getStyle().startsWith("Heading")) {
-                lineNumber++;
-                // 获取标题级别
+//                lineNumber++;
                 int level = Integer.parseInt(para.getStyle().substring("Heading".length()));
                 if (levelList.isEmpty() || level > levelList.peekLast()) {
                     levelList.add(level);
@@ -39,18 +39,20 @@ public class Initialization {
                     titleList.pollLast();
                     titleList.add(para.getText());
                 }
-                if (level == 8) {
-                    Iterator<String> iterator = titleList.iterator();
-                    StringBuilder stringBuilder = new StringBuilder("[ " + lineNumber + " ] ");
-                    String Separator = " -> ";
-                    while (iterator.hasNext()) {
-                        String next = iterator.next();
+                //A. return results
+                if (level >2 ) {
+//                    StringBuilder stringBuilder = new StringBuilder("[ " + lineNumber + " ] ");
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String resSeparator = " "+SEPARATOR+" ";
+                    for (String next : titleList) {
                         stringBuilder.append(next);
-                        stringBuilder.append(Separator);
+                        stringBuilder.append(resSeparator);
                     }
                     String str = stringBuilder.toString();
-                    resultList.add(str.substring(0, str.length() - Separator.length() + 1));
+                    resultList.add(str.substring(0, str.length() - resSeparator.length() + 1));
                 }
+            } else if(para.getStyle()==null){
+                resultList.add(para.getText());
             }
         }
         String join = StringUtils.join(resultList, System.lineSeparator());

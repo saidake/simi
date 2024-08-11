@@ -1,2 +1,8 @@
-奸雄骑
-桃源盾
+public enum State {
+    NEW,
+    RUNNABLE,
+    BLOCKED,
+    WAITING,
+    TIMED_WAITING,
+    TERMINATED;
+}

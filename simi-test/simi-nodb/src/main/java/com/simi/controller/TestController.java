@@ -3,6 +3,7 @@ package com.simi.controller;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.simi.AAAconfig.bean.PrototypeBean;
 import com.simi.AAAconfig.bean.SingletonBean;
+import com.simi.service.LongRunningService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,8 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class TestController {
 
-
+    @Autowired
+    private  LongRunningService longRunningService;
 
     @Autowired
     SingletonBean singletonBean;
@@ -99,16 +101,23 @@ public class TestController {
      */
     @GetMapping("/async")
     public String asyncSend(@RequestHeader Map<String,String> headers,@RequestParam("id") Long id) throws InterruptedException {
-        CompletableFuture<Long> longCompletableFuture1 = testAsync1(id);
-        CompletableFuture<Long> longCompletableFuture2 = testAsync2(id);
-        Object join = longCompletableFuture1.thenCombine(longCompletableFuture2,(a,b)->{
-            System.out.println(a+b);
-            return "ddddddd";
-        }).join();
-        System.out.println(join);
-        log.info("test token: {}",headers.get("token"));
+//        CompletableFuture<Long> longCompletableFuture1 = testAsync1(id);
+//        CompletableFuture<Long> longCompletableFuture2 = testAsync2(id);
+//        Object join = longCompletableFuture1.thenCombine(longCompletableFuture2,(a,b)->{
+//            System.out.println(a+b);
+//            return "ddddddd";
+//        }).join();
+//        System.out.println(join);
+//        log.info("test token: {}",headers.get("token"));
+        log.info("started");
+        List<CompletableFuture<String>> completableFutures=new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            completableFutures.add(longRunningService.performLongRunningTask());
+        }
+        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).join();
         return applicationName +" /async "+ id;
     }
+
 
     /**
      * Test synchronous request.
