@@ -39,6 +39,7 @@
         <commons-io.version>2.11.0</commons-io.version>
         <commons-codec.version>1.15</commons-codec.version>
         <dozer.version>5.5.1</dozer.version>
+        <guava.version>32.1.1-jre</guava.version>
         <!--======================================================================================================= Security -->
         <jjwt.version>0.9.1</jjwt.version>
         <java-jwt.version>3.4.0</java-jwt.version>
@@ -77,6 +78,7 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool-all.version}</version>
         </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -183,6 +185,11 @@
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
             <!--======================================================================================================= security -->
             <dependency>

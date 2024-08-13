@@ -13,6 +13,6 @@
     <artifactId>simi-service</artifactId>
 
     <modules>
-        <module>simi-trade</module>
+        <module>simi-trading</module>
     </modules>
 </project>
