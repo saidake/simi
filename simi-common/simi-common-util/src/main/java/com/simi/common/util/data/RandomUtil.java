@@ -450,7 +450,7 @@ public class RandomUtil {
 
 
     /**
-     * 取一个随机数
+     * Get a random number from lower to upper.
      *
      * @param lower 最低值
      * @param upper 最高值

@@ -14,7 +14,7 @@ public class Initialization {
     public static final String SEPARATOR=" = ";
     public static void main(String[] args) throws IOException {
         FileInputStream fis = new FileInputStream(new File("C:\\Users\\simi\\Desktop\\OneDrive\\AAAMemory\\AAD--Memory.docx"));
-        FileOutputStream fos = new FileOutputStream("C:\\Users\\simi\\Desktop\\DevProject\\simi\\simi-app\\simi-memory-management\\src\\main\\resources\\line-numbers.txt");
+        FileOutputStream fos = new FileOutputStream("C:\\Users\\simi\\Desktop\\DevProject\\simi\\simi-app\\simi-memory-management\\src\\main\\resources\\storage.txt");
         XWPFDocument document = new XWPFDocument(fis);
         List<String> resultList = new ArrayList<>();
         Deque<String> titleList = new LinkedList<>();

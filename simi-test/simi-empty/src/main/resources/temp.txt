@@ -1,8 +1,19 @@
-protected BlockingQueue<Runnable> createQueue(int queueCapacity) {
-	if (queueCapacity > 0) {
-		return new LinkedBlockingQueue<>(queueCapacity);
-	}
-	else {
-		return new SynchronousQueue<>();
-	}
-}
+springmvc 注解
+spring mvc spring boot 区别
+openfeign原理
+引用循环引用是否垃圾回收
+JVM调优
+ProxyFactoryBean相对BeanFactory执行时机
+Kafka消息不丢失
+spring生命周期
+报表系统高并发，是否mq异步生成文件，如何加缓存
+spring security
+spring 观察者模式
+volatile怎么通知其他线程。
+oracle索引结构
+splice  concatenate
+fraction of players
+transaction参数
+consecutive fraction
+corporate client customer
+分布式事务

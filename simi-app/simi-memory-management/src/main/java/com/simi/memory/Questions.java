@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Questions {
     public static void main(String[] args) throws IOException {
-        Path path = Path.of("C:\\Users\\simi\\Desktop\\DevProject\\simi\\simi-app\\simi-memory-management\\src\\main\\resources\\line-numbers.txt");
+        Path path = Path.of("C:\\Users\\simi\\Desktop\\DevProject\\simi\\simi-app\\simi-memory-management\\src\\main\\resources\\storage.txt");
         List<String> strings = Files.readAllLines(path);
         Random random = new Random();
         //A. get valid line

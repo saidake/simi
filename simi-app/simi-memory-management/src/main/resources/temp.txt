@@ -1,8 +1,5 @@
-public enum State {
-    NEW,
-    RUNNABLE,
-    BLOCKED,
-    WAITING,
-    TIMED_WAITING,
-    TERMINATED;
-}
+static final class Node implements ForkJoinPool.ManagedBlocker {
+    final boolean isData;   // false if this is a request node
+    volatile Object item;   // initially non-null if isData; CASed to match
+    volatile Node next;
+    volatile Thread waiter; // null when not waiting for a match

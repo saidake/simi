@@ -21,5 +21,6 @@
         <module>simi-custom</module>
         <module>simi-service</module>
         <module>simi-app</module>
+        <module>simi-test/simi-algorithm</module>
     </modules>
 </project>

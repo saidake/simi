@@ -1,0 +1,66 @@
+Java = Core = Constants and variables = Types of References in Java = Weak References
+Java = Core = Operator = Synchronization Keyword = volatile
+Java = Core = Operator = Synchronization Keyword = synchronized
+Java = java.base = java.lang = (Thread) = Thread
+Java = java.base = java.lang = (Thread) = ThreadLocal
+Java = java.base = java.util = concurrent = locks = AbstractQueuedSynchronizer
+DataBase = Kafka = Core = Components
+DataBase = Kafka = Core = Partition Data redundancy
+DataBase = Kafka = Core = Partition Write Strategies
+DataBase = Kafka = Core = Partition Read Strategies
+DataBase = Kafka = Core = Read Strategy Implementation
+DataBase = Kafka = Core = Fast reading and writing speed
+DataBase = Kafka = Core = Workflow
+DataBase = Kafka = Core = Ensuring that messages are not lost
+DataBase = Kafka = Core = Kafka's file storage mechanism
+SpringBoot = Concept = Web Server = Apache Tomcat
+SpringBoot = Concept = Spring IOC = Spring Bean Creation Process
+SpringBoot = Concept = Spring MVC Request Route = Request Handling Process in Spring Boot
+SpringBoot = Concept = Spring Circular Dependency = AbstractAutowireCapableBeanFactory
+SpringBoot = Third Party Package = Function Extension = aspectj = Core = Key Concepts in Spring AOP
+SpringBoot = Third Party Package = Data Storage = Kafka = Configuration = Configure Kafka Properties
+SpringBoot = Third Party Package = Data Storage = Kafka = Configuration = Create a Message Producer
+SpringBoot = Third Party Package = Data Storage = Kafka = Configuration = Create a Functional Message Producer
+SpringBoot = Third Party Package = Data Storage = Kafka = Configuration = Create a Message Consumer
+SpringBoot = Third Party Package = Data Storage = Kafka = Configuration = Create a Functional Message Consumer
+DataBase = Mysql = Core = Page Data
+DataBase = Mysql = Core = Query optimizer selects the wrong index
+DataBase = Mysql = Core = Optimize SQL Queries in MySQL
+DataBase = Mysql = Core = Handle over 50,000 transactions per day
+DataBase = Mysql = Core = Storage Engines
+DataBase = Mysql = my.cnf or my.ini = Optimizing MySQL from a configuration standpoint
+DataBase = Mysql = my.cnf or my.ini = General Logs
+DataBase = Mysql = my.cnf or my.ini = Error Logs
+DataBase = Mysql = my.cnf or my.ini = Binary Logs
+DataBase = Mysql = my.cnf or my.ini = Redo Logs
+DataBase = Mysql = my.cnf or my.ini = Undo Logs
+DataBase = Mysql = Core SQL = Table Operations = Data Types
+DataBase = Mysql = Core SQL = Lock
+DataBase = Mysql = Core SQL = Transaction
+DataBase = Mysql = Core SQL = Performance Analysis
+DataBase = Mysql = Build-in tables = Permissions
+SpringBoot = = org.springframework（spring）= web = bind = annotation
+SpringBoot = org.springframework.boot = SpringApplication
+SpringBoot = Third Party Package = Data Storage = Elasticsearch = Core = Make update and query operations mutually exclusive
+Algorithm = Questions = Backtrack = N-Queens
+Algorithm = Questions = Backtrack = Word Search II
+Algorithm = Questions = Bitmap = Different Phone Numbers
+Algorithm = Questions = Breadth-first Search = Word Ladder
+Database = Redis = Core = Redis Expired Key Deletion Strategies
+Database = Redis = Core = Persistence
+Database = Redis = Configuration = redis.conf  = Event Notification
+Database = Redis = Configuration = redis.conf  = Limit and Memory Management
+Database = Redis = Configuration = redis.conf  = Replication
+Database = Redis = Configuration = redis.conf  = Persistence
+Database = Redis = Configuration = Cluster = Purpose
+Database = Redis = Configuration = Cluster = Data Sharding Process
+Database = Redis = Configuration = Replication  = Purpose
+Database = Redis = Configuration = Replication  = Process
+Database = Redis = Configuration = Replication  = What Happens Without Replication
+Database = Redis = Configuration = Replication  = Manual Failover without Sentinel
+Database = Redis = Configuration = Sentinel  = Purpose
+Database = Redis = Configuration = Sentinel  = Election Process
+Database = Redis = Command = Terminal  = Monitor
+Database = Redis = Command = Terminal  = Persistence
+Database = Redis = Command = Data Structures  = Redis Keys
+Database = Redis = Command = Data Structures  = Redis Values
