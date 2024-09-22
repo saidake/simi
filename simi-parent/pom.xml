@@ -24,6 +24,8 @@
         <!--======================================================================================================= Core -->
         <spring-boot-dependencies.version>3.0.5</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2022.0.2</spring-cloud-dependencies.version>
+        <software.amazon.awssdk.version>2.17.173</software.amazon.awssdk.version>
+        <aws-java-sdk-bom.version>1.12.201</aws-java-sdk-bom.version>
         <jakarta.mail.version>1.6.7</jakarta.mail.version>
         <!--======================================================================================================= Features -->
         <libphonenumber.version>8.0.0</libphonenumber.version>
@@ -84,6 +86,21 @@
     <dependencyManagement>
         <dependencies>
             <!--======================================================================================================= core -->
+
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-bom</artifactId>
+                <version>${aws-java-sdk-bom.version}</version> <!-- Check for the latest version -->
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>${software.amazon.awssdk.version}</version> <!-- Check for the latest version -->
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
             <dependency>                                                             <!--  Spring Boot -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>

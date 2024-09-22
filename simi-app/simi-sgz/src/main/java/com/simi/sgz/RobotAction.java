@@ -13,6 +13,11 @@ public class RobotAction extends Robot {
     public static int wt5 =1400;
     public static int wt6 =1600;
     public static int wt7 =1800;
+    public static int wt8 =2400;
+    public static int wt9=2800;
+    public static int wt10=3200;
+    public static int wt11=3600;
+    public static int wt12=4000;
 
     public RobotAction() throws AWTException {
     }
@@ -33,7 +38,7 @@ public class RobotAction extends Robot {
         this.mouseMove(coordinate);
         this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        this.sleep(wt4);
+        this.sleep(wt8);
     }
     public void leftMouseClick(int milliseconds) {
         this.mousePress(InputEvent.BUTTON1_DOWN_MASK);

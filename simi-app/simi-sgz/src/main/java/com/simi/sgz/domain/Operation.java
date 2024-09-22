@@ -139,9 +139,9 @@ public abstract class Operation {
             }
             robot.leftMouseClick(btn4);
             robot.leftMouseClick(getTabByIndex(clearTabList[i]));
-            robot.leftMouseClick(getArmyLocationInCity(armyIndex));
-            robot.leftMouseClick(confirm, wt7);
-            robot.leftMouseClick(dangerous_confirm, wt7);
+            robot.leftMouseClick(getArmyLocationInCity(armyIndex), wt8);
+            robot.leftMouseClick(confirm, wt12);
+            robot.leftMouseClick(dangerous_confirm, wt12);
         }
 
     }

@@ -1,15 +1,8 @@
-SELECT IFNULL(round(COUNT(distinct(Result.player_id)) / COUNT(distinct(Activity.player_id)), 2), 0) AS fraction
-FROM (
-  SELECT Activity.player_id AS player_id
-  FROM (
-    SELECT player_id, DATE_ADD(MIN(event_date), INTERVAL 1 DAY) AS second_date
-    FROM Activity
-    GROUP BY player_id
-  ) AS Expected, Activity
-  WHERE Activity.event_date = Expected.second_date AND Activity.player_id = Expected.player_id
-) AS Result, Activity
-
-作者：力扣官方题解
-链接：https://leetcode.cn/problems/game-play-analysis-iv/solutions/2477611/you-xi-wan-fa-fen-xi-iv-by-leetcode-solu-h5fj/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+public enum Visibility {
+    ANY,
+    NON_PRIVATE,
+    PROTECTED_AND_PUBLIC,
+    PUBLIC_ONLY,
+    NONE,
+    DEFAULT;
+}

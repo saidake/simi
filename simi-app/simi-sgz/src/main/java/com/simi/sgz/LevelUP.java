@@ -19,27 +19,27 @@ public class LevelUP {
         int mainCityArmyNumber=5;
         int secondCityArmyNumber=4;
         // 15  30  45  60  75  90  105  120
-        int minus=15;
+        int minus=0;
         int[][] staminaList = new int[][]{
-                {0,90,105,120,120,              105, 105, 105,105 },
-                { 0,105,120,120,120,           120, 120,120,120},
-                { 105,105,120,120,120,           105, 120,120,120 }
+                {120,120,120,0,0,            0, 0, 0,0 },
+                { 120,120,120,0,0,           0, 0,0,0},
+                { 120,120,120,0,0,           0, 0,0,0 }
         };
         boolean[][] supplyList = new boolean[][]{
-                {true, true, false,false,false,     false, false, false,false},
-                {true, true, false,false, false,    false, false,false,false},
-                {true, true, false,false,false,      false, false, false,false} };
+                {true, false, false,false,false,     false, false, false,false},
+                {true, false, false,false, false,    false, false,false,false},
+                {true, false, false,false,false,      false, false, false,false} };
         int[][] clearMarkList = new int[][]{
-                {1, 1, 2, 2,3,  3,3,3,4 },
-                {1, 1, 2,2,4,  3,3,3,4},
-                {1, 1, 2, 2,3, 3,3,3,4}
+                {1, 2, 3,2,3,  3,3,3,4 },
+                {1, 2, 3,2,4,  3,3,3,4},
+                {1, 2, 3,2,3,  3,3,3,4}
         };
         int[][] clearTabList = new int[][]{
-                {2, 2, 1,1,2,  1,1,1,1},
-                {1, 1, 1,1,2,  1,1,1,1},
-                {2, 2, 1, 1,1, 1,1,1,1}
+                {1, 1, 1, 1, 2,  1,1,1,1},
+                {1, 1, 1, 1, 2,  1,1,1,1},
+                {1, 1, 1, 1, 1, 1,1,1,1}
         };
-        int[] timeList=new int[]{93+45, 93+45, 153+75};
+        int[] timeList=new int[]{93, 93, 93};
         boolean[][] failedPassList=new boolean[3][mainCityArmyNumber+secondCityArmyNumber];
         boolean[] passedList=new boolean[3];
         boolean anyPassed=true;
