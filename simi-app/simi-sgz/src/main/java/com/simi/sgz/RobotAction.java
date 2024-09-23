@@ -38,7 +38,7 @@ public class RobotAction extends Robot {
         this.mouseMove(coordinate);
         this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        this.sleep(wt8);
+        this.sleep(wt9);
     }
     public void leftMouseClick(int milliseconds) {
         this.mousePress(InputEvent.BUTTON1_DOWN_MASK);

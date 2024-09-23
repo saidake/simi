@@ -19,7 +19,7 @@ public class LevelUP {
         int mainCityArmyNumber=5;
         int secondCityArmyNumber=4;
         // 15  30  45  60  75  90  105  120
-        int minus=0;
+        int minus=15;
         int[][] staminaList = new int[][]{
                 {120,120,120,0,0,            0, 0, 0,0 },
                 { 120,120,120,0,0,           0, 0,0,0},
@@ -31,7 +31,7 @@ public class LevelUP {
                 {true, false, false,false,false,      false, false, false,false} };
         int[][] clearMarkList = new int[][]{
                 {1, 2, 3,2,3,  3,3,3,4 },
-                {1, 2, 3,2,4,  3,3,3,4},
+                {1, 3, 3,2,4,  3,3,3,4},
                 {1, 2, 3,2,3,  3,3,3,4}
         };
         int[][] clearTabList = new int[][]{
