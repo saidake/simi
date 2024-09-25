@@ -67,6 +67,7 @@
 </table>
 
 # Ongoing JIRA
+* [simi-webflux] test: Mono usage practice
 * [simi] test: add test gradle module
 * [simi-sgz] sgz game script
 * [simi-sgz] feat:Increase march time

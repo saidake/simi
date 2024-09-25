@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -247,6 +248,20 @@ public class RandomUtil {
     public static <T> T getRandomElement(T... arr) {//
         int rand = (int) (Math.random() * (arr.length));
         return arr[rand];
+    }
+
+    /**
+     * Get a random enum value.
+     *
+     * @param enumClass
+     * @return
+     * @param <T>
+     */
+    // Method to get a random enum element
+    public static <T extends Enum<T>> T getRandomEnum(Class<T> enumClass) {
+        T[] enumConstants = enumClass.getEnumConstants();
+        int rand = ThreadLocalRandom.current().nextInt(enumConstants.length);
+        return enumConstants[rand];
     }
 
     /**
