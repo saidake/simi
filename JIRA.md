@@ -67,6 +67,8 @@
 </table>
 
 # Ongoing JIRA
+* [simi-webflux] feat: build LocalStack virtual machine server
+* [simi-webflux] feat: configure Amazon Lambda
 * [simi-webflux] test: Mono usage practice
 * [simi] test: add test gradle module
 * [simi-sgz] sgz game script
