@@ -18,7 +18,7 @@ aws iam attach-role-policy --role-name lambda-exec-role --policy-arn arn:aws:iam
 aws lambda create-function \
   --function-name SimiLambdaFunction \
   --zip-file fileb://simi-webflux-1.0-SNAPSHOT.jar \
-  --handler com.simi.webflux.AAAconfig.SimiLambdaHandler  \
+  --handler org.springframework.cloud.function.adapter.aws.FunctionInvoker  \
   --runtime java17 \
   --role arn:aws:iam::123456789012:role/lambda-exec-role
 # public Function<String, String> greet()
@@ -32,7 +32,7 @@ aws lambda invoke \
     --payload "$encoded_payload" \
     output.json
 # Update function with aws cli
-
-aws lambda update-function-code \
-  --function-name SimiLambdaFunction \
-  --zip-file fileb://simi-webflux-1.0-SNAPSHOT.jar
+#
+#aws lambda update-function-code \
+#  --function-name SimiLambdaFunction \
+#  --zip-file fileb://simi-webflux-1.0-SNAPSHOT.jar

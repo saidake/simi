@@ -1,16 +1,29 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.1.0'  // Use the version you need
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group = 'com.simi'
 version = '1.0-SNAPSHOT'
-
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
 repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:3.0.6"
+        mavenBom 'org.junit:junit-bom:5.9.1' // Import JUnit BOM for version management
+    }
+}
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
+    implementation 'software.amazon.awssdk:lambda:2.20.20' // Use the latest version available
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'software.amazon.awssdk:netty-nio-client:2.20.20' // Adjust version as per your needs
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
