@@ -1,13 +1,16 @@
 plugins {
-    id 'org.springframework.boot' version '3.1.0'  // Use the version you need
-    id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
+    id 'org.springframework.boot' version '3.1.0'  // Use the version you need
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
-
 
 group = 'com.simi'
 version = '1.0-SNAPSHOT'
 
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
 repositories {
     mavenCentral()
     mavenLocal()
@@ -15,17 +18,24 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.0" // Adjust to your desired version
+        mavenBom "org.springframework.boot:spring-boot-dependencies:3.0.6"
+        mavenBom 'org.junit:junit-bom:5.9.1' // Import JUnit BOM for version management
     }
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+//    implementation 'org.springframework.cloud:spring-cloud-function-core:4.0.2' // Core Spring Cloud Function library
+    implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws:4.0.2'
     implementation 'com.simi:simi-common-test:1.0'
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws-lambda'
-    testImplementation platform('org.junit:junit-bom:5.9.1')
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
+    implementation 'software.amazon.awssdk:lambda:2.20.96'
+    implementation 'software.amazon.awssdk:s3:2.20.96'
+    implementation 'software.amazon.awssdk:dynamodb:2.20.0'
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
+
+
 
 test {
     useJUnitPlatform()

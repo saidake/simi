@@ -18,10 +18,15 @@
 </tbody>
 </table>
 
-# Local
+# Amazon
+```text
 
-    oracle：  http://127.0.0.1:1521     [ORCL] sdk = sdk      [ORCL] system = oracle
-    mongo:    http://127.0.0.1:27017    [db/smp] smp  = smp   [db/admin] admin = admin
+```
+# Local
+```text
+oracle：  http://127.0.0.1:1521     [ORCL] sdk = sdk      [ORCL] system = oracle
+mongo:    http://127.0.0.1:27017    [db/smp] smp  = smp   [db/admin] admin = admin
+```
 
 # Service Introduction
 ## simi-common

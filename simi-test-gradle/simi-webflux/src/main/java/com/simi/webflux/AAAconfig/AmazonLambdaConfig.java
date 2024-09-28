@@ -1,5 +1,4 @@
-package com.simi.webflux.AAAconfiguration;
-
+package com.simi.webflux.AAAconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.function.Function;
 
 @Configuration
-public class AmazonLambdaConfiguration {
+public class AmazonLambdaConfig {
     @Bean
     public Function<String, String> greet() {
         return name -> "Hello, " + name + "!";
@@ -17,5 +16,4 @@ public class AmazonLambdaConfiguration {
     public Function<Integer, String> square() {
         return number -> "Square: " + (number * number);
     }
-
 }

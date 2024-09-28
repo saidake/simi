@@ -67,7 +67,8 @@
 </table>
 
 # Ongoing JIRA
-* [simi-webflux] feat: build LocalStack virtual machine server
+* [simi-webflux] build: upload lambda jar to LocalStack and invoke it
+* * [simi-webflux] feat: build LocalStack virtual machine server
 * [simi-webflux] feat: configure Amazon Lambda
 * [simi-webflux] test: Mono usage practice
 * [simi] test: add test gradle module

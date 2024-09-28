@@ -1,3 +1,4 @@
 rootProject.name = 'simi-test-gradle'
 include 'simi-webflux'
+include 'simi-consumer'
 
