@@ -17,7 +17,7 @@ aws iam attach-role-policy --role-name lambda-exec-role --policy-arn arn:aws:iam
 # Create a function
 aws lambda create-function \
   --function-name SimiLambdaFunction \
-  --zip-file fileb://simi-webflux-1.0-SNAPSHOT.jar \
+  --zip-file fileb://simi-lambda.zip \
   --handler org.springframework.cloud.function.adapter.aws.FunctionInvoker  \
   --runtime java17 \
   --role arn:aws:iam::123456789012:role/lambda-exec-role

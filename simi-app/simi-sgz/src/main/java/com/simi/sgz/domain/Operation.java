@@ -1,48 +1,13 @@
 package com.simi.sgz.domain;
 
 import com.simi.sgz.RobotAction;
+import lombok.experimental.SuperBuilder;
 
 import static com.simi.sgz.RobotAction.*;
 
 
+@SuperBuilder
 public abstract class Operation {
-    public Operation(Coordinate red_point, Coordinate stop_btn1, Coordinate confirm, Coordinate dangerous_confirm,
-                     Coordinate city_add_troops, Coordinate citi_confirm, Coordinate citi_back,
-                     Coordinate army_btn, Coordinate coordinate_btn, Coordinate scroll_top, Coordinate scroll_bot,
-                     Coordinate btn1, Coordinate btn2, Coordinate btn3, Coordinate btn4, Coordinate tab1,
-                     Coordinate tab2, Coordinate tab3, Coordinate army1_from1, Coordinate army1_from5,
-                     Coordinate army2_from5, Coordinate army3_from5, Coordinate army4_from5,Coordinate army5_from5,
-                     Coordinate mark1, Coordinate mark2, Coordinate mark3, Coordinate mark4) {
-        this.red_point = red_point;
-        this.stop_btn1 = stop_btn1;
-        this.confirm = confirm;
-        this.dangerous_confirm = dangerous_confirm;
-        this.city_add_troops = city_add_troops;
-        this.citi_confirm = citi_confirm;
-        this.citi_back = citi_back;
-        this.army_btn = army_btn;
-        this.coordinate_btn = coordinate_btn;
-        this.scroll_top = scroll_top;
-        this.scroll_bot = scroll_bot;
-        this.btn1 = btn1;
-        this.btn2 = btn2;
-        this.btn3 = btn3;
-        this.btn4 = btn4;
-        this.tab1 = tab1;
-        this.tab2 = tab2;
-        this.tab3 = tab3;
-        this.army1_from1 = army1_from1;
-        this.army1_from5 = army1_from5;
-        this.army2_from5 = army2_from5;
-        this.army3_from5 = army3_from5;
-        this.army4_from5 = army4_from5;
-        this.army5_from5 = army5_from5;
-        this.mark1 = mark1;
-        this.mark2 = mark2;
-        this.mark3 = mark3;
-        this.mark4 = mark4;
-    }
-
     Coordinate red_point;
     Coordinate stop_btn1;
     // Round button
@@ -52,8 +17,8 @@ public abstract class Operation {
     // main-city  increase the number of troops
     Coordinate city_add_troops;
     // main-city  confirm
-    Coordinate citi_confirm;
-    Coordinate citi_back;
+    Coordinate city_confirm;
+    Coordinate city_back;
 
     // Scroll locations
     Coordinate army_btn;
@@ -104,12 +69,12 @@ public abstract class Operation {
             if(!supplyList[i])continue;
             robot.leftMouseClick(getArmyLocationInCity(i));
             robot.leftMouseClick(city_add_troops);
-            robot.leftMouseClick(citi_confirm);
-            robot.leftMouseClick(citi_back);
+            robot.leftMouseClick(city_confirm);
+            robot.leftMouseClick(city_back);
         }
     }
     public void goBack(RobotAction robot){
-        robot.leftMouseClick(citi_back);
+        robot.leftMouseClick(city_back);
         robot.scroll(scroll_bot,scroll_top);
         robot.scroll(scroll_bot,scroll_top);
         robot.scroll(scroll_bot,scroll_top);

@@ -24,17 +24,14 @@
             <artifactId>guava</artifactId>
             <version>33.2.1-jre</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.simi</groupId>
-            <artifactId>simi-common-simulator</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.simi</groupId>-->
+<!--            <artifactId>simi-common-simulator</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 </project>

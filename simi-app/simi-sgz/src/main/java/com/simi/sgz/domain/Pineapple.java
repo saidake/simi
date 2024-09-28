@@ -1,81 +1,52 @@
 package com.simi.sgz.domain;
 
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-public class Pineapple extends Operation{
-    static Coordinate red_point=Coordinate.of(284, 569);
-    static Coordinate stop_btn1=Coordinate.of(502,775);
-    // Round button
-    static Coordinate confirm=Coordinate.of(451,907);
-    static Coordinate dangerous_confirm=Coordinate.of(195,682);
+@SuperBuilder
+public class Pineapple extends Operation {
+    {
+        red_point = Coordinate.of(435,312);
+        stop_btn1 = Coordinate.of(0, 0);
+        // Round button
+        confirm = Coordinate.of(689,400);
+        dangerous_confirm = Coordinate.of(360,403);
 
-    // main-city  increase the number of troops
-    static Coordinate city_add_troops=Coordinate.of(79,875);
-    // main-city  confirm
-    static Coordinate citi_confirm=Coordinate.of(283,962);
-    static Coordinate citi_back=Coordinate.of(95,1044);
+        // main-city  increase the number of troops
+        city_add_troops = Coordinate.of(99,523);
+        // main-city  confirm
+        city_confirm = Coordinate.of(760,470);
+        city_back = Coordinate.of(817,82);
 
-    // Scroll locations
-    static Coordinate army_btn=Coordinate.of(423,219);
-    static Coordinate coordinate_btn=Coordinate.of(512,220);
-    static Coordinate scroll_top=Coordinate.of(464,260);
-    static Coordinate scroll_bot=Coordinate.of(464,360);
+        // Scroll locations
+        army_btn = Coordinate.of(744,124);
+        coordinate_btn = Coordinate.of(823,124);
+        scroll_top = Coordinate.of(785,154);
+        scroll_bot = Coordinate.of(777,278);
 
-    // The button menu that appears after clicking
-    static Coordinate btn1=Coordinate.of(473,496);
-    static Coordinate btn2=Coordinate.of(466, 543);
-    static Coordinate btn3=Coordinate.of(466, 587);
-    static Coordinate btn4=Coordinate.of(466, 632);
+        // The button menu that appears after clicking
+        btn1 = Coordinate.of(590,247);
+        btn2 = Coordinate.of(596,290);
+        btn3 = Coordinate.of(596,335);
+        btn4 = Coordinate.of(594,421);
 
-    // Right tabs
-    static Coordinate tab1=Coordinate.of(440,302);
-    static Coordinate tab2=Coordinate.of(442,365);
-    static Coordinate tab3=Coordinate.of(443,415);
+        // Right tabs to select troop group
+        tab1 = Coordinate.of(780,196);
+        tab2 = Coordinate.of(782,247);
+        tab3 = Coordinate.of(776,313);
 
-    // The list of armies below
-    static Coordinate army1_from1=Coordinate.of(279,849);
-    static Coordinate army1_from5=Coordinate.of(57,849);
-    static Coordinate army2_from5=Coordinate.of(165,849);
-    static Coordinate army3_from5=Coordinate.of(280,849);
-    static Coordinate army4_from5=Coordinate.of(400,849);
-    static Coordinate army5_from5=Coordinate.of(497,849);
+        // The list of armies below
+        army1_from1 = Coordinate.of(442,477);
+        army1_from5 = Coordinate.of(79,477);
+        army2_from5 = Coordinate.of(263,477);
+        army3_from5 = Coordinate.of(434,479);
+        army4_from5 = Coordinate.of(605,475);
+        army5_from5 = Coordinate.of(782,484);
 
-    // Marked positions starting from the end.
-    static Coordinate mark1=Coordinate.of(458,391 );
-    static Coordinate mark2=Coordinate.of(460,341 );
-    static Coordinate mark3=Coordinate.of(458,298 );
-    static Coordinate mark4=Coordinate.of(458,254 );
-
-    public Pineapple(){
-        super(
-                red_point,
-                stop_btn1,
-                confirm,
-                dangerous_confirm,
-                city_add_troops,
-                citi_confirm,
-                citi_back,
-                army_btn,
-                coordinate_btn,
-                scroll_top,
-                scroll_bot,
-                btn1,
-                btn2,
-                btn3,
-                btn4,
-                tab1,
-                tab2,
-                tab3,
-                army1_from1,
-                army1_from5,
-                army2_from5,
-                army3_from5,
-                army4_from5,
-                army5_from5,
-                mark1,
-                mark2,
-                mark3,
-                mark4
-        );
+        // Marked positions starting from the end.
+        mark1 = Coordinate.of(773,267);
+        mark2 = Coordinate.of(785,229);
+        mark3 = Coordinate.of(776,192);
+        mark4 = Coordinate.of(772,154);
     }
-
 }
