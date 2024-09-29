@@ -1,6 +1,5 @@
 package com.simi.sgz.domain;
 
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
@@ -25,10 +24,10 @@ public class Pineapple extends Operation {
         scroll_bot = Coordinate.of(777,278);
 
         // The button menu that appears after clicking
-        btn1 = Coordinate.of(590,247);
-        btn2 = Coordinate.of(596,290);
-        btn3 = Coordinate.of(596,335);
-        btn4 = Coordinate.of(594,421);
+        btn1 = Coordinate.of(592,249);
+        btn2 = Coordinate.of(594,293);
+        btn3 = Coordinate.of(596,334);
+        btn4 = Coordinate.of(596,378);
 
         // Right tabs to select troop group
         tab1 = Coordinate.of(780,196);

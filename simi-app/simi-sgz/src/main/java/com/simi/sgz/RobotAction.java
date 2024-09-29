@@ -22,22 +22,28 @@ public class RobotAction extends Robot {
     public RobotAction() throws AWTException {
     }
     public void scroll(Coordinate from, Coordinate to) {
-        this.mouseMove(from);
-        this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        this.mouseMove(to);
-        this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        synchronized (RobotAction.class) {
+            this.mouseMove(from);
+            this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            this.mouseMove(to);
+            this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        }
         this.sleep(wt1);
     }
     public void leftMouseClick(Coordinate coordinate, int time) {
-        this.mouseMove(coordinate);
-        this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        synchronized (RobotAction.class) {
+            this.mouseMove(coordinate);
+            this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        }
         this.sleep(time);
     }
     public void leftMouseClick(Coordinate coordinate) {
-        this.mouseMove(coordinate);
-        this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        synchronized (RobotAction.class){
+            this.mouseMove(coordinate);
+            this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        }
         this.sleep(wt9);
     }
     public void leftMouseClick(int milliseconds) {

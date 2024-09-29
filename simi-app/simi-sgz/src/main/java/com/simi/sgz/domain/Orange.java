@@ -1,7 +1,5 @@
 package com.simi.sgz.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder

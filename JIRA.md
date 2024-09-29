@@ -73,6 +73,7 @@
 * [simi-webflux] feat: configure Amazon Lambda
 * [simi-webflux] test: Mono usage practice
 * [simi] test: add test gradle module
+* [simi-sgz] feat: add mutex lock to allow multiple accounts to level up at the same time
 * [simi-sgz] feat: add a new member and reset coordinates
 * [simi-sgz] sgz game script
 * [simi-sgz] feat:Increase march time

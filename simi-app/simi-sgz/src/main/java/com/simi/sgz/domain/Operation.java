@@ -63,17 +63,13 @@ public abstract class Operation {
     }
 
 
-    public void supplyArmy(RobotAction robot, boolean[] failPassedList, boolean[] supplyList){
-        for (int i = 0; i < failPassedList.length; i++) {
-            if(failPassedList[i])continue;
-            if(!supplyList[i])continue;
-            robot.leftMouseClick(getArmyLocationInCity(i));
-            robot.leftMouseClick(city_add_troops);
-            robot.leftMouseClick(city_confirm);
-            robot.leftMouseClick(city_back);
-        }
+    public void supplyArmy(RobotAction robot, int mainCityArmyNumber, int armyIndex){
+        robot.leftMouseClick(getArmyLocationInCity(armyIndex<mainCityArmyNumber?armyIndex:armyIndex-mainCityArmyNumber));
+        robot.leftMouseClick(city_add_troops);
+        robot.leftMouseClick(city_confirm);
+        robot.leftMouseClick(city_back);
     }
-    public void goBack(RobotAction robot){
+    public void goBackAndScrollToBottom(RobotAction robot){
         robot.leftMouseClick(city_back);
         robot.scroll(scroll_bot,scroll_top);
         robot.scroll(scroll_bot,scroll_top);
@@ -83,35 +79,14 @@ public abstract class Operation {
         robot.scroll(scroll_bot,scroll_top);
     }
 
-    public void clear(RobotAction robot, int mainCityArmyNumber, boolean[] failPassedList, int[] clearMarkList, int[] clearTabList, Integer waitIndex, Integer waitIndex2) {
-        for (int i = 0; i < failPassedList.length; i++) {
-            if(failPassedList[i])continue;
-            int armyIndex=i>=mainCityArmyNumber?i-mainCityArmyNumber:i;
-            robot.leftMouseClick(getMrkByIndex(clearMarkList[i]), wt5);
-            if(waitIndex!=null&&i==waitIndex){
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if(waitIndex2!=null&&i==waitIndex2){
-                try {
-                    Thread.sleep(7000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            robot.leftMouseClick(btn4);
-            robot.leftMouseClick(getTabByIndex(clearTabList[i]));
-            robot.leftMouseClick(getArmyLocationInCity(armyIndex), wt9);
-            robot.leftMouseClick(confirm, wt12);
-            robot.leftMouseClick(dangerous_confirm, wt12);
-        }
-
+    public void clear(RobotAction robot, int mainCityArmyNumber, int curIndex, int markIndex, int clearTabIndex) {
+        robot.leftMouseClick(getMrkByIndex(markIndex), wt5);
+        robot.leftMouseClick(btn4);
+        robot.leftMouseClick(getTabByIndex(clearTabIndex));
+        robot.leftMouseClick(getArmyLocationInCity(curIndex<mainCityArmyNumber?curIndex:curIndex-mainCityArmyNumber), wt9);
+        robot.leftMouseClick(confirm, wt12);
+        robot.leftMouseClick(dangerous_confirm, wt12);
     }
-
-
     Coordinate getArmyLocationInCity(int index){
         switch (index){
             case 0: return army1_from5;
