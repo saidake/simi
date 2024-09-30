@@ -67,6 +67,7 @@
 </table>
 
 # Ongoing JIRA
+* [simi-webflux] build: execute commands via ssh and scp
 * [simi-webflux] feat: invoke lambda functions from LocalStack
 * [simi-webflux] build: upload lambda jar to LocalStack and invoke it
 * [simi-webflux] feat: build LocalStack virtual machine server
