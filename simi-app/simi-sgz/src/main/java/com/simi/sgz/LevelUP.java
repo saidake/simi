@@ -12,13 +12,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LevelUP {
     public static void main(String[] args) throws AWTException {
+        // Prerequisites
+        //!. All troops have returned to the city.
+        //2. There are no enemy troops around the city.
         // 15  30  45  60  75  90  105  120
-        int minus=0;
+        int minus=15;
         int[][] staminaList = new int[][]{
-                {15,15,0,0,0,           0, 0,0,0 },
-                { 15,12,0,0,0,          0, 0,0,0 },
-                { 28,28,0,0,0,          0, 0,0,0 },
-                { 28,0,0,0,0,           0, 0,0,0 },
+                {120,120,0,0,0,           0, 0,0,0 },
+                { 120,120,0,0,0,          0, 0,0,0 },
+                { 120,120,0,0,0,          0, 0,0,0 },
+                { 120,0,0,0,0,           0, 0,0,0 },
         };
         boolean[][] supplyList = new boolean[][]{
                 {true, true, false,false,false,     false, false, false,false},
@@ -29,13 +32,13 @@ public class LevelUP {
         int[][] clearMarkList = new int[][]{
                 {1, 2, 3,2,3,  3,3,3,4 },
                 {1, 1, 3,2,4,  3,3,3,4},
-                {1, 2, 3,2,3,  3,3,3,4},
+                {2, 2, 3,2,3,  3,3,3,4},
                 {1, 2, 3,2,3,  3,3,3,4}
         };
         int[][] clearTabList = new int[][]{
                 {1, 1, 1, 1, 2,  1,1,1,1},
                 {1, 1, 1, 1, 2,  1,1,1,1},
-                {1, 1, 1, 1, 1,  1,1,1,1},
+                {2, 2, 1, 1, 1,  1,1,1,1},
                 {1, 1, 1, 1, 1,  1,1,1,1}
         };
         int[] waitingTimeList=new int[]{45, 75, 45, 75};

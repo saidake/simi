@@ -52,14 +52,13 @@ public class LevelUPTask extends Thread {
                 if(staminaList[i]<0)continue;
                 //A。AWT operations
                 operation.clear(robot, mainCityArmyNumber, i, clearMarkList[i], clearTabList[i]);
-                try {
-                    int adjustedWaitingTime=waitingTime+10;
-                    Thread.sleep(adjustedWaitingTime+adjustedWaitingTime/2);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
             }
-
+            try {
+                int adjustedWaitingTime=waitingTime*1000+10000;
+                Thread.sleep(adjustedWaitingTime+adjustedWaitingTime/2);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
