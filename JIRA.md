@@ -67,6 +67,7 @@
 </table>
 
 # Ongoing JIRA
+* [simi-webflux] feat: create dynamodb tables
 * [simi-webflux] build: execute commands via ssh and scp
 * [simi-webflux] feat: invoke lambda functions from LocalStack
 * [simi-webflux] build: upload lambda jar to LocalStack and invoke it
