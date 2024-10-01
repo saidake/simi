@@ -75,6 +75,7 @@
 * [simi-webflux] feat: configure Amazon Lambda
 * [simi-webflux] test: Mono usage practice
 * [simi] test: add test gradle module
+* [simi-sgz] refactor: extract waiting time
 * [simi-sgz] fix: change troop waiting time
 * [simi-sgz] feat: add mutex lock to allow multiple accounts to level up at the same time
 * [simi-sgz] feat: add a new member and reset coordinates
@@ -84,4 +85,9 @@
 * [memory-enhancement] simi-memory-management
 * [simi-trading] rename trading project
 * [simi-trading] make FXCM api work again
-* [simi-algorithm] feat: add a test data generation tool 
+* [simi-algorithm] feat: add a test data generation tool
+# Next Release
+### Simi Initializer 2.1.2
+* Compatible with IDEA 2024
+### Simi Trading 1.0.0
+* Display a simple page

@@ -1,9 +1,8 @@
 package com.simi.sgz.domain;
 
+import com.simi.sgz.AAAconfig.WaitingTime;
 import com.simi.sgz.RobotAction;
 import lombok.experimental.SuperBuilder;
-
-import static com.simi.sgz.RobotAction.*;
 
 
 @SuperBuilder
@@ -58,8 +57,8 @@ public abstract class Operation {
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
-        robot.leftMouseClick(mark4, wt4);
-        robot.leftMouseClick(red_point);
+        robot.leftMouseClick(mark4, WaitingTime.SELECT_MARK);
+        robot.leftMouseClick(red_point, WaitingTime.ENTER_CITY);
     }
 
 
@@ -80,12 +79,12 @@ public abstract class Operation {
     }
 
     public void clear(RobotAction robot, int mainCityArmyNumber, int curIndex, int markIndex, int clearTabIndex) {
-        robot.leftMouseClick(getMrkByIndex(markIndex), wt5);
+        robot.leftMouseClick(getMrkByIndex(markIndex), WaitingTime.SELECT_MARK);
         robot.leftMouseClick(btn4);
         robot.leftMouseClick(getTabByIndex(clearTabIndex));
-        robot.leftMouseClick(getArmyLocationInCity(curIndex<mainCityArmyNumber?curIndex:curIndex-mainCityArmyNumber), wt9);
-        robot.leftMouseClick(confirm, wt12);
-        robot.leftMouseClick(dangerous_confirm, wt12);
+        robot.leftMouseClick(getArmyLocationInCity(curIndex<mainCityArmyNumber?curIndex:curIndex-mainCityArmyNumber), WaitingTime.SELECT_TROOP_IN_CITY);
+        robot.leftMouseClick(confirm, WaitingTime.CONFIRM);
+        robot.leftMouseClick(dangerous_confirm, WaitingTime.CONFIRM);
     }
     Coordinate getArmyLocationInCity(int index){
         switch (index){
