@@ -16,7 +16,7 @@ public class LevelUP {
         //!. All troops have returned to the city.
         //2. There are no enemy troops around the city.
         // 15  30  45  60  75  90  105  120
-        int minus=15;
+        int minus=0;
         int[][] staminaList = new int[][]{
                 {120,120,0,0,0,           0, 0,0,0 },
                 { 120,120,0,0,0,          0, 0,0,0 },
