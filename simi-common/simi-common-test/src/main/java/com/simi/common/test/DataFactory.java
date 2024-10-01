@@ -1,8 +1,7 @@
 package com.simi.common.test;
 
 import com.simi.common.test.pojo.ListNode;
-import com.simi.common.test.pojo.Person;
-import com.simi.common.test.pojo.Person.Gender;
+import com.simi.common.test.pojo.TestFruit;
 import com.simi.common.util.data.RandomUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -33,18 +32,15 @@ public class DataFactory {
     public static List<Integer> getIntList(){
         return getIntList(DEFAULT_LENGTH, DEFAULT_LOWER,DEFAULT_UPPER);
     }
-    public static List<Person> getPersonList(){
-        List<Person> personList= new ArrayList<>();
+    public static List<TestFruit> getTestFruitList(){
+        List<TestFruit> testFruitList = new ArrayList<>();
         for (int i = 0; i < DEFAULT_OBJECT_LIST_LENGTH; i++) {
             int randomInt = RandomUtil.getRandomInt(DEFAULT_LOWER, DEFAULT_UPPER);
-            personList.add(
-                    new Person(
-                            RandomUtil.getRandomEnglishName(),
-                            RandomUtil.getRandomAge(),
-                            RandomUtil.getRandomElement(Gender.MALE,Gender.FEMALE)
-                            ));
+            TestFruit testFruit = new TestFruit();
+            testFruit.setFruitType(RandomUtil.getRandomEnum(TestFruit.FruitType.class));
+            testFruitList.add(testFruit);
         }
-        return personList;
+        return testFruitList;
     }
     public static ListNode getLinkedList(){
         ListNode head = new ListNode(RandomUtil.getRandomInt(DEFAULT_LOWER,DEFAULT_UPPER));

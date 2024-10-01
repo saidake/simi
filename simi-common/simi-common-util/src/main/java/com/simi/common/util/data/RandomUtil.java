@@ -237,17 +237,30 @@ public class RandomUtil {
 
 
 //========================================================================================================================= 集合数组
-
     /**
-     * 从多个元素或数组中取一个随机元素
+     * Get a random element from an array.
      *
-     * @param arr 数组
-     * @return 随机元素
+     * @param arr array
+     * @return random element
      */
     @SafeVarargs
     public static <T> T getRandomElement(T... arr) {//
         int rand = (int) (Math.random() * (arr.length));
         return arr[rand];
+    }
+    /**
+     * Get a random element from an array.
+     *
+     * @param arr the array from which to get a random element
+     * @return a random element from the array
+     * @throws IllegalArgumentException if the array is null or empty
+     */
+    public static <T> T getRandomElementFromArray(T[] arr) {
+        if (arr == null || arr.length == 0) {
+            throw new IllegalArgumentException("Array must not be null or empty");
+        }
+        int randIndex = (int) (Math.random() * arr.length);
+        return arr[randIndex];
     }
 
     /**
