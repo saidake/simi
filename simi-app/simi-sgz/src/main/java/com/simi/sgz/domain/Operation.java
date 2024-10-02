@@ -50,26 +50,26 @@ public abstract class Operation {
     Coordinate mark3;
     Coordinate mark4;
     public void enterCity(RobotAction robot){
-        robot.leftMouseClick(coordinate_btn);
+        robot.leftMouseClickEx(coordinate_btn);
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
-        robot.leftMouseClick(mark4, WaitingTime.SELECT_MARK);
-        robot.leftMouseClick(red_point, WaitingTime.ENTER_CITY);
+        robot.leftMouseClickEx(mark4, WaitingTime.SELECT_MARK);
+        robot.leftMouseClickEx(red_point, WaitingTime.ENTER_CITY);
     }
 
 
     public void supplyArmy(RobotAction robot, int mainCityArmyNumber, int armyIndex){
-        robot.leftMouseClick(getArmyLocationInCity(armyIndex<mainCityArmyNumber?armyIndex:armyIndex-mainCityArmyNumber));
-        robot.leftMouseClick(city_add_troops);
-        robot.leftMouseClick(city_confirm);
-        robot.leftMouseClick(city_back);
+        robot.leftMouseClickEx(getArmyLocationInCity(armyIndex<mainCityArmyNumber?armyIndex:armyIndex-mainCityArmyNumber));
+        robot.leftMouseClickEx(city_add_troops);
+        robot.leftMouseClickEx(city_confirm);
+        robot.leftMouseClickEx(city_back);
     }
     public void goBackAndScrollToBottom(RobotAction robot){
-        robot.leftMouseClick(city_back);
+        robot.leftMouseClickEx(city_back);
         robot.scroll(scroll_bot,scroll_top);
         robot.scroll(scroll_bot,scroll_top);
         robot.scroll(scroll_bot,scroll_top);
@@ -79,38 +79,38 @@ public abstract class Operation {
     }
 
     public void clear(RobotAction robot, int mainCityArmyNumber, int curIndex, int markIndex, int clearTabIndex) {
-        robot.leftMouseClick(getMrkByIndex(markIndex), WaitingTime.SELECT_MARK);
-        robot.leftMouseClick(btn4);
-        robot.leftMouseClick(getTabByIndex(clearTabIndex));
-        robot.leftMouseClick(getArmyLocationInCity(curIndex<mainCityArmyNumber?curIndex:curIndex-mainCityArmyNumber), WaitingTime.SELECT_TROOP_IN_CITY);
-        robot.leftMouseClick(confirm, WaitingTime.CONFIRM);
-        robot.leftMouseClick(dangerous_confirm, WaitingTime.CONFIRM);
+        //robot.leftMouseClick(getMrkByIndex(markIndex), WaitingTime.SELECT_MARK);
+        robot.leftMouseClickMark(getMrkByIndex(markIndex),btn4, WaitingTime.SELECT_MARK,WaitingTime.REFRESH_MARK);
+        robot.leftMouseClickEx(getTabByIndex(clearTabIndex), WaitingTime.SELECT_TAB);
+        robot.leftMouseClickEx(getArmyLocationInCity(curIndex<mainCityArmyNumber?curIndex:curIndex-mainCityArmyNumber), WaitingTime.SELECT_TROOP_IN_CITY);
+        robot.leftMouseClickEx(confirm, WaitingTime.CONFIRM);
+        robot.leftMouseClickEx(dangerous_confirm, WaitingTime.CONFIRM);
     }
     Coordinate getArmyLocationInCity(int index){
-        switch (index){
-            case 0: return army1_from5;
-            case 1: return army2_from5;
-            case 2: return army3_from5;
-            case 3: return army4_from5;
-            case 4: return army5_from5;
-            default: return null;
-        }
+        return switch (index) {
+            case 0 -> army1_from5;
+            case 1 -> army2_from5;
+            case 2 -> army3_from5;
+            case 3 -> army4_from5;
+            case 4 -> army5_from5;
+            default -> null;
+        };
     }
     Coordinate getMrkByIndex(int index){
-        switch (index){
-            case 1: return mark1;
-            case 2: return mark2;
-            case 3: return mark3;
-            case 4: return mark4;
-            default: return null;
-        }
+        return switch (index) {
+            case 1 -> mark1;
+            case 2 -> mark2;
+            case 3 -> mark3;
+            case 4 -> mark4;
+            default -> null;
+        };
     }
     Coordinate getTabByIndex(int index){
-        switch (index){
-            case 1: return tab1;
-            case 2: return tab2;
-            case 3: return tab3;
-            default: return null;
-        }
+        return switch (index) {
+            case 1 -> tab1;
+            case 2 -> tab2;
+            case 3 -> tab3;
+            default -> null;
+        };
     }
 }

@@ -19,26 +19,39 @@ public class RobotAction extends Robot {
         }
         this.sleep(WaitingTime.SCROLL);
     }
-    public void leftMouseClick(Coordinate coordinate, int time) {
+    public void leftMouseClickEx(Coordinate coordinate, int time) {
         synchronized (RobotAction.class) {
-            this.mouseMove(coordinate);
-            this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            this.leftMouseClick(coordinate);
         }
         this.sleep(time);
     }
-    public void leftMouseClick(Coordinate coordinate) {
+    public void leftMouseClickMark(Coordinate mark, Coordinate btn, int time, int refreshTime) {
+        //select mark but only focus on moving view.
+        synchronized (RobotAction.class) {
+            this.leftMouseClick(mark);
+        }
+        this.sleep(time);
+        //select mark and click action button (double refresh).
+        synchronized (RobotAction.class) {
+            this.leftMouseClick(mark);
+            this.sleep(refreshTime);
+            this.leftMouseClick(mark);
+            this.leftMouseClick(btn);
+            this.sleep(time);
+            this.leftMouseClick(btn);
+        }
+        this.sleep(time);
+    }
+    public void leftMouseClickEx(Coordinate coordinate) {
         synchronized (RobotAction.class){
-            this.mouseMove(coordinate);
-            this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            this.leftMouseClick(coordinate);
         }
         this.sleep(WaitingTime.CLICK);
     }
-    public void leftMouseClick(int milliseconds) {
+    public void leftMouseClick(Coordinate coordinate) {
+        this.mouseMove(coordinate);
         this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        this.sleep(milliseconds);
     }
     public void mouseMove(Coordinate coordinate){
         this.mouseMove(coordinate.getX(),coordinate.getY());
