@@ -1,7 +1,7 @@
 package com.simi.common.test;
 
-import com.simi.common.test.pojo.ListNode;
-import com.simi.common.test.pojo.TestFruit;
+import com.simi.common.test.domain.ListNode;
+import com.simi.common.test.domain.TestFruit;
 import com.simi.common.util.data.RandomUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

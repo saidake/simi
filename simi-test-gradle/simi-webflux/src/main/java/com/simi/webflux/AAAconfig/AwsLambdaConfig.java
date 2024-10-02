@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.function.Function;
 
 @Configuration
-public class AmazonLambdaConfig {
+public class AwsLambdaConfig {
     @Bean
     public Function<String, String> greet() {
         return name -> "Hello, " + name + "!";

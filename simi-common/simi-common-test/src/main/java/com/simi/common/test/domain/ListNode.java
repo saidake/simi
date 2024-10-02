@@ -1,7 +1,6 @@
-package com.simi.common.test.pojo;
+package com.simi.common.test.domain;
 
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 public class ListNode {

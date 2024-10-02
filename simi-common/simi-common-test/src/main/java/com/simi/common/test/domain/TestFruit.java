@@ -1,4 +1,4 @@
-package com.simi.common.test.pojo;
+package com.simi.common.test.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

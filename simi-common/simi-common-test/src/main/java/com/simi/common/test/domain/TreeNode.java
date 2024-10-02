@@ -1,4 +1,4 @@
-package com.simi.common.test.pojo;
+package com.simi.common.test.domain;
 
 public class TreeNode {
     public int value;

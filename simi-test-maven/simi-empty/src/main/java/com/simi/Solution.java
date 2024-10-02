@@ -1,7 +1,7 @@
 package com.simi;
 
 import com.simi.common.test.DataFactory;
-import com.simi.common.test.pojo.ListNode;
+import com.simi.common.test.domain.ListNode;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
