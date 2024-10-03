@@ -7,3 +7,4 @@ export ROOT='C:\Users\simi\Desktop\DevProjects\simi\scripts'
 export AWS_ACCESS_KEY_ID=test
 export AWS_SECRET_ACCESS_KEY=test
 
+TEST_AMAZON_DOCKER_COMPOSE_CONFIG_PATH="~/docker/docker-compose.yml"

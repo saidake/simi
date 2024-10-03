@@ -1,3 +1,5 @@
+#!/bin/bash
+
 aws dynamodb create-table \
     --table-name TestPerson \
     --attribute-definitions AttributeName=testPersonId,AttributeType=S \
@@ -73,4 +75,4 @@ aws dynamodb put-item \
 
 # Verify Data
 aws dynamodb scan --table-name TestPerson
-
+#aws dynamodb list-tables

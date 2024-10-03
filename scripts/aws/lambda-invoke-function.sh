@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # public Function<String, String> greet()
 # public Function<Integer, String> square()
 
@@ -13,3 +15,5 @@ aws lambda invoke \
 #aws lambda update-function-code \
 #  --function-name SimiLambdaFunction \
 #  --zip-file fileb://simi-webflux-1.0-SNAPSHOT.jar
+
+echo 'print output.json: ' && cat output.json
