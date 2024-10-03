@@ -34,6 +34,7 @@ dependencies {
     //======================================================================================================= Log
     // Log4j 2 dependencies
     implementation 'org.apache.logging.log4j:log4j-slf4j-impl' // Use Log4j2 SLF4J binding
+    implementation 'org.apache.logging.log4j:log4j-api:2.14.1' // Specify the version you need
     implementation 'org.apache.logging.log4j:log4j-core' // Core Log4j2 dependency
     //======================================================================================================= Amazon
     implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
@@ -49,7 +50,6 @@ dependencies {
     // Test dependencies
     testImplementation 'org.slf4j:slf4j-api' // SLF4J API for testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test' // Add this line for testing support
-    testImplementation 'org.apache.logging.log4j:log4j-slf4j-impl' // SLF4J binding for Log4j
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.mockito:mockito-core:5.5.0'  // Add Mockito if needed
     testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'  // For Mockito integration with JUnit 5
