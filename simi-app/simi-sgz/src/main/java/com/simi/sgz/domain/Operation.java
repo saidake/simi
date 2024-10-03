@@ -80,7 +80,7 @@ public abstract class Operation {
 
     public void clear(RobotAction robot, int mainCityArmyNumber, int curIndex, int markIndex, int clearTabIndex) {
         //robot.leftMouseClick(getMrkByIndex(markIndex), WaitingTime.SELECT_MARK);
-        robot.leftMouseClickMark(getMrkByIndex(markIndex),btn4, WaitingTime.SELECT_MARK,WaitingTime.REFRESH_MARK);
+        robot.leftMouseClickMark(getMrkByIndex(markIndex),btn4);
         robot.leftMouseClickEx(getTabByIndex(clearTabIndex), WaitingTime.SELECT_TAB);
         robot.leftMouseClickEx(getArmyLocationInCity(curIndex<mainCityArmyNumber?curIndex:curIndex-mainCityArmyNumber), WaitingTime.SELECT_TROOP_IN_CITY);
         robot.leftMouseClickEx(confirm, WaitingTime.CONFIRM);

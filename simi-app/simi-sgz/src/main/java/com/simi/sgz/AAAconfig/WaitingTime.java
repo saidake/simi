@@ -8,5 +8,6 @@ public interface WaitingTime {
     int SELECT_TROOP_IN_CITY = 7000;
     int SELECT_TAB = 7000;
     int CONFIRM = 8000;
-    int REFRESH_MARK = 100;
+    int REFRESH_MARK = 200;
+    int REFRESH_MARK_MID = 400;
 }

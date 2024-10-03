@@ -18,10 +18,10 @@ public class LevelUP {
         // 15  30  45  60  75  90  105  120
         int minus=0;
         int[][] staminaList = new int[][]{
-                {45,60,60,90,60,     0, 0,0,0 },
-                { 60,45,45,75,45,    0, 0,0,0 },
-                { 60,45,60,75,75,    0, 0,0,0 },
-                { 60,45,0,0,0,        0, 0,0,0 },
+                {120,120,120,120,120,   0, 0,0,0 },
+                { 120,120,120,120,120,  0, 0,0,0 },
+                { 120,120,120,120,120,  0, 0,0,0 },
+                { 120,120,0,0,0,        0, 0,0,0 },
         };
         boolean[][] supplyList = new boolean[][]{
                 {true, true, false,false,false,     false, false, false,false},
@@ -31,18 +31,17 @@ public class LevelUP {
         };
         int[][] clearMarkList = new int[][]{
                 {1, 2, 3,3,3,  3,3,3,4 },
-                {1, 1, 3,3,3,  3,3,3,4},
                 {2, 2, 3,3,3,  3,3,3,4},
+                {1, 2, 3,3,3,  3,3,3,4},
                 {1, 2, 3,2,3,  3,3,3,4}
         };
         int[][] clearTabList = new int[][]{
                 {1, 1, 1, 1, 1,  1,1,1,1},
                 {1, 1, 2, 2, 2,  1,1,1,1},
-                {2, 2, 1, 1, 1,  1,1,1,1},
+                {1, 2, 1, 1, 1,  1,1,1,1},
                 {1, 1, 1, 1, 1,  1,1,1,1}
         };
-        int[] waitingTimeList=new int[]{60, 75, 45, 75};
-
+        int[] waitingTimeList=new int[]{60, 120, 45, 75};
 
         RobotAction robot = new RobotAction();
         List<Operation> operationList = Arrays.asList(Pineapple.builder().build(), Orange.builder().build(), Durian.builder().build(), Grape.builder().build());

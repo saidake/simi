@@ -25,22 +25,23 @@ public class RobotAction extends Robot {
         }
         this.sleep(time);
     }
-    public void leftMouseClickMark(Coordinate mark, Coordinate btn, int time, int refreshTime) {
+    public void leftMouseClickMark(Coordinate mark, Coordinate btn) {
         //select mark but only focus on moving view.
         synchronized (RobotAction.class) {
             this.leftMouseClick(mark);
         }
-        this.sleep(time);
+        this.sleep(WaitingTime.SELECT_MARK);
         //select mark and click action button (double refresh).
         synchronized (RobotAction.class) {
             this.leftMouseClick(mark);
-            this.sleep(refreshTime);
-            this.leftMouseClick(mark);
+            this.sleep(WaitingTime.REFRESH_MARK);
             this.leftMouseClick(btn);
-            this.sleep(time);
+            this.sleep(WaitingTime.CLICK);
+            this.leftMouseClick(mark);
+            this.sleep(WaitingTime.REFRESH_MARK_MID);
             this.leftMouseClick(btn);
         }
-        this.sleep(time);
+        this.sleep(WaitingTime.SELECT_MARK);
     }
     public void leftMouseClickEx(Coordinate coordinate) {
         synchronized (RobotAction.class){
