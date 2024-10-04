@@ -1,4 +1,4 @@
-package com.simi.common.test.domain.template;
+package com.simi.common.test.template;
 
 
 public interface SimiDbTestUnit {

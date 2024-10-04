@@ -12,6 +12,7 @@ java {
 }
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencyManagement {
@@ -21,10 +22,25 @@ dependencyManagement {
     }
 }
 dependencies {
-    implementation 'software.amazon.awssdk:lambda:2.20.20' // Use the latest version available
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    //======================================================================================================= Core
+    implementation ('org.springframework.boot:spring-boot-starter-webflux') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging' // Exclude the default logging
+    }
+    //======================================================================================================= Amazon
     implementation 'software.amazon.awssdk:netty-nio-client:2.20.20' // Adjust version as per your needs
+    implementation 'software.amazon.awssdk:lambda:2.20.20' // Use the latest version available
+    implementation 'software.amazon.awssdk:sqs:2.20.20' // Use the latest version available
+    //======================================================================================================= Custom
+    implementation 'com.simi:simi-common-test:1.0'
+    //======================================================================================================= Data Utils
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    //======================================================================================================= Test
+    // Test dependencies
+    testImplementation 'org.slf4j:slf4j-api' // SLF4J API for testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' // Add this line for testing support
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.mockito:mockito-core:5.5.0'  // Add Mockito if needed
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'  // For Mockito integration with JUnit 5
 }
 
 test {

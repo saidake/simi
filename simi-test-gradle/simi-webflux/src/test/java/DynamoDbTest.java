@@ -1,4 +1,4 @@
-import com.simi.common.test.domain.template.SimiDbTestUnit;
+import com.simi.common.test.template.SimiDbTestUnit;
 import com.simi.webflux.SimiWebFluxApp;
 import com.simi.webflux.domain.TestPerson;
 import lombok.extern.slf4j.Slf4j;

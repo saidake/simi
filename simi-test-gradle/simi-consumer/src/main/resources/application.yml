@@ -1,0 +1,4 @@
+cloud:
+  aws:
+    sqs:
+      queueUrl: http://192.168.127.128:4566/000000000000/SimiQueue
