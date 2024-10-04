@@ -17,7 +17,6 @@
         <module>simi-mysql</module>
         <module>simi-oracle</module>
         <module>simi-nodb</module>
-        <module>simi-algorithm</module>
     </modules>
 
     <build>

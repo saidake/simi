@@ -5,9 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.simi</groupId>
-        <artifactId>simi</artifactId>
+        <artifactId>simi-app</artifactId>
         <version>1.0</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>simi-algorithm</artifactId>
@@ -17,5 +16,11 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.simi</groupId>
+            <artifactId>simi-common-test</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
