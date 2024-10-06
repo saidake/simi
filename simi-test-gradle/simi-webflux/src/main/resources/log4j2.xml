@@ -2,16 +2,16 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1} - %m%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{X-B3-TraceId:-}, %X{X-B3-SpanId:-}] %-5level %logger{36} - %msg%n" />
         </Console>
-        <File name="FileLogger" fileName="logs/app.log">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1} - %m%n"/>
-        </File>
     </Appenders>
     <Loggers>
+        <!-- Set logger for Spring WebFlux to capture request logs -->
+        <Logger name="org.springframework.web.reactive" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="FileLogger"/>
         </Root>
     </Loggers>
 </Configuration>

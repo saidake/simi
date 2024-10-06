@@ -20,6 +20,12 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:3.0.6"
         mavenBom 'org.junit:junit-bom:5.9.1' // Import JUnit BOM for version management
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.1" // Use the appropriate version
+    }
+}
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
 }
 
@@ -29,13 +35,14 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging' // Exclude the default logging
     }
     implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws:4.0.2'
+    //implementation 'org.springframework.cloud:spring-cloud-sleuth-starter-reactor-netty:3.2.1'
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth' // Use this for Sleuth
     //======================================================================================================= Custom
     implementation 'com.simi:simi-common-test:1.0'
     //======================================================================================================= Log
     // Log4j 2 dependencies
-    implementation 'org.apache.logging.log4j:log4j-slf4j-impl' // Use Log4j2 SLF4J binding
-    implementation 'org.apache.logging.log4j:log4j-api:2.14.1' // Specify the version you need
-    implementation 'org.apache.logging.log4j:log4j-core' // Core Log4j2 dependency
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2' // Specify the version you need
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.19.0'// Use Log4j2 SLF4J binding
     //======================================================================================================= Amazon
     implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
     implementation 'software.amazon.awssdk:lambda:2.20.96'
