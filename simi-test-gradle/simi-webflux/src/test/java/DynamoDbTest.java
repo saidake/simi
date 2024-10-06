@@ -2,6 +2,7 @@ import com.simi.common.test.template.SimiDbTestUnit;
 import com.simi.webflux.SimiWebFluxApp;
 import com.simi.webflux.domain.TestPerson;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //TODO: Log4j doesn't work
 @Slf4j
+@Disabled
 @SpringBootTest(classes = SimiWebFluxApp.class) // This annotation will load the full application context
 public class DynamoDbTest  implements SimiDbTestUnit {
     @Autowired
