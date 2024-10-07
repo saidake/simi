@@ -2,3 +2,8 @@ spring:
   sleuth:
     sampler:
       probability: 1.0 # 100% sampling rate
+  main:
+    web-application-type: reactive
+logging:
+  level:
+    com.simi.webflux: DEBUG
