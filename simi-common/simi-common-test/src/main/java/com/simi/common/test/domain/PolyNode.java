@@ -6,14 +6,14 @@ public class PolyNode {
 
     public PolyNode() {
     }
-    public PolyNode(int x, int y) {
-        this.coefficient = x;
-        this.power = y;
+    public PolyNode(int coefficient, int power) {
+        this.coefficient = coefficient;
+        this.power = power;
     }
 
-    public PolyNode(int x, int y, PolyNode next) {
-        this.coefficient = x;
-        this.power = y;
+    public PolyNode(int coefficient, int power, PolyNode next) {
+        this.coefficient = coefficient;
+        this.power = power;
         this.next = next;
     }
 
