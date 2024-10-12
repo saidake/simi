@@ -4,4 +4,6 @@
   + Assuming both polynomials are not empty first.
 # SQL IM
 * Use LIMIT to filter out a specified number of records.
+* "PARTITION BY" Usage
 * Function: YEAR, MONTH
+
