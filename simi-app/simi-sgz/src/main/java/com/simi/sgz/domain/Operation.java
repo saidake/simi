@@ -1,5 +1,6 @@
 package com.simi.sgz.domain;
 
+import com.simi.sgz.AAAconfig.LevelUPTask;
 import com.simi.sgz.AAAconfig.WaitingTime;
 import com.simi.sgz.RobotAction;
 import lombok.experimental.SuperBuilder;
@@ -49,7 +50,7 @@ public abstract class Operation {
     Coordinate mark2;
     Coordinate mark3;
     Coordinate mark4;
-    public void enterCity(RobotAction robot){
+    public void enterCity(RobotAction robot, int troopIndex){
         robot.leftMouseClickEx(coordinate_btn);
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
@@ -57,7 +58,7 @@ public abstract class Operation {
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
         robot.scroll(scroll_top,scroll_bot);
-        robot.leftMouseClickEx(mark4, WaitingTime.SELECT_MARK);
+        robot.leftMouseClickEx(troopIndex< LevelUPTask.mainCityArmyNumber?mark4:mark3, WaitingTime.SELECT_MARK);
         robot.leftMouseClickEx(red_point, WaitingTime.ENTER_CITY);
     }
 
