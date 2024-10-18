@@ -15,6 +15,41 @@ import java.util.*;
  * </pre>
  */
 public class TallestBillboard {
+
+    /**
+     * DP solution for "TallestBillboard".
+     *
+     * @param rods Rod list.
+     * @return  The largest height.
+     */
+    public int tallestBillboardPassedSolution(int[] rods) {
+        //A. Initialize the DP map with the base state (0, 0)
+        Map<Integer, Integer> dp = new HashMap<>();
+        // starting state - sum
+        dp.put(0, 0);
+        //A. Iterate through each rod and update the DP map
+        for (int rod : rods) {
+            //B. Take a snapshot of the current state to avoid concurrent modification
+            Map<Integer, Integer> currentDp = new HashMap<>(dp);
+            for (Map.Entry<Integer, Integer> entry : currentDp.entrySet()) {
+                int diff = entry.getKey();
+                int maxSum = entry.getValue();
+
+                //C. Add the rod to the left side (increase the difference)
+                int newDiff = diff + rod;
+                int newSum = maxSum + rod;
+                dp.put(newDiff, Math.max(dp.getOrDefault(newDiff, 0), newSum));
+
+                //C. Add the rod to the right side (decrease the difference)
+                newDiff = diff - rod;
+                dp.put(newDiff, Math.max(dp.getOrDefault(newDiff, 0), maxSum));
+            }
+        }
+
+        //A. The maximum sum for diff = 0 is the result
+        return dp.getOrDefault(0, 0);
+    }
+
     /**
      * Temporary Solution.
      * <pre>
@@ -44,7 +79,7 @@ public class TallestBillboard {
         LinkedList<Integer> rRodList=new LinkedList<>();
         //A. traverse rods array from both ends simultaneously.
         for (int i = 0; i < len; i++) {
-            if(lSum<=halfSum){
+            if(lSum<halfSum){
                 lRodList.offerLast(rods[i]);
                 lSum+=rods[i];
             }
@@ -52,33 +87,69 @@ public class TallestBillboard {
             if(rSum< halfSum-lSum){
                 rRodList.offerLast(rods[len-1-i]);
                 rSum+=rods[len-1-i];
-            }else break;
+            }
         }
         //A. start checking the number that can be moved.
         //A.[TEMP] Only simple checks are performed first.
-        if(lSum<rSum){
+        while (lSum!=rSum){
             //B. 1,2,3,4 < 5,6  (10 < 11)   valid moving digit = 0.5
             // [TEMP] First decimals are ignored and no rounding is performed.
-            int validMovingDigit=(rSum-lSum)/2;
-            ListIterator<Integer> rListIterator = rRodList.listIterator(rRodList.size());
-            Integer movingNumber;
-            while (rListIterator.hasPrevious()){
-                int rP=rListIterator.previous();
+            int validMovingDigit=Math.abs(rSum-lSum)/2;
+            LinkedList<Integer> sourceRodList=rSum>lSum?rRodList:lRodList;
+            LinkedList<Integer> targetRodList=rSum>lSum?lRodList:rRodList;
+            int sourceSum=rSum>lSum?rSum:lSum;
+            int targetSum=rSum>lSum?lSum:rSum;
+            //B. Find a number that can be deleted so that the lSum equals to rSum.
+            Iterator<Integer> iterator = sourceRodList.iterator();
+            boolean deletedNumber=false;
+            while (iterator.hasNext()){
+                Integer next = iterator.next();
+                if(sourceSum-next==targetSum){
+                    iterator.remove();
+                    if(sourceRodList==rRodList)rSum-=next;
+                    else lSum-=next;
+                    deletedNumber=true;
+                }
+            }
+            if(deletedNumber)continue;
+            //B. Find the closest number to the validMovingDigit and move it.
+            ListIterator<Integer> moveListIterator = sourceRodList.listIterator(sourceRodList.size());
+            Integer movingNumber = null;
+            while (moveListIterator.hasPrevious()){
+                int rP=moveListIterator.previous();
                 if(rP<=validMovingDigit){
-                    rListIterator.remove();
+                    moveListIterator.remove();
                     movingNumber=rP;
                     break;
                 }
             }
-//            insertAndKeepSorted(lRodList,)
-
+            if(rSum>lSum){
+                rSum-=movingNumber;
+                lSum+=movingNumber;
+            } else {
+                lSum-=movingNumber;
+                rSum+=movingNumber;
+            }
+            insertAndKeepSorted(targetRodList, movingNumber);
         }
-        return 0;
+        return lSum;
+        // B.  1,2,3,4,5 > 6 (15 > 6)  valid moving digit  = 4.5
     }
 
-    public static void insertAndKeepSorted(AbstractList<Integer> sortedList, int newNumber) {
+    /**
+     * Insert a number to a sorted list before the first number that is greater than it,
+     *
+     * @param sortedList    A sorted list.
+     * @param newNumber     The number to be inserted, can be null.
+     */
+    public static void insertAndKeepSorted(AbstractList<Integer> sortedList, Integer newNumber) {
         ListIterator<Integer> iterator = sortedList.listIterator();
-
+        //A. Check if the new number is less than or equal to the first element
+        if (!iterator.hasNext() || iterator.next() > newNumber) {
+            //B. Insert at the beginning
+            iterator.add(newNumber);
+            return;
+        }
         //A. Find the correct position to insert the new number
         while (iterator.hasNext()) {
             if (iterator.next() > newNumber) {
@@ -88,7 +159,6 @@ public class TallestBillboard {
                 return;
             }
         }
-
         //A. If we reached the end, add the new number at the end
         sortedList.add(newNumber);
     }
