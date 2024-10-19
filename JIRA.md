@@ -66,26 +66,6 @@
 </tbody>
 </table>
 
-# Ongoing JIRA
-* [simi-webflux] feat: create dynamodb tables
-* [simi-webflux] build: execute commands via ssh and scp
-* [simi-webflux] feat: invoke lambda functions from LocalStack
-* [simi-webflux] build: upload lambda jar to LocalStack and invoke it
-* [simi-webflux] feat: build LocalStack virtual machine server
-* [simi-webflux] feat: configure Amazon Lambda
-* [simi-webflux] test: Mono usage practice
-* [simi] test: add test gradle module
-* [simi-sgz] refactor: extract waiting time
-* [simi-sgz] fix: change troop waiting time
-* [simi-sgz] feat: add mutex lock to allow multiple accounts to level up at the same time
-* [simi-sgz] feat: add a new member and reset coordinates
-* [simi-sgz] sgz game script
-* [simi-sgz] feat:Increase march time
-* [oracle-test] test jpa ddl function
-* [memory-enhancement] simi-memory-management
-* [simi-trading] rename trading project
-* [simi-trading] make FXCM api work again
-* [simi-algorithm] feat: add a test data generation tool
 # Next Release
 ### Simi Initializer 2.1.2
 * Compatible with IDEA 2024
