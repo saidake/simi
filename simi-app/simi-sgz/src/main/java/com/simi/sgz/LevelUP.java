@@ -5,10 +5,9 @@ import com.simi.sgz.domain.*;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Queue;
 
 public class LevelUP {
     public static void main(String[] args) throws AWTException {
@@ -16,12 +15,12 @@ public class LevelUP {
         //!. All troops have returned to the city.
         //2. There are no enemy troops around the city.
         // 15  30  45  60  75  90  105  120
-        int minus=15;
+        int minus=0;
         int[][] staminaList = new int[][]{
                 {0,0,0,0,0,   0, 0,0,0 },
-                { 0,0,0,0,0,  75, 0,0,0 },
                 { 0,0,0,0,0,  0, 0,0,0 },
-                { 0,75,0,0,0,  0, 0,0,0 },
+                { 0,0,0,0,0,  0, 0,0,0 },
+                { 0,105,0,0,0,  0, 0,0,0 },
         };
         boolean[][] supplyList = new boolean[][]{
                 {true, true, false,false,false,     false, false, false,false},
@@ -52,6 +51,7 @@ public class LevelUP {
                 }
             }
         }
+        Queue<Thread> runningThreads=new LinkedList<>();
         // 30 45 60 75 90 105 120
         for (int i = 0; i < 4; i++) {
             LevelUPTask levelUPTask = new LevelUPTask(
@@ -63,7 +63,9 @@ public class LevelUP {
                     clearTabList[i],
                     waitingTimeList[i]
             );
+            runningThreads.add(levelUPTask);
             levelUPTask.start();
         }
+        JNativeUtils.setupGlobalKeyEventListener(runningThreads);
     }
 }
