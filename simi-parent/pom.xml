@@ -27,10 +27,11 @@
         <software.amazon.awssdk.version>2.17.173</software.amazon.awssdk.version>
         <aws-java-sdk-bom.version>1.12.201</aws-java-sdk-bom.version>
         <jakarta.mail.version>1.6.7</jakarta.mail.version>
-        <!--======================================================================================================= Features -->
+        <!--======================================================================================================= Extension -->
         <libphonenumber.version>8.0.0</libphonenumber.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.0.4</springdoc-openapi-starter-webmvc-ui.version>
         <ehcache.version>3.10.0</ehcache.version>
+        <jnativehook.version>2.2.2</jnativehook.version>
         <!--======================================================================================================= Data Utils -->
         <lombok.version>1.18.26</lombok.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
@@ -49,13 +50,15 @@
         <!--======================================================================================================= Logging -->
         <log4jdbc-log4j2-jdbc4.1.version>1.16</log4jdbc-log4j2-jdbc4.1.version>
         <slf4j-api.version>2.0.7</slf4j-api.version>
-        <!--======================================================================================================= File handler -->
+        <logback-classic.version>1.4.11</logback-classic.version>
+        <!--======================================================================================================= File Processing -->
         <pdfbox.version>2.0.26</pdfbox.version>
         <fop.version>2.6</fop.version>
         <poi.version>5.2.1</poi.version>
         <poi-ooxml.version>5.2.1</poi-ooxml.version>
         <easyexcel.version>3.2.1</easyexcel.version>
         <dom4j.version>2.1.4</dom4j.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
     </properties>
 
     <dependencies>
@@ -156,7 +159,7 @@
                 <artifactId>simi-swagger-ui</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!--======================================================================================================= assistance -->
+            <!--======================================================================================================= Extension -->
             <dependency>
                 <groupId>org.jasypt</groupId>
                 <artifactId>jasypt</artifactId>
@@ -181,6 +184,11 @@
                 <groupId>com.sun.mail</groupId>
                 <artifactId>jakarta.mail</artifactId>
                 <version>${jakarta.mail.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.kwhat</groupId>
+                <artifactId>jnativehook</artifactId>
+                <version>${jnativehook.version}</version>
             </dependency>
             <!--======================================================================================================= data utils -->
             <dependency>
@@ -236,6 +244,11 @@
                 <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
                 <version>${log4jdbc-log4j2-jdbc4.1.version}</version>
             </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-classic.version}</version> <!-- Use the latest stable version -->
+            </dependency>
             <!--======================================================================================================= File Processing -->
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
@@ -257,8 +270,6 @@
                 <artifactId>poi-ooxml</artifactId>
                 <version>${poi-ooxml.version}</version>
             </dependency>
-
-
             <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -269,6 +280,11 @@
                 <groupId>org.dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>${dom4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
