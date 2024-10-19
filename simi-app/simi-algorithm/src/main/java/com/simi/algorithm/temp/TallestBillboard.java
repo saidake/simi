@@ -3,7 +3,7 @@ package com.simi.algorithm.temp;
 import java.util.*;
 
 /**
- * https://leetcode.cn/problems/tallest-billboard/description/
+ * <a href="https://leetcode.cn/problems/tallest-billboard/description/">Tallest Billboard</a>
  * <pre>
  * Conditions:
  *     You are given a collection of rods that can be welded together.
@@ -18,6 +18,23 @@ public class TallestBillboard {
 
     /**
      * DP solution for "TallestBillboard".
+     * <pre>
+     * rods = [1,2,3,4,5,6]
+     * map[ diff - maxSum ]
+     * key = diff + rod,  value = Math.max( map[key], maxSum + rod)
+     *
+     * dp = {0: 0}
+     *      This represents the starting state where the difference (key) is 0, and the maximum sum possible is also 0.
+     * dp = {0: 0, 1: 0}  (rod 1)
+     *      new keys: 1
+     *      After processing the first rod, a new difference of 1 can be reached with sum 0.
+     * dp = {0: 0, 1: 0, 2: 0, 3: 0}   (rod 2)
+     *      new keys: 2, 3
+     *      Adding this rod creates new states (difference 2 and 3).
+     * dp = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 6: 3}    (rod 3)
+     *      new keys: 4, 6
+     *      New states arise from adding the rod to one side or removing it from the other.s
+     * </pre>
      *
      * @param rods Rod list.
      * @return  The largest height.
@@ -25,7 +42,6 @@ public class TallestBillboard {
     public int tallestBillboardPassedSolution(int[] rods) {
         //A. Initialize the DP map with the base state (0, 0)
         Map<Integer, Integer> dp = new HashMap<>();
-        // starting state - sum
         dp.put(0, 0);
         //A. Iterate through each rod and update the DP map
         for (int rod : rods) {
