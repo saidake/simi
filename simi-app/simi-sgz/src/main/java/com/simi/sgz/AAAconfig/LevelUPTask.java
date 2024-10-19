@@ -10,9 +10,8 @@ import java.util.Arrays;
 
 @AllArgsConstructor
 public class LevelUPTask extends Thread {
-    public static final int mainCityArmyNumber=5;
-    public static final int secondCityArmyNumber=4;
-    public static final int totalArmyNumber=9;
+    private int mainCityArmyNumber;
+    private int secondCityArmyNumber;
 
     private RobotAction robot;
     private Operation operation;
@@ -23,6 +22,7 @@ public class LevelUPTask extends Thread {
     int waitingTime;
     @Override
     public void run() {
+        int totalArmyNumber=mainCityArmyNumber+secondCityArmyNumber;
         //A. Check if there is a need to supply the army.
         boolean hasStamina = Arrays.stream(staminaList).anyMatch(item -> item > 15);
         boolean needSupplyForAny=false;
