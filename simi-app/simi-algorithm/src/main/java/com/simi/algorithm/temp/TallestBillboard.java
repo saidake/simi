@@ -21,19 +21,36 @@ public class TallestBillboard {
      * <pre>
      * rods = [1,2,3,4,5,6]
      * map[ diff - maxSum ]
-     * key = diff + rod,  value = Math.max( map[key], maxSum + rod)
+     * key = diff + rod or diff - rod,  value = Math.max( map[key], (maxSum + rod) or maxSum)
      *
      * dp = {0: 0}
-     *      This represents the starting state where the difference (key) is 0, and the maximum sum possible is also 0.
-     * dp = {0: 0, 1: 0}  (rod 1)
+     *      This represents the starting state where the difference (key) is 0,
+     *      and the maximum sum possible is also 0.
+     * dp = {0: 0, 1: 0}
+     *      (rod 1)
      *      new keys: 1
-     *      After processing the first rod, a new difference of 1 can be reached with sum 0.
-     * dp = {0: 0, 1: 0, 2: 0, 3: 0}   (rod 2)
+     *      After processing the first rod, a new difference of 1 can be
+     *      reached with sum 0.
+     * dp = {0: 0, 1: 0, 2: 0, 3: 0}
+     *      (rod 2)
      *      new keys: 2, 3
      *      Adding this rod creates new states (difference 2 and 3).
-     * dp = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 6: 3}    (rod 3)
+     * dp = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 6: 3}
+     *      (rod 3)
      *      new keys: 4, 6
-     *      New states arise from adding the rod to one side or removing it from the other.s
+     *      new values: 3
+     *      New states arise from adding the rod to one side or removing it
+     *      from the other.s
+     * dp = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 3, 8: 3}
+     *      (rod 4)
+     *      new keys: 5, 8
+     * dp = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 3, 7: 0, 8: 3, 9: 0, 10: 5}
+     *      (rod 5)
+     *      new keys: 7, 9, 10
+     * dp = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 3, 7: 0, 8: 3, 9: 0, 10: 5, 11: 0, 12: 6}
+     *      (rod 6)
+     *      new keys: 11, 12
+     *
      * </pre>
      *
      * @param rods Rod list.
