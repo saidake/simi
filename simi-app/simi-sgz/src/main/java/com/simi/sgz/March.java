@@ -5,7 +5,7 @@
 //import java.util.Map;
 //
 //import static com.simi.sgz.Coordinate.*;
-//import static com.simi.sgz.RobotAction.*;
+//import static com.simi.sgz.action.RobotAction.*;
 //
 //public class March {
 //    public static int [] markLocationList=new int[3];

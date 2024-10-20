@@ -1,7 +1,6 @@
-package com.simi.sgz;
+package com.simi.sgz.action;
 
 import com.simi.sgz.AAAconfig.WaitingTime;
-import com.simi.sgz.domain.Coordinate;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -10,7 +9,7 @@ public class RobotAction extends Robot {
 
     public RobotAction() throws AWTException {
     }
-    public void scroll(Coordinate from, Coordinate to) {
+    public void scroll(int[] from, int[] to) {
         synchronized (RobotAction.class) {
             this.mouseMove(from);
             this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -19,13 +18,13 @@ public class RobotAction extends Robot {
         }
         this.sleep(WaitingTime.SCROLL);
     }
-    public void leftMouseClickEx(Coordinate coordinate, int time) {
+    public void leftMouseClickEx(int[] coordinate, int time) {
         synchronized (RobotAction.class) {
             this.leftMouseClick(coordinate);
         }
         this.sleep(time);
     }
-    public void leftMouseClickMark(Coordinate mark, Coordinate btn) {
+    public void leftMouseClickMark(int[] mark, int[] btn) {
         //select mark but only focus on moving view.
         synchronized (RobotAction.class) {
             this.leftMouseClick(mark);
@@ -43,19 +42,19 @@ public class RobotAction extends Robot {
         }
         this.sleep(WaitingTime.SELECT_MARK);
     }
-    public void leftMouseClickEx(Coordinate coordinate) {
+    public void leftMouseClickEx(int[] coordinate) {
         synchronized (RobotAction.class){
             this.leftMouseClick(coordinate);
         }
         this.sleep(WaitingTime.CLICK);
     }
-    public void leftMouseClick(Coordinate coordinate) {
+    public void leftMouseClick(int[] coordinate) {
         this.mouseMove(coordinate);
         this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
-    public void mouseMove(Coordinate coordinate){
-        this.mouseMove(coordinate.getX(),coordinate.getY());
+    public void mouseMove(int[] coordinate){
+        this.mouseMove(coordinate[0],coordinate[1]);
     }
     public void sleep(int milliseconds) {
         try {

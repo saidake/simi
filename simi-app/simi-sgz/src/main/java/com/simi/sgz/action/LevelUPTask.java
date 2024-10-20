@@ -1,8 +1,6 @@
-package com.simi.sgz.AAAconfig;
+package com.simi.sgz.action;
 
 
-import com.simi.sgz.RobotAction;
-import com.simi.sgz.domain.Operation;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
@@ -14,7 +12,7 @@ public class LevelUPTask extends Thread {
     private int secondCityArmyNumber;
 
     private RobotAction robot;
-    private Operation operation;
+    private TroopOperation operation;
     private int[] staminaList;
     private boolean[] supplyList;
     int[] clearMarkList;

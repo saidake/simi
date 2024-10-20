@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,10 +20,21 @@ public class Coordinate {
     private int[] coordinateBtn;
     private int[] scrollTop;
     private int[] scrollBot;
-    private List<int[]> btns;
-    private List<int[]> tabs;
-    private List<int[]> armies;
-    private List<int[]> marks;
+    private int[] btn1;
+    private int[] btn2;
+    private int[] btn3;
+    private int[] btn4;
+    private int[] tab1;
+    private int[] tab2;
+    private int[] tab3;
+    private int[] troop1From1;
+    private int[] troop1From5;
+    private int[] troop2From5;
+    private int[] troop3From5;
+    private int[] troop4From5;
+    private int[] troop5From5;
+    private int[] mark1;
+    private int[] mark2;
+    private int[] mark3;
+    private int[] mark4;
 }
-
-

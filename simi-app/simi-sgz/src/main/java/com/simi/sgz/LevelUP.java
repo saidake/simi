@@ -1,16 +1,15 @@
 package com.simi.sgz;
 
 import cn.hutool.setting.yaml.YamlUtil;
-import com.simi.sgz.AAAconfig.LevelUPTask;
-import com.simi.sgz.domain.*;
+import com.simi.sgz.action.LevelUPTask;
+import com.simi.sgz.action.RobotAction;
+import com.simi.sgz.action.TroopOperation;
 import com.simi.sgz.domain.properties.CoordinatesReader;
 import com.simi.sgz.domain.properties.SimiSgz;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 @Slf4j
@@ -23,9 +22,7 @@ public class LevelUP {
         // Prerequisites
         //!. All troops have returned to the city.
         //2. There are no enemy troops around the city.
-        // 15  30  45  60  75  90  105  120
         RobotAction robot = new RobotAction();
-        List<Operation> operationList = Arrays.asList(Pineapple.builder().build(), Orange.builder().build(), Durian.builder().build(), Grape.builder().build());
         int[][] staminaList = simiSgz.getStaminaList();
         if(simiSgz.getMinus()!=0){
             for (int i = 0; i < staminaList.length; i++) {
@@ -41,7 +38,7 @@ public class LevelUP {
                     simiSgz.getMainCityArmyNumber(),
                     simiSgz.getSecondCityArmyNumber(),
                     robot,
-                    operationList.get(i),
+                    new TroopOperation(simiSgz, coordinatesReader.getCoordinates().get(i)),
                     staminaList[i],
                     simiSgz.getSupplyList()[i],
                     simiSgz.getClearMarkList()[i],
