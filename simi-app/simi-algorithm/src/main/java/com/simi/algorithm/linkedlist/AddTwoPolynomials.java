@@ -1,4 +1,4 @@
-package com.simi.algorithm.math;
+package com.simi.algorithm.linkedlist;
 
 import com.simi.common.test.domain.PolyNode;
 // https://leetcode.cn/problems/add-two-polynomials-represented-as-linked-lists/description/

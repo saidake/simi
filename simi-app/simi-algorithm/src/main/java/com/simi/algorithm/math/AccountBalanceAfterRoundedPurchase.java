@@ -1,4 +1,4 @@
-package com.simi.algorithm.temp;
+package com.simi.algorithm.math;
 
 /**
  * https://leetcode.cn/problems/account-balance-after-rounded-purchase/
