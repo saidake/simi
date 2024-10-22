@@ -21,6 +21,11 @@
             <groupId>com.simi</groupId>
             <artifactId>simi-common-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>
