@@ -3,8 +3,11 @@
 - [Directory Structure](#directory-structure)
 - [Ongoing Modules](#ongoing-modules)
 # Introduction
+[Back to Top](#table-of-contents) 
+
 Simi is an educational project focused on practical experience in building and managing modular applications. It features various modules, each serving a unique purpose, enabling exploration of core programming concepts, application architecture, and integration techniques.
 # Directory Structure
+[Back to Top](#table-of-contents)
 ### AAA 
 A resource directory containing startup configuration files needed by other modules.
 ### scripts
@@ -29,7 +32,8 @@ A simple backend service for foreign exchange trading.
 A Gradle learning project that includes comprehensive testing for educational purposes.
 ### simi-test-maven
 Maven learning modules that contain JPA, MyBatis, and various database test modules.
-# Ongoing Modules 
+# Ongoing Modules
+[Back to Top](#table-of-contents)
 ## simi-controller
 This module is a controller dashboard that provide anchor for each request path inside Controller classes,
 ## simi-sgz
@@ -37,8 +41,3 @@ An automation script module designed for the game "三國志真戦," also known 
 ### Automatically Level Up
 Prerequisites: <br/>
 * All coordinates, stamina values, supply conditions are configured. <br/>
-
-
-
-
-
