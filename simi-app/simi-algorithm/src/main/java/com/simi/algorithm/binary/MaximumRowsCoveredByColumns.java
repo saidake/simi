@@ -1,4 +1,4 @@
-package com.simi.algorithm.temp;
+package com.simi.algorithm.binary;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -28,8 +28,3 @@ LEFT JOIN Purchases p
 ON cte.friday = p.purchase_date
 #GROUP BY purchase_date;
 GROUP BY cte.friday;
-# ---------------------------------------------------- Previous Solution
-SELECT (DAY(purchase_date)-3)/7 +1 AS week_of_month, purchase_date, SUM(amount_spend) AS total_amount
-FROM Purchases
-WHERE MONTH(purchase_date)=11 AND YEAR(purchase_date)=2023 AND DAY(purchase_date) in (3,10,17,24)
-GROUP BY purchase_date
