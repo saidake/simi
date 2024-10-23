@@ -24,20 +24,23 @@ public class RobotAction extends Robot {
         }
         this.sleep(time);
     }
-    public void leftMouseClickMark(int[] mark, int[] btn) {
-        //select mark but only focus on moving view.
+    public void leftMouseClickMark(int[] mark, int[] btn, boolean avoidMarchCollision) {
+        //A. select mark but only focus on moving view.
         synchronized (RobotAction.class) {
             this.leftMouseClick(mark);
         }
         this.sleep(WaitingTime.SELECT_MARK);
-        //select mark and click action button (double refresh).
+        //A. select mark and click action button (double refresh).
         synchronized (RobotAction.class) {
-            this.leftMouseClick(mark);
-            this.sleep(WaitingTime.REFRESH_MARK);
-            this.leftMouseClick(btn);
-            this.sleep(WaitingTime.CLICK);
-            this.leftMouseClick(mark);
-            this.sleep(WaitingTime.REFRESH_MARK_MID);
+            //B. Click button repeatedly to prevent the cursor from locating to the troops.
+            if(avoidMarchCollision){
+                this.leftMouseClick(mark);
+                this.sleep(WaitingTime.REFRESH_MARK);
+                this.leftMouseClick(btn);
+                this.sleep(WaitingTime.CLICK);
+                this.leftMouseClick(mark);
+                this.sleep(WaitingTime.REFRESH_MARK_MID);
+            }
             this.leftMouseClick(btn);
         }
         this.sleep(WaitingTime.SELECT_MARK);
@@ -48,7 +51,7 @@ public class RobotAction extends Robot {
         }
         this.sleep(WaitingTime.CLICK);
     }
-    public void leftMouseClick(int[] coordinate) {
+    private void leftMouseClick(int[] coordinate) {
         this.mouseMove(coordinate);
         this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);

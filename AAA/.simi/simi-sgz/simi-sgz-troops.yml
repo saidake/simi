@@ -1,12 +1,13 @@
 mainCityArmyNumber: 5
 secondCityArmyNumber: 4
 minus: 0
+avoidMarchCollision: false
 # 15  30  45  60  75  90  105  120
 staminaList:
   - [0, 0, 0, 0, 0, 0, 0, 0, 0]
   - [0, 0, 0, 0, 0, 0, 0, 0, 0]
   - [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  - [0, 90, 0, 0, 0, 0, 0, 0, 0]
+  - [0, 120, 0, 0, 0, 0, 0, 0, 0]
 supplyList:
   - [true, true, false, false, false, false, false, false, false]
   - [true, true, false, false, false, true, false, false, false]

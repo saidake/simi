@@ -4,15 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Coordinate {
+public class Coordinate implements Serializable {
     private String name;
     private int[] redPoint;
     private int[] stopBtn1;
-    private int[] confirm;
-    private int[] dangerousConfirm;
+    private int[] detailBtn;
+    private int[] trailBtn;
+    private int[] trailStartBtn;
+    private int[] cityVisit;
+    private int[] visitBtn;
+    private int[] cityMessenger;
+    private int[][] giftLocation;
+    private int[][] selectGift;
+    private int[] purchaseGift;
+    private int[] sendMessenger;
+    private int[] marchConfirm;
+    private int[] promptConfirm;
     private int[] cityAddTroops;
     private int[] cityConfirm;
     private int[] cityBack;

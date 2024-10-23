@@ -1,4 +1,4 @@
-package com.simi.sgz;
+package com.simi.sgz.utils;
 
 
 import com.github.kwhat.jnativehook.GlobalScreen;

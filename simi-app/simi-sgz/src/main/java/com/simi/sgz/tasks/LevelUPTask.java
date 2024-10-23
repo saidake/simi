@@ -1,25 +1,36 @@
-package com.simi.sgz.action;
+package com.simi.sgz.tasks;
 
 
-import lombok.AllArgsConstructor;
+import com.simi.sgz.action.RobotAction;
+import com.simi.sgz.action.TroopOperation;
+import com.simi.sgz.domain.properties.CoordinatesReader;
+import com.simi.sgz.domain.properties.SimiSgz;
+import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 
 
-@AllArgsConstructor
-public class LevelUPTask extends Thread {
-    private int mainCityArmyNumber;
-    private int secondCityArmyNumber;
-
-    private RobotAction robot;
-    private TroopOperation operation;
+@NoArgsConstructor
+public final class LevelUPTask extends BaseTask {
+    TroopOperation operation;
     private int[] staminaList;
     private boolean[] supplyList;
     int[] clearMarkList;
     int[] clearTabList;
     int waitingTime;
+    public LevelUPTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
+        super(simiSgz, robot, coordinatesReader, index);
+        this.staminaList=simiSgz.getStaminaList()[index];
+        this.supplyList=simiSgz.getSupplyList()[index];
+        this.clearMarkList=simiSgz.getClearMarkList()[index];
+        this.clearTabList=simiSgz.getClearTabList()[index];
+        this.waitingTime=simiSgz.getWaitingTimeList()[index];
+    }
+
     @Override
     public void run() {
+        int mainCityArmyNumber= simiSgz.getMainCityArmyNumber();
+        int secondCityArmyNumber= simiSgz.getSecondCityArmyNumber();
         int totalArmyNumber=mainCityArmyNumber+secondCityArmyNumber;
         //A. Check if there is a need to supply the army.
         boolean hasStamina = Arrays.stream(staminaList).anyMatch(item -> item > 15);
@@ -46,27 +57,29 @@ public class LevelUPTask extends Thread {
                 for (int i = 0; i < totalArmyNumber; i++) {
                     if(supplyList[i]&&staminaList[i]>=0){
                         if(!enteredCity){
-                            operation.enterCity(robot,i);
+                            operation.enterCity(i);
                             enteredCity=true;
                         }
                         //C. enter the second city.
                         if(!enteredSecondCity&&i>=mainCityArmyNumber){
-                            operation.goBackAndScrollToBottom(robot);
-                            operation.enterCity(robot,i);
+                            operation.exitCity();
+                            operation.scrollToBottom();
+                            operation.enterCity(i);
                             enteredSecondCity=true;
                         }
-                        operation.supplyArmy(robot,mainCityArmyNumber, i);
+                        operation.supplyArmy(mainCityArmyNumber, i);
                     }
                 }
                 //B. go to the mark button.
-                operation.goBackAndScrollToBottom(robot);
+                operation.exitCity();
+                operation.scrollToBottom();
             }
 
             //B. enter city and supply army
             for (int i = 0; i < totalArmyNumber; i++) {
                 if(staminaList[i]<0)continue;
                 //A。AWT operations
-                operation.clear(robot, mainCityArmyNumber, i, clearMarkList[i], clearTabList[i]);
+                operation.clear(mainCityArmyNumber,simiSgz.isAvoidMarchCollision(), i, clearMarkList[i], clearTabList[i]);
             }
             try {
                 int adjustedWaitingTime=waitingTime*1000+3000;
