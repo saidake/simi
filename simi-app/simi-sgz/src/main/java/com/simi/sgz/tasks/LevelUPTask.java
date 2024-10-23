@@ -12,7 +12,6 @@ import java.util.Arrays;
 
 @NoArgsConstructor
 public final class LevelUPTask extends BaseTask {
-    TroopOperation operation;
     private int[] staminaList;
     private boolean[] supplyList;
     int[] clearMarkList;
@@ -57,29 +56,29 @@ public final class LevelUPTask extends BaseTask {
                 for (int i = 0; i < totalArmyNumber; i++) {
                     if(supplyList[i]&&staminaList[i]>=0){
                         if(!enteredCity){
-                            operation.enterCity(i);
+                            this.operation.enterCity(i);
                             enteredCity=true;
                         }
                         //C. enter the second city.
                         if(!enteredSecondCity&&i>=mainCityArmyNumber){
-                            operation.exitCity();
-                            operation.scrollToBottom();
-                            operation.enterCity(i);
+                            this.operation.exitCity();
+                            this.operation.scrollToBottom();
+                            this.operation.enterCity(i);
                             enteredSecondCity=true;
                         }
-                        operation.supplyArmy(mainCityArmyNumber, i);
+                        this.operation.supplyArmy(mainCityArmyNumber, i);
                     }
                 }
                 //B. go to the mark button.
-                operation.exitCity();
-                operation.scrollToBottom();
+                this.operation.exitCity();
+                this.operation.scrollToBottom();
             }
 
             //B. enter city and supply army
             for (int i = 0; i < totalArmyNumber; i++) {
                 if(staminaList[i]<0)continue;
                 //A。AWT operations
-                operation.clear(mainCityArmyNumber,simiSgz.isAvoidMarchCollision(), i, clearMarkList[i], clearTabList[i]);
+                this.operation.clear(mainCityArmyNumber,simiSgz.isAvoidMarchCollision(), i, clearMarkList[i], clearTabList[i]);
             }
             try {
                 int adjustedWaitingTime=waitingTime*1000+3000;
