@@ -1,3 +1,4 @@
+taskType: daily
 mainCityArmyNumber: 5
 secondCityArmyNumber: 4
 minus: 0
@@ -7,7 +8,7 @@ staminaList:
   - [0, 0, 0, 0, 0, 0, 0, 0, 0]
   - [0, 0, 0, 0, 0, 0, 0, 0, 0]
   - [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  - [120, 120, 0, 0, 0, 0, 0, 0, 0]
+  - [105, 75, 0, 0, 0, 0, 0, 0, 0]
 supplyList:
   - [true, true, false, false, false, false, false, false, false]
   - [true, true, false, false, false, true, false, false, false]
@@ -17,7 +18,7 @@ clearMarkList:
   - [1, 1, 3, 3, 3, 3, 3, 3, 4]
   - [2, 2, 3, 3, 3, 2, 3, 3, 4]
   - [2, 1, 3, 3, 3, 3, 3, 3, 4]
-  - [1, 1, 3, 2, 3, 3, 3, 3, 4]
+  - [2, 1, 3, 2, 3, 3, 3, 3, 4]
 clearTabList:
   - [1, 1, 1, 1, 1, 1, 1, 1, 1]
   - [1, 2, 2, 2, 2, 2, 1, 1, 1]

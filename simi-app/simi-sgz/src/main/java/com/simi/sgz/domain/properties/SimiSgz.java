@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SimiSgz {
+    private String taskType;
     private int mainCityArmyNumber;
     private int secondCityArmyNumber;
     private int minus;
