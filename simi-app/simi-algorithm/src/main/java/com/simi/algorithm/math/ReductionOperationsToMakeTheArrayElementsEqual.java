@@ -1,4 +1,4 @@
-package com.simi.algorithm.temp;
+package com.simi.algorithm.math;
 
 import java.util.Arrays;
 
