@@ -1,8 +1,6 @@
 package com.simi.common.util.data;
 
 import lombok.experimental.UtilityClass;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.ParameterizedType;
@@ -379,102 +377,102 @@ public class RandomUtil {
      * @param matchStringMap 字段名--取值数组
      * @return
      */
-    public static Object fillObjectWithRandomString(Object object,
-                                                    Map<String, List<String>> typeStringMap,
-                                                    Map<String, List<?>> matchStringMap) {
-        Random random = new Random();
-        BeanWrapper beanWrapper = new BeanWrapperImpl(object);
-        PropertyDescriptor[] propertyDescriptorList = beanWrapper.getPropertyDescriptors();
-        //开始遍历属性描述器
-        out:
-        for (PropertyDescriptor propertyDescriptor : propertyDescriptorList) {
-            String currentFieldName = propertyDescriptor.getName();
-            Class<?> currentFieldClass = propertyDescriptor.getPropertyType();
-            //自定义检测
-            if (typeStringMap.containsKey("String") && String.class.equals(currentFieldClass)) {
-                for (String typeKeyNameString : typeStringMap.get("String")) {
-                    if (currentFieldName.toLowerCase().contains(typeKeyNameString.toLowerCase())) {
-                        beanWrapper.setPropertyValue(currentFieldName, String.valueOf(getRandomElement(matchStringMap.get(typeKeyNameString))));
-                        continue out;
-                    }
-                }
-            } else if (typeStringMap.keySet().contains("Long") && Long.class.equals(currentFieldClass)) {
-                for (String typeKeyNameLong : typeStringMap.get("Long")) {
-                    if (currentFieldName.toLowerCase().contains(typeKeyNameLong.toLowerCase())) {
-                        beanWrapper.setPropertyValue(currentFieldName, getRandomElement(matchStringMap.get(typeKeyNameLong)));
-                        continue out;
-                    }
-                }
-            }
-            //String类型处理
-            if (String.class.equals(currentFieldClass)) {
-                //邮箱检测
-                if (currentFieldName.toLowerCase().contains("email")) {
-                    beanWrapper.setPropertyValue(currentFieldName, getRandomString(6) + "@qq.com");
-                    //手机检测
-                } else if (currentFieldName.toLowerCase().contains("phone")) {
-                    beanWrapper.setPropertyValue(currentFieldName, String.valueOf(getRandomLong(13330000000L, 19800000000L)));
-                    //姓名检测
-                } else if (currentFieldName.toLowerCase().contains("name")) {
-                    beanWrapper.setPropertyValue(currentFieldName, getRandomName());
-                } else {
-                    beanWrapper.setPropertyValue(currentFieldName, getRandomString());
-                }
-                //Long类型处理
-            } else if (Long.class.equals(currentFieldClass)) {
-                beanWrapper.setPropertyValue(currentFieldName, getRandomLong(1L, 600L));
-                //时间戳类型处理
-            } else if (Timestamp.class.equals(currentFieldClass)) {
-                beanWrapper.setPropertyValue(currentFieldName, Timestamp.valueOf(LocalDateTime.now()));
-                //float类型处理
-            } else if (float.class.equals(currentFieldClass) || double.class.equals(currentFieldClass)) {
-                beanWrapper.setPropertyValue(currentFieldName, getRandomDouble(1, 600));
-                //枚举
-            } else if (currentFieldClass.isEnum()) {
-                beanWrapper.setPropertyValue(currentFieldName, getRandomElement(currentFieldClass.getEnumConstants()));
-                //Boolean
-            } else if (Boolean.class.equals(currentFieldClass)) {
-                beanWrapper.setPropertyValue(currentFieldName, true);
-                //List 递归
-            } else if (currentFieldClass.isAssignableFrom(List.class)) {
-                Type currentRealType = null;
-                try {
-                    currentRealType = object.getClass().getDeclaredField(currentFieldName).getGenericType();
-                } catch (NoSuchFieldException e) {
-                    try {
-                        currentRealType = object.getClass().getSuperclass().getDeclaredField(currentFieldName).getGenericType();
-                    } catch (NoSuchFieldException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-
-                if (currentRealType instanceof ParameterizedType) {
-                    ParameterizedType parameterizedType = (ParameterizedType) currentRealType;
-                    Class<?> tType = (Class<?>) parameterizedType.getActualTypeArguments()[0];
-                    //创建泛型实例
-                    int typeInstanceLength = random.nextInt(9) + 1;
-                    List<Object> resultList = new ArrayList<>();
-                    for (int i = 0; i < typeInstanceLength; i++) {
-                        try {
-                            resultList.add(fillObjectWithRandomString(tType.newInstance(), typeStringMap, matchStringMap));
-                        } catch (InstantiationException | IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    beanWrapper.setPropertyValue(currentFieldName, resultList);
-                }
-
-            } else if (Object.class.isAssignableFrom(currentFieldClass) && !"bytes".equals(currentFieldName) && !"class".equals(currentFieldName)) {
-                try {
-                    beanWrapper.setPropertyValue(currentFieldName, fillObjectWithRandomString(currentFieldClass.newInstance(), typeStringMap, matchStringMap));
-                } catch (IllegalAccessException | InstantiationException exp) {
-                    exp.printStackTrace();
-                }
-            }
-        }
-//        System.out.println("最终实例：" + beanWrapper.getWrappedInstance());
-        return beanWrapper.getWrappedInstance();
-    }
+//    public static Object fillObjectWithRandomString(Object object,
+//                                                    Map<String, List<String>> typeStringMap,
+//                                                    Map<String, List<?>> matchStringMap) {
+//        Random random = new Random();
+//        BeanWrapper beanWrapper = new BeanWrapperImpl(object);
+//        PropertyDescriptor[] propertyDescriptorList = beanWrapper.getPropertyDescriptors();
+//        //开始遍历属性描述器
+//        out:
+//        for (PropertyDescriptor propertyDescriptor : propertyDescriptorList) {
+//            String currentFieldName = propertyDescriptor.getName();
+//            Class<?> currentFieldClass = propertyDescriptor.getPropertyType();
+//            //自定义检测
+//            if (typeStringMap.containsKey("String") && String.class.equals(currentFieldClass)) {
+//                for (String typeKeyNameString : typeStringMap.get("String")) {
+//                    if (currentFieldName.toLowerCase().contains(typeKeyNameString.toLowerCase())) {
+//                        beanWrapper.setPropertyValue(currentFieldName, String.valueOf(getRandomElement(matchStringMap.get(typeKeyNameString))));
+//                        continue out;
+//                    }
+//                }
+//            } else if (typeStringMap.keySet().contains("Long") && Long.class.equals(currentFieldClass)) {
+//                for (String typeKeyNameLong : typeStringMap.get("Long")) {
+//                    if (currentFieldName.toLowerCase().contains(typeKeyNameLong.toLowerCase())) {
+//                        beanWrapper.setPropertyValue(currentFieldName, getRandomElement(matchStringMap.get(typeKeyNameLong)));
+//                        continue out;
+//                    }
+//                }
+//            }
+//            //String类型处理
+//            if (String.class.equals(currentFieldClass)) {
+//                //邮箱检测
+//                if (currentFieldName.toLowerCase().contains("email")) {
+//                    beanWrapper.setPropertyValue(currentFieldName, getRandomString(6) + "@qq.com");
+//                    //手机检测
+//                } else if (currentFieldName.toLowerCase().contains("phone")) {
+//                    beanWrapper.setPropertyValue(currentFieldName, String.valueOf(getRandomLong(13330000000L, 19800000000L)));
+//                    //姓名检测
+//                } else if (currentFieldName.toLowerCase().contains("name")) {
+//                    beanWrapper.setPropertyValue(currentFieldName, getRandomName());
+//                } else {
+//                    beanWrapper.setPropertyValue(currentFieldName, getRandomString());
+//                }
+//                //Long类型处理
+//            } else if (Long.class.equals(currentFieldClass)) {
+//                beanWrapper.setPropertyValue(currentFieldName, getRandomLong(1L, 600L));
+//                //时间戳类型处理
+//            } else if (Timestamp.class.equals(currentFieldClass)) {
+//                beanWrapper.setPropertyValue(currentFieldName, Timestamp.valueOf(LocalDateTime.now()));
+//                //float类型处理
+//            } else if (float.class.equals(currentFieldClass) || double.class.equals(currentFieldClass)) {
+//                beanWrapper.setPropertyValue(currentFieldName, getRandomDouble(1, 600));
+//                //枚举
+//            } else if (currentFieldClass.isEnum()) {
+//                beanWrapper.setPropertyValue(currentFieldName, getRandomElement(currentFieldClass.getEnumConstants()));
+//                //Boolean
+//            } else if (Boolean.class.equals(currentFieldClass)) {
+//                beanWrapper.setPropertyValue(currentFieldName, true);
+//                //List 递归
+//            } else if (currentFieldClass.isAssignableFrom(List.class)) {
+//                Type currentRealType = null;
+//                try {
+//                    currentRealType = object.getClass().getDeclaredField(currentFieldName).getGenericType();
+//                } catch (NoSuchFieldException e) {
+//                    try {
+//                        currentRealType = object.getClass().getSuperclass().getDeclaredField(currentFieldName).getGenericType();
+//                    } catch (NoSuchFieldException e1) {
+//                        e1.printStackTrace();
+//                    }
+//                }
+//
+//                if (currentRealType instanceof ParameterizedType) {
+//                    ParameterizedType parameterizedType = (ParameterizedType) currentRealType;
+//                    Class<?> tType = (Class<?>) parameterizedType.getActualTypeArguments()[0];
+//                    //创建泛型实例
+//                    int typeInstanceLength = random.nextInt(9) + 1;
+//                    List<Object> resultList = new ArrayList<>();
+//                    for (int i = 0; i < typeInstanceLength; i++) {
+//                        try {
+//                            resultList.add(fillObjectWithRandomString(tType.newInstance(), typeStringMap, matchStringMap));
+//                        } catch (InstantiationException | IllegalAccessException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    beanWrapper.setPropertyValue(currentFieldName, resultList);
+//                }
+//
+//            } else if (Object.class.isAssignableFrom(currentFieldClass) && !"bytes".equals(currentFieldName) && !"class".equals(currentFieldName)) {
+//                try {
+//                    beanWrapper.setPropertyValue(currentFieldName, fillObjectWithRandomString(currentFieldClass.newInstance(), typeStringMap, matchStringMap));
+//                } catch (IllegalAccessException | InstantiationException exp) {
+//                    exp.printStackTrace();
+//                }
+//            }
+//        }
+////        System.out.println("最终实例：" + beanWrapper.getWrappedInstance());
+//        return beanWrapper.getWrappedInstance();
+//    }
 
 
     /**
@@ -485,8 +483,7 @@ public class RandomUtil {
      * @return int随机数
      */
     public static int getRandomInt(int lower, int upper) {
-        int rand = (int) (Math.random() * (upper - lower)) + lower;
-        return rand;
+        return (int) (Math.random() * (upper - lower)) + lower;
     }
 
     /**
