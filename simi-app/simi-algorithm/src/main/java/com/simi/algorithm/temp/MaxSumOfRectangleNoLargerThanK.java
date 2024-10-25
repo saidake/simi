@@ -35,15 +35,41 @@ package com.simi.algorithm.temp;
  *     Start from the first element
  * Core Logic:
  *     Position the rectangle based on the upper left and lower right corner points.
- * ---------------------------------------------------------- Depth-first search
+ * ---------------------------------------------------------- Traversal
+ * Start point is [8]
  * 1   0   1   9  -1   2  -3  -4   3
- * 0  -2  [3]  8   9  -7   7  -6   2
+ * 0  -2   3   8   9  -7   7  -6   2
  * 0   3   8   9  -1   2   3   1   3
- * 0  -2   3   8   8  -7  -6   2  -4
+ * 0  -2   3  [8]  8  -7  -6   2  -4
  * 0   0   5   9  -1   4  -5   1   1
  * 3  -9   1  -2   3  -4   9  -6  -8
- *
- *
+ * >>>
+ * Look around for the end point,
+ * The end point is picked from the square [8] -> [-1] -> [-1] -> [5]
+ * Sum: 8+3, (8+3)+(8+9), 8+9, (8+9)+8-1, 8+8, 8-1+(8+9), 8+9, (8+9)+5+3
+ * 1   0   1   9  -1   2  -3  -4   3
+ * 0  -2   3   8   9  -7   7  -6   2
+ * 0   3  [8]  9 [-1]  2   3   1   3
+ * 0  -2   3  [8]  8  -7  -6   2  -4
+ * 0   0  [5]  9 [-1]  4  -5   1   1
+ * 3  -9   1  -2   3  -4   9  -6  -8
+ * >>>
+ * Expand the chosen square by 1.
+ * Current Square: [-2] -> [-7] -> [-4] -> [-9]
+ * 1   0   1   9  -1   2  -3  -4   3
+ * 0 [-2]  3   8   9 [-7]  7  -6   2
+ * 0   3  [8]  9 [-1]  2   3   1   3
+ * 0  -2   3  [8]  8  -7  -6   2  -4
+ * 0   0  [5]  9 [-1]  4  -5   1   1
+ * 3 [-9]  1  -2   3 [-4]  9  -6  -8
+ * >>
+ * Ignore the overflow part and turn the square into a rectangle.
+ *[1]  0   1   9  -1   2 [-3] -4   3
+ * 0 [-2]  3   8   9 [-7]  7  -6   2
+ * 0   3  [8]  9 [-1]  2   3   1   3
+ * 0  -2   3  [8]  8  -7  -6   2  -4
+ * 0   0  [5]  9 [-1]  4  -5   1   1
+ * 3 [-9]  1  -2   3 [-4]  9  -6  -8
  */
 public class MaxSumOfRectangleNoLargerThanK {
     public int maxSumSubmatrix(int[][] matrix, int k) {
@@ -58,7 +84,5 @@ public class MaxSumOfRectangleNoLargerThanK {
         }
         return 0;
     }
-    private void dfs(int[][] matrix, int i, int j){
 
-    }
 }
