@@ -7,11 +7,11 @@ import com.simi.sgz.domain.properties.SimiSgz;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public sealed abstract class BaseTask extends Thread permits DailyTask, LevelUPTask{
+public abstract class PropertyTask {
     protected SimiSgz simiSgz;
     protected TroopOperation operation;
 
-    public BaseTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
+    public PropertyTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         this.simiSgz=simiSgz;
         this.operation=new TroopOperation(robot, simiSgz, coordinatesReader.getCoordinates().get(index));
     }

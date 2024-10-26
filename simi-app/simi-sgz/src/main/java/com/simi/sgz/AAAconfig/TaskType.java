@@ -1,10 +1,9 @@
 package com.simi.sgz.AAAconfig;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum TaskType {
-    LEVELUP,DAILY;
+    LEVELUP,DAILY,DEFENCE;
     @JsonCreator
     public static TaskType fromValue( String text){
         for( TaskType var : TaskType.values() ){

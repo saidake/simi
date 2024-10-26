@@ -2,16 +2,13 @@ package com.simi.sgz.tasks;
 
 
 import com.simi.sgz.action.RobotAction;
-import com.simi.sgz.action.TroopOperation;
 import com.simi.sgz.domain.properties.CoordinatesReader;
 import com.simi.sgz.domain.properties.SimiSgz;
-import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 
 
-@NoArgsConstructor
-public final class LevelUPTask extends BaseTask {
+public final class LevelUPTask extends ThreadPoolTask {
     private int[] staminaList;
     private boolean[] supplyList;
     int[] clearMarkList;
@@ -26,8 +23,7 @@ public final class LevelUPTask extends BaseTask {
         this.waitingTime=simiSgz.getWaitingTimeList()[index];
     }
 
-    @Override
-    public void run() {
+    public void prepareExecutableTask() {
         int mainCityArmyNumber= simiSgz.getMainCityArmyNumber();
         int secondCityArmyNumber= simiSgz.getSecondCityArmyNumber();
         int totalArmyNumber=mainCityArmyNumber+secondCityArmyNumber;
@@ -88,4 +84,6 @@ public final class LevelUPTask extends BaseTask {
             }
         }
     }
+
+
 }

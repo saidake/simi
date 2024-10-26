@@ -1,11 +1,10 @@
 package com.simi.sgz;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.setting.yaml.YamlUtil;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.simi.sgz.AAAconfig.SgzConstants;
-import com.simi.sgz.AAAconfig.TaskType;
 import com.simi.sgz.action.TaskFactory;
-import com.simi.sgz.tasks.BaseTask;
+import com.simi.sgz.tasks.ExecutableTask;
 import com.simi.sgz.action.RobotAction;
 import com.simi.sgz.domain.properties.CoordinatesReader;
 import com.simi.sgz.domain.properties.SimiSgz;
@@ -19,7 +18,7 @@ import java.util.Queue;
 
 @Slf4j
 public class SimiSgzApp {
-    public static void main(String[] args) throws AWTException, InterruptedException, IllegalAccessException, InstantiationException {
+    public static void main(String[] args) throws AWTException, IllegalAccessException, InstantiationException {
         CoordinatesReader coordinatesReader = SgzReader.loadCoordinates();
         SimiSgz simiSgz = YamlUtil.loadByPath(SgzConstants.SGZ_TROOPS_PATH, SimiSgz.class);
         log.debug("simiSgz: {}",simiSgz);
@@ -35,14 +34,18 @@ public class SimiSgzApp {
                 }
             }
         }
-        Queue<Thread> runningThreads=new LinkedList<>();
+        Queue<ExecutableTask> executableTasks =new LinkedList<>();
         // 30 45 60 75 90 105 120
         for (int i = 0; i < coordinatesReader.getCoordinates().size(); i++) {
-            BaseTask baseTask=TaskFactory.createTask(simiSgz,robot,coordinatesReader,i);
-            runningThreads.add(baseTask);
-            baseTask.start();
+            ExecutableTask executableTask =TaskFactory.createTask(simiSgz,robot,coordinatesReader,i);
+            executableTasks.add(executableTask);
         }
-        JNativeUtils.setupGlobalKeyEventListener(runningThreads);
+        JNativeUtils.setupGlobalKeyEventListener(
+                NativeKeyEvent.VC_P,
+                ()-> System.exit(0),
+                "Press 'P' to interrupt the application."
+        );
+        executableTasks.forEach(ExecutableTask::execute);
     }
 
 }
