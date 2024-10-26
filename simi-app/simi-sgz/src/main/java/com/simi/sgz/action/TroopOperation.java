@@ -47,8 +47,9 @@ public class TroopOperation {
         for (int i = 0; i < SgzConstants.VISIT_TIMES; i++) {
             robot.leftMouseClickEx(coordinate.getVisitBtn());
             robot.leftMouseClickEx(coordinate.getCityBack());
-            robot.leftMouseClickEx(coordinate.getMarchConfirm());
+            robot.leftMouseClickEx(coordinate.getTroop3From5());
         }
+        robot.leftMouseClickEx(coordinate.getCityBack());
     }
     public void trials() {
         robot.leftMouseClickEx(coordinate.getDetailBtn());
