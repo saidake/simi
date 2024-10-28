@@ -16,10 +16,10 @@ import java.util.*;
  * max sum = k
  * m x n =  9 x 6
  * 1   0   1   9  -1   2  -3  -4   3
- * 0  -2   3   8   9  -7   7  -6   2
- * 0 [ 3   8   9  -1]  2   3   1   3
- * 0 [-2   3   8   8] -7  -6   2  -4
- * 0 [ 0   5   9  -1]  4  -5   1   1
+ * 3  -2   3   8   9  -7   7  -6   2
+ * 4 [ 3   8   9  -1]  2   3   1   3
+ * 2 [-2   3   8   8] -7  -6   2  -4
+ * 5 [ 0   5   9  -1]  4  -5   1   1
  * 3  -9   1  -2   3  -4   9  -6  -8
  * First assume that the target rectangle is the following rectangle:
  * max sum = 19 + 17 + 13 = 49
@@ -39,10 +39,10 @@ import java.util.*;
  *     The diffusion algorithm only need half points as start points in the matrix.
  * ---------------------------------------------------------- Traversal
  * 1   0   1   9  -1   2  -3  -4   3
- * 0  -2   3   8   9  -7   7  -6   2
- * 0   3   8   9  -1   2   3   1   3
- * 0  -2   3   8   8  -7  -6   2  -4
- * 0   0   5   9  -1   4  -5   1   1
+ * 3  -2   3   8   9  -7   7  -6   2
+ * 4   3   8   9  -1   2   3   1   3
+ * 2  -2   3   8   8  -7  -6   2  -4
+ * 5   0   5   9  -1   4  -5   1   1
  * 3  -9   1  -2   3  -4   9  -6  -8
  * </pre>
  *
@@ -54,18 +54,26 @@ public class MaxSumOfRectangleNoLargerThanK {
         int rLen = matrix.length;
         int cLen = matrix[0].length;
         int max = Integer.MIN_VALUE;
-        //A. Fix two rows and calculate the sum of columns between these rows.
-        for (int left = 0; left < cLen; left++) {
-            //B. Array to store the sum of elements between two rows for each column.
+        //A. Traverse column indexes.
+        // 1   0   1   9  -1   2  -3  -4   3
+        // 1 ->                            3   (Calculate the sum of each row from column rang 1 -> 3)
+        //     0 ->                        3
+        //         1 ->                    3
+        // ...
+        for (int start = 0; start < cLen; start++) {
             int[] rowSums = new int[rLen];
-            for (int right = left; right < cLen; right++) {
-                //C. Update the row sums for the current column range [left, right].
+            for (int cur = start; cur < cLen; cur++) {
+                //B. Update the row sums for the current column range [left, right].
+                // 1   0   1   9  -1   2  -3  -4   3        rowSums[0] = 1  -> 1  -> 2
+                // ↓   ↓   ↓
+                // 3  -2   3                                rowSums[1] = 3  -> 1  -> 4
+                // ↓   ↓   ↓
+                // 4   3   8                                rowSums[2] = 4  -> 7  -> 15
+                // ...
                 for (int i = 0; i < rLen; i++) {
-                    rowSums[i] += matrix[i][right];
+                    rowSums[i] += matrix[i][cur];
                 }
-                //C. Find the maximum subarray no larger than k using TreeSet.
                 max = Math.max(max, getMaxSubarraySumNoLargerThanK(rowSums, k));
-                //C. If we have found the exact k, we can return immediately.
                 if (max == k) return k;
             }
         }

@@ -1,4 +1,4 @@
-package com.simi.algorithm.dynamicprogramming;
+package com.simi.algorithm.temp;
 
 import java.util.*;
 
