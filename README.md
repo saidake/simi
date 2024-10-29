@@ -21,7 +21,7 @@ A folder containing bash and batch files required by other modules.
 ### simi-app
 Some simple applications that includes specific functionalities.
 * simi-algorithm
-  - Simi Algorithm is a collection of solutions to various algorithm problems, each accompanied by detailed comments, explanations, and illustrative diagrams.
+    - Simi Algorithm is a collection of solutions to various algorithm problems, each accompanied by detailed comments, explanations, and illustrative diagrams.
 * simi-initializer-app
     - Simi Initializer is an IntelliJ IDEA plugin designed to streamline the initial configuration of Maven projects with complex local setups.
       It automates startup configurations like adjusting certificate file locations, adding local-specific dependencies, and modifying server IP addresses.
@@ -35,6 +35,8 @@ Common configuration files for use by other modules.
 Custom UI modules.
 ### simi-gateway
 Gateway modules.
+### simi-node
+A dedicated module to test Node-related dependencies and functionalities. This module provides a streamlined testing environment for Node.js projects.
 ### simi-parent
 A parent module that manages the dependency versions of other modules.
 ### simi-service

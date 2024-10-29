@@ -1,0 +1,16 @@
+{
+  "name": "simi-cli",
+  "author": "Craig Brown",
+  "version": "1.0.0",
+  "description": "A NodeJs Cli tool module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {"simi": "index.js"},
+  "keywords": [],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "commander": "^12.1.0"
+  }
+}

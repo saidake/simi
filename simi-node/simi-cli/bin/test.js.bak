@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+"use strict"
+const { Command } = require('commander');
+const program = new Command();
+program
+    .name('simi test')
+    .arguments("[name]")
+    .description('A simple test CLI application')
+    .version('1.0.0')
+    .option('-e, --excited', 'Make the greeting excited') // Option
+    .action((name, options) => {
+        // Use the name and age provided by the user
+        let response = `Test`;
+        if (name) {
+            response += `Name: ${name}`;
+        }
+        if (options.excited) {
+            response += '!!!';
+        }
+        console.log(response);
+    });
+
+program.parse(process.argv);
+module.exports = program;
