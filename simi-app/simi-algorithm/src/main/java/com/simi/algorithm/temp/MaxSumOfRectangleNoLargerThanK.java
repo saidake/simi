@@ -12,32 +12,9 @@ import java.util.*;
  *     1 <= m, n <= 100
  *     -100 <= matrix[i][j] <= 100
  *     -105 <= k <= 105
- * ---------------------------------------------------------- Analysis
+ * ---------------------------------------------------------- Examples
  * max sum = k
  * m x n =  9 x 6
- * 1   0   1   9  -1   2  -3  -4   3
- * 3  -2   3   8   9  -7   7  -6   2
- * 4 [ 3   8   9  -1]  2   3   1   3
- * 2 [-2   3   8   8] -7  -6   2  -4
- * 5 [ 0   5   9  -1]  4  -5   1   1
- * 3  -9   1  -2   3  -4   9  -6  -8
- * First assume that the target rectangle is the following rectangle:
- * max sum = 19 + 17 + 13 = 49
- *  3  8  9 -1
- * -2  3  8  8
- *  0  5  9 -1
- * Consideration:
- *     The size of the rectangle cannot be determined.
- *     The location of the rectangle cannot be determined.
- * Optional Conditions:
- *     Mark all negative numbers. (invalid)
- *     First calculate the sum of each row and the sum of each column.
- * Initialization:
- *     Start from the first element
- * Core Logic:
- *     Position the rectangle based on the upper left and lower right corner points.
- *     The diffusion algorithm only need half points as start points in the matrix.
- * ---------------------------------------------------------- Traversal
  * 1   0   1   9  -1   2  -3  -4   3
  * 3  -2   3   8   9  -7   7  -6   2
  * 4   3   8   9  -1   2   3   1   3
@@ -65,11 +42,10 @@ public class MaxSumOfRectangleNoLargerThanK {
             for (int cur = start; cur < cLen; cur++) {
                 //B. Update the row sums for the current column range [left, right].
                 // 1   0   1   9  -1   2  -3  -4   3        rowSums[0] = 1  -> 1  -> 2
-                // ↓   ↓   ↓
+                // ↓   ↓   ↓   ...
                 // 3  -2   3                                rowSums[1] = 3  -> 1  -> 4
                 // ↓   ↓   ↓
                 // 4   3   8                                rowSums[2] = 4  -> 7  -> 15
-                // ...
                 for (int i = 0; i < rLen; i++) {
                     rowSums[i] += matrix[i][cur];
                 }
