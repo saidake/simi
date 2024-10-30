@@ -1,4 +1,4 @@
-package com.simi.algorithm.temp;
+package com.simi.algorithm.backtrack;
 
 import com.simi.common.test.domain.TreeNode;
 import lombok.extern.slf4j.Slf4j;
