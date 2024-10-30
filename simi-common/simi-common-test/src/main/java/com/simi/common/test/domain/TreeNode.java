@@ -1,12 +1,12 @@
 package com.simi.common.test.domain;
 
 public class TreeNode {
-    public int value;
+    public int val;
     public TreeNode left;
     public TreeNode right;
 
     public TreeNode(int item) {
-        value = item;
+        val = item;
         left = right = null;
     }
 }
