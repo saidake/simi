@@ -1,4 +1,4 @@
-package com.simi.algorithm.temp;
+package com.simi.algorithm.AAAbackup;
 
 import com.simi.common.test.domain.TreeNode;
 import lombok.extern.slf4j.Slf4j;
@@ -40,23 +40,33 @@ public class MaximumAverageSubtree {
      *                                   - 1               -  8
      * @param root  Root node
      */
-    private BackTrackObj postorder(TreeNode root) {
-        // Base case: if the node is null, return a zeroed BackTrackObj
-        if (root == null) return new BackTrackObj(0, 0);
-
-        // Postorder traversal
-        BackTrackObj left = postorder(root.left);
-        BackTrackObj right = postorder(root.right);
-
-        // Calculate current sum and node count including the root
-        int nodeNum = left.nodeNum + right.nodeNum + 1;
-        int curSum = left.sum + right.sum + root.val;
-
-        // Calculate current average and update max average if needed
-        double curAvg = (double) curSum / nodeNum;
-        maxAvgSum = Math.max(maxAvgSum, curAvg);
-
-        // Return the cumulative sum and node count for the current subtree
-        return new BackTrackObj(curSum, nodeNum);
+    private BackTrackObj postorder(TreeNode root){
+        //A. Creating the BackTrackObj to store return values is necessary because there is more than one return value.
+        if(root!=null){
+            BackTrackObj lo=postorder(root.left);
+            BackTrackObj ro=postorder(root.right);
+            int nodeNum=0;
+            int curSum=0;
+            if(root.left!=null&&root.right!=null){
+                nodeNum=lo.nodeNum + ro.nodeNum + 1;
+                curSum=lo.sum+ro.sum+root.val;
+            }
+            else if(root.left!=null){
+                nodeNum=lo.nodeNum  + 1;
+                curSum=lo.sum+root.val;
+            }
+            else if(root.right!=null) {
+                nodeNum=ro.nodeNum  + 1;
+                curSum=ro.sum+root.val;
+            }
+            else {
+                nodeNum=1;
+                curSum=root.val;
+            }
+            double curAvg=(double)curSum/nodeNum;
+            this.maxAvgSum=Math.max(maxAvgSum,curAvg);
+            return new BackTrackObj(curSum, nodeNum);
+        }
+        return null;
     }
 }
