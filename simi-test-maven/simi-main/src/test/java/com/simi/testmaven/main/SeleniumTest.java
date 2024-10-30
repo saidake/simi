@@ -1,6 +1,7 @@
-package com.simi.testmaven.jpa;
+package com.simi.testmaven.main;
 
-import com.simi.testmaven.jpa.AAAConfig.WebDriverConfig;
+
+import com.simi.testmaven.main.AAAConfig.WebDriverConfig;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

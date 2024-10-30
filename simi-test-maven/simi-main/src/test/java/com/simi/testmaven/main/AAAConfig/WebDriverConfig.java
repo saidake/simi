@@ -1,4 +1,4 @@
-package com.simi.testmaven.jpa.AAAConfig;
+package com.simi.testmaven.main.AAAConfig;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

@@ -13,6 +13,7 @@
     <version>1.0</version>
 
     <modules>
+        <module>simi-main</module>
         <module>simi-empty</module>
         <module>simi-mysql</module>
         <module>simi-oracle</module>
@@ -20,6 +21,12 @@
         <module>simi-jpa</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
