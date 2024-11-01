@@ -14,11 +14,12 @@
     <version>1.0</version>
 
     <modules>
+        <module>simi-algorithm</module>
+        <module>simi-app</module>
         <module>simi-common</module>
-        <module>simi-gateway</module>
         <module>simi-config</module>
         <module>simi-custom</module>
-        <module>simi-app</module>
+        <module>simi-gateway</module>
         <module>simi-test-maven</module>
     </modules>
 </project>

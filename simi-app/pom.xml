@@ -15,7 +15,6 @@
         <module>simi-initializer-app</module>
         <module>simi-memory-management</module>
         <module>simi-sgz</module>
-        <module>simi-algorithm</module>
     </modules>
 
     <properties>
