@@ -1,5 +1,5 @@
 # Table of Contents
-[Back to Main Project README](README.md)
+[Back to Main Project README](../README.md)
 - [Dynamic Programming](#dynamic-programming)
     - [Target Sum](#target-sum)
 # Dynamic Programming
@@ -39,7 +39,7 @@ Define the sum of the elements of the array `nums` as `sum`, the sum of the elem
 According to the conditions, we can get the following expression:   
 `(sum − neg) − neg = target`  
 
-Random Example:
+Here’s an example that uses the above expression:
 ```text
 nums = 7 9 8 3 4 5 4 1 9 2 8 7  
 sum = 67  
@@ -48,9 +48,10 @@ neg = (67-13)/2 = 27
 ```
 Define a two-dimensional array dp, where `dp[i][j]` represents the number of **solutions** 
 to select elements from the first `i` numbers of the array nums so that the sum of these elements is equal to `j`.  
-When there is no elements to be selected, the sum of elements can only be `0`, 
-and the corresponding number of solutions is `1`.  
-If `j` is greater than or equal to `1`, the corresponding number of solutions is `0`.  
+
+When `i=0`, there are no elements to select.   
+If `j=0`, The sum of elements can only be `0`, so the corresponding number of solutions is `1`.  
+If `j>=1`, the corresponding number of solutions is `0`.  
 So the boundary conditions is:
 ```text
 d[0][j]=
@@ -65,7 +66,45 @@ dp[i][j]=
     dp[i−1][j],                          j < nums[i]
     dp[i−1][j] + dp[i−1][j−nums[i]],     j >= nums[i] 
 ```
+If `j < nums[i]`, the current element cannot be selected, ensuring that the sum of the selected numbers 
+in the array `nums` does not exceed `j`.  
+if `j>=nums[i]` and the current element is selected, the remaining sum to find in the 
+first `i-1` elements is `j-nums[i]`.  
+if `j>=nums[i]` and the current element is not selected, the result remains the same as `d[i-1][j]`.
 
+When the index is `i` and the current value is selected, We need to check the first `i-1` elements
+to find the sum equal to `j-nums[i]`.  
+
+Let's use the initial example to demonstrate the execution process:
+```text
+nums = 7 9 8 3 4 5 4 1 9 2 8 7  
+sum = 67  
+target =  67 + (- 8 - 4 -5 - 1 - 2 - 7)*2 = 13  
+neg = (67-13)/2 = 27
+```
+```text
+Step 1:
+indexes:  0 1 2 3 4 5 6 7 8 9 10 11
+nums:     7 9 8 3 4 5 4 1 9 2 8  7 
+dp[11][27] = dp[10][27] + dp[10][20]
+
+Step 2:
+indexes:  0 1 2 3 4 5 6 7 8 9 10
+nums:     7 9 8 3 4 5 4 1 9 2 8
+dp[10][27] = dp[9][27] + dp[9][19]
+dp[10][20] = dp[9][20] + dp[9][12]
+
+Step 3:
+indexes:  0 1 2 3 4 5 6 7 8 9 
+nums:     7 9 8 3 4 5 4 1 9 2 
+dp[9][27] = dp[8][27] + dp[8][25]
+dp[9][19] = dp[8][19] + dp[8][17]
+dp[9][20] = dp[8][20] + dp[8][18]
+dp[9][12] = dp[8][12] + dp[8][10]
+...
+```
+Since the current dp expression is only related to the previous one, 
+the dp array can be simplified to a one-dimensional array: 
 ```text
  num = 7, j = 27 -> 7
      dp[27] = dp[27] + dp[20] = 0
@@ -88,5 +127,5 @@ dp[i][j]=
      dp[15] = dp[15] + dp[7] = 1 (dp[15]=1)
      dp[8] = dp[8] + dp[0] = 1 (dp[8]=1)
 ```
-### Implementation
-Check out [`TargetSum.java`](simi-algorithm/src/main/java/com/simi/algorithm/dynamicprogramming/TargetSum.java) for the implementation.
+### Source Code
+Check out [`TargetSum.java`](src/main/java/com/simi/algorithm/dynamicprogramming/TargetSum.java) for the source code.
