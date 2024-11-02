@@ -1,4 +1,5 @@
 # Table of Contents
+[Back to Main Project README](README.md)
 - [Dynamic Programming](#dynamic-programming)
     - [Target Sum](#target-sum)
 # Dynamic Programming
@@ -88,4 +89,4 @@ dp[i][j]=
      dp[8] = dp[8] + dp[0] = 1 (dp[8]=1)
 ```
 ### Implementation
-Check out [`TargetSum.java`](dynamicprogramming/TargetSum.java) for the implementation.
+Check out [`TargetSum.java`](simi-algorithm/src/main/java/com/simi/algorithm/dynamicprogramming/TargetSum.java) for the implementation.

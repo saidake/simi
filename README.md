@@ -20,7 +20,9 @@ A folder containing bash and batch files required by other modules.
   - Deploy a jar file to remote server.
 
 ###  simi-algorithm
-Simi Algorithm is a collection of solutions to various algorithm problems, each accompanied by detailed comments, explanations, and illustrative diagrams.
+Simi Algorithm is a collection of solutions to various algorithm problems, each accompanied by detailed comments, explanations, and illustrative diagrams.  
+For more information, check out the [Algorithms README](ALGORITHMS.md).
+
 ### simi-app
 Some simple applications that includes specific functionalities.
 * simi-initializer-app
