@@ -11,11 +11,5 @@ public class SimiSgz {
     private String taskType;
     private int mainCityArmyNumber;
     private int secondCityArmyNumber;
-    private int minus;
     private boolean avoidMarchCollision;
-    private int[][] staminaList;
-    private boolean[][] supplyList;
-    private int[][] clearMarkList;
-    private int[][] clearTabList;
-    private int[] waitingTimeList;
 }

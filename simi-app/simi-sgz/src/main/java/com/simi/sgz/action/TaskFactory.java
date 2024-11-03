@@ -10,9 +10,10 @@ import java.util.Objects;
 public class TaskFactory {
     public static ExecutableTask createTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         return switch (Objects.requireNonNull(TaskType.fromValue(simiSgz.getTaskType()))) {
-            case LEVELUP -> new LevelUPTask(simiSgz, robot, coordinatesReader, index);
+            case LEVEL_UP -> new LevelUPTask(simiSgz, robot, coordinatesReader, index);
             case DAILY -> new DailyTask(simiSgz, robot, coordinatesReader, index);
             case DEFENCE -> new DefenceTask(simiSgz, robot, coordinatesReader, index);
+            case ATTACK_CITY -> null;
         };
     }
 }

@@ -14,5 +14,10 @@ public abstract class PropertyTask {
     public PropertyTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         this.simiSgz=simiSgz;
         this.operation=new TroopOperation(robot, simiSgz, coordinatesReader.getCoordinates().get(index));
+        this.initialize();
     }
+    protected void initialize() {
+        loadProperties();
+    }
+    public abstract void loadProperties();
 }

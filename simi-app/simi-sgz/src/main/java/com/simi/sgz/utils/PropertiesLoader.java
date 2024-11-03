@@ -12,7 +12,7 @@ import java.util.List;
 
 @UtilityClass
 @Slf4j
-public class SgzReader {
+public class PropertiesLoader {
 
     public static CoordinatesReader loadCoordinates() throws IllegalAccessException, InstantiationException {
         CoordinatesReader coordinatesReader = YamlUtil.loadByPath(SgzConstants.SGZ_COORDINATES_PATH, CoordinatesReader.class);
@@ -62,7 +62,6 @@ public class SgzReader {
                 field.set(copy, field.get(original));
             }
         }
-
         return copy;
     }
 }

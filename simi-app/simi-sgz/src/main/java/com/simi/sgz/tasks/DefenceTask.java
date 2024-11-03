@@ -12,6 +12,12 @@ public final class DefenceTask extends PropertyTask implements ExecutableTask {
     public DefenceTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         super(simiSgz, robot, coordinatesReader, index);
     }
+
+    @Override
+    public void loadProperties() {
+
+    }
+
     @Override
     public void execute() {
         //TODO Add logic for defence task.

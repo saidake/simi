@@ -1,8 +1,11 @@
 package com.simi.sgz.tasks;
 
 
+import cn.hutool.setting.yaml.YamlUtil;
+import com.simi.sgz.AAAconfig.SgzConstants;
 import com.simi.sgz.action.RobotAction;
 import com.simi.sgz.domain.properties.CoordinatesReader;
+import com.simi.sgz.domain.properties.LevelUpProperties;
 import com.simi.sgz.domain.properties.SimiSgz;
 
 import java.util.Arrays;
@@ -14,13 +17,30 @@ public final class LevelUPTask extends ThreadPoolTask {
     private final int[] clearMarkList;
     private final int[] clearTabList;
     private final int waitingTime;
+
+    private LevelUpProperties levelUpProperties;
     public LevelUPTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         super(simiSgz, robot, coordinatesReader, index);
-        this.staminaList=simiSgz.getStaminaList()[index];
-        this.supplyList=simiSgz.getSupplyList()[index];
-        this.clearMarkList=simiSgz.getClearMarkList()[index];
-        this.clearTabList=simiSgz.getClearTabList()[index];
-        this.waitingTime=simiSgz.getWaitingTimeList()[index];
+        this.loadProperties();
+        this.staminaList=levelUpProperties.getStaminaList()[index];
+        this.supplyList=levelUpProperties.getSupplyList()[index];
+        this.clearMarkList=levelUpProperties.getClearMarkList()[index];
+        this.clearTabList=levelUpProperties.getClearTabList()[index];
+        this.waitingTime=levelUpProperties.getWaitingTimeList()[index];
+    }
+
+    @Override
+    public void loadProperties() {
+        LevelUpProperties levelUpProperties = YamlUtil.loadByPath(SgzConstants.SGZ_LEVEL_UP_PATH, LevelUpProperties.class);
+        int[][] staminaList = levelUpProperties.getStaminaList();
+        if(levelUpProperties.getMinus()!=0){
+            for (int i = 0; i < staminaList.length; i++) {
+                for (int j = 0; j < staminaList[0].length; j++) {
+                    staminaList[i][j]-=levelUpProperties.getMinus();
+                }
+            }
+        }
+        this.levelUpProperties=levelUpProperties;
     }
 
     @Override
