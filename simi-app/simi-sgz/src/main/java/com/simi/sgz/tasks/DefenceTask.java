@@ -14,6 +14,10 @@ public final class DefenceTask extends PropertyTask implements ExecutableTask {
     }
     @Override
     public void execute() {
-        JNativeUtils.setupGlobalKeyEventListener(NativeKeyEvent.VC_P,()-> System.exit(0),"");
+        //TODO Add logic for defence task.
+        JNativeUtils.setupGlobalKeyEventListener(
+                NativeKeyEvent.VC_P,
+                ()-> System.exit(0),""
+        );
     }
 }

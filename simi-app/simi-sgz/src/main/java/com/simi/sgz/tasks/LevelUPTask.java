@@ -9,11 +9,11 @@ import java.util.Arrays;
 
 
 public final class LevelUPTask extends ThreadPoolTask {
-    private int[] staminaList;
-    private boolean[] supplyList;
-    int[] clearMarkList;
-    int[] clearTabList;
-    int waitingTime;
+    private final int[] staminaList;
+    private final boolean[] supplyList;
+    private final int[] clearMarkList;
+    private final int[] clearTabList;
+    private final int waitingTime;
     public LevelUPTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         super(simiSgz, robot, coordinatesReader, index);
         this.staminaList=simiSgz.getStaminaList()[index];
@@ -23,6 +23,7 @@ public final class LevelUPTask extends ThreadPoolTask {
         this.waitingTime=simiSgz.getWaitingTimeList()[index];
     }
 
+    @Override
     public void prepareExecutableTask() {
         int mainCityArmyNumber= simiSgz.getMainCityArmyNumber();
         int secondCityArmyNumber= simiSgz.getSecondCityArmyNumber();

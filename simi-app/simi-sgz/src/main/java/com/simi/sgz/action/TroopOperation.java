@@ -59,7 +59,6 @@ public class TroopOperation {
         for (int i = 0; i < SgzConstants.TRIAL_TIMES; i++) {
             robot.leftMouseClickEx(coordinate.getTrailStartBtn());
         }
-        robot.leftMouseClickEx(coordinate.getCityBack());
     }
     public void supplyArmy(int mainCityArmyNumber, int armyIndex){
         robot.leftMouseClickEx(getArmyLocationInCity(armyIndex<mainCityArmyNumber?armyIndex:armyIndex-mainCityArmyNumber));

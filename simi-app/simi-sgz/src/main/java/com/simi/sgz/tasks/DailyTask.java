@@ -9,6 +9,7 @@ public final class DailyTask extends ThreadPoolTask  {
     public DailyTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         super(simiSgz, robot, coordinatesReader, index);
     }
+    @Override
     public void prepareExecutableTask() {
         operation.enterCity(0);
         operation.sendMessenger();
