@@ -19,6 +19,7 @@
         <module>simi-oracle</module>
         <module>simi-nodb</module>
         <module>simi-jpa</module>
+        <module>simi-cap</module>
     </modules>
 
     <dependencies>

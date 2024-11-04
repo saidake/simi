@@ -27,6 +27,7 @@
         <software.amazon.awssdk.version>2.17.173</software.amazon.awssdk.version>
         <aws-java-sdk-bom.version>1.12.201</aws-java-sdk-bom.version>
         <jakarta.mail.version>1.6.7</jakarta.mail.version>
+        <cds.services.version>3.4.0</cds.services.version>
         <!--======================================================================================================= Extension -->
         <libphonenumber.version>8.0.0</libphonenumber.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.0.4</springdoc-openapi-starter-webmvc-ui.version>
@@ -120,6 +121,14 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>                   <!--  Spring Cloud -->
                 <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- CDS SERVICES -->
+            <dependency>
+                <groupId>com.sap.cds</groupId>
+                <artifactId>cds-services-bom</artifactId>
+                <version>${cds.services.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
