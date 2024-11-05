@@ -50,5 +50,10 @@
 </tbody>
 </table>
 
+# Others
 
+```text
+oracle：  http://127.0.0.1:1521     [ORCL] sdk = sdk      [ORCL] system = oracle
+mongo:    http://127.0.0.1:27017    [db/smp] smp  = smp   [db/admin] admin = admin
+```
 
