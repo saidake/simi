@@ -20,6 +20,6 @@
         <module>simi-config</module>
         <module>simi-custom</module>
         <module>simi-gateway</module>
-        <module>simi-test-maven</module>
+        <module>simi-demo</module>
     </modules>
 </project>
