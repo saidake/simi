@@ -91,7 +91,8 @@ target =  67 + (- 8 - 4 -5 - 1 - 2 - 7)*2 = 13
 neg = (- 8 - 4 -5 - 1 - 2 - 7) = 27
 ```
 The initial solution can be optimized as follows:
-
+> Time Complexity: *O*(2<sup>n</sup>)  (The worst-case time complexity remains the same, but it is faster than the original solution in general cases.)   
+> Space Complexity: *O*(n)   
 ```java
 public class Solution {
     /**
@@ -158,7 +159,7 @@ public class Solution {
 }
 ```
 #### Dynamic Programming
-Define a two-dimensional array dp, where `dp[i][j]` represents the number of **solutions** 
+Define a two-dimensional array `dp`, where `dp[i][j]` represents the number of **solutions** 
 to select elements from the first `i` numbers of the array nums so that the sum of these elements is equal to `j`.  
 
 When `i=0`, there are no elements to select.   
@@ -170,7 +171,7 @@ d[0][j]=
     1,   j = 0
     0,   j > 0
 ```
-Define the length of the array nums to be `n`, so the final condition is `dp[n][neg]`.
+Define the length of the array `nums` to be `n`, so the final condition is `dp[n][neg]`.
 
 The dynamic programming equation can be expressed as follows:
 ```text
@@ -178,14 +179,11 @@ dp[i][j]=
     dp[i−1][j],                          j < nums[i]
     dp[i−1][j] + dp[i−1][j−nums[i]],     j >= nums[i] 
 ```
-If `j < nums[i]`, the current element cannot be selected, ensuring that the sum of the selected numbers 
+If `j < nums[i]`, the current element must not be selected, ensuring that the sum of the selected numbers 
 in the array `nums` does not exceed `j`.  
 if `j>=nums[i]` and the current element is selected, the remaining sum to find in the 
 first `i-1` elements is `j-nums[i]`.  
 if `j>=nums[i]` and the current element is not selected, the result remains the same as `d[i-1][j]`.
-
-When the index is `i` and the current value is selected, We need to check the first `i-1` elements
-to find the sum equal to `j-nums[i]`.  
 
 Let's use the original example to demonstrate the execution process:
 ```text
@@ -210,13 +208,47 @@ dp[10][27] = dp[10][27] + dp[10][25]
 dp[10][19] = dp[10][19] + dp[10][17]
 dp[10][20] = dp[10][20] + dp[10][18]
 dp[10][12] = dp[10][12] + dp[10][10]
-
 ...
 
 Step n:
 dp[0][0]=1
 dp[0][27]=0  (j>0)
 ```
+By iterating over nums in reverse order, we can directly calculate and store potential negative values for each element in the dp array, starting from the beginning of nums and considering the relatively small target value.
+
+```text
+Constraints:
+    1 <= nums.length <= 20
+    0 <= nums[i] <= 1000
+    0 <= sum(nums[i]) <= 1000
+    -1000 <= target <= 1000
+```
+```text
+i:        1 2 3 4 5 6 7 8 9 10 11 12
+nums:     7 9 8 3 4 5 4 1 9 2  8  7 
+dp[0][0] = 1
+
+Step 1:
+dp[1][0->27] = dp[0][0->27]   (The current element is not selected)
+dp[1][7->27] += dp[0][0->20]  (The current element has been selected)
+
+Step 2:
+dp[2][0->27] = dp=[1][0->27]
+dp[2][9->27] += dp=[1][0->18]
+
+Step 3:
+dp[3][0->27] = dp=[2][0->27]
+dp[3][8->27] += dp=[2][0->19]
+
+...
+
+Step 3:
+dp[n][neg]
+
+```
+Use a two-dimensional array to store DP results. The solution is as follows:
+> Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
+> Space Complexity: O(n×neg) 
 ```java
 class Solution {
     /**
@@ -254,29 +286,9 @@ class Solution {
 }
 ```
 Since the current dp expression is only related to the previous one, 
-the dp array can be simplified to a one-dimensional array: 
-```text
- num = 7, j = 27 -> 7
-     dp[27] = dp[27] + dp[20] = 0
-     ...
-     dp[7] = dp[7] + dp[0] = 1 (dp[7]=1)
-```
-```text
- num = 9, j = 27 -> 9
-     dp[27] = dp[27] + dp[16] = 0
-     ...
-     dp[16] = dp[16] + dp[7] = 1 (dp[16]=1)
-     dp[9] = dp[9] + dp[0] = 1 (dp[9]=1)
-```
-```text
- num = 8, j = 27 -> 8
-     dp[27] = dp[27] + dp[19] = 0
-     ...
-     dp[24] = dp[24] + dp[16] = 1 (dp[24]=1)
-     dp[17] = dp[17] + dp[9] = 1 (dp[17]=1)
-     dp[15] = dp[15] + dp[7] = 1 (dp[15]=1)
-     dp[8] = dp[8] + dp[0] = 1 (dp[8]=1)
-```
+the dp array can be simplified to a one-dimensional array:
+> Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
+> Space Complexity: O(neg)
 ```java
 public class Solution {
     /**
