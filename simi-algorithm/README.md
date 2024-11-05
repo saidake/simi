@@ -41,8 +41,6 @@ resulting in `2` choices per element and a total of 2<sup>n</sup> combinations f
 Use depth-first search to iterate over each combination and maintain a counter `targetSum` shared in each search path 
 to count the total number of valid paths that achieve the target sum.
 
-> Time Complexity: *O*(2<sup>n</sup>)  
-> Space Complexity: *O*(n) (for the recursion stack)
 ```java
 public class Solution {
     private int targetSum=0;
@@ -75,6 +73,10 @@ public class Solution {
     }
 }
 ```
+Time and Space Complexity
+* Time Complexity: *O*(2<sup>n</sup>)  
+* Space Complexity: *O*(n) (for the recursion stack)
+
 Define the sum of the elements of the array `nums` as `sum`, the sum of the elements with a `-` sign is `neg`.  
 According to the conditions, we can get the following expression:   
 `(sum − neg) − neg = target`
@@ -91,8 +93,6 @@ target =  67 + (- 8 - 4 -5 - 1 - 2 - 7)*2 = 13
 neg = (- 8 - 4 -5 - 1 - 2 - 7) = 27
 ```
 The initial solution can be optimized as follows:
-> Time Complexity: *O*(2<sup>n</sup>)  (The worst-case time complexity remains the same, but it is faster than the original solution in general cases.)   
-> Space Complexity: *O*(n)   
 ```java
 public class Solution {
     /**
@@ -158,6 +158,10 @@ public class Solution {
     }
 }
 ```
+Time and Space Complexity
+* Time Complexity: *O*(2<sup>n</sup>)  (The worst-case time complexity remains the same, but it is faster than the original solution in general cases.)   
+* Space Complexity: *O*(n)
+
 #### Dynamic Programming
 Define a two-dimensional array `dp`, where `dp[i][j]` represents the number of **solutions** 
 to select elements from the first `i` numbers of the array nums so that the sum of these elements is equal to `j`.  
@@ -247,8 +251,6 @@ dp[n][neg]
 
 ```
 Use a two-dimensional array to store DP results. The solution is as follows:
-> Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
-> Space Complexity: O(n×neg) 
 ```java
 class Solution {
     /**
@@ -285,10 +287,12 @@ class Solution {
     }
 }
 ```
+Time and Space Complexity
+* Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
+* Space Complexity: O(n×neg)
+
 Since the current dp expression is only related to the previous one, 
 the dp array can be simplified to a one-dimensional array:
-> Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
-> Space Complexity: O(neg)
 ```java
 public class Solution {
     /**
@@ -322,3 +326,6 @@ public class Solution {
     }
 }
 ```
+Time and Space Complexity
+* Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
+* Space Complexity: O(neg)
