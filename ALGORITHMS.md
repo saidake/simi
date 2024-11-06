@@ -1,5 +1,5 @@
 # Table of Contents
-[Back to Main Project README](../README.md)
+[Back to Main Project README](README.md)
 - [Dynamic Programming](#dynamic-programming)
     - [Target Sum](#target-sum)
 # Dynamic Programming

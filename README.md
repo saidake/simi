@@ -10,6 +10,9 @@
 Simi is an educational project focused on practical experience in building and managing modular applications. It features various modules, each serving a unique purpose, enabling exploration of core programming concepts, application architecture, and integration techniques.
 # Directory Structure
 [Back to Top](#table-of-contents)
+##  ALGORITHMS.md
+This markdown file contains solutions to various algorithm problems, each with detailed comments, explanations, and illustrative diagrams.
+For more information, check out the [Algorithms README](ALGORITHMS.md).
 ## AAA 
 A resource directory containing startup configuration files needed by other modules.
 ## scripts
@@ -20,9 +23,6 @@ A folder containing bash and batch files required by other modules.
   - Execute a remote bash script with its environment variables.
 * simidep.sh 
   - Deploy a jar file to remote server.
-##  simi-algorithm
-Simi Algorithm is a collection of solutions to various algorithm problems, each accompanied by detailed comments, explanations, and illustrative diagrams.  
-For more information, check out the [Algorithms README](simi-algorithm/README.md).
 ## simi-test-gradle
 A Gradle learning project that includes comprehensive testing for educational purposes.
 ## simi-test-maven
