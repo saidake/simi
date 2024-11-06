@@ -218,8 +218,13 @@ Step n:
 dp[0][0]=1
 dp[0][27]=0  (j>0)
 ```
-By iterating over nums in reverse order, we can directly calculate and store potential negative values for each element in the dp array, starting from the beginning of nums and considering the relatively small target value.
+The execution process described above, which starts from the end of the array nums, 
+resembles the Depth-First Search solution. 
+However, if we traverse nums in the usual left-to-right order, 
+we should calculate and store the potential negative values for each element in the `dp` array in advance,
+allowing the subsequent `dp` items to access them.
 
+Below is the solution that traverse the array `nums` in the usual order:
 ```text
 Constraints:
     1 <= nums.length <= 20
@@ -329,3 +334,59 @@ public class Solution {
 Time and Space Complexity
 * Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
 * Space Complexity: O(neg)
+# Temp 
+## Stone Game
+Alice and Bob play a game with piles of stones. 
+There are an even number of piles arranged in a row, and each pile has a positive integer number of stones `piles[i]`.
+
+The objective of the game is to end with the most stones. The **total** number of stones across all the piles is **odd**, 
+so there are no ties.
+
+Alice and Bob take turns, with Alice starting first. Each turn, a player takes the entire pile of stones either 
+from the beginning or from the end of the row. This continues until there are no more piles left, 
+at which point the person with the most stones wins.
+
+Assuming Alice and Bob play optimally, return true if Alice wins the game, or false if Bob wins.
+
+```text
+Example 1:
+    Input: piles = [5,3,4,5]
+    Output: true
+    Explanation: 
+        Alice starts first, and can only take the first 5 or the last 5.
+        Say she takes the first 5, so that the row becomes [3, 4, 5].
+        If Bob takes 3, then the board is [4, 5], and Alice takes 5 to win with 10 points.
+        If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 to win with 9 points.
+        This demonstrated that taking the first 5 was a winning move for Alice, so we return true.
+Example 2:
+    Input: piles = [3,7,2,3]
+    Output: true
+Constraints:
+    2 <= piles.length <= 500
+    piles.length is even.
+    1 <= piles[i] <= 500
+    sum(piles[i]) is odd.
+```
+### Analysis
+Here is a random example:
+```text
+piles = 1 4 5 2 3 8 7 9 2 2 3 8 9 
+sum = 53
+sum /2 = 26.5
+```
+The winner is the person who takes more than half of the total stones.
+#### Depth-first search
+```java
+class Solution {
+    public boolean stoneGame(int[] piles) {
+        int sum = Arrays.stream(piles).sum();
+        return dfs(piles, (double)sum/2, 0, piles.length-1,0,true);
+    }
+
+    private boolean dfs(int[] piles, double hsum, int left, int right, int aliceSum, boolean isAliceTurn){
+        if(aliceSum>hsum)return true;
+        if(left>=piles.length || right<0 || left >= right )return false;
+        return dfs(piles, hsum, left+1, right, aliceSum+piles[left], !isAliceTurn) || dfs(piles, hsum, left, right-1, aliceSum+piles[right], !isAliceTurn);
+    }
+}
+```
