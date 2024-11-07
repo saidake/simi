@@ -1,9 +1,8 @@
 # Table of Contents
 - [Introduction](#introduction)
 - [Directory Structure](#directory-structure)
-  - [simi-algorithm](#simi-algorithm)
-  - [simi-test-maven](#simi-test-maven)
-  - [simi-test-gradle](#simi-test-gradle)
+  - [ALGORITHMS.md](#algorithmsmd)
+  - [Simi Sandbox](#simi-sandbox)
 # Introduction
 [Back to Top](#table-of-contents) 
 
@@ -23,10 +22,8 @@ A folder containing bash and batch files required by other modules.
   - Execute a remote bash script with its environment variables.
 * simidep.sh 
   - Deploy a jar file to remote server.
-## simi-test-gradle
-A Gradle learning project that includes comprehensive testing for educational purposes.
-## simi-test-maven
-Maven learning modules that contain JPA, MyBatis, and various database test modules.
+## simi-sandbox
+The simi-sandbox is a dedicated Maven module designed as a versatile environment for testing, experimenting, and showcasing various code implementations.
 ### simi-cap  
 Simi Cap is a CAP demo application.  
 The [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap/docs/java/getting-started) is a framework of languages, libraries, and tools for building enterprise-grade services and applications.
@@ -42,7 +39,7 @@ Common modules shared by other modules.
 ## simi-config
 Common configuration files for use by other modules.
 ## simi-custom
-Custom UI modules.
+Custom modules.
 ## simi-gateway
 Gateway modules.
 ## simi-node

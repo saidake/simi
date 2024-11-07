@@ -19,6 +19,6 @@
         <module>simi-config</module>
         <module>simi-custom</module>
         <module>simi-gateway</module>
-        <module>simi-demo</module>
+        <module>simi-sandbox</module>
     </modules>
 </project>
