@@ -2,6 +2,8 @@
 [Back to Main Project README](README.md)
 - [Dynamic Programming](#dynamic-programming)
     - [Target Sum](#target-sum)
+- [Depth-first Search](#depth-first-search)
+    - [Stone Game](#stone-game) 
 # Dynamic Programming
 ## Target Sum
 [Back to Top](#table-of-contents) 
@@ -35,7 +37,7 @@ Constraints:
     -1000 <= target <= 1000
 ```
 ### Analysis
-#### Depth-first search
+#### Depth-first Search Solution
 Each element of the array nums can be added either a `+` or `-` sign, 
 resulting in `2` choices per element and a total of 2<sup>n</sup> combinations for n elements.  
 Use depth-first search to iterate over each combination and maintain a counter `targetSum` shared in each search path 
@@ -162,7 +164,7 @@ Time and Space Complexity
 * Time Complexity: *O*(2<sup>n</sup>)  (The worst-case time complexity remains the same, but it is faster than the original solution in general cases.)   
 * Space Complexity: *O*(n)
 
-#### Dynamic Programming
+#### Dynamic Programming Solution
 Define a two-dimensional array `dp`, where `dp[i][j]` represents the number of **solutions** 
 to select elements from the first `i` numbers of the array nums so that the sum of these elements is equal to `j`.  
 
@@ -334,8 +336,10 @@ public class Solution {
 Time and Space Complexity
 * Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
 * Space Complexity: O(neg)
-# Temp 
+# Depth-first Search
 ## Stone Game
+[Back to Top](#table-of-contents)
+
 Alice and Bob play a game with piles of stones. 
 There are an even number of piles arranged in a row, and each pile has a positive integer number of stones `piles[i]`.
 
@@ -375,14 +379,17 @@ sum = 53
 sum /2 = 26.5
 ```
 The winner is the person who takes more than half of the total stones.
-#### Depth-first search
+#### Solution
+Recursively evaluate the `piles` array from both the start and end, 
+using a flag variable `isAliceTurn` to track whose turn it is and only calculate the sum for Alice.  
+Since the game ends when one player collects more than half of the total stones, 
+the recursion can terminate early, ensuring only one player wins.
 ```java
 class Solution {
     public boolean stoneGame(int[] piles) {
         int sum = Arrays.stream(piles).sum();
         return dfs(piles, (double)sum/2, 0, piles.length-1,0,true);
     }
-
     private boolean dfs(int[] piles, double hsum, int left, int right, int aliceSum, boolean isAliceTurn){
         if(aliceSum>hsum)return true;
         if(left>=piles.length || right<0 || left >= right )return false;
@@ -390,3 +397,42 @@ class Solution {
     }
 }
 ```
+Time and Space Complexity
+* Time Complexity: *O*(2<sup>n</sup>)
+* Space Complexity: *O*(n) (for the recursion stack)
+# Hash Table
+## Find the Longest Equal Subarray
+[Back to Top](#table-of-contents)  
+
+You are given a **0-indexed** integer array nums and an integer `k`.  
+A subarray is called **equal** if all of its elements are equal. Note that the empty subarray is an **equal** subarray.  
+Return the length of the **longest** possible equal subarray after deleting **at most** `k` elements from `nums`.  
+A **subarray** is a contiguous, possibly empty sequence of elements within an array.
+```text
+Example 1:
+    Input: nums = [1,3,2,3,1,3], k = 3
+    Output: 3
+    Explanation: 
+        It's optimal to delete the elements at index 2 and index 4.
+        After deleting them, nums becomes equal to [1, 3, 3, 3].
+        The longest equal subarray starts at i = 1 and ends at j = 3 with length equal to 3.
+        It can be proven that no longer equal subarrays can be created.
+Example 2:
+    Input: nums = [1,1,2,2,1,1], k = 2
+    Output: 4
+    Explanation: 
+        It's optimal to delete the elements at index 2 and index 3.
+        After deleting them, nums becomes equal to [1, 1, 1, 1].
+        The array itself is an equal subarray, so the answer is 4.
+        It can be proven that no longer equal subarrays can be created.
+Constraints:
+    1 <= nums.length <= 105
+    1 <= nums[i] <= nums.length
+    0 <= k <= nums.length
+```
+### Analysis
+Finding the longest possible equal subarray involves counting the number of identical numbers.   
+Because we can delete at most `k` elements,  
+the number of other numbers between those identical numbers must be counted 
+so that the number of elements to be deleted can be determined.  
+Determine a hashtable `ht` that the key is a unique number in the array `nums`, the value is  

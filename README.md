@@ -1,7 +1,7 @@
 # Table of Contents
 - [Introduction](#introduction)
 - [Directory Structure](#directory-structure)
-  - [ALGORITHMS.md](#algorithmsmd)
+  - [ALGORITHMS](#algorithmsmd)
   - [Simi Sandbox](#simi-sandbox)
 # Introduction
 [Back to Top](#table-of-contents) 
