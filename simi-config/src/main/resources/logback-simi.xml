@@ -1,72 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration  scan="true" scanPeriod="10 seconds">
-    <!-- scan               配置文档如果发生改变，将会被重新加载，默认值为true -->
-    <!-- scanPeriod    监测配置文档修改的时间间隔，默认单位是毫秒（当scan为true时，此属性生效。默认的时间间隔为1分钟）-->
-    <!-- debug           当此属性设置为true时，将打印出logback内部日志信息。默认值为false。 -->
+<configuration scan="true" scanPeriod="10 seconds">
+    <!-- scan: If the configuration file changes, it will be reloaded. The default value is true -->
+    <!-- scanPeriod: The time interval to monitor changes in the configuration file, default unit is milliseconds (this property is effective when scan is true, with a default interval of 1 minute) -->
+    <!-- debug: When this property is set to true, internal logback logs will be printed. The default value is false. -->
 
-    <springProperty name="LOG_PATH" scope="context"  source="simi.log-path" default="../AAAlogs"/>           <!--application.properties内定义的值会被插入到logger上下文中，也可以使用 -->
-    <springProperty name="APP_NAME" scope="context"  source="spring.application.name"/>
+    <springProperty name="LOG_PATH" scope="context" source="simi.log-path" default="../AAAlogs"/>           <!-- Values defined in application.properties will be inserted into the logger context, variables can also be used -->
+    <springProperty name="APP_NAME" scope="context" source="spring.application.name"/>
     <springProperty name="SERVER_IP" scope="context" source="spring.cloud.client.ip-address" defaultValue="0.0.0.0"/>
     <springProperty name="SERVER_PORT" scope="context" source="server.port" defaultValue="0000"/>
 
-    <property name="CONSOLE_LOG_PATTERN" value="%clr(%date{yyyy-MM-dd HH:mm:ss.SSS}){blue} %clr(-){faint}%clr(%5level) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%thread]){yellow} %clr(%logger){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>        <!-- 自定义彩色日志格式配置，自定义属性，可以使"${}"来使用变量，faint  blue  yellow magenta orange cyan -->
+    <property name="CONSOLE_LOG_PATTERN" value="%clr(%date{yyyy-MM-dd HH:mm:ss.SSS}){blue} %clr(-){faint}%clr(%5level) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%thread]){yellow} %clr(%logger){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>        <!-- Custom colored log format configuration, custom attributes allow the use of variables with "${}", colors like faint, blue, yellow, magenta, orange, cyan -->
 
-    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} - ${APP_NAME} - %-5level --- [%thread] %logger{50} - %msg%n "/>        <!-- 自定义文件日志格式配置 -->
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} - ${APP_NAME} - %-5level --- [%thread] %logger{50} - %msg%n "/>        <!-- Custom file log format configuration -->
 
     <contextName>logback</contextName>
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />               <!--日志格式和颜色渲染，彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />               <!-- Log format and color rendering, the class responsible for rendering colored logs -->
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
 
-    <!-- %date   时间格式-->
-    <!-- %level   日志级别-->
-    <!-- %thread   日志所在线程名-->
-    <!-- %logger   包名，会缩短简写-->
-    <!-- %msg   应用程序提供的信息-->
-    <!-- %n   平台的换行符\n或\r\n-->
-    <!-- -%20.30logger  短于20个字符在左侧填充空格。超过30个字符从开头截断。负号表示向左靠齐-->
-    <!-- %logger{26}   超过26的包名会被缩写  -->
+    <!-- %date: Time format -->
+    <!-- %level: Log level -->
+    <!-- %thread: The thread name where the log was generated -->
+    <!-- %logger: Package name, shortened or abbreviated -->
+    <!-- %msg: The message provided by the application -->
+    <!-- %n: Platform's newline character \n or \r\n -->
+    <!-- -%20.30logger: For logger names shorter than 20 characters, pad with spaces on the left; truncate longer names at 30 characters -->
+    <!-- %logger{26}: Abbreviates package names longer than 26 characters -->
 
-    <!-- ${testKey:-%t }   输出testKey所对应的value，默认为-%t-->
+    <!-- ${testKey:-%t }: Outputs the value of testKey, defaulting to -%t -->
 
-    <!-- gray 灰色  white白色  yellow 黄色  green绿色  red 红色 black 黑色   magenta 洋红  boldMagenta  加粗洋红  cyan 青色   -->
+    <!-- gray: Gray, white: White, yellow: Yellow, green: Green, red: Red, black: Black, magenta: Magenta, boldMagenta: Bold magenta, cyan: Cyan -->
 
-
-
-    <appender name="CONSOLE_LOG" class="ch.qos.logback.core.ConsoleAppender">                       <!--输出到控制台，此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+    <appender name="CONSOLE_LOG" class="ch.qos.logback.core.ConsoleAppender">                       <!-- Outputs to the console, this appender is for development use with the lowest log level configuration, console logs will show logs greater than or equal to this level -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
         </filter>
         <encoder>
             <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
-            <charset>UTF-8</charset>                                                         <!-- 设置字符集 -->
+            <charset>UTF-8</charset>                                                         <!-- Set the character encoding -->
         </encoder>
     </appender>
 
-
-    <appender name="FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">            <!--输出到文档，每天产生一个文件，level为 DEBUG 日志-->
-        <!--<file>${LOG_PATH}/sdk-${APP_NAME}.log</file>                                                 &lt;!&ndash; 输出日志路径，配置滚动日志文件时，当前的日志输出到此文件，明天之后的日志输出到滚动日志pattern文件&ndash;&gt;-->
-        <encoder>                                                                                          <!--日志文档输出格式-->
+    <appender name="FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">            <!-- Outputs to a file, generates a new file daily with DEBUG level logs -->
+        <!--<file>${LOG_PATH}/sdk-${APP_NAME}.log</file>                                                 <!-- Log output path, when configuring rolling logs, current logs are output to this file, and logs after tomorrow will be output to the rolling log pattern file -->
+        <encoder>                                                                                          <!-- Log file output format -->
             <pattern>${FILE_LOG_PATTERN}</pattern>
-            <charset>UTF-8</charset>                                                              <!-- 设置字符集 -->
+            <charset>UTF-8</charset>                                                              <!-- Set the character encoding -->
         </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">                              <!-- 基于时间和大小的滚动策略-->
-            <fileNamePattern>${LOG_PATH}/sdklog-${APP_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>                  <!-- 日志按照天滚动 -->
-            <!--  clp.%i.log.zip           后缀以".zip"或".gz"结尾，则开启日志文件压缩  -->
-            <!--  %d决定以什么时间维度轮转(但实际轮转时机取决于日志事件的到达时间)，比如%d{yyyy/MM}:每个月开始的时候轮转,%d默认为 yyyy-MM-dd：按天轮转 -->
-            <!-- %i为文件按照maxFileSize大小规定轮转后的序号 -->
-            <maxFileSize>100MB</maxFileSize>                                            <!--单个日志文件最大大小，当文件达到该大小则触发截断（以及压缩）-->
-            <maxHistory>60</maxHistory>                                                     <!--日志文件保留最大时间滚动周期，比如当filaNamePattern中%d以为dd结尾时，则保留60天-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">                              <!-- Rolling policy based on time and size -->
+            <fileNamePattern>${LOG_PATH}/sdklog-${APP_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>                  <!-- Logs roll daily -->
+            <!--  clp.%i.log.zip: If the suffix ends with ".zip" or ".gz", log compression is enabled -->
+            <!--  %d determines the time dimension for rotation, e.g., %d{yyyy/MM} rotates at the beginning of each month, by default %d is yyyy-MM-dd for daily rotation -->
+            <!-- %i is the sequence number for the file after rolling based on maxFileSize -->
+            <maxFileSize>100MB</maxFileSize>                                            <!-- The maximum size of a single log file, the log file will be truncated (and compressed) when this size is reached -->
+            <maxHistory>60</maxHistory>                                                     <!-- Maximum retention time for log files, for example, when %d in fileNamePattern ends with dd, retain logs for 60 days -->
         </rollingPolicy>
-        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">                     &lt;!&ndash; 此日志文档只记录debug级别的 &ndash;&gt;-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">                     <!-- This log file only records DEBUG level logs -->
         <!--<level>DEBUG</level>-->
         <!--<onMatch>ACCEPT</onMatch>-->
         <!--<onMismatch>DENY</onMismatch>-->
         <!--</filter>-->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">            <!-- 过滤掉低于INFO级别的日志，记录等于或高于INFO的日志-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">            <!-- Filters out logs lower than INFO level, records logs equal to or higher than INFO -->
             <level>INFO</level>
         </filter>
-        <!-- 日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出 -->
+        <!-- Log levels from low to high: TRACE < DEBUG < INFO < WARN < ERROR < FATAL, if set to WARN, logs lower than WARN will not be output -->
     </appender>
 
     <root level="info">
@@ -74,34 +71,33 @@
         <appender-ref ref="FILE_LOG" />
     </root>
 
-
-    <!--    监控sql日志输出-->
-    <!--  如想看到表格数据，将OFF改为INFO  -->
+    <!-- Monitoring SQL log output -->
+    <!-- To see the result data, change OFF to INFO -->
     <logger name="jdbc.resultsettable" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE_LOG"/>
     </logger>
 
-    <!--    包含 SQL 语句实际的执行时间 及sql语句（与jdbc.sqlonly功能重复）   -->
+    <!-- Logs the actual execution time and SQL statements (duplicates the jdbc.sqlonly functionality) -->
     <logger name="jdbc.sqltiming" level="OFF" additivity="false">
         <appender-ref ref="CONSOLE_LOG"/>
     </logger>
 
-    <!--      仅仅记录 SQL 语句，会将占位符替换为实际的参数-->
+    <!-- Logs only the SQL statements, replacing placeholders with actual parameters -->
     <logger name="jdbc.sqlonly" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE_LOG"/>
     </logger>
 
-    <!--  包含 ResultSet 的信息，输出篇幅较长  -->
+    <!-- Includes information from the ResultSet, which can be lengthy -->
     <logger name="jdbc.resultset" level="OFF" additivity="false">
         <appender-ref ref="CONSOLE_LOG"/>
     </logger>
 
-    <!-- 输出了 Connection 的 open、close 等信息  -->
+    <!-- Logs connection information like open and close actions -->
     <logger name="jdbc.connection" level="OFF" additivity="false">
         <appender-ref ref="CONSOLE_LOG"/>
     </logger>
 
-    <!--    除了 ResultSet 之外的所有JDBC调用信息，篇幅较长 -->
+    <!-- Logs all JDBC calls except for ResultSet, which can be lengthy -->
     <logger name="jdbc.audit" level="OFF" additivity="false">
         <appender-ref ref="CONSOLE_LOG"/>
     </logger>

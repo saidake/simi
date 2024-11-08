@@ -8,23 +8,27 @@ import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 
 /**
- * 精确计算
+ * Utility class for precise arithmetic calculations using BigDecimal.
  */
 @Slf4j
 public final class BigDecimalUtils {
 
 	/**
-	 * 默认除法运算精度
+	 * Default scale for division operations, using 2 decimal places.
 	 */
 	public static final int DEFAULT_DIV_SCALE_2 = 2;
+
+	/**
+	 * Default scale for division operations, using 4 decimal places.
+	 */
 	public static final int DEFAULT_DIV_SCALE_4 = 4;
 
 	/**
-	 * 提供精确的加法运算。
+	 * Provides precise addition of two Double values.
 	 *
-	 * @param v1
-	 * @param v2
-	 * @return 两个参数的和
+	 * @param v1 The first value to add.
+	 * @param v2 The second value to add.
+	 * @return The sum of v1 and v2, rounded to 2 decimal places using HALF_EVEN rounding mode.
 	 */
 	public static BigDecimal add(Double v1, Double v2) {
 		BigDecimal b1 = BigDecimal.valueOf(v1);
@@ -32,13 +36,12 @@ public final class BigDecimalUtils {
 		return b1.add(b2).setScale(DEFAULT_DIV_SCALE_2, BigDecimal.ROUND_HALF_EVEN);
 	}
 
-
 	/**
-	 * 提供精确的减法运算。
+	 * Provides precise subtraction of two Double values.
 	 *
-	 * @param v1
-	 * @param v2
-	 * @return 两个参数的差
+	 * @param v1 The value to subtract from (minuend).
+	 * @param v2 The value to be subtracted (subtrahend).
+	 * @return The difference between v1 and v2, rounded to 2 decimal places using HALF_EVEN rounding mode.
 	 */
 	public static BigDecimal subtract(Double v1, Double v2) {
 		BigDecimal b1 = BigDecimal.valueOf(v1);
@@ -46,92 +49,106 @@ public final class BigDecimalUtils {
 		return b1.subtract(b2).setScale(DEFAULT_DIV_SCALE_2, BigDecimal.ROUND_HALF_EVEN);
 	}
 
-
 	/**
-	 * 提供精确的乘法运算。
+	 * Provides precise multiplication of two Double values.
 	 *
-	 * @param v1
-	 * @param v2
-	 * @return 两个参数的积
+	 * @param v1 The first value to multiply.
+	 * @param v2 The second value to multiply.
+	 * @return The product of v1 and v2, rounded to 2 decimal places using HALF_EVEN rounding mode.
 	 */
 	public static BigDecimal multiply(Double v1, Double v2) {
 		return multiply(v1, v2, DEFAULT_DIV_SCALE_2);
 	}
 
+	/**
+	 * Provides precise multiplication of two Double values with specified scale.
+	 *
+	 * @param v1    The first value to multiply.
+	 * @param v2    The second value to multiply.
+	 * @param scale The number of decimal places to round to.
+	 * @return The product of v1 and v2, rounded to the specified scale using HALF_EVEN rounding mode.
+	 */
 	public static BigDecimal multiply(Double v1, Double v2, int scale) {
 		return multiply(v1, v2, scale, BigDecimal.ROUND_HALF_EVEN);
 	}
 
+	/**
+	 * Provides precise multiplication of two Double values with specified scale and rounding mode.
+	 *
+	 * @param v1        The first value to multiply.
+	 * @param v2        The second value to multiply.
+	 * @param scale     The number of decimal places to round to.
+	 * @param roundMode The rounding mode to apply.
+	 * @return The product of v1 and v2, rounded to the specified scale and using the specified rounding mode.
+	 */
 	public static BigDecimal multiply(Double v1, Double v2, int scale, int roundMode) {
 		if (scale < 0) {
-			throw new IllegalArgumentException("精度指定错误，请指定一个 >= 0 的精度");
+			throw new IllegalArgumentException("Invalid scale value. Scale must be greater than or equal to 0.");
 		}
 		BigDecimal b1 = BigDecimal.valueOf(v1);
 		BigDecimal b2 = BigDecimal.valueOf(v2);
-		BigDecimal d;
+		BigDecimal result;
 		try {
-			d = b1.multiply(b2).setScale(scale, roundMode);
+			result = b1.multiply(b2).setScale(scale, roundMode);
 		} catch (Exception e) {
-			throw new ArithmeticException("被除数不能为0!!");
+			throw new ArithmeticException("Division by zero error!");
 		}
-		return d;
+		return result;
 	}
 
-
 	/**
-	 * 提供（相对）精确的除法运算，当发生除不尽的情况时，精确到 小数点以后2位，以后的数字四舍五入,舍入模式采用ROUND_HALF_EVEN
+	 * Provides precise division of two Double values, rounded to 2 decimal places using HALF_EVEN rounding mode.
 	 *
-	 * @param v1
-	 * @param v2
-	 * @return 两个Double类型参数的商
+	 * @param v1 The dividend.
+	 * @param v2 The divisor.
+	 * @return The quotient of v1 and v2, rounded to 2 decimal places.
 	 */
 	public static BigDecimal divide(Double v1, Double v2) {
 		return divide(v1, v2, DEFAULT_DIV_SCALE_2);
 	}
 
 	/**
-	 * 提供（相对）精确的除法运算，当发生除不尽的情况时，由scale参数指 定精度，以后的数字四舍五入。舍入模式采用用户指定舍入模式
+	 * Provides precise division of two Double values with specified scale, using HALF_EVEN rounding mode.
 	 *
-	 * @param v1
-	 * @param v2
-	 * @param scale 表示需要精确到小数点后几位
-	 * @return 两个Double类型参数的商
+	 * @param v1    The dividend.
+	 * @param v2    The divisor.
+	 * @param scale The number of decimal places to round to.
+	 * @return The quotient of v1 and v2, rounded to the specified scale.
 	 */
 	public static BigDecimal divide(Double v1, Double v2, int scale) {
 		return divide(v1, v2, scale, BigDecimal.ROUND_HALF_EVEN);
 	}
 
 	/**
-	 * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指 定精度，以后的数字四舍五入。舍入模式采用用户指定舍入模式
+	 * Provides precise division of two Double values with specified scale and rounding mode.
 	 *
-	 * @param v1
-	 * @param v2
-	 * @param scale     表示需要精确到小数点后几位
-	 * @param roundMode 表示用户指定的舍入模式
-	 * @return 两个Double类型参数的商
+	 * @param v1        The dividend.
+	 * @param v2        The divisor.
+	 * @param scale     The number of decimal places to round to.
+	 * @param roundMode The rounding mode to apply.
+	 * @return The quotient of v1 and v2, rounded to the specified scale and using the specified rounding mode.
 	 */
 	public static BigDecimal divide(Double v1, Double v2, int scale, int roundMode) {
 		if (scale < 0) {
-			throw new IllegalArgumentException("精度指定错误，请指定一个 >= 0 的精度");
+			throw new IllegalArgumentException("Invalid scale value. Scale must be greater than or equal to 0.");
 		}
 		BigDecimal b1 = BigDecimal.valueOf(v1);
 		BigDecimal b2 = BigDecimal.valueOf(v2);
 
-		BigDecimal d;
+		BigDecimal result;
 		try {
-			d = b1.divide(b2, scale, roundMode);
+			result = b1.divide(b2, scale, roundMode);
 		} catch (Exception e) {
-			throw new ArithmeticException("被除数不能为0!!");
+			throw new ArithmeticException("Division by zero error!");
 		}
-		return d;
+		return result;
 	}
 
-
 	/**
-	 * 将数字格式的字符串里面，有逗号去掉
+	 * Removes comma separators from a formatted numeric string.
 	 *
-	 * @param str=5,000,000.00
-	 * @return 去掉逗号后为 5000000.00
+	 * @param str A numeric string with comma separators (e.g., "5,000,000.00").
+	 * @return A string with comma separators removed (e.g., "5000000.00"), or an empty string if parsing fails.
 	 */
 	public static String parseDouStr(String str) {
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
@@ -144,14 +161,9 @@ public final class BigDecimalUtils {
 		try {
 			num = df.parse(str);
 		} catch (ParseException e) {
-			log.error("异常信息为：",e);
+			log.error("Parsing error: ", e);
 		}
-//		return BigDecimal.valueOf(Double.valueOf(num.toString())).toString();
-		if(num != null){
-			return BigDecimal.valueOf(Double.valueOf(num.toString())).toString();
-		}else {
-			return "";
-		}
+		return num != null ? BigDecimal.valueOf(Double.parseDouble(num.toString())).toString() : "";
 	}
 
 }

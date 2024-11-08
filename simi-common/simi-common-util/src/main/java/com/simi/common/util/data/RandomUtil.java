@@ -13,9 +13,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-/**
- * 随机工具类
- */
 @UtilityClass
 public class RandomUtil {
     private static String ChineseFamilyNameSingle = "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻水云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳鲍史唐费岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅卞齐康伍余元卜顾孟平"
@@ -36,10 +33,7 @@ public class RandomUtil {
     };
 
 
-    /**
-     * 生成随机英文姓名
-     * @return 姓名
-     */
+
     public static String getRandomEnglishName() {
         String currentSex=getRandomSex();
         if("男".equals(currentSex)){
@@ -49,20 +43,13 @@ public class RandomUtil {
         }
     }
 
-    /**
-     * 生成随机姓名
-     * @return 姓名
-     */
     public static String getRandomName() {
         String currentSex=getRandomSex();
         return getRandomFamilyName()+getRandomOnlyNameBySex(currentSex);
     }
 
 
-    /**
-     * 功能：随机产生姓氏
-     * @return 姓氏
-     */
+
     public static String getRandomFamilyName() {
         String str = "";
         int randNum = new Random().nextInt(2) + 1;
@@ -79,22 +66,11 @@ public class RandomUtil {
 
 
 
-    /**
-     * 功能：随机产生性别
-     *
-     * @return
-     */
     public static String getRandomSex() {
         int randNum = new Random().nextInt(2) + 1;
         return randNum == 1 ? "男" : "女";
     }
 
-    /**
-     * 功能：传入性别参数，依据性别产生名字
-     *
-     * @param sex
-     * @return
-     */
     public static String getRandomOnlyNameBySex(String sex) {
         String name;
         int randNum = new Random().nextInt(2) + 1;  // [1,3)
@@ -105,11 +81,6 @@ public class RandomUtil {
         return name;
     }
 
-    /**
-     * 功能：随机产生[0,99)的整数
-     *
-     * @return
-     */
     public static int getRandomAge() {
         return new Random().nextInt(99) ;
     }
@@ -126,44 +97,30 @@ public class RandomUtil {
         return Integer.valueOf(stringList.get(nextInt));
     }
 
-    /**
-     * 功能：随机产生[start, end)的整数
-     *
-     * @return
-     */
     public static int getRandomNum(int start, int end) {
         return new Random().nextInt(end-start)+start;
     }
 
 
 
-    //中国移动
     public static final String[] CHINA_MOBILE = {
             "134", "135", "136", "137", "138", "139", "150", "151", "152", "157", "158", "159",
             "182", "183", "184", "187", "188", "178", "147", "172", "198"
     };
-    //中国联通
     public static final String[] CHINA_UNICOM = {
             "130", "131", "132", "145", "155", "156", "166", "171", "175", "176", "185", "186", "166"
     };
-    //中国电信
     public static final String[] CHINA_TELECOME = {
             "133", "149", "153", "173", "177", "180", "181", "189", "199"
     };
 
 
-    /**
-     * 生成随机手机号
-     */
+
     public static String getRandomPhone() {
         return getRandomPhoneByOp( new Random().nextInt(3));
     }
 
-    /**
-     * 生成手机号
-     *
-     * @param op 0 移动 1 联通 2 电信
-     */
+
     public static String getRandomPhoneByOp(int op) {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
@@ -180,14 +137,13 @@ public class RandomUtil {
                 mobile01 = CHINA_TELECOME[random.nextInt(CHINA_TELECOME.length)];
                 break;
             default:
-                mobile01 = "op标志位有误！";
+                mobile01 = "op mark error！";
                 break;
         }
         if (mobile01.length() > 3) {
             return mobile01;
         }
         sb.append(mobile01);
-        //生成手机号后8位
         for (int i = 0; i < 8; i++) {
             temp = random.nextInt(10);
             sb.append(temp);
@@ -197,7 +153,6 @@ public class RandomUtil {
 
 
 
-    //邮箱后缀
     public static final String[] EMAIL_SUFFIX = {
          "@gmail.com","@yahoo.com","@msn.com","@hotmail.com","@aol.com","@ask.com","@live.com","@qq.com","@0355.net","@163.com","@163.net","@263.net","@3721.net","@yeah"
     };
@@ -206,11 +161,7 @@ public class RandomUtil {
         return getSaltString(getRandomNum(3,10))+EMAIL_SUFFIX[getRandomNum(0,EMAIL_SUFFIX.length)];
     }
 
-    /**
-     * 生成随机字符串
-     * @param length
-     * @return
-     */
+
     public static String getSaltString(Integer length) {
 
         String SALTCHARS ="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

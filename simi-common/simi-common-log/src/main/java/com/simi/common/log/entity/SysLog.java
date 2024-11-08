@@ -4,47 +4,46 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
 @Data
 @EqualsAndHashCode
-public class SysLog  {
+public class SysLog {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "日志编号")
+    @Schema(description = "Log ID")
     private Long id;
 
-    @Schema(description = "日志类型")
+    @Schema(description = "Log Type")
     private String type;
 
-    @Schema(description = "日志标题")
+    @Schema(description = "Log Title")
     private String title;
 
-    @Schema(description = "操作ip地址")
+    @Schema(description = "Operation IP Address")
     private String remoteAddr;
 
-    @Schema(description = "用户代理")
+    @Schema(description = "User Agent")
     private String userAgent;
 
-    @Schema(description = "请求uri")
+    @Schema(description = "Request URI")
     private String requestUri;
 
-    @Schema(description = "操作方式")
+    @Schema(description = "Operation Method")
     private String method;
 
-    @Schema(description = "数据")
+    @Schema(description = "Data")
     private String params;
 
-    @Schema(description = "方法执行时间")
+    @Schema(description = "Method Execution Time")
     private Long time;
 
-    @Schema(description = "异常信息")
+    @Schema(description = "Exception Information")
     private String exception;
 
-    @Schema(description = "应用标识")
+    @Schema(description = "Service Identifier")
     private String serviceId;
 
-    @Schema(description = "删除标记")
+    @Schema(description = "Delete Flag")
     private String delFlag;
 
 }

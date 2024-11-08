@@ -14,11 +14,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.expression.EvaluationContext;
 
-/**
- * 操作日志使用spring event异步入库
- *
- * @author L.cm
- */
 @Aspect
 @Slf4j
 public class SysLogAspect {
@@ -28,7 +23,6 @@ public class SysLogAspect {
     public Object around(ProceedingJoinPoint point, com.simi.common.log.annotation.SysLog sysLog) {
         String strClassName = point.getTarget().getClass().getName();
         String strMethodName = point.getSignature().getName();
-        log.info("[类名]:{},[方法]:{}", strClassName, strMethodName);
 
         String value = sysLog.value();
         String expression = sysLog.expression();
@@ -42,7 +36,7 @@ public class SysLogAspect {
             }
             catch (Exception e) {
                 // SPEL 表达式异常，获取 value 的值
-                log.info("@SysLog 解析SPEL {} 异常", expression);
+                log.info("@SysLog  {} Exception.", expression);
             }
         }
 
