@@ -1,10 +1,130 @@
 # Table of Contents
 [Back to Main Project README](README.md)
 - [Dynamic Programming](#dynamic-programming)
-    - [Target Sum](#target-sum)
+  - [Stone Game](#stone-game)
+  - [Target Sum](#target-sum)
 - [Depth-first Search](#depth-first-search)
-    - [Stone Game](#stone-game) 
 # Dynamic Programming
+## Stone Game
+[Back to Top](#table-of-contents)
+
+Alice and Bob play a game with piles of stones.
+There are an even number of piles arranged in a row, and each pile has a positive integer number of stones `piles[i]`.
+
+The objective of the game is to end with the most stones. The **total** number of stones across all the piles is **odd**,
+so there are no ties.
+
+Alice and Bob take turns, with Alice starting first. Each turn, a player takes the entire pile of stones either
+from the beginning or from the end of the row. This continues until there are no more piles left,
+at which point the person with the most stones wins.
+
+Assuming Alice and Bob play optimally, return true if Alice wins the game, or false if Bob wins.
+
+```text
+Example 1:
+    Input: piles = [5,3,4,5]
+    Output: true
+    Explanation: 
+        Alice starts first, and can only take the first 5 or the last 5.
+        Say she takes the first 5, so that the row becomes [3, 4, 5].
+        If Bob takes 3, then the board is [4, 5], and Alice takes 5 to win with 10 points.
+        If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 to win with 9 points.
+        This demonstrated that taking the first 5 was a winning move for Alice, so we return true.
+Example 2:
+    Input: piles = [3,7,2,3]
+    Output: true
+Constraints:
+    2 <= piles.length <= 500
+    piles.length is even.
+    1 <= piles[i] <= 500
+    sum(piles[i]) is odd.
+```
+### Analysis
+Here is a random example:
+```text
+piles = 1 4 5 2 3 8 7 9 2 2 3 8 9 
+sum = 53
+sum /2 = 26.5
+```
+The winner is the person who takes more than half of the total stones.
+#### Depth-first Search Solution
+Recursively evaluate the `piles` array from both the start and end,
+using a flag variable `isAliceTurn` to track whose turn it is and only calculate the sum for Alice.  
+Since the game ends when one player collects more than half of the total stones,
+the recursion can terminate early, ensuring only one player wins.
+```java
+class Solution {
+  public boolean stoneGame(int[] piles) {
+    int sum = Arrays.stream(piles).sum();
+    return dfs(piles, (double)sum/2, 0, piles.length-1,0,true);
+  }
+
+  /**
+   * Recursive DFS function to determine if Alice can win.
+   * 
+   * @param piles           The array of stone piles.
+   * @param hsum            Half of the total sum of stones (the target for Alice to win).
+   * @param left            The current left index of the pile range.    
+   * @param right           The current right index of the pile range.
+   * @param aliceSum        The current sum of stones collected by Alice.
+   * @param isAliceTurn     A boolean indicating whether it is Alice's turn.
+   * @return                True if Alice can win, otherwise false.
+   */
+  private boolean dfs(int[] piles, double hsum, int left, int right, int aliceSum, boolean isAliceTurn){
+    // If Alice's current sum exceeds half of the total sum, she wins.
+    if(aliceSum>hsum)return true;
+    if(left>=piles.length || right<0 || left >= right )return false;
+    if(piles[left]>piles[right]){
+      return dfs(piles, hsum, left+1, right, aliceSum+piles[left], !isAliceTurn);
+    }else if(piles[left]<piles[right]){
+      return dfs(piles, hsum, left, right-1, aliceSum+piles[right], !isAliceTurn);
+    }else{
+      return dfs(piles, hsum, left+1, right, aliceSum+piles[left], !isAliceTurn) || dfs(piles, hsum, left, right-1, aliceSum+piles[right], !isAliceTurn);
+    }
+  }
+}
+```
+Time and Space Complexity
+* Time Complexity: *O*(2<sup>n</sup>)
+* Space Complexity: *O*(n) (for the recursion stack)
+#### Dynamic Programming Solution
+Define a two-dimensional array `dp`
+
+```java
+class Solution {
+    public boolean stoneGame(int[] piles) {
+        int length = piles.length;
+        int[][] dp = new int[length][length];
+        for (int i = 0; i < length; i++) {
+            dp[i][i] = piles[i];
+        }
+        for (int i = length - 2; i >= 0; i--) {
+            for (int j = i + 1; j < length; j++) {
+                dp[i][j] = Math.max(piles[i] - dp[i + 1][j], piles[j] - dp[i][j - 1]);
+            }
+        }
+        return dp[0][length - 1] > 0;
+    }
+}
+```
+#### Optimized Dynamic Programming Solution
+```java
+class Solution {
+    public boolean stoneGame(int[] piles) {
+        int length = piles.length;
+        int[] dp = new int[length];
+        for (int i = 0; i < length; i++) {
+            dp[i] = piles[i];
+        }
+        for (int i = length - 2; i >= 0; i--) {
+            for (int j = i + 1; j < length; j++) {
+                dp[j] = Math.max(piles[i] - dp[j], piles[j] - dp[j - 1]);
+            }
+        }
+        return dp[length - 1] > 0;
+    }
+}
+```
 ## Target Sum
 [Back to Top](#table-of-contents) 
 ### Overview
@@ -337,69 +457,6 @@ Time and Space Complexity
 * Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
 * Space Complexity: O(neg)
 # Depth-first Search
-## Stone Game
-[Back to Top](#table-of-contents)
-
-Alice and Bob play a game with piles of stones. 
-There are an even number of piles arranged in a row, and each pile has a positive integer number of stones `piles[i]`.
-
-The objective of the game is to end with the most stones. The **total** number of stones across all the piles is **odd**, 
-so there are no ties.
-
-Alice and Bob take turns, with Alice starting first. Each turn, a player takes the entire pile of stones either 
-from the beginning or from the end of the row. This continues until there are no more piles left, 
-at which point the person with the most stones wins.
-
-Assuming Alice and Bob play optimally, return true if Alice wins the game, or false if Bob wins.
-
-```text
-Example 1:
-    Input: piles = [5,3,4,5]
-    Output: true
-    Explanation: 
-        Alice starts first, and can only take the first 5 or the last 5.
-        Say she takes the first 5, so that the row becomes [3, 4, 5].
-        If Bob takes 3, then the board is [4, 5], and Alice takes 5 to win with 10 points.
-        If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 to win with 9 points.
-        This demonstrated that taking the first 5 was a winning move for Alice, so we return true.
-Example 2:
-    Input: piles = [3,7,2,3]
-    Output: true
-Constraints:
-    2 <= piles.length <= 500
-    piles.length is even.
-    1 <= piles[i] <= 500
-    sum(piles[i]) is odd.
-```
-### Analysis
-Here is a random example:
-```text
-piles = 1 4 5 2 3 8 7 9 2 2 3 8 9 
-sum = 53
-sum /2 = 26.5
-```
-The winner is the person who takes more than half of the total stones.
-#### Solution
-Recursively evaluate the `piles` array from both the start and end, 
-using a flag variable `isAliceTurn` to track whose turn it is and only calculate the sum for Alice.  
-Since the game ends when one player collects more than half of the total stones, 
-the recursion can terminate early, ensuring only one player wins.
-```java
-class Solution {
-    public boolean stoneGame(int[] piles) {
-        int sum = Arrays.stream(piles).sum();
-        return dfs(piles, (double)sum/2, 0, piles.length-1,0,true);
-    }
-    private boolean dfs(int[] piles, double hsum, int left, int right, int aliceSum, boolean isAliceTurn){
-        if(aliceSum>hsum)return true;
-        if(left>=piles.length || right<0 || left >= right )return false;
-        return dfs(piles, hsum, left+1, right, aliceSum+piles[left], !isAliceTurn) || dfs(piles, hsum, left, right-1, aliceSum+piles[right], !isAliceTurn);
-    }
-}
-```
-Time and Space Complexity
-* Time Complexity: *O*(2<sup>n</sup>)
-* Space Complexity: *O*(n) (for the recursion stack)
 # Hash Table
 ## Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
