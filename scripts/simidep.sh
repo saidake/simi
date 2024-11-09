@@ -15,6 +15,10 @@
 # ./simidep.sh status    - Display application status
 # ./simidep.sh debug     - Start application in debug mode
 # ./simidep.sh startjmx  - Start application with JMX enabled
+#
+# Author: Craig Brown
+# Since: Oct 6, 2024
+# ************************************************************************************
 
 #========================================================== Default File Parameter Values
 
