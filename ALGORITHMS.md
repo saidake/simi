@@ -492,4 +492,39 @@ Finding the longest possible equal subarray involves counting the number of iden
 Because we can delete at most `k` elements,  
 the number of other numbers between those identical numbers must be counted 
 so that the number of elements to be deleted can be determined.  
-Determine a hashtable `ht` that the key is a unique number in the array `nums`, the value is  
+```java
+class Solution {
+    public int longestEqualSubarray(List<Integer> nums, int k) {
+        // Create a hash map to store the count of identical elements and the count of other elements with different values between them.
+        // { number : [len1, len2, len3 ] }
+        // len1: The length of the equal subarray
+        // len2: The quantity of other numbers that need to be deleted within the equal subarray.
+        // len3: The quantity of other numbers outside the current equal subarray.
+        Map<Integer, List<Integer>> countMap=new LinkedHashMap();
+        int maxNum=0;
+        for(int i=0; i<nums.size(); i++){
+            int cur=nums.get(i);
+            // If the current value already exists, increase the length of equal subarray of the current value by 1.
+            List<Integer> mapValue = countMap.compute(cur, (key,val)->{
+                if(val!=null){
+                    val.set(0,val.get(0)+1);
+                    // Synchronize the latest length of other numbers that need to be deleted within the equal subarray.
+                    val.set(1,val.get(2));
+                    return val;
+                }else return Arrays.asList(1,0,0);
+            });
+            //TODO: filter out the cases where only the minimum number of deletions is needed.  
+            
+            // Increase the length of other numbers outside the current equal subarray by 1.
+            Set<Map.Entry<Integer, List<Integer>>> entrySet=countMap.entrySet();
+            for(Map.Entry<Integer, List<Integer>> item: entrySet){
+                if(item.getKey().equals(cur))continue;
+                List<Integer> itemVal=item.getValue();
+                itemVal.set(2, itemVal.get(2)+1);
+            }
+            if(mapValue.get(1)<=k)maxNum=Math.max(countMap.get(cur).get(0),maxNum);
+        }
+        return maxNum;
+    }
+}
+```
