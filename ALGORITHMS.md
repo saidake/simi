@@ -1,9 +1,10 @@
 # Table of Contents
 [Back to Main Project README](README.md)
 - [Dynamic Programming](#dynamic-programming)
-  - [Stone Game](#stone-game)
-  - [Target Sum](#target-sum)
-- [Depth-first Search](#depth-first-search)
+    - [Stone Game](#stone-game)
+    - [Target Sum](#target-sum)
+- [Hash Table](#hash-table)
+    - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
 # Dynamic Programming
 ## Stone Game
 [Back to Top](#table-of-contents)
@@ -113,9 +114,7 @@ class Solution {
     public boolean stoneGame(int[] piles) {
         int length = piles.length;
         int[] dp = new int[length];
-        for (int i = 0; i < length; i++) {
-            dp[i] = piles[i];
-        }
+        System.arraycopy(piles, 0, dp, 0, length);
         for (int i = length - 2; i >= 0; i--) {
             for (int j = i + 1; j < length; j++) {
                 dp[j] = Math.max(piles[i] - dp[j], piles[j] - dp[j - 1]);
@@ -456,7 +455,6 @@ public class Solution {
 Time and Space Complexity
 * Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
 * Space Complexity: O(neg)
-# Depth-first Search
 # Hash Table
 ## Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
@@ -489,42 +487,39 @@ Constraints:
 ```
 ### Analysis
 Finding the longest possible equal subarray involves counting the number of identical numbers.   
-Because we can delete at most `k` elements,  
-the number of other numbers between those identical numbers must be counted 
-so that the number of elements to be deleted can be determined.  
+Since we can delete at most `k` elements, 
+we need to count the number of other numbers between the identical numbers to determine how many deletions are required.
+
 ```java
 class Solution {
-    public int longestEqualSubarray(List<Integer> nums, int k) {
-        // Create a hash map to store the count of identical elements and the count of other elements with different values between them.
-        // { number : [len1, len2, len3 ] }
-        // len1: The length of the equal subarray
-        // len2: The quantity of other numbers that need to be deleted within the equal subarray.
-        // len3: The quantity of other numbers outside the current equal subarray.
-        Map<Integer, List<Integer>> countMap=new LinkedHashMap();
-        int maxNum=0;
-        for(int i=0; i<nums.size(); i++){
-            int cur=nums.get(i);
-            // If the current value already exists, increase the length of equal subarray of the current value by 1.
-            List<Integer> mapValue = countMap.compute(cur, (key,val)->{
-                if(val!=null){
-                    val.set(0,val.get(0)+1);
-                    // Synchronize the latest length of other numbers that need to be deleted within the equal subarray.
-                    val.set(1,val.get(2));
-                    return val;
-                }else return Arrays.asList(1,0,0);
-            });
-            //TODO: filter out the cases where only the minimum number of deletions is needed.  
-            
-            // Increase the length of other numbers outside the current equal subarray by 1.
-            Set<Map.Entry<Integer, List<Integer>>> entrySet=countMap.entrySet();
-            for(Map.Entry<Integer, List<Integer>> item: entrySet){
-                if(item.getKey().equals(cur))continue;
-                List<Integer> itemVal=item.getValue();
-                itemVal.set(2, itemVal.get(2)+1);
-            }
-            if(mapValue.get(1)<=k)maxNum=Math.max(countMap.get(cur).get(0),maxNum);
-        }
-        return maxNum;
+  public int longestEqualSubarray(List<Integer> nums, int k) {
+    // Define an array to store the quantity of equal values. If the values in the array nums are large, use HashMap.
+    int[] arr = new int[nums.size() + 1];
+    int left = 0;
+    int res = 0; // The final result
+    int num = 0; // The count of unequal numbers in the range from left (inclusive) to index i (inclusive).
+    // Traverse array nums
+    for (int i = 0; i < nums.size(); i++) {
+      ++arr[nums.get(i)];
+      if (!Objects.equals(nums.get(i), nums.get(left))) {
+        num++;
+      }
+      // When the count of unequal numbers exceeds the integer k, 
+      // move the sliding window by one element and reduce the count of the current equal value by 1. 
+      while (num > k) {
+        arr[nums.get(left)]--;
+        left++;
+        num = i - left + 1 - arr[nums.get(left)];
+      }
+      res = Math.max(res, i - left + 1 - num);
     }
+    while (left < nums.size() - 1) {
+      arr[nums.get(left)]--;
+      left++;
+      num = nums.size() - left - arr[nums.get(left)];
+      res = Math.max(res, nums.size() - left  - num);
+    }
+    return res;
+  }
 }
 ```
