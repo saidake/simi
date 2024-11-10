@@ -1,4 +1,4 @@
-taskType: levelup
+taskType: dispatch
 mainCityArmyNumber: 5
 secondCityArmyNumber: 4
 avoidMarchCollision: false

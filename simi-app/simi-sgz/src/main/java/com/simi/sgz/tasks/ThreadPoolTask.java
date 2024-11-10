@@ -11,10 +11,10 @@ public abstract class ThreadPoolTask extends PropertyTask implements ExecutableT
     public ThreadPoolTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         super(simiSgz, robot, coordinatesReader, index);
     }
-    public abstract void prepareExecutableTask();
+    public abstract void executableTask();
     @Override
     public void execute() {
         ThreadPoolExecutor threadPoolExecutor = ThreadPoolContext.getThreadPoolExecutor();
-        threadPoolExecutor.execute(this::prepareExecutableTask);
+        threadPoolExecutor.execute(this::executableTask);
     }
 }

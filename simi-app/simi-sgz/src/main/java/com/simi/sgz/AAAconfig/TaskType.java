@@ -3,7 +3,7 @@ package com.simi.sgz.AAAconfig;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum TaskType {
-    LEVEL_UP,DAILY,DEFENCE, ATTACK_CITY;
+    LEVEL_UP,DAILY,DEFENCE, ATTACK_CITY, DISPATCH;
     @JsonCreator
     public static TaskType fromValue( String text){
         for( TaskType var : TaskType.values() ){

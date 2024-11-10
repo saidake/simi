@@ -17,14 +17,7 @@ public class TroopOperation {
     private Coordinate coordinate;
     public void enterCity(int troopIndex){
         robot.leftMouseClickEx(coordinate.getCoordinateBtn());
-        int[] scrollTop = coordinate.getScrollTop();
-        int[] scrollBot = coordinate.getScrollBot();
-        robot.scroll(scrollTop,scrollBot);
-        robot.scroll(scrollTop,scrollBot);
-        robot.scroll(scrollTop,scrollBot);
-        robot.scroll(scrollTop,scrollBot);
-        robot.scroll(scrollTop,scrollBot);
-        robot.scroll(scrollTop,scrollBot);
+        this.scrollToTop();
         robot.leftMouseClickEx(troopIndex< simiSgz.getMainCityArmyNumber()?coordinate.getMark4():coordinate.getMark3(), WaitingTime.SELECT_MARK);
         robot.leftMouseClickEx(coordinate.getRedPoint(), WaitingTime.ENTER_CITY);
     }
@@ -50,6 +43,7 @@ public class TroopOperation {
             robot.leftMouseClickEx(coordinate.getTroop3From5());
         }
         robot.leftMouseClickEx(coordinate.getCityBack());
+        robot.leftMouseClickEx(getMrkByIndex(1));
     }
     public void trials() {
         robot.leftMouseClickEx(coordinate.getDetailBtn());
@@ -67,16 +61,32 @@ public class TroopOperation {
         robot.leftMouseClickEx(coordinate.getCityBack());
     }
     public void scrollToBottom(){
-        int[] scrollTop = coordinate.getScrollTop();
-        int[] scrollBot = coordinate.getScrollBot();
-        robot.scroll(scrollBot,scrollTop);
-        robot.scroll(scrollBot,scrollTop);
-        robot.scroll(scrollBot,scrollTop);
-        robot.scroll(scrollBot,scrollTop);
-        robot.scroll(scrollBot,scrollTop);
-        robot.scroll(scrollBot,scrollTop);
+        this.scroll(coordinate.getScrollBot(), coordinate.getScrollTop());
     }
+    public void scrollToTop(){
+        this.scroll(coordinate.getScrollTop(), coordinate.getScrollBot());
+    }
+    public void dispatchTroop(){
+        robot.leftMouseClickEx(coordinate.getRedPoint());
+        robot.leftMouseClickEx(coordinate.getBtn2());
+        robot.leftMouseClickEx(coordinate.getTab1());
+        robot.leftMouseClickEx(coordinate.getTroop1From5());
+        robot.leftMouseClickEx(coordinate.getMarchConfirm());
+        robot.leftMouseClickEx(coordinate.getRedPoint());
+        robot.leftMouseClickEx(coordinate.getBtn2());
+        robot.leftMouseClickEx(coordinate.getTab2());
+        robot.leftMouseClickEx(coordinate.getTroop1From5());
+        robot.leftMouseClickEx(coordinate.getMarchConfirm());
 
+    }
+    public void scroll(int[] scrollFrom, int[] scrollTo){
+        robot.scroll(scrollFrom,scrollTo);
+        robot.scroll(scrollFrom,scrollTo);
+        robot.scroll(scrollFrom,scrollTo);
+        robot.scroll(scrollFrom,scrollTo);
+        robot.scroll(scrollFrom,scrollTo);
+        robot.scroll(scrollFrom,scrollTo);
+    }
     public void clear(int mainCityArmyNumber, boolean avoidMarchCollision, int curIndex, int markIndex, int clearTabIndex) {
         //robot.leftMouseClick(getMrkByIndex(markIndex), WaitingTime.SELECT_MARK);
         robot.leftMouseClickMark(getMrkByIndex(markIndex),coordinate.getBtn4(),avoidMarchCollision);

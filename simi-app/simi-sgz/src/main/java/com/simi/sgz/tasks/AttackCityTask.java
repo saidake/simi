@@ -15,7 +15,7 @@ public class AttackCityTask extends ThreadPoolTask {
     }
 
     @Override
-    public void prepareExecutableTask() {
+    public void executableTask() {
 
     }
 }

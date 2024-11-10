@@ -14,6 +14,7 @@ public class TaskFactory {
             case DAILY -> new DailyTask(simiSgz, robot, coordinatesReader, index);
             case DEFENCE -> new DefenceTask(simiSgz, robot, coordinatesReader, index);
             case ATTACK_CITY -> null;
+            case DISPATCH -> new DispatchTask(simiSgz,robot,coordinatesReader,index);
         };
     }
 }

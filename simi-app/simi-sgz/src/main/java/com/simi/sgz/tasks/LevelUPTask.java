@@ -44,7 +44,7 @@ public final class LevelUPTask extends ThreadPoolTask {
     }
 
     @Override
-    public void prepareExecutableTask() {
+    public void executableTask() {
         int mainCityArmyNumber= simiSgz.getMainCityArmyNumber();
         int secondCityArmyNumber= simiSgz.getSecondCityArmyNumber();
         int totalArmyNumber=mainCityArmyNumber+secondCityArmyNumber;
