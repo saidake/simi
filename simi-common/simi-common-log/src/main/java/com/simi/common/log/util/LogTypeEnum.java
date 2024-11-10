@@ -24,9 +24,9 @@ import lombok.RequiredArgsConstructor;
 public enum LogTypeEnum {
 
 
-	NORMAL("0", "正常日志"),
+	NORMAL("0", "Normal Log"),
 
-	ERROR("9", "错误日志");
+	ERROR("9", "Error Log");
 
 	private final String type;
 
