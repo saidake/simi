@@ -8,7 +8,7 @@
 # Dynamic Programming
 ## Stone Game
 [Back to Top](#table-of-contents)
-
+### Overview
 Alice and Bob play a game with piles of stones.
 There are an even number of piles arranged in a row, and each pile has a positive integer number of stones `piles[i]`.
 
@@ -41,17 +41,10 @@ Constraints:
     sum(piles[i]) is odd.
 ```
 ### Analysis
-Here is a random example:
-```text
-piles = 1 4 5 2 3 8 7 9 2 2 3 8 9 
-sum = 53
-sum /2 = 26.5
-```
-The winner is the person who takes more than half of the total stones.
 #### Depth-first Search Solution
 Recursively evaluate the `piles` array from both the start and end,
 using a flag variable `isAliceTurn` to track whose turn it is and only calculate the sum for Alice.  
-Since the game ends when one player collects more than half of the total stones,
+Since the game ends when one player takes more than half of the total stones,
 the recursion can terminate early, ensuring only one player wins.
 ```java
 class Solution {
@@ -89,8 +82,59 @@ Time and Space Complexity
 * Time Complexity: *O*(2<sup>n</sup>)
 * Space Complexity: *O*(n) (for the recursion stack)
 #### Dynamic Programming Solution
-Define a two-dimensional array `dp`
+##### Initialization  
+Define a two-dimensional array `dp`, where both the roww and columns correspond to the indices of the array `piles`.  
+The `dp[i][j]` represents the difference between the number of stones Alice has and the number of stones Bob has, when considering the subarray from index `i` to `j` of the piles array.  
+When `i` equals `j`, there is only a single pile of stones, which is `piles[i]`.
+Since Alice goes first, she takes this pile, so `dp[i][j]=piles[i]`.
+#####  Filling the DP Table  
+The dynamic programming equation can be expressed as follows:
+```text
+dp[i][j] = 
+    piles[i] - dp[i+1][j],         If the current player picks the pile at index i.
+    piles[j] - dp[i][j - 1],       If the current player picks the pile at index j.
+```
+The negative sign is used to reverse the difference in the number of stones between the players when the turn changes.  
+Since both players play optimally, the current player will choose the pile with the most stones.  
+The equation will be:
+```text
+dp[i][j] = Math.max(piles[i] - dp[i+1][j], piles[j] - dp[i][j - 1])
+```
+Here is a random example:
+```text
+piles = 1 4 5 2 3 8 7 9 2 3
+sum = 53
+sum /2 = 26.5
+```
 
+```text
+indices:  0 1 2 3 4 5 6 7 8 9 
+piles:    1 4 5 2 3 8 7 9 2 3
+
+Step 1:
+dp[0][0] = 1 
+dp[1][1] = 4
+...
+dp[9][9] = 3
+
+
+Step 2: 
+dp[8][9] = Math.max( 2 - dp[9][9], 3 - dp[8][8] )
+
+Step 3:
+dp[7][8] = Math.max( 9 - dp[8][8], 2 - dp[7][7] ) 
+dp[7][9] = Math.max( 9 - dp[8][9], 3 - dp[7][8] )
+
+Step 4:
+dp[6][7] = Math.max( 7 - dp[7][7], 9 - dp[6][6] ) 
+dp[6][8] = Math.max( 7 - dp[7][8], 2 - dp[6][7] ) 
+dp[6][9] = Math.max( 7 - dp[7][9], 3 - dp[6][8] ) 
+...
+```
+#####  Result  
+The result is determined based on whether the score difference for the entire array (`dp[0][length - 1]`) is positive, indicating that the first player Alice can secure a win.
+
+Here is the solution:
 ```java
 class Solution {
     public boolean stoneGame(int[] piles) {
@@ -458,7 +502,7 @@ Time and Space Complexity
 # Hash Table
 ## Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
-
+### Overview
 You are given a **0-indexed** integer array nums and an integer `k`.  
 A subarray is called **equal** if all of its elements are equal. Note that the empty subarray is an **equal** subarray.  
 Return the length of the **longest** possible equal subarray after deleting **at most** `k` elements from `nums`.  
