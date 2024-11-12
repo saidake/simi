@@ -3,8 +3,10 @@
 - [Dynamic Programming](#dynamic-programming)
     - [Stone Game](#stone-game)
     - [Target Sum](#target-sum)
-- [Hash Table](#hash-table)
+- [Sliding Window](#sliding-window)
     - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
+- [Uncategorized Problems](#uncategorized-problems)
+
 # Dynamic Programming
 ## Stone Game
 [Back to Top](#table-of-contents)
@@ -94,17 +96,20 @@ dp[i][j] =
     piles[i] - dp[i+1][j],         If the current player picks the pile at index i.
     piles[j] - dp[i][j - 1],       If the current player picks the pile at index j.
 ```
-The negative sign is used to reverse the difference in the number of stones between the players when the turn changes.  
+The negative sign in `"- dp[i+1][j]"` and `"- dp[i][j - 1]"`  is used to reverse the difference in the number of stones between the players when the turn changes.  
 Since both players play optimally, the current player will choose the pile with the most stones.  
 The equation will be:
 ```text
 dp[i][j] = Math.max(piles[i] - dp[i+1][j], piles[j] - dp[i][j - 1])
 ```
+Fill the DP table in a bottom-up matter.
+The current problem (i, j) depends on the results of (i + 1, j) and (i, j - 1).   
+By filling the table from the smallest subproblems to larger subproblems (from the end towards the start for i), 
+we ensure that `dp[i + 1][j]` and `dp[i][j - 1]` are already computed when needed.  
 Here is a random example:
 ```text
 piles = 1 4 5 2 3 8 7 9 2 3
-sum = 53
-sum /2 = 26.5
+sum = 44
 ```
 
 ```text
@@ -143,6 +148,7 @@ class Solution {
         for (int i = 0; i < length; i++) {
             dp[i][i] = piles[i];
         }
+        // Fill the DP table in a bottom-up matter. 
         for (int i = length - 2; i >= 0; i--) {
             for (int j = i + 1; j < length; j++) {
                 dp[i][j] = Math.max(piles[i] - dp[i + 1][j], piles[j] - dp[i][j - 1]);
@@ -152,7 +158,18 @@ class Solution {
     }
 }
 ```
+Time and Space Complexity
+* Time Complexity: *O*(n<sup>2</sup>)  
+
+    The sum of iterations for both loop is:  
+    1+2+3+...+(n-1) = (n-1)×n/2 = *O*(n<sup>2</sup>)  
+* Space Complexity: *O*(n<sup>2</sup>)  
+
+    The algorithm uses a two-dimensional array `dp` of size n×n, where n is the length of the input array `piles`.
+    The space required for this array is *O*(n<sup>2</sup>).
 #### Optimized Dynamic Programming Solution
+The computation of each cell `dp[i][j]` only depends on values from the current row `i` and the next row `i + 1`,
+Thus, We can reuse values in a single one-dimensional array.
 ```java
 class Solution {
     public boolean stoneGame(int[] piles) {
@@ -168,6 +185,15 @@ class Solution {
     }
 }
 ```
+Time and Space Complexity
+* Time Complexity: *O*(n<sup>2</sup>)  
+
+    The sum of iterations for both loop is:  
+    1+2+3+...+(n-1) = (n-1)×n/2 = *O*(n<sup>2</sup>)  
+* Space Complexity: *O*(n)  
+
+    The size of one-dimensional array `dp` is `n`, corresponding to the length of the input array.
+    The space requried for this array is *O*(n).
 ## Target Sum
 [Back to Top](#table-of-contents) 
 ### Overview
@@ -209,15 +235,8 @@ to count the total number of valid paths that achieve the target sum.
 ```java
 public class Solution {
     private int targetSum=0;
-    /**
-     * DFS Solution.
-     *
-     * @param nums  Source array
-     * @param target The target value
-     * @return The maximum numbers of valid expressions in the array nums.
-     */
     public int findTargetSumWays(int[] nums, int target) {
-        this.depthFirstSearch(nums, target, 0, 0);
+        this.dfs(nums, target, 0, 0);
         return this.targetSum;
     }
 
@@ -228,18 +247,20 @@ public class Solution {
      * @param target   Target sum
      * @param index    Current index
      */
-    public void depthFirstSearch(int[] nums, int target, int index, int sum){
+    public void dfs(int[] nums, int target, int index, int sum){
         if(index>=nums.length) {
             if(sum==target)this.targetSum++;
             return;
         }
-        depthFirstSearch(nums, target, index+1, sum+nums[index]);
-        depthFirstSearch(nums, target, index+1, sum-nums[index]);
+        dfs(nums, target, index+1, sum+nums[index]);
+        dfs(nums, target, index+1, sum-nums[index]);
     }
 }
 ```
 Time and Space Complexity
 * Time Complexity: *O*(2<sup>n</sup>)  
+    The total number of recursive calls is proportional to 2<sup>n</sup>, 
+    as each element can either contribute positively or negatively to the sum.
 * Space Complexity: *O*(n) (for the recursion stack)
 
 Define the sum of the elements of the array `nums` as `sum`, the sum of the elements with a `-` sign is `neg`.  
@@ -260,13 +281,6 @@ neg = (- 8 - 4 -5 - 1 - 2 - 7) = 27
 The initial solution can be optimized as follows:
 ```java
 public class Solution {
-    /**
-     * DFS Solution
-     *
-     * @param nums  Source array
-     * @param target The target value
-     * @return The maximum numbers of valid expressions in the array nums.
-     */
     public int findTargetSumWays(int[] nums, int target) {
         // Calculate the sum of nums.
         int sum = 0;
@@ -383,9 +397,9 @@ Step n:
 dp[0][0]=1
 dp[0][27]=0  (j>0)
 ```
-The execution process described above, which starts from the end of the array nums, 
+The execution process described above, which starts from the end of the array `nums`, 
 resembles the Depth-First Search solution. 
-However, if we traverse nums in the usual left-to-right order, 
+However, if we traverse `nums` in the usual left-to-right order, 
 we should calculate and store the potential negative values for each element in the `dp` array in advance,
 allowing the subsequent `dp` items to access them.
 
@@ -423,13 +437,6 @@ dp[n][neg]
 Use a two-dimensional array to store DP results. The solution is as follows:
 ```java
 class Solution {
-    /**
-     * Standard Solution
-     *
-     * @param nums  Source array
-     * @param target The target value
-     * @return The maximum numbers of valid expressions in the array nums.
-     */
     public int findTargetSumWays(int[] nums, int target) {
         // Calculate the sum of nums.
         int sum = 0;
@@ -461,17 +468,10 @@ Time and Space Complexity
 * Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
 * Space Complexity: O(n×neg)
 
-Since the current dp expression is only related to the previous one, 
-the dp array can be simplified to a one-dimensional array:
+Since the current `dp` expression is only related to the previous one, 
+the `dp` array can be simplified to a one-dimensional array:
 ```java
 public class Solution {
-    /**
-     * Standard Solution
-     *
-     * @param nums  Source array
-     * @param target The target value
-     * @return The maximum numbers of valid expressions in the array nums.
-     */
     public int findTargetSumWays(int[] nums, int target) {
         // Calculate the sum of nums.
         int sum = 0;
@@ -499,7 +499,7 @@ public class Solution {
 Time and Space Complexity
 * Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
 * Space Complexity: O(neg)
-# Hash Table
+# Sliding Window
 ## Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -533,7 +533,6 @@ Constraints:
 Finding the longest possible equal subarray involves counting the number of identical numbers.   
 Since we can delete at most `k` elements, 
 we need to count the number of other numbers between the identical numbers to determine how many deletions are required.
-
 ```java
 class Solution {
   public int longestEqualSubarray(List<Integer> nums, int k) {
@@ -544,6 +543,7 @@ class Solution {
     int num = 0; // The count of unequal numbers in the range from left (inclusive) to index i (inclusive).
     // Traverse array nums
     for (int i = 0; i < nums.size(); i++) {
+      // Count the number of times the current value occurs.
       ++arr[nums.get(i)];
       if (!Objects.equals(nums.get(i), nums.get(left))) {
         num++;
@@ -567,3 +567,4 @@ class Solution {
   }
 }
 ```
+//TODO Analyze the standard solution and evaluate its time and space complexity.
