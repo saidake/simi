@@ -465,8 +465,8 @@ class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
-* Space Complexity: O(n×neg)
+* Time Complexity: *O*(n×neg)   (with neg being dependent on the input values).  
+* Space Complexity: *O*(n×neg)
 
 Since the current `dp` expression is only related to the previous one, 
 the `dp` array can be simplified to a one-dimensional array:
@@ -497,8 +497,8 @@ public class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: O(n×neg)   (with neg being dependent on the input values).  
-* Space Complexity: O(neg)
+* Time Complexity: *O*(n×neg)   (with neg being dependent on the input values).  
+* Space Complexity: *O*(neg)
 # Sliding Window
 ## Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
@@ -568,3 +568,65 @@ class Solution {
 }
 ```
 //TODO Analyze the standard solution and evaluate its time and space complexity.
+# Uncategorized Problems
+## License Key Formatting
+### Overview
+You are given a license key represented as a string `s` that consists of only alphanumeric characters and dashes.  
+The string is separated into `n + 1` groups by `n` dashes. 
+You are also given an integer `k`.
+
+We want to reformat the string `s` such that each group contains exactly `k` characters, 
+except for the first group, which could be shorter than `k` but still must contain at least one character.   
+Furthermore, there must be a dash inserted between two groups, and you should convert all lowercase letters to uppercase.
+
+Return the reformatted license key.
+```text
+Example 1:
+    Input: s = "5F3Z-2e-9-w", k = 4
+    Output: "5F3Z-2E9W"
+    Explanation: The string s has been split into two parts, each part has 4 characters. 
+    Note that the two extra dashes are not needed and can be removed.
+Example 2:
+    Input: s = "2-5g-3-J", k = 2
+    Output: "2-5G-3J"
+    Explanation: The string s has been split into three parts, each part has 2 characters except the first part as it could be shorter as mentioned above.
+ 
+
+Constraints:
+    1 <= s.length <= 105
+    s consists of English letters, digits, and dashes '-'.
+    1 <= k <= 104
+```
+### Analysis
+First, capitalize the entire string and remove all `'-'` characters.
+Determine the length of the first substring using `s.length % k`, then append the remaining substrings of length `k`.
+```java
+class Solution {
+    public String licenseKeyFormatting(String s, int k) {
+        // Capitalize the entire string directly.
+        s=s.toUpperCase().replaceAll("-","");
+        int firstLen=s.length()%k;
+        char[] charArr=s.toCharArray();
+        // Initialize the StringBuilder object with the first string whose length matches the remainder.
+        StringBuilder sb=new StringBuilder(s.substring(0,firstLen));
+        // Append other strings.
+        for(int i=firstLen; i<s.length(); i+=k){
+            if(i!=0)sb.append('-');
+            sb.append(s.substring(i,i+k));
+        }
+        return sb.toString();
+    }
+}
+```
+Time and Space Complexity
+* Time Complexity: *O*(n)  
+
+    The time complexity of methods `toUpperCase, replaceAll, toCharArray` are all *O*(n).  
+    Additionally, the time complexity for `substring` is O(m), where m is the length of the substring (endIndex - startIndex).  
+    Since each iteration takes *O*(k) time where k is the length of the sliced substring and there are `(n-firstLen)/k` iterations, the loop takes *O*(n).
+    Therefore, the total time complexity is *O*(n).
+* Space Complexity: *O*(n)
+    
+    s.toCharArray() creates a new character array of size *O*(n),
+    `StringBuilder sb` stores the result string, which can also be of size *O*(n).  
+    Therefore, the total space complexity is *O*(n)
