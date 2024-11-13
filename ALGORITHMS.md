@@ -5,8 +5,10 @@
     - [Target Sum](#target-sum)
 - [Sliding Window](#sliding-window)
     - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
+- [String](#string)
+    - [License Key Formatting](#license-key-formatting)
 - [Uncategorized Problems](#uncategorized-problems)
-
+    - [Decode Ways II](#decode-ways-ii)
 # Dynamic Programming
 ## Stone Game
 [Back to Top](#table-of-contents)
@@ -85,7 +87,7 @@ Time and Space Complexity
 * Space Complexity: *O*(n) (for the recursion stack)
 #### Dynamic Programming Solution
 ##### Initialization  
-Define a two-dimensional array `dp`, where both the roww and columns correspond to the indices of the array `piles`.  
+Define a two-dimensional array `dp`, where both the rows and columns correspond to the indices of the array `piles`.  
 The `dp[i][j]` represents the difference between the number of stones Alice has and the number of stones Bob has, when considering the subarray from index `i` to `j` of the piles array.  
 When `i` equals `j`, there is only a single pile of stones, which is `piles[i]`.
 Since Alice goes first, she takes this pile, so `dp[i][j]=piles[i]`.
@@ -568,8 +570,9 @@ class Solution {
 }
 ```
 //TODO Analyze the standard solution and evaluate its time and space complexity.
-# Uncategorized Problems
+# String
 ## License Key Formatting
+[Back to Top](#table-of-contents)  
 ### Overview
 You are given a license key represented as a string `s` that consists of only alphanumeric characters and dashes.  
 The string is separated into `n + 1` groups by `n` dashes. 
@@ -627,6 +630,125 @@ Time and Space Complexity
     Therefore, the total time complexity is *O*(n).
 * Space Complexity: *O*(n)
     
-    s.toCharArray() creates a new character array of size *O*(n),
+    `s.toCharArray()` creates a new character array of size *O*(n),
     `StringBuilder sb` stores the result string, which can also be of size *O*(n).  
     Therefore, the total space complexity is *O*(n)
+# Uncategorized Problems
+## Decode Ways II
+[Back to Top](#table-of-contents)  
+### Overview
+A message containing letters from `A-Z` can be encoded into numbers using the following mapping:
+```text
+'A' -> "1"
+'B' -> "2"
+...
+'Z' -> "26"
+```
+To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, "11106" can be mapped into:
+
+`"AAJF"` with the grouping `(1 1 10 6)`
+`"KJF"` with the grouping `(11 10 6)`
+Note that the grouping `(1 11 06)` is invalid because `"06"` cannot be mapped into `'F'` since `"6"` is different from `"06"`.
+
+In addition to the mapping above, an encoded message may contain the `'*'` character, which can represent any digit from '1' to '9' ('0' is excluded). For example, the encoded message "1*" may represent any of the encoded messages `"11"`, `"12"`, `"13"`, `"14"`, `"15"`, `"16"`, `"17"`, `"18"`, or `"19"`. Decoding `"1*"` is equivalent to decoding any of the encoded messages it can represent.
+
+Given a string `s` consisting of digits and `'*'` characters, return the **number** of ways to **decode** it.
+
+Since the answer may be very large, return it **modulo** 10<sup>9</sup> + 7.
+```text
+Example 1:
+    Input: s = "*"
+    Output: 9
+    Explanation: The encoded message can represent any of the encoded messages "1", "2", "3", "4", "5", "6", "7", "8", or "9".
+    Each of these can be decoded to the strings "A", "B", "C", "D", "E", "F", "G", "H", and "I" respectively.
+    Hence, there are a total of 9 ways to decode "*".
+Example 2:
+    Input: s = "1*"
+    Output: 18
+    Explanation: The encoded message can represent any of the encoded messages "11", "12", "13", "14", "15", "16", "17", "18", or "19".
+    Each of these encoded messages have 2 ways to be decoded (e.g. "11" can be decoded to "AA" or "K").
+    Hence, there are a total of 9 * 2 = 18 ways to decode "1*".
+Example 3:
+    Input: s = "2*"
+    Output: 15
+    Explanation: The encoded message can represent any of the encoded messages "21", "22", "23", "24", "25", "26", "27", "28", or "29".
+    "21", "22", "23", "24", "25", and "26" have 2 ways of being decoded, but "27", "28", and "29" only have 1 way.
+    Hence, there are a total of (6 * 2) + (3 * 1) = 12 + 3 = 15 ways to decode "2*".
+
+Constraints:
+    1 <= s.length <= 105
+    s[i] is a digit or '*'.
+```
+### Analysis
+Here is a random example to demonstrate the decode process:
+```text
+indices: 0 1 2 3 4 5 6 7   
+s:       3 2 9 * 8 1 4 2
+```
+First, The numbers `7, 8, 9` can only be decoded as a single number, 
+and the numbers `1-6` can be decoded as a single number or when the previous number is `1` or `2`,
+they can be decoded together with the previous number as a new number.
+#### Dynamic Programming Solution
+##### Initialization 
+Define a one-dimensional array `dp`, where `dp[i]` represents the number of ways to decode the  the string `s` from index `0` to index `i`.  
+When i=0, there is only one number can be choosed, so `dp[0] = 1`.
+#####  Filling the DP Table  
+The dynamic programming equation can be expressed as follows:
+```text
+dp[i] = 
+    dp[i-1],        s[i] = (7 8, 9) and s[i-1]!=1
+    dp[i-1]+1,      s[i] = (7 8, 9) and s[i-1]=1
+    dp[i-1],        s[i] = 0-6 and s[i-1] = 3-9 or 0
+    dp[i-1]+1,      s[i] = 0-6 and s[i-1] = 1 or 2
+    dp[i-1]+2,      s[i] = 0-6 and s[i-1] = *
+    dp[i-1]+8,      s[i] = * and s[i-1] = 3-9 or 0
+    dp[i-1]+17,     s[i] = * and s[i-1] = 1 
+    dp[i-1]+14,     s[i] = * and s[i-1] = 2
+    dp[i-1]+81+9+6, s[i] = * and s[i-1] = *
+```
+#####  Result
+The dp[length-1] is the number of ways to decode the string `s`.
+
+Here is the solution:
+```java
+class Solution {
+    public int numDecodings(String s) {
+        int len=s.length();
+        int[] dp=new int[len];
+        char[] chars=s.toCharArray();
+        //Initialize dp array
+        if(chars[0]!='*')dp[0]=1;
+        else dp[0]=9;
+        //traverse array chars
+        for(int i=1; i<len; i++){
+            int pre=Character.getNumericValue(chars[i-1]);
+            int val=Character.getNumericValue(chars[i]);
+            //Calculate dp value
+            if(val>=7){
+                if(pre!=1)dp[i]=dp[i-1];
+                else dp[i]=dp[i-1]+1;
+            }else if(val>=0&&val<=6){
+                if(pre>=3||pre==0){
+                    dp[i]=dp[i-1];
+                }else if(pre!=-1){
+                    dp[i]=dp[i-1]+1;
+                }else{
+                    dp[i]=dp[i-1]+2;
+                }
+            }else{
+                if(pre>=3||pre==0){
+                    dp[i]=dp[i-1]+8;
+                }else if(pre==1){
+                    dp[i]=dp[i-1]+17;
+                }else if(pre==2){
+                    dp[i]=dp[i-1]+14;
+                }else{
+                    dp[i]=dp[i-1]+81+9+6; //TODO Decode the expression "**"
+                }
+            }
+        }
+        return (int)(dp[len-1]%(Math.pow(10,9)+7));
+    }
+}
+```
+
