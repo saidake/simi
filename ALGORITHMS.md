@@ -696,15 +696,15 @@ When i=0, there is only one number can be choosed, so `dp[0] = 1`.
 The dynamic programming equation can be expressed as follows:
 ```text
 dp[i] = 
-    dp[i-1],        s[i] = (7 8, 9) and s[i-1]!=1
-    dp[i-1]+1,      s[i] = (7 8, 9) and s[i-1]=1
-    dp[i-1],        s[i] = 0-6 and s[i-1] = 3-9 or 0
-    dp[i-1]+1,      s[i] = 0-6 and s[i-1] = 1 or 2
-    dp[i-1]+2,      s[i] = 0-6 and s[i-1] = *
-    dp[i-1]+8,      s[i] = * and s[i-1] = 3-9 or 0
-    dp[i-1]+17,     s[i] = * and s[i-1] = 1 
-    dp[i-1]+14,     s[i] = * and s[i-1] = 2
-    dp[i-1]+81+9+6, s[i] = * and s[i-1] = *
+    dp[i-1],            s[i] = (7 8, 9) and s[i-1]!=1
+    dp[i-2]×2,          s[i] = (7 8, 9) and s[i-1]=1
+    dp[i-1],                s[i] = 0-6 and s[i-1] = 3-9 or 0
+    dp[i-2]×2,              s[i] = 0-6 and s[i-1] = 1 or 2
+    dp[i-2]×11,             s[i] = 0-6 and s[i-1] = *
+    dp[i-1]×9,                  s[i] = * and s[i-1] = 3-9 or 0
+    dp[i-2]×18,                 s[i] = * and s[i-1] = 1 
+    dp[i-2]×15,                 s[i] = * and s[i-1] = 2
+    dp[i-1]*9+dp[1-2]*15,       s[i] = * and s[i-1] = *
 ```
 #####  Result
 The dp[length-1] is the number of ways to decode the string `s`.
@@ -714,40 +714,45 @@ Here is the solution:
 class Solution {
     public int numDecodings(String s) {
         int len=s.length();
-        int[] dp=new int[len];
+        int[] dp=new int[len+1];
+        dp[0]=1;
         char[] chars=s.toCharArray();
         //Initialize dp array
-        if(chars[0]!='*')dp[0]=1;
-        else dp[0]=9;
+        if(chars[0]!='*')dp[1]=1;
+        else dp[1]=9;
         //traverse array chars
-        for(int i=1; i<len; i++){
-            int pre=Character.getNumericValue(chars[i-1]);
-            int val=Character.getNumericValue(chars[i]);
+        for(int i=2; i<=len; i++){
+            int pre=Character.getNumericValue(chars[i-2]);
+            int val=Character.getNumericValue(chars[i-1]);
             //Calculate dp value
             if(val>=7){
                 if(pre!=1)dp[i]=dp[i-1];
-                else dp[i]=dp[i-1]+1;
-            }else if(val>=0&&val<=6){
+                else dp[i]=dp[i-2]*2;
+            }else if(val>=0){
                 if(pre>=3||pre==0){
                     dp[i]=dp[i-1];
                 }else if(pre!=-1){
-                    dp[i]=dp[i-1]+1;
+                    dp[i]=dp[i-2]*2;
                 }else{
-                    dp[i]=dp[i-1]+2;
+                    dp[i]=dp[i-1]+dp[i-2]*2;
                 }
             }else{
                 if(pre>=3||pre==0){
-                    dp[i]=dp[i-1]+8;
+                    dp[i]=dp[i-1]*9;
                 }else if(pre==1){
-                    dp[i]=dp[i-1]+17;
+                    dp[i]=dp[i-2]*18;
                 }else if(pre==2){
-                    dp[i]=dp[i-1]+14;
+                    dp[i]=dp[i-2]*15;
                 }else{
-                    dp[i]=dp[i-1]+81+9+6; //TODO Decode the expression "**"
+                    // 1* = 9+9
+                    // 2* = 9+6
+                    // "**"  ->  9×9 +9 +6  ->   96
+                    // "***" ->  96×9 +    ->  864
+                    dp[i]=dp[i-1]*9+dp[i-2]*15;
                 }
             }
         }
-        return (int)(dp[len-1]%(Math.pow(10,9)+7));
+        return (int)(dp[len]%(Math.pow(10,9)+7));
     }
 }
 ```
