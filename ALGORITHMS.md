@@ -84,7 +84,7 @@ class Solution {
 ```
 Time and Space Complexity
 * Time Complexity: *O*(2<sup>n</sup>)
-* Space Complexity: *O*(n) (for the recursion stack)
+* Space Complexity: $ O(n) $ (for the recursion stack)
 #### Dynamic Programming Solution
 ##### Initialization  
 Define a two-dimensional array `dp`, where both the rows and columns correspond to the indices of the array `piles`.  
@@ -161,14 +161,14 @@ class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: *O*(n<sup>2</sup>)  
+* Time Complexity: $ O(n^2)$ 
 
     The sum of iterations for both loop is:  
-    1+2+3+...+(n-1) = (n-1)×n/2 = *O*(n<sup>2</sup>)  
-* Space Complexity: *O*(n<sup>2</sup>)  
+    $$ 1+2+3+...+(n-1) = \frac{(n-1) \times n}{2} =  O(n^2)$$
+* Space Complexity: $ O(n^2)$ 
 
-    The algorithm uses a two-dimensional array `dp` of size n×n, where n is the length of the input array `piles`.
-    The space required for this array is *O*(n<sup>2</sup>).
+    The algorithm uses a two-dimensional array `dp` of size `n×n`, where `n` is the length of the input array `piles`.
+    The space required for this array is $ O(n^2)$ .
 #### Optimized Dynamic Programming Solution
 The computation of each cell `dp[i][j]` only depends on values from the current row `i` and the next row `i + 1`,
 Thus, We can reuse values in a single one-dimensional array.
@@ -188,14 +188,14 @@ class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: *O*(n<sup>2</sup>)  
+* Time Complexity: $ O(n^2)$ 
 
     The sum of iterations for both loop is:  
-    1+2+3+...+(n-1) = (n-1)×n/2 = *O*(n<sup>2</sup>)  
-* Space Complexity: *O*(n)  
+    $$ 1+2+3+...+(n-1) = \frac{(n-1) \times n}{2} =  O(n^2)$$
+* Space Complexity: $ O(n) $  
 
     The size of one-dimensional array `dp` is `n`, corresponding to the length of the input array.
-    The space requried for this array is *O*(n).
+    The space requried for this array is $ O(n) $.
 ## Target Sum
 [Back to Top](#table-of-contents) 
 ### Overview
@@ -260,10 +260,11 @@ public class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: *O*(2<sup>n</sup>)  
+* Time Complexity: $ O(2^n)$ 
+
     The total number of recursive calls is proportional to 2<sup>n</sup>, 
     as each element can either contribute positively or negatively to the sum.
-* Space Complexity: *O*(n) (for the recursion stack)
+* Space Complexity: $ O(n) $ (for the recursion stack)
 
 Define the sum of the elements of the array `nums` as `sum`, the sum of the elements with a `-` sign is `neg`.  
 According to the conditions, we can get the following expression:   
@@ -340,8 +341,10 @@ public class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: *O*(2<sup>n</sup>)  (The worst-case time complexity remains the same, but it is faster than the original solution in general cases.)   
-* Space Complexity: *O*(n)
+* Time Complexity: $ O(2^n)$  
+    
+    The worst-case time complexity remains the same, but it is faster than the original solution in general cases.
+* Space Complexity: $ O(n) $
 
 #### Dynamic Programming Solution
 Define a two-dimensional array `dp`, where `dp[i][j]` represents the number of **solutions** 
@@ -467,8 +470,8 @@ class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: *O*(n×neg)   (with neg being dependent on the input values).  
-* Space Complexity: *O*(n×neg)
+* Time Complexity: $ O(n×neg) $   (with neg being dependent on the input values).  
+* Space Complexity: $ O(n×neg) $
 
 Since the current `dp` expression is only related to the previous one, 
 the `dp` array can be simplified to a one-dimensional array:
@@ -499,8 +502,8 @@ public class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: *O*(n×neg)   (with neg being dependent on the input values).  
-* Space Complexity: *O*(neg)
+* Time Complexity: $ O(n×neg) $  (with neg being dependent on the input values).  
+* Space Complexity: $ O(neg) $
 # Sliding Window
 ## Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
@@ -622,17 +625,17 @@ class Solution {
 }
 ```
 Time and Space Complexity
-* Time Complexity: *O*(n)  
+* Time Complexity: $ O(n) $
 
-    The time complexity of methods `toUpperCase, replaceAll, toCharArray` are all *O*(n).  
+    The time complexity of methods `toUpperCase, replaceAll, toCharArray` are all $ O(n) $.  
     Additionally, the time complexity for `substring` is O(m), where m is the length of the substring (endIndex - startIndex).  
-    Since each iteration takes *O*(k) time where k is the length of the sliced substring and there are `(n-firstLen)/k` iterations, the loop takes *O*(n).
-    Therefore, the total time complexity is *O*(n).
-* Space Complexity: *O*(n)
+    Since each iteration takes *O*(k) time where k is the length of the sliced substring and there are `(n-firstLen)/k` iterations, the loop takes $ O(n) $.
+    Therefore, the total time complexity is $ O(n) $.
+* Space Complexity: $ O(n) $
     
-    `s.toCharArray()` creates a new character array of size *O*(n),
-    `StringBuilder sb` stores the result string, which can also be of size *O*(n).  
-    Therefore, the total space complexity is *O*(n)
+    `s.toCharArray()` creates a new character array of size $ O(n) $,
+    `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
+    Therefore, the total space complexity is $ O(n) $
 # Uncategorized Problems
 ## Decode Ways II
 [Back to Top](#table-of-contents)  
@@ -754,8 +757,8 @@ class Solution {
                 dp[i] += dp[i-1];
             } else if (val == '*') {
                 dp[i] += dp[i-1] * 9;
+                if(dp[i]>MOD)dp[i]%=MOD;
             }
-            dp[i]%=MOD;
             // Two-digit decoding (current and previous character together)
             if(val>='7'&&(pre=='1'|| pre=='*')){
                 dp[i]+=dp[i-2];
@@ -774,21 +777,79 @@ class Solution {
                     dp[i]+=dp[i-2]*15;
                 }
             }
-            dp[i]%=MOD;
+            if(dp[i]>MOD)dp[i]%=MOD;
         }
         return (int)dp[len];
     }
 }
 ```
 ##### Time and Space Complexity
-* Time Complexity: *O*(n)
+* Time Complexity: $ O(n) $
 
     The main loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where len is the length of the string `s`.
-* Space Complexity: *O*(n) 
+* Space Complexity: $ O(n) $
 
     The dp array is of size `𝑛+1`, where `𝑛` is the length of the string.
 ##### Consideration
-* First, calculate the single-digit decoding cases to avoid redundant calculations.
+* Calculate the single-digit decoding cases first to avoid redundant calculations.
 * The time complexity of `s.toCharArray()` is O(n), while the `s.charAt()` has a time complexity of O(1), making `charAt()` more efficient.
 * The values in the `dp` array are taken modulo 10<sup>9</sup> + 7, which is still a very large value. long type is required to prevent integer overflow.
 * Using `Character.getNumericValue()` to obtain the nummeric value of `'*'` in string `s` will return `'-1'` and using the `-1` for checking purposes can lead to misleading readability.
+
+## Array Partition
+[Back to Top](#table-of-contents)  
+### Overview
+Given an integer array `nums` of 2n integers, 
+group these integers into `n` pairs `(a1, b1), (a2, b2), ..., (an, bn)` such that the sum of `min(ai, bi)` for all `i` is maximized. 
+Return the maximized sum.
+```text
+Example 1:
+    Input: nums = [1,4,3,2]
+    Output: 4
+    Explanation: All possible pairings (ignoring the ordering of elements) are:
+    1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
+    2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
+    3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
+    So the maximum possible sum is 4.
+
+Example 2:
+    Input: nums = [6,2,6,5,1,2]
+    Output: 9
+    Explanation: The optimal pairing is (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9.
+
+Constraints:
+    1 <= n <= 104
+    nums.length == 2 * n
+    -104 <= nums[i] <= 104
+```
+### Analysis
+In each group, the larger integer will be omitted, and we need to maximize the `sum`.
+Therefore, The omitted value must be smaller.
+To ensure this, wen can sort the array, so that the smaller integer is omitted when calculating the minimal value from the group.
+
+#### Implementation
+```java
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum=0;
+        for(int i=0; i< nums.length; i+=2){
+            sum+=nums[i];
+        }
+        return sum;
+    }
+}
+```
+##### Time and Space Complexity
+* Time Complexity: $ O(n \log n) $
+
+    The time complexity of `Arrays.sort(nums)` is $ O(n \log n) $.  
+    The loop iterates through the array with a step of 2, so it runs $ 𝑛/2 $ times. 
+    The time complexity of this loop is $ O(n) $.  
+    The sorting step dominates the iteration step. 
+    Hence, The total time complexity is $ O(n \log n) $.
+* Space Complexity: $ O(1) $
+
+    The Arrays.sort() method uses $ O(1) $ space for primitive data types like integers in Java, as it utilizes a variation of quicksort (dual-pivot quicksort).
+    There is no additional space used apart from the input array and a few variables.   
+    Therefore, the total space complexity is $ O(1) $.
