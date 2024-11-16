@@ -704,7 +704,12 @@ However, There is another case we need to consider:
 
 When the digit `2` on the left and the digit `5` on the right are decoded as a pair, 
 the product of decoding ways for `2392` and `576` alone is insufficient to account for all possible decoding methods.  
-Thus, the total number of decoding ways should also **include** the product of the decoding ways for `239` and `25` and `576`.
+Thus, the total number of decoding ways should also **include** the product of the decoding ways for `239` and `25` and `76`.
+
+The DP process below traverses by index, checking one number at a time.  
+For example, the process will consider `2392` and `5`. 
+The total number of decoding ways should be the sum of the product of decoding ways for `239` and `5`, plus the product of decoding ways for `239` and `25`.
+
 ##### Initialization 
 Define a one-dimensional array `dp`, where `dp[i]` represents the number of ways to decode the  the string `s` from index `0` to index `i-1`.
 The length of the `dp` array is `s.length+1`, providing space to prevent missing the value of `dp[i-2]`.
