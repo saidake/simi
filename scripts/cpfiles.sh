@@ -3,20 +3,20 @@
 # This script automates the process of uploading all files from a local 'assets' directory
 # to a remote server specified in a configuration file 'file-paths.properties'.
 # It uses SSH and SCP for secure file transfer on the remote server after the upload is complete.
+#
 # Prerequisites:
-#   1. Define the file-paths.properties mapping file to specify the copy target directory
+#   1. Define the 'file-paths.properties' mapping file to specify the copy target directory
 #        of each asset file.
-#   2. Put your files in the assets folder.
-#   3. Modify the common variables of this bash file to specify paths and update the
-#        servers.sh path if needed.
+#   2. Put your files in the 'assets' folder.
+#   3. Modify the required configurations in the bash file with your own values.
 # Usage:
 #   ./upload-assets.sh
 #
 # Author: Craig Brown
-# Since: Oct 4, 2024
+# Created: Oct 4, 2024
 # ************************************************************************************
 
-# ================================================================== Common variables
+# ================================================================== Required Configurations
 # Import global environment variables
 source ./config/servers.sh
 REMOTE_USER=$TEST_AMAZON_USER

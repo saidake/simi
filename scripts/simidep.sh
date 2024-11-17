@@ -1,26 +1,26 @@
 #!/bin/sh
 
-#========================================================== Introduction
-# Prerequisites
-# Make sure that all the configuration parameters are configured to yours or
-# pass these parameters through command parameters, which will overwrite the
-# configuration variables.
-
+# ************************************************************************************
+# This bash file can run in your local environment to deploy jar file to the remote server
+# and control the execution of the jar file like restart, stop etc.
+# Prerequisites:
+#   Modify the required configurations in the bash file with your own values.
+#
 # Usage
-# ./simidep.sh start     - Start the application
-# ./simidep.sh restart   - Restart the application
-# ./simidep.sh stop      - Stop the application
-# ./simidep.sh log       - Print log file
-# ./simidep.sh info      - Show application info
-# ./simidep.sh status    - Display application status
-# ./simidep.sh debug     - Start application in debug mode
-# ./simidep.sh startjmx  - Start application with JMX enabled
+#   ./simidep.sh start     - Start the application
+#   ./simidep.sh restart   - Restart the application
+#   ./simidep.sh stop      - Stop the application
+#   ./simidep.sh log       - Print log file
+#   ./simidep.sh info      - Show application info
+#   ./simidep.sh status    - Display application status
+#   ./simidep.sh debug     - Start application in debug mode
+#   ./simidep.sh startjmx  - Start application with JMX enabled
 #
 # Author: Craig Brown
-# Since: Oct 6, 2024
+# Created: Oct 6, 2024
 # ************************************************************************************
 
-#========================================================== Default File Parameter Values
+#========================================================== Required Configurations
 
 # The root directory where the application is deployed
 APP_HOME=/root
@@ -33,7 +33,7 @@ APP_JAR_NAME=simi-webflux-1.0-SNAPSHOT.jar
 # The path where the application logs will be stored
 JAR_LOG_PATH=/tmp/simi.log
 
-#========================================================== Optional Configuration
+#========================================================== Optional Configurations
 # Declare a global variable to determine whether to use SSH or execute locally
 USE_SSH=true  # Set to true for SSH execution, false for local execution
 # If the current bash file is executed via ssh, the remote server user and host need to be configured.

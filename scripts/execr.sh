@@ -1,17 +1,19 @@
 #!/bin/bash
 # ************************************************************************************
-# This script execute bash file on the remote sever. The first parameter of this bash
-# file is the bash file to be executed on the remote server. The work path is the user
-# path by default.
+# This script execute bash file on the remote sever. The first parameter of this Bash
+# script is a local Bash file, which will be executed on the remote server.
+# The work path is the user path by default.
+#
+# Prerequisites:
+#   Modify the required configurations in the bash file with your own values.
 # Usage:
-#   1. Update the servers.sh path if needed.
-#   2. Execute this bash command:  ./execr.sh <remote-bash-file-path>
+#   ./execr.sh <remote-bash-file-path>
 #
 # Author: Craig Brown
 # Since: Oct 4, 2024
 # ************************************************************************************
 
-# ================================================================== Common Variables
+# ================================================================== Required Configurations
 # Import global environment variables (Optional)
 source ./config/servers.sh
 
