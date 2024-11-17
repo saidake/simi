@@ -1,6 +1,9 @@
 # Table of Contents
 [Back to Main Project README](README.md)
+- [Array](#array)
+    - [Array Partition](#array-partition)
 - [Dynamic Programming](#dynamic-programming)
+    - [Decode Ways II](#decode-ways-ii)
     - [Stone Game](#stone-game)
     - [Target Sum](#target-sum)
 - [Sliding Window](#sliding-window)
@@ -8,8 +11,230 @@
 - [String](#string)
     - [License Key Formatting](#license-key-formatting)
 - [Uncategorized Problems](#uncategorized-problems)
-    - [Decode Ways II](#decode-ways-ii)
+    
+# Array
+## Array Partition
+[Back to Top](#table-of-contents)  
+### Overview
+Given an integer array `nums` of 2n integers, 
+group these integers into `n` pairs `(a1, b1), (a2, b2), ..., (an, bn)` such that the sum of `min(ai, bi)` for all `i` is maximized. 
+Return the maximized sum.
+```text
+Example 1:
+    Input: nums = [1,4,3,2]
+    Output: 4
+    Explanation: All possible pairings (ignoring the ordering of elements) are:
+    1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
+    2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
+    3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
+    So the maximum possible sum is 4.
+
+Example 2:
+    Input: nums = [6,2,6,5,1,2]
+    Output: 9
+    Explanation: The optimal pairing is (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9.
+
+Constraints:
+    1 <= n <= 104
+    nums.length == 2 * n
+    -104 <= nums[i] <= 104
+```
+### Analysis
+In each group, the larger integer will be omitted, and we need to maximize the `sum`.
+Therefore, The omitted value must be smaller.
+To ensure this, wen can sort the array, so that the smaller integer is omitted when calculating the minimal value from the group.
+
+#### Implementation
+```java
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum=0;
+        for(int i=0; i< nums.length; i+=2){
+            sum+=nums[i];
+        }
+        return sum;
+    }
+}
+```
+##### Time and Space Complexity
+* Time Complexity: $ O(n \log n) $
+
+    The time complexity of `Arrays.sort(nums)` is $ O(n \log n) $.  
+    The loop iterates through the array with a step of 2, so it runs $ 𝑛/2 $ times. 
+    The time complexity of this loop is $ O(n) $.  
+    The sorting step dominates the iteration step. 
+    Hence, The total time complexity is $ O(n \log n) $.
+* Space Complexity: $ O(1) $
+
+    The Arrays.sort() method uses $ O(1) $ space for primitive data types like integers in Java, as it utilizes a variation of quicksort (dual-pivot quicksort).
+    There is no additional space used apart from the input array and a few variables.   
+    Therefore, the total space complexity is $ O(1) $.
 # Dynamic Programming
+## Decode Ways II
+[Back to Top](#table-of-contents)  
+### Overview
+A message containing letters from `A-Z` can be encoded into numbers using the following mapping:
+```text
+'A' -> "1"
+'B' -> "2"
+...
+'Z' -> "26"
+```
+To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, "11106" can be mapped into:
+
+`"AAJF"` with the grouping `(1 1 10 6)`
+`"KJF"` with the grouping `(11 10 6)`
+Note that the grouping `(1 11 06)` is invalid because `"06"` cannot be mapped into `'F'` since `"6"` is different from `"06"`.
+
+In addition to the mapping above, an encoded message may contain the `'*'` character, which can represent any digit from '1' to '9' ('0' is excluded). For example, the encoded message "1*" may represent any of the encoded messages `"11"`, `"12"`, `"13"`, `"14"`, `"15"`, `"16"`, `"17"`, `"18"`, or `"19"`. Decoding `"1*"` is equivalent to decoding any of the encoded messages it can represent.
+
+Given a string `s` consisting of digits and `'*'` characters, return the **number** of ways to **decode** it.
+
+Since the answer may be very large, return it **modulo** 10<sup>9</sup> + 7.
+```text
+Example 1:
+    Input: s = "*"
+    Output: 9
+    Explanation: The encoded message can represent any of the encoded messages "1", "2", "3", "4", "5", "6", "7", "8", or "9".
+    Each of these can be decoded to the strings "A", "B", "C", "D", "E", "F", "G", "H", and "I" respectively.
+    Hence, there are a total of 9 ways to decode "*".
+Example 2:
+    Input: s = "1*"
+    Output: 18
+    Explanation: The encoded message can represent any of the encoded messages "11", "12", "13", "14", "15", "16", "17", "18", or "19".
+    Each of these encoded messages have 2 ways to be decoded (e.g. "11" can be decoded to "AA" or "K").
+    Hence, there are a total of 9 * 2 = 18 ways to decode "1*".
+Example 3:
+    Input: s = "2*"
+    Output: 15
+    Explanation: The encoded message can represent any of the encoded messages "21", "22", "23", "24", "25", "26", "27", "28", or "29".
+    "21", "22", "23", "24", "25", and "26" have 2 ways of being decoded, but "27", "28", and "29" only have 1 way.
+    Hence, there are a total of (6 * 2) + (3 * 1) = 12 + 3 = 15 ways to decode "2*".
+
+Constraints:
+    1 <= s.length <= 105
+    s[i] is a digit or '*'.
+```
+### Analysis
+Here is a random example to demonstrate the decode process:
+```text
+indices: 0 1 2 3 4 5 6 7   
+s:       3 2 9 * 8 1 4 2
+```
+First, The numbers `7, 8, 9` can only be decoded as a single number, 
+and the numbers `1-6` can be decoded as a single number or when the previous number is `1` or `2`,
+they can be decoded together with the previous number as a new number.
+#### Dynamic Programming Solution
+When determining the number of ways to decode a sequence, we can break it down into two distinct parts for analysis.  
+
+Here is an simple example:
+```text
+2392576 
+```
+Divide the number into `2392` and `576`, so the total number of decoding ways is the product of the decoding ways for `2392` and `576`.  
+
+However, There is another case we need to consider:  
+
+When the digit `2` on the left and the digit `5` on the right are decoded as a pair, 
+the product of decoding ways for `2392` and `576` alone is insufficient to account for all possible decoding methods.  
+Thus, the total number of decoding ways should also **include** the product of the decoding ways for `239` and `25` and `76`.
+
+The DP process below traverses by index, checking one number at a time.  
+For example, the process will consider `2392` and `5`. 
+The total number of decoding ways should be the sum of the product of decoding ways for `239` and `5`, plus the product of decoding ways for `239` and `25`.
+
+##### Initialization 
+Define a one-dimensional array `dp`, where `dp[i]` represents the number of ways to decode the  the string `s` from index `0` to index `i-1`.
+The length of the `dp` array is `s.length+1`, providing space to prevent missing the value of `dp[i-2]`.
+#####  Filling the DP Table  
+The dynamic programming equation can be expressed as follows:
+
+Single-digit decoding (current character only):
+```text
+dp[i] += 
+    dp[i-1],    s[i] = 1-9
+    dp[i-1]×9,  s[i] = * 
+```
+Two-digit decoding (current and previous character together):
+```text
+dp[i] += 
+    dp[i-2],    s[i] = 7~9 and s[i-1]=1 or *
+    0,          s[i] = 7~9 and s[i-1] = 3~9 or 0 or 2
+    dp[i-2],    s[i] = 0~6 and s[i-1] = 1 or 2
+    dp[i-2]×2,  s[i] = 0~6 and s[i-1] = *
+    0,          s[i] = 0~6 and s[i-1] = 3~9 or 0
+    dp[i-2]×9,  s[i] = * and s[i-1] = 1 
+    dp[i-2]×6,  s[i] = * and s[i-1] = 2
+    dp[1-2]*15, s[i] = * and s[i-1] = *
+    0,          s[i] = * and s[i-1] = 3~9 or 0
+```
+##### Result
+The `dp[len]` is the number of ways to decode the string `s`.
+
+##### Implementation
+```java
+class Solution {
+    static final int MOD = 1000000007;
+    public int numDecodings(String s) {
+        int len=s.length();
+        long[] dp=new long[len+1];
+        dp[0]=1;
+        // Initialize dp array
+        dp[1] = (s.charAt(0) == '*') ? 9 : (s.charAt(0) != '0' ? 1 : 0);
+        // Traverse array chars
+        // indices:  0 1 2 3 4 5 6
+        // dp:     0 1 2 3 4 5 6 7
+        for(int i=2; i<len+1; i++){
+            // Check the string s starting from index 1
+            // Use characters instead of numeric value to prevent confusion
+            char val=s.charAt(i-1);
+            char pre=s.charAt(i-2);
+            // Single-digit decoding (current character only)
+            // '0' has no valid encoding as a single digit
+            if (val >= '1' && val <= '9') {
+                dp[i] += dp[i-1];
+            } else if (val == '*') {
+                dp[i] += dp[i-1] * 9;
+                if(dp[i]>MOD)dp[i]%=MOD;
+            }
+            // Two-digit decoding (current and previous character together)
+            if(val>='7'&&(pre=='1'|| pre=='*')){
+                dp[i]+=dp[i-2];
+            }else if(val>='0'&&val<='6'){
+                if(pre=='1'||pre=='2'){
+                    dp[i]+=dp[i-2];
+                }else if(pre=='*'){
+                    dp[i]+=dp[i-2]*2;
+                }
+            }else if(val=='*'){
+                if(pre=='1'){
+                    dp[i]+=dp[i-2]*9;
+                }else if(pre=='2'){
+                    dp[i]+=dp[i-2]*6;
+                }else if(pre=='*'){
+                    dp[i]+=dp[i-2]*15;
+                }
+            }
+            if(dp[i]>MOD)dp[i]%=MOD;
+        }
+        return (int)dp[len];
+    }
+}
+```
+##### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    The main loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where len is the length of the string `s`.
+* Space Complexity: $ O(n) $
+
+    The dp array is of size `𝑛+1`, where `𝑛` is the length of the string.
+##### Consideration
+* Calculate the single-digit decoding cases first to avoid redundant calculations.
+* The time complexity of `s.toCharArray()` is O(n), while the `s.charAt()` has a time complexity of O(1), making `charAt()` more efficient.
+* The values in the `dp` array are taken modulo 10<sup>9</sup> + 7, which is still a very large value. long type is required to prevent integer overflow.
+* Using `Character.getNumericValue()` to obtain the nummeric value of `'*'` in string `s` will return `'-1'` and using the `-1` for checking purposes can lead to misleading readability.
+
 ## Stone Game
 [Back to Top](#table-of-contents)
 ### Overview
@@ -637,224 +862,3 @@ Time and Space Complexity
     `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
     Therefore, the total space complexity is $ O(n) $
 # Uncategorized Problems
-## Decode Ways II
-[Back to Top](#table-of-contents)  
-### Overview
-A message containing letters from `A-Z` can be encoded into numbers using the following mapping:
-```text
-'A' -> "1"
-'B' -> "2"
-...
-'Z' -> "26"
-```
-To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, "11106" can be mapped into:
-
-`"AAJF"` with the grouping `(1 1 10 6)`
-`"KJF"` with the grouping `(11 10 6)`
-Note that the grouping `(1 11 06)` is invalid because `"06"` cannot be mapped into `'F'` since `"6"` is different from `"06"`.
-
-In addition to the mapping above, an encoded message may contain the `'*'` character, which can represent any digit from '1' to '9' ('0' is excluded). For example, the encoded message "1*" may represent any of the encoded messages `"11"`, `"12"`, `"13"`, `"14"`, `"15"`, `"16"`, `"17"`, `"18"`, or `"19"`. Decoding `"1*"` is equivalent to decoding any of the encoded messages it can represent.
-
-Given a string `s` consisting of digits and `'*'` characters, return the **number** of ways to **decode** it.
-
-Since the answer may be very large, return it **modulo** 10<sup>9</sup> + 7.
-```text
-Example 1:
-    Input: s = "*"
-    Output: 9
-    Explanation: The encoded message can represent any of the encoded messages "1", "2", "3", "4", "5", "6", "7", "8", or "9".
-    Each of these can be decoded to the strings "A", "B", "C", "D", "E", "F", "G", "H", and "I" respectively.
-    Hence, there are a total of 9 ways to decode "*".
-Example 2:
-    Input: s = "1*"
-    Output: 18
-    Explanation: The encoded message can represent any of the encoded messages "11", "12", "13", "14", "15", "16", "17", "18", or "19".
-    Each of these encoded messages have 2 ways to be decoded (e.g. "11" can be decoded to "AA" or "K").
-    Hence, there are a total of 9 * 2 = 18 ways to decode "1*".
-Example 3:
-    Input: s = "2*"
-    Output: 15
-    Explanation: The encoded message can represent any of the encoded messages "21", "22", "23", "24", "25", "26", "27", "28", or "29".
-    "21", "22", "23", "24", "25", and "26" have 2 ways of being decoded, but "27", "28", and "29" only have 1 way.
-    Hence, there are a total of (6 * 2) + (3 * 1) = 12 + 3 = 15 ways to decode "2*".
-
-Constraints:
-    1 <= s.length <= 105
-    s[i] is a digit or '*'.
-```
-### Analysis
-Here is a random example to demonstrate the decode process:
-```text
-indices: 0 1 2 3 4 5 6 7   
-s:       3 2 9 * 8 1 4 2
-```
-First, The numbers `7, 8, 9` can only be decoded as a single number, 
-and the numbers `1-6` can be decoded as a single number or when the previous number is `1` or `2`,
-they can be decoded together with the previous number as a new number.
-#### Dynamic Programming Solution
-When determining the number of ways to decode a sequence, we can break it down into two distinct parts for analysis.  
-
-Here is an simple example:
-```text
-2392576 
-```
-Divide the number into `2392` and `576`, so the total number of decoding ways is the product of the decoding ways for `2392` and `576`.  
-
-However, There is another case we need to consider:  
-
-When the digit `2` on the left and the digit `5` on the right are decoded as a pair, 
-the product of decoding ways for `2392` and `576` alone is insufficient to account for all possible decoding methods.  
-Thus, the total number of decoding ways should also **include** the product of the decoding ways for `239` and `25` and `76`.
-
-The DP process below traverses by index, checking one number at a time.  
-For example, the process will consider `2392` and `5`. 
-The total number of decoding ways should be the sum of the product of decoding ways for `239` and `5`, plus the product of decoding ways for `239` and `25`.
-
-##### Initialization 
-Define a one-dimensional array `dp`, where `dp[i]` represents the number of ways to decode the  the string `s` from index `0` to index `i-1`.
-The length of the `dp` array is `s.length+1`, providing space to prevent missing the value of `dp[i-2]`.
-#####  Filling the DP Table  
-The dynamic programming equation can be expressed as follows:
-
-Single-digit decoding (current character only):
-```text
-dp[i] += 
-    dp[i-1],    s[i] = 1-9
-    dp[i-1]×9,  s[i] = * 
-```
-Two-digit decoding (current and previous character together):
-```text
-dp[i] += 
-    dp[i-2],    s[i] = 7~9 and s[i-1]=1 or *
-    0,          s[i] = 7~9 and s[i-1] = 3~9 or 0 or 2
-    dp[i-2],    s[i] = 0~6 and s[i-1] = 1 or 2
-    dp[i-2]×2,  s[i] = 0~6 and s[i-1] = *
-    0,          s[i] = 0~6 and s[i-1] = 3~9 or 0
-    dp[i-2]×9,  s[i] = * and s[i-1] = 1 
-    dp[i-2]×6,  s[i] = * and s[i-1] = 2
-    dp[1-2]*15, s[i] = * and s[i-1] = *
-    0,          s[i] = * and s[i-1] = 3~9 or 0
-```
-##### Result
-The `dp[len]` is the number of ways to decode the string `s`.
-
-##### Implementation
-```java
-class Solution {
-    static final int MOD = 1000000007;
-    public int numDecodings(String s) {
-        int len=s.length();
-        long[] dp=new long[len+1];
-        dp[0]=1;
-        // Initialize dp array
-        dp[1] = (s.charAt(0) == '*') ? 9 : (s.charAt(0) != '0' ? 1 : 0);
-        // Traverse array chars
-        // indices:  0 1 2 3 4 5 6
-        // dp:     0 1 2 3 4 5 6 7
-        for(int i=2; i<len+1; i++){
-            // Check the string s starting from index 1
-            // Use characters instead of numeric value to prevent confusion
-            char val=s.charAt(i-1);
-            char pre=s.charAt(i-2);
-            // Single-digit decoding (current character only)
-            // '0' has no valid encoding as a single digit
-            if (val >= '1' && val <= '9') {
-                dp[i] += dp[i-1];
-            } else if (val == '*') {
-                dp[i] += dp[i-1] * 9;
-                if(dp[i]>MOD)dp[i]%=MOD;
-            }
-            // Two-digit decoding (current and previous character together)
-            if(val>='7'&&(pre=='1'|| pre=='*')){
-                dp[i]+=dp[i-2];
-            }else if(val>='0'&&val<='6'){
-                if(pre=='1'||pre=='2'){
-                    dp[i]+=dp[i-2];
-                }else if(pre=='*'){
-                    dp[i]+=dp[i-2]*2;
-                }
-            }else if(val=='*'){
-                if(pre=='1'){
-                    dp[i]+=dp[i-2]*9;
-                }else if(pre=='2'){
-                    dp[i]+=dp[i-2]*6;
-                }else if(pre=='*'){
-                    dp[i]+=dp[i-2]*15;
-                }
-            }
-            if(dp[i]>MOD)dp[i]%=MOD;
-        }
-        return (int)dp[len];
-    }
-}
-```
-##### Time and Space Complexity
-* Time Complexity: $ O(n) $
-
-    The main loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where len is the length of the string `s`.
-* Space Complexity: $ O(n) $
-
-    The dp array is of size `𝑛+1`, where `𝑛` is the length of the string.
-##### Consideration
-* Calculate the single-digit decoding cases first to avoid redundant calculations.
-* The time complexity of `s.toCharArray()` is O(n), while the `s.charAt()` has a time complexity of O(1), making `charAt()` more efficient.
-* The values in the `dp` array are taken modulo 10<sup>9</sup> + 7, which is still a very large value. long type is required to prevent integer overflow.
-* Using `Character.getNumericValue()` to obtain the nummeric value of `'*'` in string `s` will return `'-1'` and using the `-1` for checking purposes can lead to misleading readability.
-
-## Array Partition
-[Back to Top](#table-of-contents)  
-### Overview
-Given an integer array `nums` of 2n integers, 
-group these integers into `n` pairs `(a1, b1), (a2, b2), ..., (an, bn)` such that the sum of `min(ai, bi)` for all `i` is maximized. 
-Return the maximized sum.
-```text
-Example 1:
-    Input: nums = [1,4,3,2]
-    Output: 4
-    Explanation: All possible pairings (ignoring the ordering of elements) are:
-    1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
-    2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
-    3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
-    So the maximum possible sum is 4.
-
-Example 2:
-    Input: nums = [6,2,6,5,1,2]
-    Output: 9
-    Explanation: The optimal pairing is (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9.
-
-Constraints:
-    1 <= n <= 104
-    nums.length == 2 * n
-    -104 <= nums[i] <= 104
-```
-### Analysis
-In each group, the larger integer will be omitted, and we need to maximize the `sum`.
-Therefore, The omitted value must be smaller.
-To ensure this, wen can sort the array, so that the smaller integer is omitted when calculating the minimal value from the group.
-
-#### Implementation
-```java
-class Solution {
-    public int arrayPairSum(int[] nums) {
-        Arrays.sort(nums);
-        int sum=0;
-        for(int i=0; i< nums.length; i+=2){
-            sum+=nums[i];
-        }
-        return sum;
-    }
-}
-```
-##### Time and Space Complexity
-* Time Complexity: $ O(n \log n) $
-
-    The time complexity of `Arrays.sort(nums)` is $ O(n \log n) $.  
-    The loop iterates through the array with a step of 2, so it runs $ 𝑛/2 $ times. 
-    The time complexity of this loop is $ O(n) $.  
-    The sorting step dominates the iteration step. 
-    Hence, The total time complexity is $ O(n \log n) $.
-* Space Complexity: $ O(1) $
-
-    The Arrays.sort() method uses $ O(1) $ space for primitive data types like integers in Java, as it utilizes a variation of quicksort (dual-pivot quicksort).
-    There is no additional space used apart from the input array and a few variables.   
-    Therefore, the total space complexity is $ O(1) $.
