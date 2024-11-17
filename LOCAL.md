@@ -18,8 +18,8 @@
 <tr>
     <td>test-sap-hana</td>
     <td>Vmware</td>
-    <td>192.168.0.122</td>
-    <td>Test SAP HANA Database</td>
+    <td>192.168.127.129</td>
+    <td>Test SAP HANA Express Database, it is a full Hana database with features but with restrictions (max memory 32GB). </td>
 </tr>
 </tbody>
 </table>
