@@ -919,21 +919,25 @@ class Solution {
     private long score=0;
     public long getMaxFunctionValue(List<Integer> receiver, long k) {
         long max=0;
+        int[] loopLen=new int[receiver.size()];
+        long[] loopSum=new long[receiver.size()];
+        Set<Integer> receivedInd=new HashSet();
         // Select an index to pass the ball
         for(int i=0; i<receiver.size(); i++){
             long sum=i;
             int ind=i;
             // Start passing the ball
-            System.out.println("start passing the ball");
-            for(int j=0; j<k; j++){
-                //TODO Check whether loop passing exists
-                // [5,6,7, 4,3,2,1] 
-                // [5,6,7, 4,3,2,1, 4,3,2,1]
-                
+            for(int j=0,loopLen=0; j<k; j++,loopLen++){
                 // Pass the ball to the next receiver
                 ind=receiver.get(ind);
                 sum+=ind;
-                System.out.println("pass the ball to " +ind);
+                //TODO Check whether loop passing exists
+                // [5,6,7, 4,3,2,1] 
+                // [5,6,7, 4,3,2,1, 4,3,2,1]
+                if(receivedInd.contains(ind)){
+                    
+                }
+                receivedInd.add(ind);
                 if(ind==receiver.get(ind)){
                     sum+=ind*(k-j-1);
                     break;
