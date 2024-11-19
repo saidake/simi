@@ -1088,17 +1088,18 @@ class Solution {
     private void dfs(int stair, int jump, boolean down, int k){
         if(stair<0)return;
         if(stair==k){
-            res++;
+            this.res++;
             // Repeat operation
-            // 1 -> 2: 
+            // k = 2: 
             //     1 -> 2        
-            //          up 
+            //          up
+            //     1 -> 2 -> 1 -> 3 -> 2       
+            //          up -> down -> up -> down
             //     1 -> 0 -> 1 -> 3 -> 2  
             //          down - up - up - down
             //     1 -> 0 -> 1 -> 0 -> 2
             //          down - up - down - up
             //     ...
-            return;
         }else if(stair>k+1){
             return;
         }
@@ -1108,7 +1109,7 @@ class Solution {
             dfs(stair-1, jump, true, k);
         }
         // Go up
-        stair+=(int)Math.pow(2,jump);
+        stair+=1<<jump;
         jump++;
         down=false;
         dfs(stair, jump, down, k);
