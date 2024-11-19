@@ -11,7 +11,8 @@
 - [String](#string)
     - [License Key Formatting](#license-key-formatting)
 - [Uncategorized Problems](#uncategorized-problems)
-    
+    - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
+    - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -763,6 +764,9 @@ Constraints:
 Finding the longest possible equal subarray involves counting the number of identical numbers.   
 Since we can delete at most `k` elements, 
 we need to count the number of other numbers between the identical numbers to determine how many deletions are required.
+
+//TODO Analyze the sliding window process.
+
 ```java
 class Solution {
   public int longestEqualSubarray(List<Integer> nums, int k) {
@@ -912,36 +916,24 @@ Return the `maximum` possible score.
 
 * `1 <= k <= 1010`
 ### Analysis
+Using simple enumeration, we can calculate the sum at each index and compare them to determine the maximum sum.  
+However, calculating for each index involves a significant amount of repeat computation, resulting in very low performance.
 
-#### Implementation
+Enumeration Implementation:  
 ```java
 class Solution {
     private long score=0;
     public long getMaxFunctionValue(List<Integer> receiver, long k) {
         long max=0;
-        int[] loopLen=new int[receiver.size()];
-        long[] loopSum=new long[receiver.size()];
-        Set<Integer> receivedInd=new HashSet();
         // Select an index to pass the ball
         for(int i=0; i<receiver.size(); i++){
             long sum=i;
             int ind=i;
             // Start passing the ball
-            for(int j=0,loopLen=0; j<k; j++,loopLen++){
+            for(int j=0; j<k; j++){
                 // Pass the ball to the next receiver
                 ind=receiver.get(ind);
                 sum+=ind;
-                //TODO Check whether loop passing exists
-                // [5,6,7, 4,3,2,1] 
-                // [5,6,7, 4,3,2,1, 4,3,2,1]
-                if(receivedInd.contains(ind)){
-                    
-                }
-                receivedInd.add(ind);
-                if(ind==receiver.get(ind)){
-                    sum+=ind*(k-j-1);
-                    break;
-                }
             }
             max=Math.max(max,sum);
         }
@@ -949,3 +941,179 @@ class Solution {
     }
 }
 ```
+Define a two-dimensional array `pa[i][x]` to store the node reached from node after $ 2^i $ steps.
+Initially, `pa[0][x]` is simply the direct receiver of `x`. 
+
+Similarly, define a two-dimensional array `sum[i][x]` to store the cumulative sum of node values when making $ 2^i $ jumps starting from node `x`.    
+`sum[0][x]` is simply the value of the node at `receiver[x]`, as it represents a single jump.
+
+Using bitwise operations can significantly enhance the algorithm's performance:
+* `k & k -1`
+
+    The operation clears all bits when `k` is a power of two (like `8`, `16`, `32`, etc.)
+    Additionally, it sets the rightmost set bit in `k` to `0`.  
+
+    Example 1:  
+    * $ k = 6 $ (binary: `110`)  
+    * $ k-1=5 $ (binary: `101`)  
+    * `k & k-1` = `110 & 101 = 100 ` = `4`
+
+    Example 2:  
+    * $ k = 13 $ (binary: `1101`)
+    * $ k-1=12 $ (binary: `1100`) 
+    * `k & k-1` = `1101 & 1100 = 1100 ` = `12`
+
+    Example 3:
+    * $ k = 8 $ (binary: `1000`)
+    * $ k-1=7 $ (binary: `0111`) 
+    * `k & k-1` = `1000 & 0111 = 0000 ` = `0`
+
+* `64 - Long.numberOfLeadingZeros(k)`
+
+    Java `long` values are represented using `64` bits.
+    By subtracting the number of leading zeros from `64`, 
+    we determine the number of bits required to represent `k` in binary (its bit length).  
+
+//TODO Analyze the jump steps.
+
+#### Implementation
+```java
+class Solution {
+    public long getMaxFunctionValue(List<Integer> receiver, long K) {
+        int len = receiver.size();
+        int m = 64 - Long.numberOfLeadingZeros(K); 
+        var pa = new int[m][len];
+        var sum = new long[m][len];
+        // Populate the initial values
+        for (int i = 0; i < len; i++) {
+            pa[0][i] = receiver.get(i);
+            sum[0][i] = receiver.get(i);
+        }
+        // Calculate the sum starting from each index incrementally, step by step.
+        for (int i = 0; i < m - 1; i++) {
+            for (int x = 0; x < len; x++) {
+                int p = pa[i][x];
+                pa[i + 1][x] = pa[i][p];
+                sum[i + 1][x] = sum[i][x] + sum[i][p];
+            }
+        }
+        long ans = 0;
+        for (int i = 0; i < len; i++) {
+            long s = i;
+            int x = i;
+            for (long k = K; k > 0; k &= k - 1) {
+                int ctz = Long.numberOfTrailingZeros(k);
+                s += sum[ctz][x];
+                x = pa[ctz][x];
+            }
+            ans = Math.max(ans, s);
+        }
+        return ans;
+    }
+}
+```
+##### Time and Space Complexity
+* Time Complexity: $ O(n \log n) $
+
+
+* Space Complexity: $ O(n \log n) $
+
+//TODO Compute Time and Space Complexity
+
+
+## Find Number of Ways to Reach the K-th Stair
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a **non-negative** integer `k`. There exists a staircase with an infinite number of stairs, with the **lowest** stair numbered 0.
+
+Alice has an integer `jump`, with an initial value of 0. 
+She starts on stair 1 and wants to reach stair `k` using any number of operations. 
+If she is on stair `i`, in one operation she can:
+
+Go down to stair `i - 1`. This operation cannot be used consecutively or on stair 0.
+Go up to stair $i + 2^{\text{jump}} $. And then, `jump` becomes `jump + 1`.
+Return the total number of ways Alice can reach stair `k`.
+
+Note that it is possible that Alice reaches the stair `k`, and performs some operations to reach the stair `k` again.
+
+**Example 1:**
+> Input: k = 0  
+> Output: 2  
+> Explanation:  
+> The 2 possible ways of reaching stair 0 are:
+> * Alice starts at stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+> * Alice starts at stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+>   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+
+**Example 2:**
+> Input: k = 1  
+> Output: 4  
+> Explanation:  
+> The 4 possible ways of reaching stair 1 are:
+> * Alice starts at stair 1. Alice is at stair 1.  
+> * Alice starts at stair 1.  
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.  
+>   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.  
+> * Alice starts at stair 1.
+>   * Using an operation of the second type, she goes up 20 stairs to reach stair 2.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 1.
+> * Alice starts at stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+>   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+>   * Using an operation of the second type, she goes up 21 stairs to reach stair 2.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 1.
+
+**Constraints:**
+* 0 <= k <= 109
+
+### Analysis
+#### Implementation
+```java
+class Solution {
+    private int res=0;
+    // 0 <= k <= 10^9
+    public int waysToReachStair(int k) {
+        if(k==0)return 2;
+        if(k==1)return 4;
+        // Jump to stair k
+        // 1  ->  5
+        dfs(1, 0, false, k);
+        return this.res;
+    }
+
+    private void dfs(int stair, int jump, boolean down, int k){
+        if(stair<0)return;
+        if(stair==k){
+            res++;
+            // Repeat operation
+            // 1 -> 2: 
+            //     1 -> 2        
+            //          up 
+            //     1 -> 0 -> 1 -> 3 -> 2  
+            //          down - up - up - down
+            //     1 -> 0 -> 1 -> 0 -> 2
+            //          down - up - down - up
+            //     ...
+            return;
+        }else if(stair>k+1){
+            return;
+        }
+        // Check whether Alice has gone down
+        if(!down){
+            // Try to go down when alice didn't go down last time
+            dfs(stair-1, jump, true, k);
+        }
+        // Go up
+        stair+=(int)Math.pow(2,jump);
+        jump++;
+        down=false;
+        dfs(stair, jump, down, k);
+
+    }
+}
+```
+
