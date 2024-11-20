@@ -941,17 +941,30 @@ class Solution {
     }
 }
 ```
-Define a two-dimensional array `pa[i][x]` to store the node reached from node after $ 2^i $ steps.
+Define a two-dimensional array `pa[i][x]` to store the receiver value `x` reached from the initial receiver after $ 2^i $ passings.
 Initially, `pa[0][x]` is simply the direct receiver of `x`. 
 
-Similarly, define a two-dimensional array `sum[i][x]` to store the cumulative sum of node values when making $ 2^i $ jumps starting from node `x`.    
-`sum[0][x]` is simply the value of the node at `receiver[x]`, as it represents a single jump.
+Similarly, define a two-dimensional array `sum[i][x]` to store the cumulative sum of receiver values when making $ 2^i $ passings from receiver `x`.   
+`sum[0][x]` is simply the receiver value at `receiver[x]`, as it represents a single passing.
+
+We can pass the ball to a distant receiver by skipping $ 2^n $ passings, 
+instead of passing to the next receiver, as we have stored the cumulative sums for each passing from from each receiver.
 
 Using bitwise operations can significantly enhance the algorithm's performance:
 * `k & k -1`
+    
+    The operation can result in:
+    * The nearest lower even number to `k`.
 
-    The operation clears all bits when `k` is a power of two (like `8`, `16`, `32`, etc.)
-    Additionally, it sets the rightmost set bit in `k` to `0`.  
+        This operation clears the rightmost set bit, making `k` the nearest lower even number.
+    * Zero when `k` is a power of two.
+
+        The operation clears all bits when `k` is a power of two (like `8`, `16`, `32`, etc.)  
+    
+    Using `k & k-1` to skip passings, each iteration will have a default of `2` passings, 
+    When only powers of two passings remain, directly retrieve the sum from the precomputed two-dimensional sum array.
+
+    Even when `k` is not close to the power of `2`, the passing process remains optimized by skipping `2` passings in each iteration.
 
     Example 1:  
     * $ k = 6 $ (binary: `110`)  
@@ -968,13 +981,16 @@ Using bitwise operations can significantly enhance the algorithm's performance:
     * $ k-1=7 $ (binary: `0111`) 
     * `k & k-1` = `1000 & 0111 = 0000 ` = `0`
 
+
 * `64 - Long.numberOfLeadingZeros(k)`
 
     Java `long` values are represented using `64` bits.
     By subtracting the number of leading zeros from `64`, 
     we determine the number of bits required to represent `k` in binary (its bit length).  
 
-//TODO Analyze the jump steps.
+* `Long.numberOfTrailingZeros(k)`
+
+//TODO Analyze passing process
 
 #### Implementation
 ```java
@@ -989,8 +1005,9 @@ class Solution {
             pa[0][i] = receiver.get(i);
             sum[0][i] = receiver.get(i);
         }
-        // Calculate the sum starting from each index incrementally, step by step.
+        // Precompute the sum starting from each index incrementally, step by step.
         for (int i = 0; i < m - 1; i++) {
+            // Traverse receivers
             for (int x = 0; x < len; x++) {
                 int p = pa[i][x];
                 pa[i + 1][x] = pa[i][p];
@@ -1071,50 +1088,44 @@ Note that it is possible that Alice reaches the stair `k`, and performs some ope
 * 0 <= k <= 109
 
 ### Analysis
+If Alice go up at each jump, the steps will be predictable:
+$$ 2^0 + 2^1 + 2^2 + ... + 2^n = 2^{n+1}-1$$
+The total jumps is `k`, so we need to calculate the nearest lower power of two to `k`, 
+
+
+```text
+k = 2
+
+1 -> 2        
+     up
+1 -> 2 -> 1 -> 3 -> 2       
+     up -> down -> up -> down
+1 -> 0 -> 1 -> 3 -> 2  
+     down - up - up - down
+1 -> 0 -> 1 -> 0 -> 2
+     down - up - down - up
+
+k = 8
+1  ->  8
+```
+
 #### Implementation
 ```java
 class Solution {
-    private int res=0;
     // 0 <= k <= 10^9
     public int waysToReachStair(int k) {
-        if(k==0)return 2;
-        if(k==1)return 4;
-        // Jump to stair k
-        // 1  ->  5
-        dfs(1, 0, false, k);
-        return this.res;
-    }
-
-    private void dfs(int stair, int jump, boolean down, int k){
-        if(stair<0)return;
-        if(stair==k){
-            this.res++;
-            // Repeat operation
-            // k = 2: 
-            //     1 -> 2        
-            //          up
-            //     1 -> 2 -> 1 -> 3 -> 2       
-            //          up -> down -> up -> down
-            //     1 -> 0 -> 1 -> 3 -> 2  
-            //          down - up - up - down
-            //     1 -> 0 -> 1 -> 0 -> 2
-            //          down - up - down - up
-            //     ...
-        }else if(stair>k+1){
-            return;
-        }
-        // Check whether Alice has gone down
-        if(!down){
-            // Try to go down when alice didn't go down last time
-            dfs(stair-1, jump, true, k);
-        }
-        // Go up
-        stair+=1<<jump;
-        jump++;
-        down=false;
-        dfs(stair, jump, down, k);
-
+        int result=0;
+        int equalJump=Integer.highestOnBit(k);
+        if(equalJump==k)result++;
+        // Get the nearest lower power of 2 to k.
+        int overJump=Integer.highestOnBit(k+1)<<1;
+        int upwardJumps=31 - Integer.numberOfLeadingZeros(k+1) + 1;
+        int downwardJumps=overJump-k;
+        // Insert these downward jumps between or after all upward jumps
+        // 1 2 3 4 5 
+        //  * *   *
     }
 }
 ```
 
+//TODO finish the solution.

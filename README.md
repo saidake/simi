@@ -10,7 +10,7 @@ Simi is an educational project focused on practical experience in building and m
 # Directory Structure
 [Back to Top](#table-of-contents)
 ##  ALGORITHMS.md
-This markdown file contains solutions to various algorithm problems, each with detailed comments, explanations, and illustrative diagrams.
+This markdown file contains solutions to various algorithm problems, each with detailed comments, explanations, and illustrative diagrams.  
 For more information, check out the [Algorithms README](ALGORITHMS.md).
 ## AAA 
 A resource directory containing startup configuration files needed by other modules.
