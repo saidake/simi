@@ -14,12 +14,13 @@
 
     <modules>
         <module>simi-main</module>
-        <module>simi-empty</module>
         <module>simi-mysql</module>
         <module>simi-oracle</module>
         <module>simi-nodb</module>
         <module>simi-jpa</module>
         <module>simi-cap</module>
+        <module>simi-aws</module>
+        <module>simi-consumer</module>
     </modules>
 
     <dependencies>
