@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 public final class LevelUPTask extends ThreadPoolTask {
     private final int[] staminaList;
+    private final int[] selectTroopFrom;
     private final boolean[] supplyList;
     private final int[] clearMarkList;
     private final int[] clearTabList;
@@ -23,6 +24,7 @@ public final class LevelUPTask extends ThreadPoolTask {
         super(simiSgz, robot, coordinatesReader, index);
         this.loadProperties();
         this.staminaList=levelUpProperties.getStaminaList()[index];
+        this.selectTroopFrom=levelUpProperties.getSelectTroopFrom()[index];
         this.supplyList=levelUpProperties.getSupplyList()[index];
         this.clearMarkList=levelUpProperties.getClearMarkList()[index];
         this.clearTabList=levelUpProperties.getClearTabList()[index];
@@ -95,7 +97,7 @@ public final class LevelUPTask extends ThreadPoolTask {
             for (int i = 0; i < totalArmyNumber; i++) {
                 if(staminaList[i]<0)continue;
                 //A。AWT operations
-                this.operation.clear(mainCityArmyNumber,simiSgz.isAvoidMarchCollision(), i, clearMarkList[i], clearTabList[i]);
+                this.operation.clear(simiSgz.isAvoidMarchCollision(), selectTroopFrom[i], clearMarkList[i], clearTabList[i]);
             }
             try {
                 int adjustedWaitingTime=waitingTime*1000+3000;

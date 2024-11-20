@@ -87,11 +87,11 @@ public class TroopOperation {
         robot.scroll(scrollFrom,scrollTo);
         robot.scroll(scrollFrom,scrollTo);
     }
-    public void clear(int mainCityArmyNumber, boolean avoidMarchCollision, int curIndex, int markIndex, int clearTabIndex) {
+    public void clear(boolean avoidMarchCollision, int curIndex, int markIndex, int clearTabIndex) {
         //robot.leftMouseClick(getMrkByIndex(markIndex), WaitingTime.SELECT_MARK);
         robot.leftMouseClickMark(getMrkByIndex(markIndex),coordinate.getBtn4(),avoidMarchCollision);
         robot.leftMouseClickEx(getTabByIndex(clearTabIndex), WaitingTime.SELECT_TAB);
-        robot.leftMouseClickEx(getArmyLocationInCity(curIndex<mainCityArmyNumber?curIndex:curIndex-mainCityArmyNumber), WaitingTime.SELECT_TROOP_IN_CITY);
+        robot.leftMouseClickEx(getArmyLocationInCity(curIndex), WaitingTime.SELECT_TROOP_IN_CITY);
         robot.leftMouseClickEx(coordinate.getMarchConfirm(), WaitingTime.CONFIRM);
         robot.leftMouseClickEx(coordinate.getPromptConfirm(), WaitingTime.CONFIRM);
     }

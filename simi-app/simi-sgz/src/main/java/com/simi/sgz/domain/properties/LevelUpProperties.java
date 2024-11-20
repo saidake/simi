@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class LevelUpProperties {
     private int minus;
     private int[][] staminaList;
+    private int[][] selectTroopFrom;
     private boolean[][] supplyList;
     private int[][] clearMarkList;
     private int[][] clearTabList;
