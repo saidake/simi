@@ -13,6 +13,7 @@
 - [Uncategorized Problems](#uncategorized-problems)
     - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
     - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
+    - [Climbing Stairs](#climbing-stairs)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -20,26 +21,27 @@
 Given an integer array `nums` of 2n integers, 
 group these integers into `n` pairs `(a1, b1), (a2, b2), ..., (an, bn)` such that the sum of `min(ai, bi)` for all `i` is maximized. 
 Return the maximized sum.
-```text
-Example 1:
-    Input: nums = [1,4,3,2]
-    Output: 4
-    Explanation: All possible pairings (ignoring the ordering of elements) are:
-    1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
-    2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
-    3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
-    So the maximum possible sum is 4.
 
-Example 2:
-    Input: nums = [6,2,6,5,1,2]
-    Output: 9
-    Explanation: The optimal pairing is (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9.
+**Example 1:**
+> Input: nums = [1,4,3,2]  
+> Output: 4  
+> Explanation: All possible pairings (ignoring the ordering of elements) are:
+> 1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
+> 2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
+> 3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
+> 
+> So the maximum possible sum is 4.
 
-Constraints:
-    1 <= n <= 104
-    nums.length == 2 * n
-    -104 <= nums[i] <= 104
-```
+**Example 2:**
+> Input: nums = [6,2,6,5,1,2]  
+> Output: 9  
+> Explanation:   
+> The optimal pairing is (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9.
+
+**Constraints:**
+* 1 <= n <= 104
+* nums.length == 2 * n
+* -104 <= nums[i] <= 104
 ### Analysis
 In each group, the larger integer will be omitted, and we need to maximize the `sum`.
 Therefore, The omitted value must be smaller.
@@ -92,31 +94,33 @@ In addition to the mapping above, an encoded message may contain the `'*'` chara
 
 Given a string `s` consisting of digits and `'*'` characters, return the **number** of ways to **decode** it.
 
-Since the answer may be very large, return it **modulo** 10<sup>9</sup> + 7.
-```text
-Example 1:
-    Input: s = "*"
-    Output: 9
-    Explanation: The encoded message can represent any of the encoded messages "1", "2", "3", "4", "5", "6", "7", "8", or "9".
-    Each of these can be decoded to the strings "A", "B", "C", "D", "E", "F", "G", "H", and "I" respectively.
-    Hence, there are a total of 9 ways to decode "*".
-Example 2:
-    Input: s = "1*"
-    Output: 18
-    Explanation: The encoded message can represent any of the encoded messages "11", "12", "13", "14", "15", "16", "17", "18", or "19".
-    Each of these encoded messages have 2 ways to be decoded (e.g. "11" can be decoded to "AA" or "K").
-    Hence, there are a total of 9 * 2 = 18 ways to decode "1*".
-Example 3:
-    Input: s = "2*"
-    Output: 15
-    Explanation: The encoded message can represent any of the encoded messages "21", "22", "23", "24", "25", "26", "27", "28", or "29".
-    "21", "22", "23", "24", "25", and "26" have 2 ways of being decoded, but "27", "28", and "29" only have 1 way.
-    Hence, there are a total of (6 * 2) + (3 * 1) = 12 + 3 = 15 ways to decode "2*".
+Since the answer may be very large, return it **modulo** $ 10^9+7 $.
+
+**Example 1:**
+> Input: s = "*"  
+> Output: 9  
+> Explanation: The encoded message can represent any of the encoded messages "1", "2", "3","4", "5", "6", "7", "8", or "9".  
+> Each of these can be decoded to the strings "A", "B", "C", "D", "E", "F", "G", "H", and"I" respectively.  
+> Hence, there are a total of 9 ways to decode "*".  
+
+**Example 2:**
+> Input: s = "1*"  
+> Output: 18  
+> Explanation: The encoded message can represent any of the encoded messages "11", "12", "13", "14", "15", "16", "17", "18", or "19".  
+> Each of these encoded messages have 2 ways to be decoded (e.g. "11" can be decoded to "AA" or "K").  
+> Hence, there are a total of 9 * 2 = 18 ways to decode "1*".
+
+**Example 3:**
+> Input: s = "2*"  
+> Output: 15  
+> Explanation:  
+> The encoded message can represent any of the encoded messages "21", "22","23", "24", "25", "26", "27", "28", or "29".  
+> "21", "22", "23", "24", "25", and "26" have 2 ways of being decoded, but "27", "28", and"29" only have 1 way.  
+> Hence, there are a total of (6 * 2) + (3 * 1) = 12 + 3 = 15 ways to decode "2*".
 
 Constraints:
-    1 <= s.length <= 105
-    s[i] is a digit or '*'.
-```
+* 1 <= s.length <= 105
+* s[i] is a digit or '*'.
 ### Analysis
 Here is a random example to demonstrate the decode process:
 ```text
@@ -251,25 +255,25 @@ at which point the person with the most stones wins.
 
 Assuming Alice and Bob play optimally, return true if Alice wins the game, or false if Bob wins.
 
-```text
-Example 1:
-    Input: piles = [5,3,4,5]
-    Output: true
-    Explanation: 
-        Alice starts first, and can only take the first 5 or the last 5.
-        Say she takes the first 5, so that the row becomes [3, 4, 5].
-        If Bob takes 3, then the board is [4, 5], and Alice takes 5 to win with 10 points.
-        If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 to win with 9 points.
-        This demonstrated that taking the first 5 was a winning move for Alice, so we return true.
-Example 2:
-    Input: piles = [3,7,2,3]
-    Output: true
-Constraints:
-    2 <= piles.length <= 500
-    piles.length is even.
-    1 <= piles[i] <= 500
-    sum(piles[i]) is odd.
-```
+**Example 1:**
+> Input: piles = [5,3,4,5]  
+> Output: true  
+> Explanation:  
+> Alice starts first, and can only take the first 5 or the last 5.  
+> Say she takes the first 5, so that the row becomes [3, 4, 5].  
+> If Bob takes 3, then the board is [4, 5], and Alice takes 5 to win with 10 points.  
+> If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 to win with 9 points.  
+> This demonstrated that taking the first 5 was a winning move for Alice, so we return true.
+
+**Example 2:** 
+> Input: piles = [3,7,2,3]  
+> Output: true
+
+**Constraints:**
+* 2 <= piles.length <= 500
+* piles.length is even.
+* 1 <= piles[i] <= 500
+* sum(piles[i]) is odd.
 ### Analysis
 #### Depth-first Search Solution
 Recursively evaluate the `piles` array from both the start and end,
@@ -433,7 +437,6 @@ before each integer in nums and then concatenate all the integers.
 them to build the expression `"+2-1"`.
 + Return the number of different expressions that you can build, which evaluates to target.
 
-```text
 Example 1:  
     Input: nums = [1,1,1,1,1], target = 3
     Output: 5
@@ -443,16 +446,16 @@ Example 1:
     +1 + 1 - 1 + 1 + 1 = 3
     +1 + 1 + 1 - 1 + 1 = 3
     +1 + 1 + 1 + 1 - 1 = 3
-Example 2:
+
+**Example 2:**
     Input: nums = [1], target = 1
     Output: 1
 
-Constraints:
-    1 <= nums.length <= 20
-    0 <= nums[i] <= 1000
-    0 <= sum(nums[i]) <= 1000
-    -1000 <= target <= 1000
-```
+**Constraints:**
+* 1 <= nums.length <= 20
+* 0 <= nums[i] <= 1000
+* 0 <= sum(nums[i]) <= 1000
+* -1000 <= target <= 1000
 ### Analysis
 #### Depth-first Search Solution
 Each element of the array nums can be added either a `+` or `-` sign, 
@@ -738,28 +741,29 @@ You are given a **0-indexed** integer array nums and an integer `k`.
 A subarray is called **equal** if all of its elements are equal. Note that the empty subarray is an **equal** subarray.  
 Return the length of the **longest** possible equal subarray after deleting **at most** `k` elements from `nums`.  
 A **subarray** is a contiguous, possibly empty sequence of elements within an array.
-```text
-Example 1:
-    Input: nums = [1,3,2,3,1,3], k = 3
-    Output: 3
-    Explanation: 
-        It's optimal to delete the elements at index 2 and index 4.
-        After deleting them, nums becomes equal to [1, 3, 3, 3].
-        The longest equal subarray starts at i = 1 and ends at j = 3 with length equal to 3.
-        It can be proven that no longer equal subarrays can be created.
-Example 2:
-    Input: nums = [1,1,2,2,1,1], k = 2
-    Output: 4
-    Explanation: 
-        It's optimal to delete the elements at index 2 and index 3.
-        After deleting them, nums becomes equal to [1, 1, 1, 1].
-        The array itself is an equal subarray, so the answer is 4.
-        It can be proven that no longer equal subarrays can be created.
-Constraints:
-    1 <= nums.length <= 105
-    1 <= nums[i] <= nums.length
-    0 <= k <= nums.length
-```
+
+**Example 1:**
+> Input: nums = [1,3,2,3,1,3], k = 3  
+> Output: 3  
+> Explanation:   
+> It's optimal to delete the elements at index 2 and index 4.  
+> After deleting them, nums becomes equal to [1, 3, 3, 3].  
+> The longest equal subarray starts at i = 1 and ends at j = 3 with length equal to 3.  
+> It can be proven that no longer equal subarrays can be created.
+
+**Example 2:**
+> Input: nums = [1,1,2,2,1,1], k = 2  
+> Output: 4  
+> Explanation:   
+> It's optimal to delete the elements at index 2 and index 3.  
+> After deleting them, nums becomes equal to [1, 1, 1, 1].  
+> The array itself is an equal subarray, so the answer is 4.  
+> It can be proven that no longer equal subarrays can be created.
+
+**Constraints:**  
+* 1 <= nums.length <= 105
+* 1 <= nums[i] <= nums.length
+* 0 <= k <= nums.length
 ### Analysis
 Finding the longest possible equal subarray involves counting the number of identical numbers.   
 Since we can delete at most `k` elements, 
@@ -815,23 +819,23 @@ except for the first group, which could be shorter than `k` but still must conta
 Furthermore, there must be a dash inserted between two groups, and you should convert all lowercase letters to uppercase.
 
 Return the reformatted license key.
-```text
-Example 1:
-    Input: s = "5F3Z-2e-9-w", k = 4
-    Output: "5F3Z-2E9W"
-    Explanation: The string s has been split into two parts, each part has 4 characters. 
-    Note that the two extra dashes are not needed and can be removed.
-Example 2:
-    Input: s = "2-5g-3-J", k = 2
-    Output: "2-5G-3J"
-    Explanation: The string s has been split into three parts, each part has 2 characters except the first part as it could be shorter as mentioned above.
+
+**Example 1:**
+> Input: s = "5F3Z-2e-9-w", k = 4  
+> Output: "5F3Z-2E9W"  
+> Explanation: The string s has been split into two parts, each part has 4 characters.   
+> Note that the two extra dashes are not needed and can be removed.
+
+**Example 2:**
+> Input: s = "2-5g-3-J", k = 2  
+> Output: "2-5G-3J"  
+> Explanation: The string s has been split into three parts, each part has 2 characters except the first part as it could be shorter as mentioned above.
  
 
-Constraints:
-    1 <= s.length <= 105
-    s consists of English letters, digits, and dashes '-'.
-    1 <= k <= 104
-```
+**Constraints:**
+* 1 <= s.length <= 105
+* s consists of English letters, digits, and dashes '-'.
+* 1 <= k <= 104
 ### Analysis
 First, capitalize the entire string and remove all `'-'` characters.
 Determine the length of the first substring using `s.length % k`, then append the remaining substrings of length `k`.
@@ -1129,3 +1133,70 @@ class Solution {
 ```
 
 //TODO finish the solution.
+
+## Climbing Stairs
+[Back to Top](#table-of-contents)  
+### Overview
+You are climbing a staircase. It takes `n` steps to reach the top.
+
+Each time you can either climb `1` or `2` steps. In how many distinct ways can you climb to the top?
+
+Example 1:
+> Input: n = 2  
+> Output: 2  
+> Explanation: There are two ways to climb to the top.
+> 1. 1 step + 1 step  
+> 2. 2 steps
+
+Example 2:
+> Input: n = 3  
+> Output: 3  
+> Explanation: There are three ways to climb to the top.  
+> 1. 1 step + 1 step + 1 step  
+> 2. 1 step + 2 steps  
+> 3. 2 steps + 1 step
+
+
+**Constraints:**
+* 1 <= n <= 45
+
+### Analysis
+Here is a simple example when `n=5`:
+```text
+stair:            0 1 2 3 4 5 
+ways:               1 2 3 5 8
+```
+Observe the above example, the number of ways to reach stair `n` is the sum of the number of ways to reach stairs `n-1` and `n-2`.
+Thus, it follows the Fibonacci sequence.
+
+#### Dynamic Programming Solution
+Fibonacci sequence formula:
+$$ F(n)=F(n-1)+F(n-2) $$
+##### Initialization 
+The number of ways to reach stair `1` is `1` and stair `2` is `2`, so:  
+$$ F(1) = 1,  F(2) = 2 $$
+##### Filling the DP Table
+Since this process only depends on the previous two stairs, we can just define two variables to store the number of ways for the previous two stairs.
+#### Implementation
+```java
+class Solution {
+    public int climbStairs(int n) {
+        if(n==1)return 1;
+        if(n==2)return 2;
+        int pre1=1;
+        int pre2=2;
+        int current=0;
+        for(int i=3;i<=n;i++){
+            current=pre1+pre2;
+            pre1=pre2;
+            pre2=current;
+        }
+        return current;
+
+    }
+}
+```
+##### Time and Space Complexity
+* Time Complexity: $ O(n) $
+* Space Complexity: $ O(1) $
+
