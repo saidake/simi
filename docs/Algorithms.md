@@ -60,7 +60,7 @@ class Solution {
     }
 }
 ```
-##### Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n \log n) $
 
     The time complexity of `Arrays.sort(nums)` is $ O(n \log n) $.  
@@ -130,7 +130,7 @@ s:       3 2 9 * 8 1 4 2
 First, The numbers `7, 8, 9` can only be decoded as a single number, 
 and the numbers `1-6` can be decoded as a single number or when the previous number is `1` or `2`,
 they can be decoded together with the previous number as a new number.
-#### Dynamic Programming Solution
+### Dynamic Programming Solution
 When determining the number of ways to decode a sequence, we can break it down into two distinct parts for analysis.  
 
 Here is an simple example:
@@ -149,10 +149,10 @@ The DP process below traverses by index, checking one number at a time.
 For example, the process will consider `2392` and `5`. 
 The total number of decoding ways should be the sum of the product of decoding ways for `239` and `5`, plus the product of decoding ways for `239` and `25`.
 
-##### Initialization 
+#### Initialization 
 Define a one-dimensional array `dp`, where `dp[i]` represents the number of ways to decode the  the string `s` from index `0` to index `i-1`.
 The length of the `dp` array is `s.length+1`, providing space to prevent missing the value of `dp[i-2]`.
-#####  Filling the DP Table  
+####  Filling the DP Table  
 The dynamic programming equation can be expressed as follows:
 
 Single-digit decoding (current character only):
@@ -174,10 +174,10 @@ dp[i] +=
     dp[1-2]*15, s[i] = * and s[i-1] = *
     0,          s[i] = * and s[i-1] = 3~9 or 0
 ```
-##### Result
+#### Result
 The `dp[len]` is the number of ways to decode the string `s`.
 
-##### Implementation
+#### Implementation
 ```java
 class Solution {
     static final int MOD = 1000000007;
@@ -227,14 +227,14 @@ class Solution {
     }
 }
 ```
-##### Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n) $
 
     The main loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where len is the length of the string `s`.
 * Space Complexity: $ O(n) $
 
     The dp array is of size `𝑛+1`, where `𝑛` is the length of the string.
-##### Consideration
+#### Consideration
 * Calculate the single-digit decoding cases first to avoid redundant calculations.
 * The time complexity of `s.toCharArray()` is O(n), while the `s.charAt()` has a time complexity of O(1), making `charAt()` more efficient.
 * The values in the `dp` array are taken modulo 10<sup>9</sup> + 7, which is still a very large value. long type is required to prevent integer overflow.
@@ -274,8 +274,7 @@ Assuming Alice and Bob play optimally, return true if Alice wins the game, or fa
 * piles.length is even.
 * 1 <= piles[i] <= 500
 * sum(piles[i]) is odd.
-### Analysis
-#### Depth-first Search Solution
+### Depth-first Search Solution
 Recursively evaluate the `piles` array from both the start and end,
 using a flag variable `isAliceTurn` to track whose turn it is and only calculate the sum for Alice.  
 Since the game ends when one player takes more than half of the total stones,
@@ -312,16 +311,16 @@ class Solution {
   }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: *O*(2<sup>n</sup>)
 * Space Complexity: $ O(n) $ (for the recursion stack)
-#### Dynamic Programming Solution
-##### Initialization  
+### Dynamic Programming Solution
+#### Initialization  
 Define a two-dimensional array `dp`, where both the rows and columns correspond to the indices of the array `piles`.  
 The `dp[i][j]` represents the difference between the number of stones Alice has and the number of stones Bob has, when considering the subarray from index `i` to `j` of the piles array.  
 When `i` equals `j`, there is only a single pile of stones, which is `piles[i]`.
 Since Alice goes first, she takes this pile, so `dp[i][j]=piles[i]`.
-#####  Filling the DP Table  
+####  Filling the DP Table  
 The dynamic programming equation can be expressed as follows:
 ```text
 dp[i][j] = 
@@ -368,7 +367,7 @@ dp[6][8] = Math.max( 7 - dp[7][8], 2 - dp[6][7] )
 dp[6][9] = Math.max( 7 - dp[7][9], 3 - dp[6][8] ) 
 ...
 ```
-#####  Result  
+####  Result  
 The result is determined based on whether the score difference for the entire array (`dp[0][length - 1]`) is positive, indicating that the first player Alice can secure a win.
 
 Here is the solution:
@@ -390,7 +389,7 @@ class Solution {
     }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n^2)$ 
 
     The sum of iterations for both loop is:  
@@ -399,7 +398,7 @@ Time and Space Complexity
 
     The algorithm uses a two-dimensional array `dp` of size `n×n`, where `n` is the length of the input array `piles`.
     The space required for this array is $ O(n^2)$ .
-#### Optimized Dynamic Programming Solution
+### Optimized Dynamic Programming Solution
 The computation of each cell `dp[i][j]` only depends on values from the current row `i` and the next row `i + 1`,
 Thus, We can reuse values in a single one-dimensional array.
 ```java
@@ -417,7 +416,7 @@ class Solution {
     }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n^2)$ 
 
     The sum of iterations for both loop is:  
@@ -456,8 +455,7 @@ Example 1:
 * 0 <= nums[i] <= 1000
 * 0 <= sum(nums[i]) <= 1000
 * -1000 <= target <= 1000
-### Analysis
-#### Depth-first Search Solution
+### Depth-first Search Solution
 Each element of the array nums can be added either a `+` or `-` sign, 
 resulting in `2` choices per element and a total of 2<sup>n</sup> combinations for n elements.  
 Use depth-first search to iterate over each combination and maintain a counter `targetSum` shared in each search path 
@@ -488,13 +486,13 @@ public class Solution {
     }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(2^n)$ 
 
     The total number of recursive calls is proportional to 2<sup>n</sup>, 
     as each element can either contribute positively or negatively to the sum.
 * Space Complexity: $ O(n) $ (for the recursion stack)
-
+### Optimized Depth-first Search Solution
 Define the sum of the elements of the array `nums` as `sum`, the sum of the elements with a `-` sign is `neg`.  
 According to the conditions, we can get the following expression:   
 `(sum − neg) − neg = target`
@@ -511,6 +509,7 @@ target =  67 + (- 8 - 4 -5 - 1 - 2 - 7)*2 = 13
 neg = (- 8 - 4 -5 - 1 - 2 - 7) = 27
 ```
 The initial solution can be optimized as follows:
+#### Implementation
 ```java
 public class Solution {
     public int findTargetSumWays(int[] nums, int target) {
@@ -569,13 +568,13 @@ public class Solution {
     }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(2^n)$  
     
     The worst-case time complexity remains the same, but it is faster than the original solution in general cases.
 * Space Complexity: $ O(n) $
 
-#### Dynamic Programming Solution
+### Dynamic Programming Solution
 Define a two-dimensional array `dp`, where `dp[i][j]` represents the number of **solutions** 
 to select elements from the first `i` numbers of the array nums so that the sum of these elements is equal to `j`.  
 
@@ -698,9 +697,10 @@ class Solution {
     }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n×neg) $   (with neg being dependent on the input values).  
 * Space Complexity: $ O(n×neg) $
+### Optimized Dynamic Programming Solution
 
 Since the current `dp` expression is only related to the previous one, 
 the `dp` array can be simplified to a one-dimensional array:
@@ -730,7 +730,7 @@ public class Solution {
     }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n×neg) $  (with neg being dependent on the input values).  
 * Space Complexity: $ O(neg) $
 # Sliding Window
@@ -775,12 +775,12 @@ Move the range form left to right in the array `nums` as a sliding window.
 During this process, the following operations are needed:
 * If the count of the unequal numbers for `m` in this range is less than `k`, we can directly count the occurrences of `m` as a valid result if it is the maximum.
 * Otherwise, the `m` at index `L` will be excluded from this range, as the count of unequal numbers exceeds the restriction `k`, even if additional integers with the value `m` exist beyond index `R`.
-  Keep moving the sliding window to the right by increasing right boundary index `R`
+  Keep moving the sliding window to the right by increasing right boundary index `R`.
 
 There are several different choices next:
 * Goupe each value and store the indexes of integers with the same value, then repeat the above process for each index group.
-* Instead of restarting the process, exclude the first unequal integer after excluding the `m` at index `L` to directly shrink the sliding window,
-  keeping the range boundary index `R` constant, and continue moving the sliding window to the right.   
+* Exclude the first unequal integer after excluding the `m` at index `L` to directly shrink the sliding window,
+  keeping the right boundary index `R` constant during the process, and continue moving the sliding window to the right by shifting right boundary `R`.   
 
   Below is an example for the exclusion process when the occurrences of unequal integer exceed the restriction `k`: 
   ```text
@@ -845,7 +845,7 @@ class Solution {
   }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n) $  
     * Outer Loop
     
@@ -918,7 +918,7 @@ class Solution {
     }
 }
 ```
-Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n) $
 
     The time complexity of methods `toUpperCase, replaceAll, toCharArray` are all $ O(n) $.  
@@ -982,9 +982,9 @@ Return the `maximum` possible score.
 * `1 <= k <= 1010`
 ### Analysis
 Using simple enumeration, we can calculate the sum at each index and compare them to determine the maximum sum.  
-However, calculating for each index involves a significant amount of repeat computation, resulting in very low performance.
+However, calculating for each index involves a significant amount of repeat computation, resulting in very low performance, we need to minimize the number of passes and avoid redundant calculations.
 
-Enumeration Implementation:  
+Simple Enumeration Implementation:  
 ```java
 class Solution {
     private long score=0;
@@ -1006,6 +1006,8 @@ class Solution {
     }
 }
 ```
+### Dynamic Programming Solution
+
 Define a two-dimensional array `pa[i][x]` to store the receiver value `x` reached from the initial receiver after $ 2^i $ passings.
 Initially, `pa[0][x]` is simply the direct receiver of `x`. 
 
@@ -1094,7 +1096,7 @@ class Solution {
     }
 }
 ```
-##### Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n \log n) $
 
 
@@ -1230,13 +1232,13 @@ ways:               1 2 3 5 8
 Observe the above example, the number of ways to reach stair `n` is the sum of the number of ways to reach stairs `n-1` and `n-2`.
 Thus, it follows the Fibonacci sequence.
 
-#### Dynamic Programming Solution
+### Dynamic Programming Solution
 Fibonacci sequence formula:
 $$ F(n)=F(n-1)+F(n-2) $$
-##### Initialization 
+#### Initialization 
 The number of ways to reach stair `1` is `1` and stair `2` is `2`, so:  
 $$ F(1) = 1,  F(2) = 2 $$
-##### Filling the DP Table
+#### Filling the DP Table
 Since this process only depends on the previous two stairs, we can just define two variables to store the number of ways for the previous two stairs.
 #### Implementation
 ```java
@@ -1257,7 +1259,7 @@ class Solution {
     }
 }
 ```
-##### Time and Space Complexity
+#### Time and Space Complexity
 * Time Complexity: $ O(n) $
 * Space Complexity: $ O(1) $
 
