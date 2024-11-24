@@ -1017,7 +1017,10 @@ Similarly, define a two-dimensional array `sum[i][x]` to store the cumulative su
 We can pass the ball to a distant receiver by skipping $ 2^n $ passings, 
 instead of passing to the next receiver, as we have stored the cumulative sums for each passing from from each receiver.
 
-Using bitwise operations can significantly enhance the algorithm's performance:
+During the population process, Since we skipped some passing procedures, 
+
+
+Using bitwise operations can significantly improve the efficiency of the passing process:
 * `k & k -1`
     
     The operation can result in:
@@ -1052,10 +1055,13 @@ Using bitwise operations can significantly enhance the algorithm's performance:
 * `64 - Long.numberOfLeadingZeros(k)`
 
     Java `long` values are represented using `64` bits.
-    By subtracting the number of leading zeros from `64`, 
-    we determine the number of bits required to represent `k` in binary (its bit length).  
+    By subtracting the number of leading zeros from `64`,
+    we determine the number of bits required to represent `k` in binary (its bit length),
+    which also serves as the exponent of the power of two closest to k.
 
 * `Long.numberOfTrailingZeros(k)`
+
+
 
 //TODO Analyze passing process
 
@@ -1064,19 +1070,28 @@ Using bitwise operations can significantly enhance the algorithm's performance:
 class Solution {
     public long getMaxFunctionValue(List<Integer> receiver, long K) {
         int len = receiver.size();
-        int m = 64 - Long.numberOfLeadingZeros(K); 
-        var pa = new int[m][len];
-        var sum = new long[m][len];
-        // Populate the initial values
+        // The number of passes, which corresponds to the exponent of the power of 2 closest to k.
+        int passCount = 64 - Long.numberOfLeadingZeros(K); 
+        var pa = new int[passCount][len];
+        var sum = new long[passCount][len];
+        // Populate the direct receivers
         for (int i = 0; i < len; i++) {
             pa[0][i] = receiver.get(i);
             sum[0][i] = receiver.get(i);
         }
         // Precompute the sum starting from each index incrementally, step by step.
-        for (int i = 0; i < m - 1; i++) {
+        for (int i = 0; i < passCount - 1; i++) {
             // Traverse receivers
             for (int x = 0; x < len; x++) {
                 int p = pa[i][x];
+                 // [1,1,1,2,3]
+                //        1 2
+                //        1 1
+                // pa[2][3] = pa[1][ pa[1][3] ]
+                // pa[2][3] = pa[1][2]
+
+                // [1,1,1,8,9,2,2,2,3,3]
+                //          8 
                 pa[i + 1][x] = pa[i][p];
                 sum[i + 1][x] = sum[i][x] + sum[i][p];
             }
