@@ -1,5 +1,5 @@
 # Table of Contents
-[Back to Main Project README](README.md)
+[Back to Main Project README](../README.md)
 - [Array](#array)
     - [Array Partition](#array-partition)
 - [Dynamic Programming](#dynamic-programming)
@@ -774,7 +774,8 @@ Move the range form left to right in the array `nums` as a sliding window.
 
 During this process, the following operations are needed:
 * If the count of the unequal numbers for `m` in this range is less than `k`, we can directly count the occurrences of `m` as a valid result if it is the maximum.
-* Otherwise, the `m` at index `L` will be excluded from this range, as the count of unequal numbers exceeds the restriction `k`, even if additional integers with the value `m` exist beyond index `R`.  
+* Otherwise, the `m` at index `L` will be excluded from this range, as the count of unequal numbers exceeds the restriction `k`, even if additional integers with the value `m` exist beyond index `R`.
+  Keep moving the sliding window to the right by increasing right boundary index `R`
 
 There are several different choices next:
 * Goupe each value and store the indexes of integers with the same value, then repeat the above process for each index group.

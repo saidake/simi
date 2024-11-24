@@ -9,9 +9,11 @@
 Simi is an educational project focused on practical experience in building and managing modular applications. It features various modules, each serving a unique purpose, enabling exploration of core programming concepts, application architecture, and integration techniques.
 # Directory Structure
 [Back to Top](#table-of-contents)
-##  ALGORITHMS.md
-This markdown file contains solutions to various algorithm problems, each with detailed comments, explanations, and illustrative diagrams.  
-For more information, check out the [Algorithms README](ALGORITHMS.md).
+## docs
+* ALGORITHMS.md
+
+  This markdown file contains solutions to various algorithm problems, each with detailed comments, explanations, and illustrative diagrams.  
+  For more information, check out the [Algorithms README](docs/ALGORITHMS.md).
 ## AAA 
 A resource directory containing startup configuration files needed by other modules.
 ## scripts
