@@ -1,7 +1,10 @@
 # Table of Contents
 - [Introduction](#introduction)
 - [Directory Structure](#directory-structure)
-  - [ALGORITHMS](#algorithmsmd)
+  - [docs](#docs)
+    - [Algorithms.md](#algorithmsmd)
+    - [Env.md](#envmd)
+    - [Standards.md](#standardsmd)
   - [Simi Sandbox](#simi-sandbox)
 # Introduction
 [Back to Top](#table-of-contents) 
@@ -10,10 +13,19 @@ Simi is an educational project focused on practical experience in building and m
 # Directory Structure
 [Back to Top](#table-of-contents)
 ## docs
-* ALGORITHMS.md
+### Algorithms.md
+This markdown file contains solutions to various algorithm problems, each with detailed comments, explanations, and illustrative diagrams.    
+For more information, check out the [Algorithms File](docs/Algorithms.md).
 
-  This markdown file contains solutions to various algorithm problems, each with detailed comments, explanations, and illustrative diagrams.  
-  For more information, check out the [Algorithms README](docs/ALGORITHMS.md).
+### Env.md
+This file provides details about the project's environment setup, 
+including information about the virtual machines used and instructions for configuring the local development environment.  
+For more information, check out the [Env File](docs/Env.md).
+
+### Standards.md
+This file outlines the standards and guidelines for the project, including JIRA issue type conventions and other best practices to ensure consistency and clarity across the team.  
+For more information, check out the [Standards File](docs/Standards.md).
+
 ## AAA 
 A resource directory containing startup configuration files needed by other modules.
 ## scripts
