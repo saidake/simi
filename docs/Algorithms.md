@@ -778,9 +778,10 @@ During this process, the following operations are needed:
   Keep moving the sliding window to the right by increasing right boundary index `R`.
 
 There are several different choices next:
-* Goupe each value and store the indexes of integers with the same value, then repeat the above process for each index group.
-* Exclude the first unequal integer after excluding the `m` at index `L` to directly shrink the sliding window,
-  keeping the right boundary index `R` constant during the process, and continue moving the sliding window to the right by shifting right boundary `R`.   
+* Group each value and store the indexes of integers with the same value, then repeat the above process for each index group.
+* Continue excluding other integers after excluding the `m` at index `L` to directly shrink the sliding window,
+  and check whether the occurrences of each excluded integer are the maximum in the current range.
+  keeping the right boundary index `R` constant during the process, and resume moving the sliding window to the right by shifting right boundary `R`.   
 
   Below is an example for the exclusion process when the occurrences of unequal integer exceed the restriction `k`: 
   ```text
@@ -1017,9 +1018,47 @@ Similarly, define a two-dimensional array `sum[i][x]` to store the cumulative su
 We can pass the ball to a distant receiver by skipping $ 2^n $ passings, 
 instead of passing to the next receiver, as we have stored the cumulative sums for each passing from from each receiver.
 
-During the population process, Since we skipped some passing procedures, 
+#### Precomputation Process
+Since each passing distance doubles the previous one,
+the current receiver can be determined based on the previously calculated results for the current passing distance.
+```text
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0]  
+ 1       ->  5    ->     9
+ 1                ->     9
+```
+We can determine the receiver as follows:
+Receiver `5` is reached after $2^2$ passes from receiver `1`.
+Receiver `9` is reached after $2^2$ passes from receiver `5`.
+Receiver `9` is also reached after $2^3$ passes from receiver `1`.
 
+Here is a simple example to demonstrate the Precomputation process:
+```text
+receivers:  [1,2,3,4,5,6,7,8,9,10,0]  
 
+Step 1:  
+pa[0][1] = 2
+pa[0][2] = 3
+pa[0][3] = 4
+pa[0][4] = 5
+...
+
+Step 2: 
+pa[1][1] = pa[0][ pa[0][1] ]  = pa[0][2] = 3
+pa[1][2] = pa[0][ pa[0][2] ]  = pa[0][3] = 4
+pa[1][3] = pa[0][ pa[0][3] ]  = pa[0][4] = 5
+...
+
+Step 3: 
+pa[2][1] = pa[1][ pa[1][1] ]  = pa[1][3] = 5
+...
+```
+Since `pa[i][x]` represents the receiver after $2^i$ passes from receiver `x`, we can substitute this into the calculation for `pa[i+1][x]`:
+$$ pa[i+1][x]=pa[i][pa[i][x]] $$
+
+This relation allows us to efficiently compute the receiver after $2^{i+1}$ passes using previously calculated results.
+
+As initialization, we can directly determine the receiver for each element after $2^{i+1}$ pass, which represents the immediate next receiver in a single pass.
+#### Passing Process
 Using bitwise operations can significantly improve the efficiency of the passing process:
 * `k & k -1`
     
@@ -1031,10 +1070,10 @@ Using bitwise operations can significantly improve the efficiency of the passing
 
         The operation clears all bits when `k` is a power of two (like `8`, `16`, `32`, etc.)  
     
-    Using `k & k-1` to skip passings, each iteration will have a default of `2` passings, 
+    Using `k & k-1` to skip passings, each iteration will have a default of `2` passings (`1` for the first passing if `k` is odd), 
     When only powers of two passings remain, directly retrieve the sum from the precomputed two-dimensional sum array.
 
-    Even when `k` is not close to the power of `2`, the passing process remains optimized by skipping `2` passings in each iteration.
+    Even when `k` is not close to the power of `2`, the passing process remains optimized by skipping `2` passings in each iteration  (`1` for the first passing if `k` is odd).
 
     Example 1:  
     * $ k = 6 $ (binary: `110`)  
@@ -1051,19 +1090,14 @@ Using bitwise operations can significantly improve the efficiency of the passing
     * $ k-1=7 $ (binary: `0111`) 
     * `k & k-1` = `1000 & 0111 = 0000 ` = `0`
 
-
 * `64 - Long.numberOfLeadingZeros(k)`
 
     Java `long` values are represented using `64` bits.
     By subtracting the number of leading zeros from `64`,
     we determine the number of bits required to represent `k` in binary (its bit length),
-    which also serves as the exponent of the power of two closest to k.
+    which also serves as **the exponent** of the power of two closest to k.
 
 * `Long.numberOfTrailingZeros(k)`
-
-
-
-//TODO Analyze passing process
 
 #### Implementation
 ```java
@@ -1083,15 +1117,9 @@ class Solution {
         for (int i = 0; i < passCount - 1; i++) {
             // Traverse receivers
             for (int x = 0; x < len; x++) {
+                //  Get the receiver reached after 2^i passes from receiver x
                 int p = pa[i][x];
-                 // [1,1,1,2,3]
-                //        1 2
-                //        1 1
-                // pa[2][3] = pa[1][ pa[1][3] ]
-                // pa[2][3] = pa[1][2]
-
-                // [1,1,1,8,9,2,2,2,3,3]
-                //          8 
+                //  Get the receiver reached after 2^i passes from receiver p
                 pa[i + 1][x] = pa[i][p];
                 sum[i + 1][x] = sum[i][x] + sum[i][p];
             }
@@ -1101,6 +1129,7 @@ class Solution {
             long s = i;
             int x = i;
             for (long k = K; k > 0; k &= k - 1) {
+                // Count trailing zero
                 int ctz = Long.numberOfTrailingZeros(k);
                 s += sum[ctz][x];
                 x = pa[ctz][x];
