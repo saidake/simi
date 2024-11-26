@@ -850,14 +850,12 @@ class Solution {
 * Time Complexity: $ O(n) $  
     * Outer Loop
     
-      The outer loop runs from `i = 0` to `i = nums.size() - 1`, i.e., $ O(n) $ iterations, where n is the size of the input list nums.
+        The outer for loop iterates over each element of the nums array once, making the time complexity $ O(n) $.
     * Inner While Loop
 
-       The while loop moves the left pointer forward each time neq > k. Since each integer at index `index` is processed at most once, 
-       the total number of operations performed by the while loop is also $ O(n)$.
+        While the inner while loop might seem to potentially iterate multiple times, its amortized time complexity is $ O(1) $. This is because each element is only removed from the window once.
 
-    Since both the outer loop and the inner while loop run a total of O(n) operations, the overall time complexity of the algorithm is:
-    $$ O(n) $$
+    Therefore, the overall time complexity of the algorithm is $ O(n) $
 * Space Complexity: $ O(n) $
     * valCount Array
     
@@ -867,7 +865,7 @@ class Solution {
     
         The rest of the variables (left, res, neq) are scalar integers, each taking constant space.
    
-   Since the primary space usage comes from the `valCount` array, the space complexity is: $$ O(n) $$
+   Since the primary space usage comes from the `valCount` array, the space complexity is $ O(n) $
 
 ## License Key Formatting
 [Back to Top](#table-of-contents)  
@@ -1026,9 +1024,9 @@ the current receiver can be determined based on the previously calculated result
  1       ->  5    ->     9
  1                ->     9
 ```
-We can determine the receiver as follows:
-Receiver `5` is reached after $2^2$ passes from receiver `1`.
-Receiver `9` is reached after $2^2$ passes from receiver `5`.
+We can determine the receiver as follows:  
+Receiver `5` is reached after $2^2$ passes from receiver `1`.  
+Receiver `9` is reached after $2^2$ passes from receiver `5`.  
 Receiver `9` is also reached after $2^3$ passes from receiver `1`.
 
 Here is a simple example to demonstrate the Precomputation process:
@@ -1057,35 +1055,39 @@ $$ pa[i+1][x]=pa[i][pa[i][x]] $$
 
 This relation allows us to efficiently compute the receiver after $2^{i+1}$ passes using previously calculated results.
 
-As initialization, we can directly determine the receiver for each element after $2^{i+1}$ pass, which represents the immediate next receiver in a single pass.
+As initialization, we can directly determine the receiver for each element after $2^0$ pass, which represents the immediate next receiver in a single pass.
 #### Passing Process
 Using bitwise operations can significantly improve the efficiency of the passing process:
-* `k & k -1`
+* `k & k -1`  
+
+    The operation clears the rightmost set bit (1) in the binary representation of k.
     
-    The operation can result in:
-    * The nearest lower even number to `k`.
+    It can result in:
+    * Clearing the rightmost set bit (1) in the binary representation of `k`.  
 
-        This operation clears the rightmost set bit, making `k` the nearest lower even number.
-    * Zero when `k` is a power of two.
+        The operation `k & k -1` is equivalent to subtracting $2^n$ from `k`, where $n$ is the position of the rightmost set bit.
+        For example, when comparing `24` and `12`, the number subtracted from `24` is greater than the number subtracted from `12`, because the rightmost set bit in `24` is further to the left than in `12`.
 
-        The operation clears all bits when `k` is a power of two (like `8`, `16`, `32`, etc.)  
+    * Clearing all bits when `k` is a power of two (like `8`, `16`, `32`, etc.)  
+
+        When `k` is a power of two, `k & k -1` will return `0`.
     
-    Using `k & k-1` to skip passings, each iteration will have a default of `2` passings (`1` for the first passing if `k` is odd), 
-    When only powers of two passings remain, directly retrieve the sum from the precomputed two-dimensional sum array.
-
-    Even when `k` is not close to the power of `2`, the passing process remains optimized by skipping `2` passings in each iteration  (`1` for the first passing if `k` is odd).
-
     Example 1:  
-    * $ k = 6 $ (binary: `110`)  
-    * $ k-1=5 $ (binary: `101`)  
-    * `k & k-1` = `110 & 101 = 100 ` = `4`
-
-    Example 2:  
     * $ k = 13 $ (binary: `1101`)
     * $ k-1=12 $ (binary: `1100`) 
     * `k & k-1` = `1101 & 1100 = 1100 ` = `12`
 
-    Example 3:
+    Example 2:  
+    * $ k = 24  $ (binary: `11000`)  
+    * $ k-1=23 $ (binary: `10111`)  
+    * `k & k-1` = `11000 & 10011 = 10000 ` = `16`
+
+   Example 3:  
+    * $ k = 12 $ (binary: `1100`)
+    * $ k-1=11 $ (binary: `1011`) 
+    * `k & k-1` = `1100 & 1011 = 1000 ` = `8`
+
+    Example 4:
     * $ k = 8 $ (binary: `1000`)
     * $ k-1=7 $ (binary: `0111`) 
     * `k & k-1` = `1000 & 0111 = 0000 ` = `0`
@@ -1098,6 +1100,8 @@ Using bitwise operations can significantly improve the efficiency of the passing
     which also serves as **the exponent** of the power of two closest to k.
 
 * `Long.numberOfTrailingZeros(k)`
+
+    Count the trailing zeros of `k`, which corresponds to the number substracted from `k` after the oprations `k &= k-1`.
 
 #### Implementation
 ```java
@@ -1143,10 +1147,7 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(n \log n) $
 
-
 * Space Complexity: $ O(n \log n) $
-
-//TODO Compute Time and Space Complexity
 
 
 ## Find Number of Ways to Reach the K-th Stair
