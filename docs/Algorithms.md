@@ -312,7 +312,7 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: *O*(2<sup>n</sup>)
+* Time Complexity: $O(2^n)$
 * Space Complexity: $ O(n) $ (for the recursion stack)
 ### Dynamic Programming Solution
 #### Initialization  
@@ -457,7 +457,7 @@ Example 1:
 * -1000 <= target <= 1000
 ### Depth-first Search Solution
 Each element of the array nums can be added either a `+` or `-` sign, 
-resulting in `2` choices per element and a total of 2<sup>n</sup> combinations for n elements.  
+resulting in `2` choices per element and a total of $2^n$ combinations for `n` elements.  
 Use depth-first search to iterate over each combination and maintain a counter `targetSum` shared in each search path 
 to count the total number of valid paths that achieve the target sum.
 
@@ -489,7 +489,7 @@ public class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(2^n)$ 
 
-    The total number of recursive calls is proportional to 2<sup>n</sup>, 
+    The total number of recursive calls is proportional to $2^n$, 
     as each element can either contribute positively or negatively to the sum.
 * Space Complexity: $ O(n) $ (for the recursion stack)
 ### Optimized Depth-first Search Solution
@@ -837,6 +837,7 @@ class Solution {
       res = Math.max(res, R - L + 1 - neq);
     }
 
+    // Traverse remaining integers
     while (L < nums.size() - 1) {
       frequency[nums.get(L)]--;
       L++;
@@ -848,12 +849,14 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $ O(n) $  
-    * Outer Loop
+    * Traverse array nums
     
-        The outer for loop iterates over each element of the nums array once, making the time complexity $ O(n) $.
-    * Inner While Loop
+        The outer for loop iterates over each element of the nums array once, making the time complexity $ O(n) $.  
 
         While the inner while loop might seem to potentially iterate multiple times, its amortized time complexity is $ O(1) $. This is because each element is only removed from the window once.
+    * Traverse remaining integers
+
+        This loop only traverses the remaining integers after the sliding window reaches the end of the nums array, with a time complexity of $O(1)$ corresponding to the size of the sliding window.
 
     Therefore, the overall time complexity of the algorithm is $ O(n) $
 * Space Complexity: $ O(n) $
@@ -921,8 +924,8 @@ class Solution {
 * Time Complexity: $ O(n) $
 
     The time complexity of methods `toUpperCase, replaceAll, toCharArray` are all $ O(n) $.  
-    Additionally, the time complexity for `substring` is O(m), where m is the length of the substring (endIndex - startIndex).  
-    Since each iteration takes *O*(k) time where k is the length of the sliced substring and there are `(n-firstLen)/k` iterations, the loop takes $ O(n) $.
+    Additionally, the time complexity for `substring` is $O(m)$, where $m$ is the length of the substring (endIndex - startIndex).  
+    Since each iteration takes $O(k)$ time where $k$ is the length of the sliced substring and there are `(n-firstLen)/k` iterations, the loop takes $ O(n) $.
     Therefore, the total time complexity is $ O(n) $.
 * Space Complexity: $ O(n) $
     
@@ -1101,7 +1104,7 @@ Using bitwise operations can significantly improve the efficiency of the passing
 
 * `Long.numberOfTrailingZeros(k)`
 
-    Count the trailing zeros of `k`, which corresponds to the number substracted from `k` after the oprations `k &= k-1`.
+    Count the trailing zeros of `k`, which corresponds to the exponent of the number $2^n$  substracted from `k` after the oprations `k &= k-1`.
 
 #### Implementation
 ```java
@@ -1129,6 +1132,7 @@ class Solution {
             }
         }
         long ans = 0;
+        // Pass the ball
         for (int i = 0; i < len; i++) {
             long s = i;
             int x = i;
@@ -1145,10 +1149,19 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n \log n) $
+* Time Complexity: $ O(n \log k) $
+    * Precomputation
+
+        The outer loop iterates $log(k)$ times, as it calcualtes the powers of 2 up to $k$.
+        The inner loop iterates `n` times for each outer loop iteration, calculating the receiver and sum for each index.
+
+        So, the precomputation step takes $O(n \times log k)$ time.
+    * Pass the ball
+
 
 * Space Complexity: $ O(n \log n) $
 
+//TODO Analyze the time and space complexity
 
 ## Find Number of Ways to Reach the K-th Stair
 [Back to Top](#table-of-contents)  
