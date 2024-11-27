@@ -1152,16 +1152,25 @@ class Solution {
 * Time Complexity: $ O(n \log k) $
     * Precomputation
 
-        The outer loop iterates $log(k)$ times, as it calcualtes the powers of 2 up to $k$.
-        The inner loop iterates `n` times for each outer loop iteration, calculating the receiver and sum for each index.
+        The outer loop takes $O(log k)$ time, as it calcualtes the powers of 2 up to $k$.
+        The inner loop iterates $O(n)$ times for each outer loop iteration, calculating the receiver and sum for each index, where `n` is the length of the receiver array.
 
         So, the precomputation step takes $O(n \times log k)$ time.
     * Pass the ball
+        The outer loop iterates $O(n)$ times to consider each starting index.
 
+        The inner loop iterates at most $O(log k)$ times to calculate the final sum for each starting index, using the precomputed values.
 
-* Space Complexity: $ O(n \log n) $
+    Therefore, the overall time complexity of the algorithm is $ O(n \log k) $
 
-//TODO Analyze the time and space complexity
+* Space Complexity: $ O(n \log k) $
+    * `pa` and `sum` arrays 
+        
+        These two arrays store information for each power of `2` up to `k`, and each entry in the array corresponds to a receiver, So the space complexity of these arrays is $ O(n \log k) $.
+
+    * Other variables
+        
+        The other variables, such as `len`, `passCount`, `i`, `x`, `k`, `ctz`, `s`, and `ans`, require constant extra space.
 
 ## Find Number of Ways to Reach the K-th Stair
 [Back to Top](#table-of-contents)  
@@ -1215,6 +1224,8 @@ Note that it is possible that Alice reaches the stair `k`, and performs some ope
 ### Analysis
 If Alice go up at each jump, the steps will be predictable:
 $$ 2^0 + 2^1 + 2^2 + ... + 2^n = 2^{n+1}-1$$
+Let's say alice can reach the stair `k` after `n` upward jumps, 
+
 The total jumps is `k`, so we need to calculate the nearest lower power of two to `k`, 
 
 
