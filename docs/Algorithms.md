@@ -1222,12 +1222,17 @@ Note that it is possible that Alice reaches the stair `k`, and performs some ope
 * 0 <= k <= 109
 
 ### Analysis
-If Alice go up at each jump, the steps will be predictable:
+If Alice go up at each jump, the steps will be predictable (the total number of upward jumps is `n`):
 $$ 2^0 + 2^1 + 2^2 + ... + 2^n = 2^{n+1}-1$$
-Let's say alice can reach the stair `k` after `n` upward jumps, 
+Suppose Alice reaches the stair `k` after `n` upward jumps without any downward jumps, So we can get:
+    $$ 1 + ( 2^{n+1}-1 ) = k $$
+Convert the equation to:
+    $$2^{n+1} = k $$
 
-The total jumps is `k`, so we need to calculate the nearest lower power of two to `k`, 
+Using bitwise operation calculates the nearest lower power of two to `k`, we can directly get the number of downward jumps.
 
+Combination Probability (Order doesn't matter):
+$$C(n,r)= \frac{n!}{r! \times (n-r)!} $$
 
 ```text
 k = 2
@@ -1241,25 +1246,45 @@ k = 2
 1 -> 0 -> 1 -> 0 -> 2
      down - up - down - up
 
-k = 8
-1  ->  8
-```
 
+k = 5
+
+1 -> 2 -> 4 -> 8
+
+1 -> 2 -> 4 -> 8
+
+
+```
 #### Implementation
 ```java
 class Solution {
     // 0 <= k <= 10^9
     public int waysToReachStair(int k) {
         int result=0;
-        int equalJump=Integer.highestOnBit(k);
-        if(equalJump==k)result++;
-        // Get the nearest lower power of 2 to k.
-        int overJump=Integer.highestOnBit(k+1)<<1;
-        int upwardJumps=31 - Integer.numberOfLeadingZeros(k+1) + 1;
-        int downwardJumps=overJump-k;
+        // The total steps Alice skips starting from stair 1 duiring all upward jumps
+        int upwardJumpTargetStair=Integer.highestOneBit(k)<<1;
+
+        // The maximum number of downward jumps (the number of upward jumps plus 1)
+        int maxDownwardJumps=32 - Integer.numberOfLeadingZeros(k);
+
+        System.out.println("upwardJumps: "+upwardJumps+" downwardJumps: "+downwardJumps);
         // Insert these downward jumps between or after all upward jumps
         // 1 2 3 4 5 
         //  * *   *
+        // return (int)
+        // (
+        //     factorial(upwardJumps)/(
+        //         factorial(downwardJumps)*factorial(upwardJumps-downwardJumps)
+        //         )
+        // );
+    }
+
+    public static long factorial(int n) {
+      long result = 1;
+       for (int i = 1; i <= n; i++) {
+           result *= i;
+       }
+      return result;
     }
 }
 ```
