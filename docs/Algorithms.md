@@ -1256,27 +1256,32 @@ k = 5
 
 ```
 #### Implementation
+//TODO passed cases: k= 10, k=5
 ```java
 class Solution {
     // 0 <= k <= 10^9
     public int waysToReachStair(int k) {
         int result=0;
         // The total steps Alice skips starting from stair 1 duiring all upward jumps
+        //TODO Assume that steps beyond k need to be jumped
         int upwardJumpTargetStair=Integer.highestOneBit(k)<<1;
 
         // The maximum number of downward jumps (the number of upward jumps plus 1)
-        int maxDownwardJumps=32 - Integer.numberOfLeadingZeros(k);
+        int maxDownwardJumps=32 - Integer.numberOfLeadingZeros(k)+1;
 
-        System.out.println("upwardJumps: "+upwardJumps+" downwardJumps: "+downwardJumps);
+        //TODO Assume maxDownwardJumps>upwardJumpTargetStair-k
+        int downwardJumps= upwardJumpTargetStair-k;
+        System.out.println("upwardJumpTargetStair: "+upwardJumpTargetStair);
+        System.out.println("downwardJumps: "+downwardJumps+" maxDownwardJumps: "+maxDownwardJumps);
         // Insert these downward jumps between or after all upward jumps
         // 1 2 3 4 5 
         //  * *   *
-        // return (int)
-        // (
-        //     factorial(upwardJumps)/(
-        //         factorial(downwardJumps)*factorial(upwardJumps-downwardJumps)
-        //         )
-        // );
+        return (int)
+        (
+            factorial(maxDownwardJumps)/(
+                factorial(downwardJumps)*factorial(maxDownwardJumps-downwardJumps)
+                )
+        );
     }
 
     public static long factorial(int n) {
