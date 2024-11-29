@@ -1246,50 +1246,68 @@ k = 2
 1 -> 0 -> 1 -> 0 -> 2
      down - up - down - up
 
-
 k = 5
-
 1 -> 2 -> 4 -> 8
-
-1 -> 2 -> 4 -> 8
-
-
 ```
 #### Implementation
-//TODO passed cases: k= 10, k=5
 ```java
 class Solution {
     // 0 <= k <= 10^9
     public int waysToReachStair(int k) {
+        // Since 0 is not a power of two, this case should be excluded.
+        if(k==0)return 2;
+        // Since Alice can choose not to jump when k=1, this case should also be excluded.
+        if(k==1)return 4;
+        
         int result=0;
+        int checkTargetStair=Integer.highestOneBit(k);
+        if(checkTargetStair==k){
+            result++;
+        }
+
         // The total steps Alice skips starting from stair 1 duiring all upward jumps
-        //TODO Assume that steps beyond k need to be jumped
-        int upwardJumpTargetStair=Integer.highestOneBit(k)<<1;
+        int upwardJumpTargetStair=checkTargetStair<<1;
 
         // The maximum number of downward jumps (the number of upward jumps plus 1)
         int maxDownwardJumps=32 - Integer.numberOfLeadingZeros(k)+1;
 
-        //TODO Assume maxDownwardJumps>upwardJumpTargetStair-k
         int downwardJumps= upwardJumpTargetStair-k;
-        System.out.println("upwardJumpTargetStair: "+upwardJumpTargetStair);
-        System.out.println("downwardJumps: "+downwardJumps+" maxDownwardJumps: "+maxDownwardJumps);
+        if(maxDownwardJumps < downwardJumps)return result;
+        else if(maxDownwardJumps == downwardJumps)return result +1;
+
+        System.out.println(" maxDownwardJumps: "+maxDownwardJumps+" downwardJumps: "+downwardJumps);
         // Insert these downward jumps between or after all upward jumps
-        // 1 2 3 4 5 
-        //  * *   *
-        return (int)
-        (
-            factorial(maxDownwardJumps)/(
-                factorial(downwardJumps)*factorial(maxDownwardJumps-downwardJumps)
-                )
-        );
+
+        // TODO Avoid combination long value overflow.
+        return result+(int)combination(downwardJumps, maxDownwardJumps);
     }
 
-    public static long factorial(int n) {
-      long result = 1;
-       for (int i = 1; i <= n; i++) {
+    /**
+     * Calculate the factorial for range m (exclusive) to n (inclusive).
+     */
+    public static long factorial(int m, int n) {
+      long result = n;
+       for (int i = n-1; i > m; i--) {
            result *= i;
        }
       return result;
+    }
+    
+    public static long factorial(int n) {
+      return factorial(0, n);
+    }
+    /**
+     * Select r balls from n balls
+     */
+    public static long combination(int r, int n) {
+      System.out.println(" r: "+r+" n: "+n);
+      if(n-r>r){
+        System.out.println("factorial(n-r, n): "+factorial(n-r, n)+" factorial(r): "+factorial(r));
+        return factorial(n-r, n)/factorial(r);
+      }else{
+        System.out.println("factorial(r, n): "+factorial(r, n)+" factorial(r): "+factorial(n-r));
+        return factorial(r, n)/factorial(n-r);
+      }
     }
 }
 ```
