@@ -1229,10 +1229,19 @@ Suppose Alice reaches the stair `k` after `n` upward jumps without any downward 
 Convert the equation to:
     $$2^{n+1} = k $$
 
-Using bitwise operation calculates the nearest lower power of two to `k`, we can directly get the number of downward jumps.
+#### Combination Probability (Order doesn't matter)
+$$ C(n,m)= \frac{n!}{m! \times (n-m)!} $$
 
-Combination Probability (Order doesn't matter):
-$$C(n,r)= \frac{n!}{r! \times (n-r)!} $$
+#### Value Evaluation for Combination Probability
+
+Binomial Theorem:
+$$ (a + b)^n = \sum_{k=0}^n C(n, k) \times a^{n-k} \times b^k $$
+When a=1, b=1, the result is:
+$$ (1 + 1)^n = \sum_{k=0}^n C(n, k) = C(n,0)+C(n,1)+C(n,2)+...+C(n,n) $$
+Since C(n,k) is one of these elements, it follows that:
+$$ C(n,k)<2^n $$
+Replace each index in the previous equation with $n/2$ :
+$$ (1 + 1)^n < C(n,n/2)+C(n,n/2)+C(n,n/2)+...+C(n,n/2) $$
 
 ```text
 k = 2
@@ -1245,9 +1254,6 @@ k = 2
      down - up - up - down
 1 -> 0 -> 1 -> 0 -> 2
      down - up - down - up
-
-k = 5
-1 -> 2 -> 4 -> 8
 ```
 #### Implementation
 ```java
