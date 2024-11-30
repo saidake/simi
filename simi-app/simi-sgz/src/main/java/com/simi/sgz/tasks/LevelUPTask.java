@@ -51,25 +51,21 @@ public final class LevelUPTask extends ThreadPoolTask {
         int secondCityArmyNumber= simiSgz.getSecondCityArmyNumber();
         int totalArmyNumber=mainCityArmyNumber+secondCityArmyNumber;
         //A. Check if there is a need to supply the army.
-        boolean hasStamina = Arrays.stream(staminaList).anyMatch(item -> item > 15);
-        boolean needSupplyForAny=false;
-        for (boolean curSupply : supplyList) {
-            if (curSupply) {
-                needSupplyForAny = true;
-                break;
-            }
-        }
         //A.start the level-up action
-        boolean hasAnyStaminaLeft=true;
+        boolean hasAnyStaminaLeft= Arrays.stream(staminaList).anyMatch(item -> item >= 15);
         while (hasAnyStaminaLeft){
             hasAnyStaminaLeft=false;
+            boolean needSupplyForAny=false;
             //B. reduce stamina
             for (int i = 0; i < totalArmyNumber; i++) {
                 staminaList[i]-=15;
-                if(staminaList[i]>=15)hasAnyStaminaLeft=true;
+                if(staminaList[i]>=0){
+                    hasAnyStaminaLeft=true;
+                    if(supplyList[i])needSupplyForAny=true;
+                }
             }
             //B. enter city and supply army
-            if(needSupplyForAny&&hasStamina){
+            if(needSupplyForAny){
                 boolean enteredCity=false;
                 boolean enteredSecondCity=false;
                 for (int i = 0; i < totalArmyNumber; i++) {
