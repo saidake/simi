@@ -1156,7 +1156,7 @@ class Solution {
         The inner loop iterates $O(n)$ times for each outer loop iteration, calculating the receiver and sum for each index, where `n` is the length of the receiver array.
 
         So, the precomputation step takes $O(n \times log k)$ time.
-    * Pass the ball
+    * Pass the ball  
         The outer loop iterates $O(n)$ times to consider each starting index.
 
         The inner loop iterates at most $O(log k)$ times to calculate the final sum for each starting index, using the precomputed values.
@@ -1177,7 +1177,7 @@ class Solution {
 ### Overview
 You are given a **non-negative** integer `k`. There exists a staircase with an infinite number of stairs, with the **lowest** stair numbered 0.
 
-Alice has an integer `jump`, with an initial value of 0. 
+Alice has an integer `jump`, with an initial value of `0`. 
 She starts on stair 1 and wants to reach stair `k` using any number of operations. 
 If she is on stair `i`, in one operation she can:
 
@@ -1219,106 +1219,78 @@ Note that it is possible that Alice reaches the stair `k`, and performs some ope
 >   * Using an operation of the first type, she goes down 1 stair to reach stair 1.
 
 **Constraints:**
-* 0 <= k <= 109
+* $0 <= k <= 10^9$
 
 ### Analysis
-If Alice go up at each jump, the steps will be predictable (the total number of upward jumps is `n`):
+Based on the formula for the sum of a geometric series:
 $$ 2^0 + 2^1 + 2^2 + ... + 2^n = 2^{n+1}-1$$
-Suppose Alice reaches the stair `k` after `n` upward jumps without any downward jumps, So we can get:
-    $$ 1 + ( 2^{n+1}-1 ) = k $$
-Convert the equation to:
-    $$2^{n+1} = k $$
+If Alice reaches the stair k after `e` upward jumps and `f` downward jumps, then:
+$$ 2^0 + 2^1 + 2^2 + ... + 2^{e-1} = 2^e-1$$
+Thus, the relationship is:
+$$ 1 + ( 2^e-1 )- f = k $$
+Rearranging gives:
+$$ f = 2^e - k$$ 
+Since there are `e+1` positions where these downward jumps can occur, the result is:
+$$ C(e+1, 2^e - k) $$
 
-#### Combination Probability (Order doesn't matter)
-$$ C(n,m)= \frac{n!}{m! \times (n-m)!} $$
+Using `Integer.highestOneBit(k)` to determine the nearest lower power of two (`nlp`) for `k`, 
+consider the following cases:
+* If `k=0`, no jumps are required.
+* If `nlp=k`, there is one valid case where all jumps are upward.
+* If `nlp<k`, an additional upward jump is needed to pass stair `k`, followed by several downward jumps to return to `k`.
+#### Precomputation for Combination Probability
+Using the following combination formula, the results can be precomputed and stored in a two-dimensional array:
+$$C(n,m)=C(n-1,m-1)+C(n-1,m)$$
 
-#### Value Evaluation for Combination Probability
-
+#### Evaluating the Value Range of Combination Probability
 Binomial Theorem:
 $$ (a + b)^n = \sum_{k=0}^n C(n, k) \times a^{n-k} \times b^k $$
-When a=1, b=1, the result is:
+For a=1, b=1, the result becomes:
 $$ (1 + 1)^n = \sum_{k=0}^n C(n, k) = C(n,0)+C(n,1)+C(n,2)+...+C(n,n) $$
-Since C(n,k) is one of these elements, it follows that:
+Since $C(n,k)$ is one of these terms, it follows that: 
 $$ C(n,k)<2^n $$
-Replace each index in the previous equation with $n/2$ :
-$$ (1 + 1)^n < C(n,n/2)+C(n,n/2)+C(n,n/2)+...+C(n,n/2) $$
 
-```text
-k = 2
-
-1 -> 2        
-     up
-1 -> 2 -> 1 -> 3 -> 2       
-     up -> down -> up -> down
-1 -> 0 -> 1 -> 3 -> 2  
-     down - up - up - down
-1 -> 0 -> 1 -> 0 -> 2
-     down - up - down - up
-```
+Let the exponent of the nearest lower power of two for `k` be `ex`,  
+Given the constraint $0 <= k <= 10^9$, 
+even though an additional upward jump may need to be considered,
+The combination probability result remains less than $2^{ex+1}$, which is equivalent to `2k`.  
+Since integer can represent values in the range $-2,147,483,648$ to $2,147,483,647$,
+a result within $0 \sim 2\times10^9$ is valid.
 #### Implementation
 ```java
 class Solution {
-    // 0 <= k <= 10^9
-    public int waysToReachStair(int k) {
-        // Since 0 is not a power of two, this case should be excluded.
-        if(k==0)return 2;
-        // Since Alice can choose not to jump when k=1, this case should also be excluded.
-        if(k==1)return 4;
-        
-        int result=0;
-        int checkTargetStair=Integer.highestOneBit(k);
-        if(checkTargetStair==k){
-            result++;
+    private static final int MX = 31;
+    private static final int[][] c = new int[MX][MX];
+
+    static {
+        for (int n = 0; n < MX; n++) {
+            c[n][0] = c[n][n] = 1;
+            for (int m = 1; m < n; m++) {
+                c[n][m] = c[n - 1][m - 1] + c[n - 1][m];
+            }
         }
-
-        // The total steps Alice skips starting from stair 1 duiring all upward jumps
-        int upwardJumpTargetStair=checkTargetStair<<1;
-
-        // The maximum number of downward jumps (the number of upward jumps plus 1)
-        int maxDownwardJumps=32 - Integer.numberOfLeadingZeros(k)+1;
-
-        int downwardJumps= upwardJumpTargetStair-k;
-        if(maxDownwardJumps < downwardJumps)return result;
-        else if(maxDownwardJumps == downwardJumps)return result +1;
-
-        System.out.println(" maxDownwardJumps: "+maxDownwardJumps+" downwardJumps: "+downwardJumps);
-        // Insert these downward jumps between or after all upward jumps
-
-        // TODO Avoid combination long value overflow.
-        return result+(int)combination(downwardJumps, maxDownwardJumps);
     }
 
-    /**
-     * Calculate the factorial for range m (exclusive) to n (inclusive).
-     */
-    public static long factorial(int m, int n) {
-      long result = n;
-       for (int i = n-1; i > m; i--) {
-           result *= i;
-       }
-      return result;
-    }
-    
-    public static long factorial(int n) {
-      return factorial(0, n);
-    }
-    /**
-     * Select r balls from n balls
-     */
-    public static long combination(int r, int n) {
-      System.out.println(" r: "+r+" n: "+n);
-      if(n-r>r){
-        System.out.println("factorial(n-r, n): "+factorial(n-r, n)+" factorial(r): "+factorial(r));
-        return factorial(n-r, n)/factorial(r);
-      }else{
-        System.out.println("factorial(r, n): "+factorial(r, n)+" factorial(r): "+factorial(n-r));
-        return factorial(r, n)/factorial(n-r);
-      }
+    public int waysToReachStair(int k) {
+        // The nearest power of two for k.
+        int nlp=Integer.highestOneBit(k);
+        // The exponent of the nearest power of two for k.
+        int ex=32 - Integer.numberOfLeadingZeros(k);
+        int result=0;
+        if(k==1) result++;
+        if(nlp==k) result++;
+        if((nlp<<=1)-k <= ex+1){
+            result+=c[ex+1][nlp-k];
+        }
+        return result;
     }
 }
 ```
-
-//TODO finish the solution.
+#### Time and Space Complexity
+* Time Complexity: $ O(1) $
+ 
+    The time and space used duiring the precomputation process are not factored into the solution.
+* Space Complexity: $ O(1) $
 
 ## Climbing Stairs
 [Back to Top](#table-of-contents)  
