@@ -21,6 +21,7 @@
         <module>simi-cap</module>
         <module>simi-aws</module>
         <module>simi-consumer</module>
+        <module>simi-extensions</module>
     </modules>
 
     <dependencies>
