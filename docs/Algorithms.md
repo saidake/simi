@@ -1406,3 +1406,52 @@ Queen:  (2,3)
 Calculate steps:
 * If the binshop is outside the square consisted of white rook and black queen, directly return 2.
 * 
+### Implementation
+```java
+class Solution {
+    private int moves=0;
+    public int minMovesToCaptureTheQueen(int a, int b, int c, int d, int e, int f) {
+        // If the binshop is outside the square consisted of white rook and black queen, directly return 2.
+        // Rook:    (a,b)
+        // Bishop:  (c,d)
+
+        // Queen:   (e,f)
+
+
+        // Rook:    (4,3)
+        // Bishop:  (3,4)
+
+        // Queen:   (2,5)
+        // y= x + k -> y-x = k
+        // y= -x + k -> y+x=k
+
+
+        // Rook:    (5,8)
+        // Bishop:  (8,8)
+
+        // Queen:   (1,8)
+
+
+        if(c-d==e-f && a-b!=e-f)return 1;
+        if(c-d==e-f && a-b==e-f && Math.abs(c-e)<Math.abs(a-e) )return 1;
+        if(c+d==e+f && a+b!=e+f)return 1;
+        if(c+d==e+f && a+b==e+f && Math.abs(c-e)<Math.abs(a-e) )return 1;
+
+        if(a==e&&a!=c)return 1;
+        if(a==e&&a==c&&
+            (
+                (b>f&&(d<f||d>b))
+                ||(b<f)&&(d<b||d>f)
+            )
+        )return 1;
+        if(b==f&&b!=d)return 1;
+        if(b==f&&b==d&& 
+            (
+                (a>e&&(c<e||c>a))
+                ||(a<e)&&(c<a||c>e)
+            )
+        )return 1;
+        return 2;
+    }
+}
+```
