@@ -3,17 +3,19 @@
 - [Array](#array)
     - [Array Partition](#array-partition)
 - [Dynamic Programming](#dynamic-programming)
+    - [Climbing Stairs](#climbing-stairs)
     - [Decode Ways II](#decode-ways-ii)
+    - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
     - [Stone Game](#stone-game)
     - [Target Sum](#target-sum)
+- [Math](#math)
+    - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
 - [Sliding Window](#sliding-window)
     - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
 - [String](#string)
     - [License Key Formatting](#license-key-formatting)
 - [Uncategorized Problems](#uncategorized-problems)
-    - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
-    - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
-    - [Climbing Stairs](#climbing-stairs)
+    - [Minimum Moves to Capture The Queen](#minimum-moves-to-capture-the-queen)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -74,6 +76,71 @@ class Solution {
     There is no additional space used apart from the input array and a few variables.   
     Therefore, the total space complexity is $ O(1) $.
 # Dynamic Programming
+## Climbing Stairs
+[Back to Top](#table-of-contents)  
+### Overview
+You are climbing a staircase. It takes `n` steps to reach the top.
+
+Each time you can either climb `1` or `2` steps. In how many distinct ways can you climb to the top?
+
+Example 1:
+> Input: n = 2  
+> Output: 2  
+> Explanation: There are two ways to climb to the top.
+> 1. 1 step + 1 step  
+> 2. 2 steps
+
+Example 2:
+> Input: n = 3  
+> Output: 3  
+> Explanation: There are three ways to climb to the top.  
+> 1. 1 step + 1 step + 1 step  
+> 2. 1 step + 2 steps  
+> 3. 2 steps + 1 step
+
+
+**Constraints:**
+* 1 <= n <= 45
+
+### Analysis
+Here is a simple example when `n=5`:
+```text
+stair:            0 1 2 3 4 5 
+ways:               1 2 3 5 8
+```
+Observe the above example, the number of ways to reach stair `n` is the sum of the number of ways to reach stairs `n-1` and `n-2`.
+Thus, it follows the Fibonacci sequence.
+
+### Dynamic Programming Solution
+Fibonacci sequence formula:
+$$ F(n)=F(n-1)+F(n-2) $$
+#### Initialization 
+The number of ways to reach stair `1` is `1` and stair `2` is `2`, so:  
+$$ F(1) = 1,  F(2) = 2 $$
+#### Filling the DP Table
+Since this process only depends on the previous two stairs, we can just define two variables to store the number of ways for the previous two stairs.
+#### Implementation
+```java
+class Solution {
+    public int climbStairs(int n) {
+        if(n==1)return 1;
+        if(n==2)return 2;
+        int pre1=1;
+        int pre2=2;
+        int current=0;
+        for(int i=3;i<=n;i++){
+            current=pre1+pre2;
+            pre1=pre2;
+            pre2=current;
+        }
+        return current;
+
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+* Space Complexity: $ O(1) $
 ## Decode Ways II
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -239,6 +306,244 @@ class Solution {
 * The time complexity of `s.toCharArray()` is O(n), while the `s.charAt()` has a time complexity of O(1), making `charAt()` more efficient.
 * The values in the `dp` array are taken modulo 10<sup>9</sup> + 7, which is still a very large value. long type is required to prevent integer overflow.
 * Using `Character.getNumericValue()` to obtain the nummeric value of `'*'` in string `s` will return `'-1'` and using the `-1` for checking purposes can lead to misleading readability.
+## Maximize Value of Function in a Ball Passing Game
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an integer array `receiver` of length `n` and an integer `k`. 
+`n` players are playing a ball-passing game.
+
+You choose the starting player, `i`. The game proceeds as follows:   
+
+player `i` passes the ball to player `receiver[i]`, who then passes it to `receiver[receiver[i]]`, 
+and so on, for `k` passes in total. The game's score is the sum of the indices of the players who touched the ball, 
+including repetitions, i.e. `i + receiver[i] + receiver[receiver[i]] + ... + receiver(k)[i]`.
+
+Return the `maximum` possible score.
+
+**Notes:**
+* `receiver` may contain duplicates.
+
+* `receiver[i]` may be equal to `i`.
+
+
+**Example 1:**
+> **Input:** `receiver = [2, 0, 1]`, `k = 4`  
+> **Output:** `6`  
+> **Explanation:**  
+> Starting with player `i = 2`, the initial score is `2`.
+> | Pass | Sender Index | Receiver Index | Score |
+> |------|--------------|----------------|-------|
+> | 1    | 2            | 1              | 3     |
+> | 2    | 1            | 0              | 3     |
+> | 3    | 0            | 2              | 5     |
+> | 4    | 2            | 1              | 6     |
+
+**Example 2:**
+> **Input:** `receiver = [1, 1, 1, 2, 3]`, `k = 3`  
+> **Output:** `10`  
+> **Explanation:**  
+> Starting with player `i = 4`, the initial score is `4`.  
+> | Pass | Sender Index | Receiver Index | Score |
+> |------|--------------|----------------|-------|
+> | 1    | 4            | 3              | 7     |
+> | 2    | 3            | 2              | 9     |
+> | 3    | 2            | 1              | 10    |
+
+**Constraints:**
+* `1 <= receiver.length == n <= 105`
+
+* `0 <= receiver[i] <= n - 1`
+
+* `1 <= k <= 1010`
+### Analysis
+Using simple enumeration, we can calculate the sum at each index and compare them to determine the maximum sum.  
+However, calculating for each index involves a significant amount of repeat computation, resulting in very low performance, we need to minimize the number of passes and avoid redundant calculations.
+
+Simple Enumeration Implementation:  
+```java
+class Solution {
+    private long score=0;
+    public long getMaxFunctionValue(List<Integer> receiver, long k) {
+        long max=0;
+        // Select an index to pass the ball
+        for(int i=0; i<receiver.size(); i++){
+            long sum=i;
+            int ind=i;
+            // Start passing the ball
+            for(int j=0; j<k; j++){
+                // Pass the ball to the next receiver
+                ind=receiver.get(ind);
+                sum+=ind;
+            }
+            max=Math.max(max,sum);
+        }
+        return max;
+    }
+}
+```
+### Dynamic Programming Solution
+
+Define a two-dimensional array `pa[i][x]` to store the receiver value `x` reached from the initial receiver after $ 2^i $ passings.
+Initially, `pa[0][x]` is simply the direct receiver of `x`. 
+
+Similarly, define a two-dimensional array `sum[i][x]` to store the cumulative sum of receiver values when making $ 2^i $ passings from receiver `x`.   
+`sum[0][x]` is simply the receiver value at `receiver[x]`, as it represents a single passing.
+
+We can pass the ball to a distant receiver by skipping $ 2^n $ passings, 
+instead of passing to the next receiver, as we have stored the cumulative sums for each passing from from each receiver.
+
+#### Precomputation Process
+Since each passing distance doubles the previous one,
+the current receiver can be determined based on the previously calculated results for the current passing distance.
+```text
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0]  
+ 1       ->  5    ->     9
+ 1                ->     9
+```
+We can determine the receiver as follows:  
+Receiver `5` is reached after $2^2$ passes from receiver `1`.  
+Receiver `9` is reached after $2^2$ passes from receiver `5`.  
+Receiver `9` is also reached after $2^3$ passes from receiver `1`.
+
+Here is a simple example to demonstrate the Precomputation process:
+```text
+receivers:  [1,2,3,4,5,6,7,8,9,10,0]  
+
+Step 1:  
+pa[0][1] = 2
+pa[0][2] = 3
+pa[0][3] = 4
+pa[0][4] = 5
+...
+
+Step 2: 
+pa[1][1] = pa[0][ pa[0][1] ]  = pa[0][2] = 3
+pa[1][2] = pa[0][ pa[0][2] ]  = pa[0][3] = 4
+pa[1][3] = pa[0][ pa[0][3] ]  = pa[0][4] = 5
+...
+
+Step 3: 
+pa[2][1] = pa[1][ pa[1][1] ]  = pa[1][3] = 5
+...
+```
+Since `pa[i][x]` represents the receiver after $2^i$ passes from receiver `x`, we can substitute this into the calculation for `pa[i+1][x]`:
+$$ pa[i+1][x]=pa[i][pa[i][x]] $$
+
+This relation allows us to efficiently compute the receiver after $2^{i+1}$ passes using previously calculated results.
+
+As initialization, we can directly determine the receiver for each element after $2^0$ pass, which represents the immediate next receiver in a single pass.
+#### Passing Process
+Using bitwise operations can significantly improve the efficiency of the passing process:
+* `k & k -1`  
+
+    The operation clears the rightmost set bit (1) in the binary representation of k.
+    
+    It can result in:
+    * Clearing the rightmost set bit (1) in the binary representation of `k`.  
+
+        The operation `k & k -1` is equivalent to subtracting $2^n$ from `k`, where $n$ is the position of the rightmost set bit.
+        For example, when comparing `24` and `12`, the number subtracted from `24` is greater than the number subtracted from `12`, because the rightmost set bit in `24` is further to the left than in `12`.
+
+    * Clearing all bits when `k` is a power of two (like `8`, `16`, `32`, etc.)  
+
+        When `k` is a power of two, `k & k -1` will return `0`.
+    
+    Example 1:  
+    * $ k = 13 $ (binary: `1101`)
+    * $ k-1=12 $ (binary: `1100`) 
+    * `k & k-1` = `1101 & 1100 = 1100 ` = `12`
+
+    Example 2:  
+    * $ k = 24  $ (binary: `11000`)  
+    * $ k-1=23 $ (binary: `10111`)  
+    * `k & k-1` = `11000 & 10011 = 10000 ` = `16`
+
+   Example 3:  
+    * $ k = 12 $ (binary: `1100`)
+    * $ k-1=11 $ (binary: `1011`) 
+    * `k & k-1` = `1100 & 1011 = 1000 ` = `8`
+
+    Example 4:
+    * $ k = 8 $ (binary: `1000`)
+    * $ k-1=7 $ (binary: `0111`) 
+    * `k & k-1` = `1000 & 0111 = 0000 ` = `0`
+
+* `64 - Long.numberOfLeadingZeros(k)`
+
+    Java `long` values are represented using `64` bits.
+    By subtracting the number of leading zeros from `64`,
+    we determine the number of bits required to represent `k` in binary (its bit length),
+    which also serves as **the exponent** of the power of two closest to k.
+
+* `Long.numberOfTrailingZeros(k)`
+
+    Count the trailing zeros of `k`, which corresponds to the exponent of the number $2^n$  substracted from `k` after the oprations `k &= k-1`.
+
+#### Implementation
+```java
+class Solution {
+    public long getMaxFunctionValue(List<Integer> receiver, long K) {
+        int len = receiver.size();
+        // The number of passes, which corresponds to the exponent of the power of 2 closest to k.
+        int passCount = 64 - Long.numberOfLeadingZeros(K); 
+        var pa = new int[passCount][len];
+        var sum = new long[passCount][len];
+        // Populate the direct receivers
+        for (int i = 0; i < len; i++) {
+            pa[0][i] = receiver.get(i);
+            sum[0][i] = receiver.get(i);
+        }
+        // Precompute the sum starting from each index incrementally, step by step.
+        for (int i = 0; i < passCount - 1; i++) {
+            // Traverse receivers
+            for (int x = 0; x < len; x++) {
+                //  Get the receiver reached after 2^i passes from receiver x
+                int p = pa[i][x];
+                //  Get the receiver reached after 2^i passes from receiver p
+                pa[i + 1][x] = pa[i][p];
+                sum[i + 1][x] = sum[i][x] + sum[i][p];
+            }
+        }
+        long ans = 0;
+        // Pass the ball
+        for (int i = 0; i < len; i++) {
+            long s = i;
+            int x = i;
+            for (long k = K; k > 0; k &= k - 1) {
+                // Count trailing zero
+                int ctz = Long.numberOfTrailingZeros(k);
+                s += sum[ctz][x];
+                x = pa[ctz][x];
+            }
+            ans = Math.max(ans, s);
+        }
+        return ans;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n \log k) $
+    * Precomputation
+
+        The outer loop takes $O(log k)$ time, as it calcualtes the powers of 2 up to $k$.
+        The inner loop iterates $O(n)$ times for each outer loop iteration, calculating the receiver and sum for each index, where `n` is the length of the receiver array.
+
+        So, the precomputation step takes $O(n \times log k)$ time.
+    * Pass the ball  
+        The outer loop iterates $O(n)$ times to consider each starting index.
+
+        The inner loop iterates at most $O(log k)$ times to calculate the final sum for each starting index, using the precomputed values.
+
+    Therefore, the overall time complexity of the algorithm is $ O(n \log k) $
+
+* Space Complexity: $ O(n \log k) $
+    * `pa` and `sum` arrays 
+        
+        These two arrays store information for each power of `2` up to `k`, and each entry in the array corresponds to a receiver, So the space complexity of these arrays is $ O(n \log k) $.
+
+    * Other variables
+        
+        The other variables, such as `len`, `passCount`, `i`, `x`, `k`, `ctz`, `s`, and `ans`, require constant extra space.
 
 ## Stone Game
 [Back to Top](#table-of-contents)
@@ -733,6 +1038,127 @@ public class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(n×neg) $  (with neg being dependent on the input values).  
 * Space Complexity: $ O(neg) $
+# Math
+## Find Number of Ways to Reach the K-th Stair
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a **non-negative** integer `k`. There exists a staircase with an infinite number of stairs, with the **lowest** stair numbered 0.
+
+Alice has an integer `jump`, with an initial value of `0`. 
+She starts on stair 1 and wants to reach stair `k` using any number of operations. 
+If she is on stair `i`, in one operation she can:
+
+Go down to stair `i - 1`. This operation cannot be used consecutively or on stair 0.
+Go up to stair $i + 2^{\text{jump}} $. And then, `jump` becomes `jump + 1`.
+Return the total number of ways Alice can reach stair `k`.
+
+Note that it is possible that Alice reaches the stair `k`, and performs some operations to reach the stair `k` again.
+
+**Example 1:**
+> Input: k = 0  
+> Output: 2  
+> Explanation:  
+> The 2 possible ways of reaching stair 0 are:
+> * Alice starts at stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+> * Alice starts at stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+>   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+
+**Example 2:**
+> Input: k = 1  
+> Output: 4  
+> Explanation:  
+> The 4 possible ways of reaching stair 1 are:
+> * Alice starts at stair 1. Alice is at stair 1.  
+> * Alice starts at stair 1.  
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.  
+>   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.  
+> * Alice starts at stair 1.
+>   * Using an operation of the second type, she goes up 20 stairs to reach stair 2.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 1.
+> * Alice starts at stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+>   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
+>   * Using an operation of the second type, she goes up 21 stairs to reach stair 2.
+>   * Using an operation of the first type, she goes down 1 stair to reach stair 1.
+
+**Constraints:**
+* $0 <= k <= 10^9$
+
+### Analysis
+Based on the formula for the sum of a geometric series:
+$$ 2^0 + 2^1 + 2^2 + ... + 2^n = 2^{n+1}-1$$
+If Alice reaches the stair k after `e` upward jumps and `f` downward jumps, then:
+$$ 2^0 + 2^1 + 2^2 + ... + 2^{e-1} = 2^e-1$$
+Thus, the relationship is:
+$$ 1 + ( 2^e-1 )- f = k $$
+Rearranging gives:
+$$ f = 2^e - k$$ 
+Since there are `e+1` positions where these downward jumps can occur, the result is:
+$$ C(e+1, 2^e - k) $$
+
+Using `Integer.highestOneBit(k)` to determine the nearest lower power of two (`nlp`) for `k`, 
+consider the following cases:
+* If `k=0`, no jumps are required.
+* If `nlp=k`, there is one valid case where all jumps are upward.
+* If `nlp<k`, an additional upward jump is needed to pass stair `k`, followed by several downward jumps to return to `k`.
+#### Precomputation for Combination Probability
+Using the following combination formula, the results can be precomputed and stored in a two-dimensional array:
+$$C(n,m)=C(n-1,m-1)+C(n-1,m)$$
+
+#### Evaluating the Value Range of Combination Probability
+Binomial Theorem:
+$$ (a + b)^n = \sum_{k=0}^n C(n, k) \times a^{n-k} \times b^k $$
+For a=1, b=1, the result becomes:
+$$ (1 + 1)^n = \sum_{k=0}^n C(n, k) = C(n,0)+C(n,1)+C(n,2)+...+C(n,n) $$
+Since $C(n,k)$ is one of these terms, it follows that: 
+$$ C(n,k)<2^n $$
+
+Let the exponent of the nearest lower power of two for `k` be `ex`,  
+Given the constraint $0 <= k <= 10^9$, 
+even though an additional upward jump may need to be considered,
+The combination probability result remains less than $2^{ex+1}$, which is equivalent to `2k`.  
+Since integer can represent values in the range $-2,147,483,648$ to $2,147,483,647$,
+a result within $0 \sim 2\times10^9$ is valid.
+#### Implementation
+```java
+class Solution {
+    private static final int MX = 31;
+    private static final int[][] c = new int[MX][MX];
+
+    static {
+        for (int n = 0; n < MX; n++) {
+            c[n][0] = c[n][n] = 1;
+            for (int m = 1; m < n; m++) {
+                c[n][m] = c[n - 1][m - 1] + c[n - 1][m];
+            }
+        }
+    }
+
+    public int waysToReachStair(int k) {
+        // The nearest power of two for k.
+        int nlp=Integer.highestOneBit(k);
+        // The exponent of the nearest power of two for k.
+        int ex=32 - Integer.numberOfLeadingZeros(k);
+        int result=0;
+        if(k==1) result++;
+        if(nlp==k) result++;
+        if((nlp<<=1)-k <= ex+1){
+            result+=c[ex+1][nlp-k];
+        }
+        return result;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(1) $
+ 
+    The time and space used duiring the precomputation process are not factored into the solution.
+* Space Complexity: $ O(1) $
+
 # Sliding Window
 ## Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
@@ -933,431 +1359,6 @@ class Solution {
     `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
     Therefore, the total space complexity is $ O(n) $
 # Uncategorized Problems
-## Maximize Value of Function in a Ball Passing Game
-[Back to Top](#table-of-contents)  
-### Overview
-You are given an integer array `receiver` of length `n` and an integer `k`. 
-`n` players are playing a ball-passing game.
-
-You choose the starting player, `i`. The game proceeds as follows:   
-
-player `i` passes the ball to player `receiver[i]`, who then passes it to `receiver[receiver[i]]`, 
-and so on, for `k` passes in total. The game's score is the sum of the indices of the players who touched the ball, 
-including repetitions, i.e. `i + receiver[i] + receiver[receiver[i]] + ... + receiver(k)[i]`.
-
-Return the `maximum` possible score.
-
-**Notes:**
-* `receiver` may contain duplicates.
-
-* `receiver[i]` may be equal to `i`.
-
-
-**Example 1:**
-> **Input:** `receiver = [2, 0, 1]`, `k = 4`  
-> **Output:** `6`  
-> **Explanation:**  
-> Starting with player `i = 2`, the initial score is `2`.
-> | Pass | Sender Index | Receiver Index | Score |
-> |------|--------------|----------------|-------|
-> | 1    | 2            | 1              | 3     |
-> | 2    | 1            | 0              | 3     |
-> | 3    | 0            | 2              | 5     |
-> | 4    | 2            | 1              | 6     |
-
-**Example 2:**
-> **Input:** `receiver = [1, 1, 1, 2, 3]`, `k = 3`  
-> **Output:** `10`  
-> **Explanation:**  
-> Starting with player `i = 4`, the initial score is `4`.  
-> | Pass | Sender Index | Receiver Index | Score |
-> |------|--------------|----------------|-------|
-> | 1    | 4            | 3              | 7     |
-> | 2    | 3            | 2              | 9     |
-> | 3    | 2            | 1              | 10    |
-
-**Constraints:**
-* `1 <= receiver.length == n <= 105`
-
-* `0 <= receiver[i] <= n - 1`
-
-* `1 <= k <= 1010`
-### Analysis
-Using simple enumeration, we can calculate the sum at each index and compare them to determine the maximum sum.  
-However, calculating for each index involves a significant amount of repeat computation, resulting in very low performance, we need to minimize the number of passes and avoid redundant calculations.
-
-Simple Enumeration Implementation:  
-```java
-class Solution {
-    private long score=0;
-    public long getMaxFunctionValue(List<Integer> receiver, long k) {
-        long max=0;
-        // Select an index to pass the ball
-        for(int i=0; i<receiver.size(); i++){
-            long sum=i;
-            int ind=i;
-            // Start passing the ball
-            for(int j=0; j<k; j++){
-                // Pass the ball to the next receiver
-                ind=receiver.get(ind);
-                sum+=ind;
-            }
-            max=Math.max(max,sum);
-        }
-        return max;
-    }
-}
-```
-### Dynamic Programming Solution
-
-Define a two-dimensional array `pa[i][x]` to store the receiver value `x` reached from the initial receiver after $ 2^i $ passings.
-Initially, `pa[0][x]` is simply the direct receiver of `x`. 
-
-Similarly, define a two-dimensional array `sum[i][x]` to store the cumulative sum of receiver values when making $ 2^i $ passings from receiver `x`.   
-`sum[0][x]` is simply the receiver value at `receiver[x]`, as it represents a single passing.
-
-We can pass the ball to a distant receiver by skipping $ 2^n $ passings, 
-instead of passing to the next receiver, as we have stored the cumulative sums for each passing from from each receiver.
-
-#### Precomputation Process
-Since each passing distance doubles the previous one,
-the current receiver can be determined based on the previously calculated results for the current passing distance.
-```text
-[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0]  
- 1       ->  5    ->     9
- 1                ->     9
-```
-We can determine the receiver as follows:  
-Receiver `5` is reached after $2^2$ passes from receiver `1`.  
-Receiver `9` is reached after $2^2$ passes from receiver `5`.  
-Receiver `9` is also reached after $2^3$ passes from receiver `1`.
-
-Here is a simple example to demonstrate the Precomputation process:
-```text
-receivers:  [1,2,3,4,5,6,7,8,9,10,0]  
-
-Step 1:  
-pa[0][1] = 2
-pa[0][2] = 3
-pa[0][3] = 4
-pa[0][4] = 5
-...
-
-Step 2: 
-pa[1][1] = pa[0][ pa[0][1] ]  = pa[0][2] = 3
-pa[1][2] = pa[0][ pa[0][2] ]  = pa[0][3] = 4
-pa[1][3] = pa[0][ pa[0][3] ]  = pa[0][4] = 5
-...
-
-Step 3: 
-pa[2][1] = pa[1][ pa[1][1] ]  = pa[1][3] = 5
-...
-```
-Since `pa[i][x]` represents the receiver after $2^i$ passes from receiver `x`, we can substitute this into the calculation for `pa[i+1][x]`:
-$$ pa[i+1][x]=pa[i][pa[i][x]] $$
-
-This relation allows us to efficiently compute the receiver after $2^{i+1}$ passes using previously calculated results.
-
-As initialization, we can directly determine the receiver for each element after $2^0$ pass, which represents the immediate next receiver in a single pass.
-#### Passing Process
-Using bitwise operations can significantly improve the efficiency of the passing process:
-* `k & k -1`  
-
-    The operation clears the rightmost set bit (1) in the binary representation of k.
-    
-    It can result in:
-    * Clearing the rightmost set bit (1) in the binary representation of `k`.  
-
-        The operation `k & k -1` is equivalent to subtracting $2^n$ from `k`, where $n$ is the position of the rightmost set bit.
-        For example, when comparing `24` and `12`, the number subtracted from `24` is greater than the number subtracted from `12`, because the rightmost set bit in `24` is further to the left than in `12`.
-
-    * Clearing all bits when `k` is a power of two (like `8`, `16`, `32`, etc.)  
-
-        When `k` is a power of two, `k & k -1` will return `0`.
-    
-    Example 1:  
-    * $ k = 13 $ (binary: `1101`)
-    * $ k-1=12 $ (binary: `1100`) 
-    * `k & k-1` = `1101 & 1100 = 1100 ` = `12`
-
-    Example 2:  
-    * $ k = 24  $ (binary: `11000`)  
-    * $ k-1=23 $ (binary: `10111`)  
-    * `k & k-1` = `11000 & 10011 = 10000 ` = `16`
-
-   Example 3:  
-    * $ k = 12 $ (binary: `1100`)
-    * $ k-1=11 $ (binary: `1011`) 
-    * `k & k-1` = `1100 & 1011 = 1000 ` = `8`
-
-    Example 4:
-    * $ k = 8 $ (binary: `1000`)
-    * $ k-1=7 $ (binary: `0111`) 
-    * `k & k-1` = `1000 & 0111 = 0000 ` = `0`
-
-* `64 - Long.numberOfLeadingZeros(k)`
-
-    Java `long` values are represented using `64` bits.
-    By subtracting the number of leading zeros from `64`,
-    we determine the number of bits required to represent `k` in binary (its bit length),
-    which also serves as **the exponent** of the power of two closest to k.
-
-* `Long.numberOfTrailingZeros(k)`
-
-    Count the trailing zeros of `k`, which corresponds to the exponent of the number $2^n$  substracted from `k` after the oprations `k &= k-1`.
-
-#### Implementation
-```java
-class Solution {
-    public long getMaxFunctionValue(List<Integer> receiver, long K) {
-        int len = receiver.size();
-        // The number of passes, which corresponds to the exponent of the power of 2 closest to k.
-        int passCount = 64 - Long.numberOfLeadingZeros(K); 
-        var pa = new int[passCount][len];
-        var sum = new long[passCount][len];
-        // Populate the direct receivers
-        for (int i = 0; i < len; i++) {
-            pa[0][i] = receiver.get(i);
-            sum[0][i] = receiver.get(i);
-        }
-        // Precompute the sum starting from each index incrementally, step by step.
-        for (int i = 0; i < passCount - 1; i++) {
-            // Traverse receivers
-            for (int x = 0; x < len; x++) {
-                //  Get the receiver reached after 2^i passes from receiver x
-                int p = pa[i][x];
-                //  Get the receiver reached after 2^i passes from receiver p
-                pa[i + 1][x] = pa[i][p];
-                sum[i + 1][x] = sum[i][x] + sum[i][p];
-            }
-        }
-        long ans = 0;
-        // Pass the ball
-        for (int i = 0; i < len; i++) {
-            long s = i;
-            int x = i;
-            for (long k = K; k > 0; k &= k - 1) {
-                // Count trailing zero
-                int ctz = Long.numberOfTrailingZeros(k);
-                s += sum[ctz][x];
-                x = pa[ctz][x];
-            }
-            ans = Math.max(ans, s);
-        }
-        return ans;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n \log k) $
-    * Precomputation
-
-        The outer loop takes $O(log k)$ time, as it calcualtes the powers of 2 up to $k$.
-        The inner loop iterates $O(n)$ times for each outer loop iteration, calculating the receiver and sum for each index, where `n` is the length of the receiver array.
-
-        So, the precomputation step takes $O(n \times log k)$ time.
-    * Pass the ball  
-        The outer loop iterates $O(n)$ times to consider each starting index.
-
-        The inner loop iterates at most $O(log k)$ times to calculate the final sum for each starting index, using the precomputed values.
-
-    Therefore, the overall time complexity of the algorithm is $ O(n \log k) $
-
-* Space Complexity: $ O(n \log k) $
-    * `pa` and `sum` arrays 
-        
-        These two arrays store information for each power of `2` up to `k`, and each entry in the array corresponds to a receiver, So the space complexity of these arrays is $ O(n \log k) $.
-
-    * Other variables
-        
-        The other variables, such as `len`, `passCount`, `i`, `x`, `k`, `ctz`, `s`, and `ans`, require constant extra space.
-
-## Find Number of Ways to Reach the K-th Stair
-[Back to Top](#table-of-contents)  
-### Overview
-You are given a **non-negative** integer `k`. There exists a staircase with an infinite number of stairs, with the **lowest** stair numbered 0.
-
-Alice has an integer `jump`, with an initial value of `0`. 
-She starts on stair 1 and wants to reach stair `k` using any number of operations. 
-If she is on stair `i`, in one operation she can:
-
-Go down to stair `i - 1`. This operation cannot be used consecutively or on stair 0.
-Go up to stair $i + 2^{\text{jump}} $. And then, `jump` becomes `jump + 1`.
-Return the total number of ways Alice can reach stair `k`.
-
-Note that it is possible that Alice reaches the stair `k`, and performs some operations to reach the stair `k` again.
-
-**Example 1:**
-> Input: k = 0  
-> Output: 2  
-> Explanation:  
-> The 2 possible ways of reaching stair 0 are:
-> * Alice starts at stair 1.
->   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
-> * Alice starts at stair 1.
->   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
->   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.
->   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
-
-**Example 2:**
-> Input: k = 1  
-> Output: 4  
-> Explanation:  
-> The 4 possible ways of reaching stair 1 are:
-> * Alice starts at stair 1. Alice is at stair 1.  
-> * Alice starts at stair 1.  
->   * Using an operation of the first type, she goes down 1 stair to reach stair 0.  
->   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.  
-> * Alice starts at stair 1.
->   * Using an operation of the second type, she goes up 20 stairs to reach stair 2.
->   * Using an operation of the first type, she goes down 1 stair to reach stair 1.
-> * Alice starts at stair 1.
->   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
->   * Using an operation of the second type, she goes up 20 stairs to reach stair 1.
->   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
->   * Using an operation of the second type, she goes up 21 stairs to reach stair 2.
->   * Using an operation of the first type, she goes down 1 stair to reach stair 1.
-
-**Constraints:**
-* $0 <= k <= 10^9$
-
-### Analysis
-Based on the formula for the sum of a geometric series:
-$$ 2^0 + 2^1 + 2^2 + ... + 2^n = 2^{n+1}-1$$
-If Alice reaches the stair k after `e` upward jumps and `f` downward jumps, then:
-$$ 2^0 + 2^1 + 2^2 + ... + 2^{e-1} = 2^e-1$$
-Thus, the relationship is:
-$$ 1 + ( 2^e-1 )- f = k $$
-Rearranging gives:
-$$ f = 2^e - k$$ 
-Since there are `e+1` positions where these downward jumps can occur, the result is:
-$$ C(e+1, 2^e - k) $$
-
-Using `Integer.highestOneBit(k)` to determine the nearest lower power of two (`nlp`) for `k`, 
-consider the following cases:
-* If `k=0`, no jumps are required.
-* If `nlp=k`, there is one valid case where all jumps are upward.
-* If `nlp<k`, an additional upward jump is needed to pass stair `k`, followed by several downward jumps to return to `k`.
-#### Precomputation for Combination Probability
-Using the following combination formula, the results can be precomputed and stored in a two-dimensional array:
-$$C(n,m)=C(n-1,m-1)+C(n-1,m)$$
-
-#### Evaluating the Value Range of Combination Probability
-Binomial Theorem:
-$$ (a + b)^n = \sum_{k=0}^n C(n, k) \times a^{n-k} \times b^k $$
-For a=1, b=1, the result becomes:
-$$ (1 + 1)^n = \sum_{k=0}^n C(n, k) = C(n,0)+C(n,1)+C(n,2)+...+C(n,n) $$
-Since $C(n,k)$ is one of these terms, it follows that: 
-$$ C(n,k)<2^n $$
-
-Let the exponent of the nearest lower power of two for `k` be `ex`,  
-Given the constraint $0 <= k <= 10^9$, 
-even though an additional upward jump may need to be considered,
-The combination probability result remains less than $2^{ex+1}$, which is equivalent to `2k`.  
-Since integer can represent values in the range $-2,147,483,648$ to $2,147,483,647$,
-a result within $0 \sim 2\times10^9$ is valid.
-#### Implementation
-```java
-class Solution {
-    private static final int MX = 31;
-    private static final int[][] c = new int[MX][MX];
-
-    static {
-        for (int n = 0; n < MX; n++) {
-            c[n][0] = c[n][n] = 1;
-            for (int m = 1; m < n; m++) {
-                c[n][m] = c[n - 1][m - 1] + c[n - 1][m];
-            }
-        }
-    }
-
-    public int waysToReachStair(int k) {
-        // The nearest power of two for k.
-        int nlp=Integer.highestOneBit(k);
-        // The exponent of the nearest power of two for k.
-        int ex=32 - Integer.numberOfLeadingZeros(k);
-        int result=0;
-        if(k==1) result++;
-        if(nlp==k) result++;
-        if((nlp<<=1)-k <= ex+1){
-            result+=c[ex+1][nlp-k];
-        }
-        return result;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(1) $
- 
-    The time and space used duiring the precomputation process are not factored into the solution.
-* Space Complexity: $ O(1) $
-
-## Climbing Stairs
-[Back to Top](#table-of-contents)  
-### Overview
-You are climbing a staircase. It takes `n` steps to reach the top.
-
-Each time you can either climb `1` or `2` steps. In how many distinct ways can you climb to the top?
-
-Example 1:
-> Input: n = 2  
-> Output: 2  
-> Explanation: There are two ways to climb to the top.
-> 1. 1 step + 1 step  
-> 2. 2 steps
-
-Example 2:
-> Input: n = 3  
-> Output: 3  
-> Explanation: There are three ways to climb to the top.  
-> 1. 1 step + 1 step + 1 step  
-> 2. 1 step + 2 steps  
-> 3. 2 steps + 1 step
-
-
-**Constraints:**
-* 1 <= n <= 45
-
-### Analysis
-Here is a simple example when `n=5`:
-```text
-stair:            0 1 2 3 4 5 
-ways:               1 2 3 5 8
-```
-Observe the above example, the number of ways to reach stair `n` is the sum of the number of ways to reach stairs `n-1` and `n-2`.
-Thus, it follows the Fibonacci sequence.
-
-### Dynamic Programming Solution
-Fibonacci sequence formula:
-$$ F(n)=F(n-1)+F(n-2) $$
-#### Initialization 
-The number of ways to reach stair `1` is `1` and stair `2` is `2`, so:  
-$$ F(1) = 1,  F(2) = 2 $$
-#### Filling the DP Table
-Since this process only depends on the previous two stairs, we can just define two variables to store the number of ways for the previous two stairs.
-#### Implementation
-```java
-class Solution {
-    public int climbStairs(int n) {
-        if(n==1)return 1;
-        if(n==2)return 2;
-        int pre1=1;
-        int pre2=2;
-        int current=0;
-        for(int i=3;i<=n;i++){
-            current=pre1+pre2;
-            pre1=pre2;
-            pre2=current;
-        }
-        return current;
-
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $
-* Space Complexity: $ O(1) $
-
 ## Minimum Moves to Capture The Queen
 There is a **1-indexed** `8 x 8` chessboard containing 3 pieces.
 
