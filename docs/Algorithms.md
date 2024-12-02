@@ -1375,24 +1375,34 @@ Given that you can only move the white pieces, return the **minimum** number of 
 * Bishops can move any number of squares diagonally, but cannot jump over other pieces. 
 * A rook or a bishop can capture the queen if it is located in a square that they can move to. 
 * The queen does not move. 
-**Example 1:**
+
+**Example 1:**   
+![mmtctq1](assets/Algorithms/mmtctq1.png)
+
 > Input: a = 1, b = 1, c = 8, d = 8, e = 2, f = 3  
 > Output: 2  
 > Explanation: We can capture the black queen in two moves by moving the white rook to (1, 3) then to (2, 3).  
 > It is impossible to capture the black queen in less than two moves since it is not being attacked by any of the pieces at the beginning.  
 
-**Example 2:**
+**Example 2:**  
+![mmtctq2](assets/Algorithms/mmtctq2.png)
 > Input: a = 5, b = 3, c = 3, d = 4, e = 5, f = 2  
 > Output: 1  
 > Explanation: We can capture the black queen in a single move by doing one of the following: 
 > - Move the white rook to (5, 2).
 > - Move the white bishop to (5, 2).
- 
 
 Constraints:
 * 1 <= a, b, c, d, e, f <= 8
 * No two pieces are on the same square.
 
-#### Analysis
-
-
+### Analysis
+Here are the coordinates of these pieces in example 1:
+```text
+Rook:   (1,1)
+Bishop: (8,8)
+Queen:  (2,3)
+```
+Calculate steps:
+* If the binshop is outside the square consisted of white rook and black queen, directly return 2.
+* 
