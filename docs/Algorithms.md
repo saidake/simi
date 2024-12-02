@@ -1433,9 +1433,19 @@ class Solution {
 
 
         if(c-d==e-f && a-b!=e-f)return 1;
-        if(c-d==e-f && a-b==e-f && Math.abs(c-e)<Math.abs(a-e) )return 1;
+        if(c-d==e-f && a-b==e-f &&  
+            (
+                (d>f&&(b<f||b>d))   
+                ||(d<f)&&(b<d||b>f)             
+            )
+        )return 1;
         if(c+d==e+f && a+b!=e+f)return 1;
-        if(c+d==e+f && a+b==e+f && Math.abs(c-e)<Math.abs(a-e) )return 1;
+        if(c+d==e+f && a+b==e+f && 
+              (
+                (d>f&&(b<f||b>d))   
+                ||(d<f)&&(b<d||b>f)             
+            )
+         )return 1;
 
         if(a==e&&a!=c)return 1;
         if(a==e&&a==c&&
@@ -1453,5 +1463,10 @@ class Solution {
         )return 1;
         return 2;
     }
+
+
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $ O(1) $
+* Space Complexity: $ O(1) $
