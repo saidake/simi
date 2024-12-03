@@ -1397,74 +1397,66 @@ Constraints:
 * No two pieces are on the same square.
 
 ### Analysis
-Here are the coordinates of these pieces in example 1:
+Here are the coordinates of the pieces:
 ```text
-Rook:   (1,1)
-Bishop: (8,8)
-Queen:  (2,3)
+Rook:   (a,b)
+Bishop: (c,d)
+Queen:  (e,f)
 ```
-Calculate steps:
-* If the binshop is outside the square consisted of white rook and black queen, directly return 2.
-* 
-### Implementation
+Cases where the rook can directly capture the queen:
+* rook and queen in the same row (bishop is not in between):   
+
+    `c != a`: The bishop is not in the same row as the rook.  
+    `d <= Math.min(b, f)`: The bishop is to the left of both the rook and the queen.    
+    `d >= Math.min(b, f)`: The bishop is to the right of both the rook and the queen.  
+* rook and queen in the same column (bishop is not in between):  
+
+    `d != b`:  The bishop is not in the same column as the rook.  
+    `c <= Math.min(a, e)`: The bishop is below both the rook and the queen.  
+    `c >= Math.min(a, e)`: The bishop is above both the rook and the queen.
+
+Cases where the bishop can capture the queen:
+* The bishop and queen on the same diagonal (rook is not in between).  
+
+    For two points $(x_1, y_1)$ and $(x_2, y_2)$ to lie on the same diagonal of a coordinate grid, the points must satisfy on of two conditions:
+    * They lie on the main diagonal where $ x_1 - x_2 = y_1-y_2 $  (difference of coordinates is equal)
+    * They lie on the anti-diagonal where $ x_1 - x_2 = -(y_1-y_2) $  (sum of coordinates is constant)  
+
+    Combining these two conditions into one equation:
+        $$ | x_1 - x_2 |  = | y_1-y_2 | $$
+
+Other cases:
+* If a piece blocks the direct capture path, 
+it can either be moved or an additional step can be taken to bypass the obstruction and approach the queen. 
+In such situations, the maximum steps required are 2.
+* If the rook or bishop cannot directly capture the queen, they can move an additional step to do so.
+The maximum steps required are also 2.
+
+#### Implementation
 ```java
 class Solution {
     private int moves=0;
     public int minMovesToCaptureTheQueen(int a, int b, int c, int d, int e, int f) {
-        // If the binshop is outside the square consisted of white rook and black queen, directly return 2.
         // Rook:    (a,b)
         // Bishop:  (c,d)
-
         // Queen:   (e,f)
 
-
-        // Rook:    (4,3)
-        // Bishop:  (3,4)
-
-        // Queen:   (2,5)
-        // y= x + k -> y-x = k
-        // y= -x + k -> y+x=k
-
-
-        // Rook:    (5,8)
-        // Bishop:  (8,8)
-
-        // Queen:   (1,8)
-
-
-        if(c-d==e-f && a-b!=e-f)return 1;
-        if(c-d==e-f && a-b==e-f &&  
-            (
-                (d>f&&(b<f||b>d))   
-                ||(d<f)&&(b<d||b>f)             
-            )
-        )return 1;
-        if(c+d==e+f && a+b!=e+f)return 1;
-        if(c+d==e+f && a+b==e+f && 
-              (
-                (d>f&&(b<f||b>d))   
-                ||(d<f)&&(b<d||b>f)             
-            )
-         )return 1;
-
-        if(a==e&&a!=c)return 1;
-        if(a==e&&a==c&&
-            (
-                (b>f&&(d<f||d>b))
-                ||(b<f)&&(d<b||d>f)
-            )
-        )return 1;
-        if(b==f&&b!=d)return 1;
-        if(b==f&&b==d&& 
-            (
-                (a>e&&(c<e||c>a))
-                ||(a<e)&&(c<a||c>e)
-            )
-        )return 1;
+        // The rook and queen in the same row (bishop is not in between)
+         if (a == e && (c != a || d <= Math.min(b, f) || d >= Math.max(b, f))) {
+            return 1;
+        }
+        // The rook and queen in the same column (bishop is not in between)
+        if (b == f && (d != b || c <= Math.min(a, e) || c >= Math.max(a, e))) {
+            return 1;
+        }
+        // The bishop and queen on the same diagonal (rook is not in between)
+       if (Math.abs(c - e) == Math.abs(d - f) 
+            && ((c - e) * (b - f) != (a - e) * (d - f) 
+            || a < Math.min(c, e) || a > Math.max(c, e))) {
+            return 1;
+        }
         return 2;
     }
-
-
 }
 ```
 #### Time and Space Complexity
