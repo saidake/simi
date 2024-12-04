@@ -1517,27 +1517,39 @@ class Solution {
         // 0111, 1000 -> 1111        7|8 = 15    (Case 2)
         // 0011, 0100 -> 0111        3|4 -> 7    (Case 2)
         // 100111, 101000 -> 101111  39|40 -> 45 (Case 2)
+        // 
         // 1001, 1010 -> 1011   9|10 = 11      (Case 3)
         // 10101, 10110 -> 10111  21|22 -> 23  (Case 3)
-
 
         int[] ans=new int[nums.size()];
         for(int i=0; i<nums.size(); i++){
             int cur=nums.get(i);
-            if(cur%2==0)ans[i]=-1;
-            // Check if continuous bit sequence exits
-            else if(){
-                int bc=Integer.bitCount(cur);
-                int continuousBits=0;
-                int cBitNum=1;
-                for(; cBitNum<cur; cBitNum<<1){
-                    if(j&cur==j)continuousBits++;
-                }
-                if(c)
-
-            }else ans[i]=cur-1;
+            if(cur%2==0){
+                ans[i]=-1;
+                continue;
+            }
+            int bc=Integer.bitCount(cur);
+            int continuousBits=0;
+            int cBitNum=1;
+            // Check if continuous bit sequence exits and save the number of continuous bits
+            for(;cBitNum<=cur; cBitNum|=cBitNum<<1){
+                if((cBitNum&cur)==cBitNum)continuousBits++;
+            }
+            if(cBitNum==bc){
+                ans[i] = cur>>1;
+            }else{
+                ans[i] = clearBit(cur,continuousBits-1);
+            }
         }
         return ans;
     }
+
+     public int clearBit(int number, int bitPosition) {
+        int mask = ~(1 << bitPosition); // Create a mask with the target bit cleared
+        return number & mask; // Apply the mask using bitwise AND
+    }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $  
+* Space Complexity: $ O(n) $
