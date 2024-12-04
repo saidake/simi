@@ -1091,7 +1091,7 @@ Note that it is possible that Alice reaches the stair `k`, and performs some ope
 ### Analysis
 Based on the formula for the sum of a geometric series:
 $$ 2^0 + 2^1 + 2^2 + ... + 2^n = 2^{n+1}-1$$
-If Alice reaches the stair k after `e` upward jumps and `f` downward jumps, then:
+If Alice reaches the stair `k` after `e` upward jumps and `f` downward jumps, then:
 $$ 2^0 + 2^1 + 2^2 + ... + 2^{e-1} = 2^e-1$$
 Thus, the relationship is:
 $$ 1 + ( 2^e-1 )- f = k $$
@@ -1121,8 +1121,7 @@ Let the exponent of the nearest lower power of two for `k` be `ex`,
 Given the constraint $0 <= k <= 10^9$, 
 even though an additional upward jump may need to be considered,
 The combination probability result remains less than $2^{ex+1}$, which is equivalent to `2k`.  
-Since integer can represent values in the range $-2,147,483,648$ to $2,147,483,647$,
-a result within $0 \sim 2\times10^9$ is valid.
+Since integer value range is $-2,147,483,648$ to $2,147,483,647$,the result within $0 \sim 2\times10^9$ can be safely represented as an `int`.
 #### Implementation
 ```java
 class Solution {
@@ -1418,12 +1417,19 @@ Cases where the rook can directly capture the queen:
 Cases where the bishop can capture the queen:
 * The bishop and queen on the same diagonal (rook is not in between).  
 
-    For two points $(x_1, y_1)$ and $(x_2, y_2)$ to lie on the same diagonal of a coordinate grid, the points must satisfy on of two conditions:
+    Using the equation of a line $ y = ax + b $ (where $a=1$ since the line is diagonal in this problem),
+    two points $(x_1, y_1)$ and $(x_2, y_2)$ to lie on the same diagonal of a coordinate grid if one of the following conditions is met:
+
     * They lie on the main diagonal where $ x_1 - x_2 = y_1-y_2 $  (difference of coordinates is equal)
     * They lie on the anti-diagonal where $ x_1 - x_2 = -(y_1-y_2) $  (sum of coordinates is constant)  
 
     Combining these two conditions into one equation:
         $$ | x_1 - x_2 |  = | y_1-y_2 | $$
+
+    To determine if the bishop, queen, and rook are collinear, compare the slopes of the lines formed by these points:
+    $$ \frac{y_3-y_1}{x_3-x_1}=\frac{y_2-y_1}{x_2-x_1} $$
+    If this equation holds, the three pieces are collinear; otherwise, they are not. To avoid division, the equation can be rewritten as:
+    $$ (y_3-y_1)\times(x_2-x_1)=(y_2-y_1)\times(x_3-x_1) $$
 
 Other cases:
 * If a piece blocks the direct capture path, 
