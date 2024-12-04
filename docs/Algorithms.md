@@ -10,12 +10,13 @@
     - [Target Sum](#target-sum)
 - [Math](#math)
     - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
+    - [Minimum Moves to Capture The Queen](#minimum-moves-to-capture-the-queen)
 - [Sliding Window](#sliding-window)
     - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
 - [String](#string)
     - [License Key Formatting](#license-key-formatting)
 - [Uncategorized Problems](#uncategorized-problems)
-    - [Minimum Moves to Capture The Queen](#minimum-moves-to-capture-the-queen)
+
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -1157,6 +1158,118 @@ class Solution {
  
     The time and space used duiring the precomputation process are not factored into the solution.
 * Space Complexity: $ O(1) $
+## Minimum Moves to Capture The Queen
+[Back to Top](#table-of-contents)  
+### Overview
+There is a **1-indexed** `8 x 8` chessboard containing 3 pieces.
+
+You are given `6` integers `a`, `b`, `c`, `d`, `e`, and `f` where:
+
+* `(a, b)` denotes the position of the white rook.
+* `(c, d)` denotes the position of the white bishop.
+* `(e, f)` denotes the position of the black queen.
+Given that you can only move the white pieces, return the **minimum** number of moves required to capture the black queen.
+
+**Note** that:
+
+* Rooks can move any number of squares either vertically or horizontally, but cannot jump over other pieces. 
+* Bishops can move any number of squares diagonally, but cannot jump over other pieces. 
+* A rook or a bishop can capture the queen if it is located in a square that they can move to. 
+* The queen does not move. 
+
+**Example 1:**   
+![mmtctq1](assets/Algorithms/mmtctq1.png)
+
+> Input: a = 1, b = 1, c = 8, d = 8, e = 2, f = 3  
+> Output: 2  
+> Explanation: We can capture the black queen in two moves by moving the white rook to (1, 3) then to (2, 3).  
+> It is impossible to capture the black queen in less than two moves since it is not being attacked by any of the pieces at the beginning.  
+
+**Example 2:**  
+![mmtctq2](assets/Algorithms/mmtctq2.png)
+> Input: a = 5, b = 3, c = 3, d = 4, e = 5, f = 2  
+> Output: 1  
+> Explanation: We can capture the black queen in a single move by doing one of the following: 
+> - Move the white rook to (5, 2).
+> - Move the white bishop to (5, 2).
+
+Constraints:
+* 1 <= a, b, c, d, e, f <= 8
+* No two pieces are on the same square.
+
+### Analysis
+Here are the coordinates of the pieces:
+```text
+Rook:   (a,b)
+Bishop: (c,d)
+Queen:  (e,f)
+```
+Cases where the rook can directly capture the queen:
+* rook and queen in the same row (bishop is not in between):   
+
+    `c != a`: The bishop is not in the same row as the rook.  
+    `d <= Math.min(b, f)`: The bishop is to the left of both the rook and the queen.    
+    `d >= Math.min(b, f)`: The bishop is to the right of both the rook and the queen.  
+* rook and queen in the same column (bishop is not in between):  
+
+    `d != b`:  The bishop is not in the same column as the rook.  
+    `c <= Math.min(a, e)`: The bishop is below both the rook and the queen.  
+    `c >= Math.min(a, e)`: The bishop is above both the rook and the queen.
+
+Cases where the bishop can capture the queen:
+* The bishop and queen on the same diagonal (rook is not in between).  
+
+    Using the equation of a line $ y = ax + b $ (where $a=1$ since the line is diagonal in this problem),
+    two points $(x_1, y_1)$ and $(x_2, y_2)$ to lie on the same diagonal of a coordinate grid if one of the following conditions is met:
+
+    * They lie on the main diagonal where $ x_1 - x_2 = y_1-y_2 $  (difference of coordinates is equal)
+    * They lie on the anti-diagonal where $ x_1 - x_2 = -(y_1-y_2) $  (sum of coordinates is constant)  
+
+    Combining these two conditions into one equation:
+        $$ | x_1 - x_2 |  = | y_1-y_2 | $$
+
+    To determine if the bishop, queen, and rook are collinear, compare the slopes of the lines formed by these points:
+    $$ \frac{y_3-y_1}{x_3-x_1}=\frac{y_2-y_1}{x_2-x_1} $$
+    If this equation holds, the three pieces are collinear; otherwise, they are not. To avoid division, the equation can be rewritten as:
+    $$ (y_3-y_1)\times(x_2-x_1)=(y_2-y_1)\times(x_3-x_1) $$
+
+Other cases:
+* If a piece blocks the direct capture path, 
+it can either be moved or an additional step can be taken to bypass the obstruction and approach the queen. 
+In such situations, the maximum steps required are 2.
+* If the rook or bishop cannot directly capture the queen, they can move an additional step to do so.
+The maximum steps required are also 2.
+
+#### Implementation
+```java
+class Solution {
+    private int moves=0;
+    public int minMovesToCaptureTheQueen(int a, int b, int c, int d, int e, int f) {
+        // Rook:    (a,b)
+        // Bishop:  (c,d)
+        // Queen:   (e,f)
+
+        // The rook and queen in the same row (bishop is not in between)
+         if (a == e && (c != a || d <= Math.min(b, f) || d >= Math.max(b, f))) {
+            return 1;
+        }
+        // The rook and queen in the same column (bishop is not in between)
+        if (b == f && (d != b || c <= Math.min(a, e) || c >= Math.max(a, e))) {
+            return 1;
+        }
+        // The bishop and queen on the same diagonal (rook is not in between)
+       if (Math.abs(c - e) == Math.abs(d - f) 
+            && ((c - e) * (b - f) != (a - e) * (d - f) 
+            || a < Math.min(c, e) || a > Math.max(c, e))) {
+            return 1;
+        }
+        return 2;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(1) $
+* Space Complexity: $ O(1) $
 
 # Sliding Window
 ## Find the Longest Equal Subarray
@@ -1358,113 +1471,73 @@ class Solution {
     `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
     Therefore, the total space complexity is $ O(n) $
 # Uncategorized Problems
-## Minimum Moves to Capture The Queen
-There is a **1-indexed** `8 x 8` chessboard containing 3 pieces.
+## Construct the Minimum Bitwise Array II
+### Overview
+You are given an array `nums` consisting of `n` prime integers.
 
-You are given `6` integers `a`, `b`, `c`, `d`, `e`, and `f` where:
+You need to construct an array `ans` of length `n`, such that, for each index `i`, the bitwise `OR` of `ans[i]` and `ans[i] + 1` is equal to `nums[i]`, i.e. `ans[i] OR (ans[i] + 1) == nums[i]`.
 
-* `(a, b)` denotes the position of the white rook.
-* `(c, d)` denotes the position of the white bishop.
-* `(e, f)` denotes the position of the black queen.
-Given that you can only move the white pieces, return the **minimum** number of moves required to capture the black queen.
+Additionally, you must minimize each value of `ans[i]` in the resulting array.
 
-**Note** that:
+If it is not possible to find such a value for `ans[i]` that satisfies the condition, then set `ans[i] = -1`.
 
-* Rooks can move any number of squares either vertically or horizontally, but cannot jump over other pieces. 
-* Bishops can move any number of squares diagonally, but cannot jump over other pieces. 
-* A rook or a bishop can capture the queen if it is located in a square that they can move to. 
-* The queen does not move. 
+Example 1:
 
-**Example 1:**   
-![mmtctq1](assets/Algorithms/mmtctq1.png)
+> Input: nums = [2,3,5,7]  
+> Output: [-1,1,4,3]  
+> Explanation:
+> * For `i = 0`, as there is no value for `ans[0]` that satisfies `ans[0] OR (ans[0] + 1) = 2`, so `ans[0] = -1`.
+> * For `i = 1`, the smallest `ans[1]` that satisfies `ans[1] OR (ans[1] + 1) = 3` is `1`, because `1 OR (1 + 1) = 3`.
+> * For `i = 2`, the smallest `ans[2]` that satisfies `ans[2] OR (ans[2] + 1) = 5` is `4`, because `4 OR (4 + 1) = 5`.
+> * For `i = 3`, the smallest `ans[3]` that satisfies `ans[3] OR (ans[3] + 1) = 7` is `3`, because `3 OR (3 + 1) = 7`.
 
-> Input: a = 1, b = 1, c = 8, d = 8, e = 2, f = 3  
-> Output: 2  
-> Explanation: We can capture the black queen in two moves by moving the white rook to (1, 3) then to (2, 3).  
-> It is impossible to capture the black queen in less than two moves since it is not being attacked by any of the pieces at the beginning.  
-
-**Example 2:**  
-![mmtctq2](assets/Algorithms/mmtctq2.png)
-> Input: a = 5, b = 3, c = 3, d = 4, e = 5, f = 2  
-> Output: 1  
-> Explanation: We can capture the black queen in a single move by doing one of the following: 
-> - Move the white rook to (5, 2).
-> - Move the white bishop to (5, 2).
+Example 2:
+> Input: nums = [11,13,31]  
+> Output: [9,12,15]  
+> Explanation:  
+> * For `i = 0`, the smallest `ans[0]` that satisfies `ans[0] OR (ans[0] + 1) = 11` is `9`, because `9 OR (9 + 1) = 11`.
+> * For `i = 1`, the smallest `ans[1]` that satisfies `ans[1] OR (ans[1] + 1) = 13` is `12`, because `12 OR (12 + 1) = 13`.
+> * For `i = 2`, the smallest `ans[2]` that satisfies `ans[2] OR (ans[2] + 1) = 31` is `15`, because `15 OR (15 + 1) = 31`.
 
 Constraints:
-* 1 <= a, b, c, d, e, f <= 8
-* No two pieces are on the same square.
+* 1 <= nums.length <= 100
+* 2 <= nums[i] <= $10^9$
+* `nums[i]` is a prime number.
 
 ### Analysis
-Here are the coordinates of the pieces:
-```text
-Rook:   (a,b)
-Bishop: (c,d)
-Queen:  (e,f)
-```
-Cases where the rook can directly capture the queen:
-* rook and queen in the same row (bishop is not in between):   
-
-    `c != a`: The bishop is not in the same row as the rook.  
-    `d <= Math.min(b, f)`: The bishop is to the left of both the rook and the queen.    
-    `d >= Math.min(b, f)`: The bishop is to the right of both the rook and the queen.  
-* rook and queen in the same column (bishop is not in between):  
-
-    `d != b`:  The bishop is not in the same column as the rook.  
-    `c <= Math.min(a, e)`: The bishop is below both the rook and the queen.  
-    `c >= Math.min(a, e)`: The bishop is above both the rook and the queen.
-
-Cases where the bishop can capture the queen:
-* The bishop and queen on the same diagonal (rook is not in between).  
-
-    Using the equation of a line $ y = ax + b $ (where $a=1$ since the line is diagonal in this problem),
-    two points $(x_1, y_1)$ and $(x_2, y_2)$ to lie on the same diagonal of a coordinate grid if one of the following conditions is met:
-
-    * They lie on the main diagonal where $ x_1 - x_2 = y_1-y_2 $  (difference of coordinates is equal)
-    * They lie on the anti-diagonal where $ x_1 - x_2 = -(y_1-y_2) $  (sum of coordinates is constant)  
-
-    Combining these two conditions into one equation:
-        $$ | x_1 - x_2 |  = | y_1-y_2 | $$
-
-    To determine if the bishop, queen, and rook are collinear, compare the slopes of the lines formed by these points:
-    $$ \frac{y_3-y_1}{x_3-x_1}=\frac{y_2-y_1}{x_2-x_1} $$
-    If this equation holds, the three pieces are collinear; otherwise, they are not. To avoid division, the equation can be rewritten as:
-    $$ (y_3-y_1)\times(x_2-x_1)=(y_2-y_1)\times(x_3-x_1) $$
-
-Other cases:
-* If a piece blocks the direct capture path, 
-it can either be moved or an additional step can be taken to bypass the obstruction and approach the queen. 
-In such situations, the maximum steps required are 2.
-* If the rook or bishop cannot directly capture the queen, they can move an additional step to do so.
-The maximum steps required are also 2.
-
-#### Implementation
+### Implementation
 ```java
 class Solution {
-    private int moves=0;
-    public int minMovesToCaptureTheQueen(int a, int b, int c, int d, int e, int f) {
-        // Rook:    (a,b)
-        // Bishop:  (c,d)
-        // Queen:   (e,f)
+    public int[] minBitwiseArray(List<Integer> nums) {
+        // Even digits
+        // 0100, 0101 -> 0101  4|5=5 (Case 1)
+        // 0010, 0011 -> 0011  2|3=3 (Case 1)
 
-        // The rook and queen in the same row (bishop is not in between)
-         if (a == e && (c != a || d <= Math.min(b, f) || d >= Math.max(b, f))) {
-            return 1;
+        // Odd digits
+        // 0111, 1000 -> 1111        7|8 = 15    (Case 2)
+        // 0011, 0100 -> 0111        3|4 -> 7    (Case 2)
+        // 100111, 101000 -> 101111  39|40 -> 45 (Case 2)
+        // 1001, 1010 -> 1011   9|10 = 11      (Case 3)
+        // 10101, 10110 -> 10111  21|22 -> 23  (Case 3)
+
+
+        int[] ans=new int[nums.size()];
+        for(int i=0; i<nums.size(); i++){
+            int cur=nums.get(i);
+            if(cur%2==0)ans[i]=-1;
+            // Check if continuous bit sequence exits
+            else if(){
+                int bc=Integer.bitCount(cur);
+                int continuousBits=0;
+                int cBitNum=1;
+                for(; cBitNum<cur; cBitNum<<1){
+                    if(j&cur==j)continuousBits++;
+                }
+                if(c)
+
+            }else ans[i]=cur-1;
         }
-        // The rook and queen in the same column (bishop is not in between)
-        if (b == f && (d != b || c <= Math.min(a, e) || c >= Math.max(a, e))) {
-            return 1;
-        }
-        // The bishop and queen on the same diagonal (rook is not in between)
-       if (Math.abs(c - e) == Math.abs(d - f) 
-            && ((c - e) * (b - f) != (a - e) * (d - f) 
-            || a < Math.min(c, e) || a > Math.max(c, e))) {
-            return 1;
-        }
-        return 2;
+        return ans;
     }
 }
 ```
-#### Time and Space Complexity
-* Time Complexity: $ O(1) $
-* Space Complexity: $ O(1) $
