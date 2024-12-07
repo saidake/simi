@@ -299,10 +299,10 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(n) $
 
-    The main loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where len is the length of the string `s`.
+    The main loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where `len` is the length of the string `s`.
 * Space Complexity: $ O(n) $
 
-    The dp array is of size `𝑛+1`, where `𝑛` is the length of the string.
+    The `dp` array is of size `𝑛+1`, where `𝑛` is the length of the string.
 #### Consideration
 * Calculate the single-digit decoding cases first to avoid redundant calculations.
 * The time complexity of `s.toCharArray()` is O(n), while the `s.charAt()` has a time complexity of O(1), making `charAt()` more efficient.
@@ -1488,7 +1488,7 @@ class Solution {
 * Time Complexity: $ O(n) $  
     * Traverse array nums
     
-        The outer for loop iterates over each element of the nums array once, making the time complexity $ O(n) $.  
+        The outer `for` loop iterates over each element of the `nums` array once, making the time complexity $ O(n) $.  
 
         While the inner while loop might seem to potentially iterate multiple times, its amortized time complexity is $ O(1) $. This is because each element is only removed from the window once.
     * Traverse remaining integers
@@ -1599,34 +1599,72 @@ Return true if you can reach index `s.length - 1` in `s`, or `false` otherwise.
 * `1 <= minJump <= maxJump < s.length`
 
 ### Analysis
-### Implementation
+The `minJump` and `maxJump` define the reachable range for each index `i` in the string `s`. 
+Directly applying dynamic programming or depth-first search to traverse the entire range would result in high time complexity.
+
+### Diff Array Solution
+Instead of checking the entire reachable range, use a `diff` array to mark the start(`+1`) and the end(`-1`) of each reachable range.  
+Utilize an accumulatable falg `acc` to track the reachable range:
+* Increment `acc` by `1` (`acc += 1`) upon entering a range 
+* Decrement `acc` by `1` (`acc -= 1`) upon leaving.
+Example:
+```text
+Two non-overlapping reachable areas:
+minJump = 3, maxJump = 4
+s:      0 1 1 0 1 1 1 1 1 1
+              a a   b b
+acc:          + -   + -
+
+Two overlapping reachable areas:
+minJump = 2, maxJump = 5
+s:      0 1 0 1 1 1 1 1 1 1
+            a a a a  
+                b b b b
+acc:        +     -
+                +     -
+```
+In both cases, the `diff` array enables distinguishing whether current index is within a reachable range, even when multiple ranges overlap.
+#### Implementation
 ```java
 class Solution {
+
     public boolean canReach(String s, int minJump, int maxJump) {
-        // minJump = 2, maxJump = 3
-        // Case 1:
-        // 01101110 
-        // 0,3,7
-        int tail=s.length()-1;
-        if(s.charAt(tail)=='1')return false;
-        int left=0,right=0; // continuous zero sequence
-        for(int i=1; i<s.length(); i++){
-            if(i==tail&&( tail-left<minJump) )return false;
-            if(s.charAt(i)=='0'){
-                if(right==i-1){
-                    right=i;
-                }
-                else{
-                    if(i-right>maxJump)return false;
-                    left=i;
-                    right=i;
+        int len = s.length();
+        if ( s.charAt(len - 1) == '1' || minJump > len) {
+            return false;
+        }
+        int[] diff = new int[len];
+        diff[0] = 1;
+        diff[1] = -1;
+        int acc = 0;
+        // Accumulated prefix sum to track reachability
+        for (int i = 0; i < len; i++) {
+            acc += diff[i];
+            if (acc > 0 && s.charAt(i) == '0') {
+                // Mark the start of the reachable range from i + minJump
+                if (i + minJump < len) {
+                    diff[i + minJump] += 1;
+                } 
+                // Mark the end of the reachable range after i + maxJump
+                if (i + maxJump + 1 < len) {
+                    diff[i + maxJump + 1] -= 1;
                 }
             }
         }
-        return true;
+        return acc > 0;
     }
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
-* Space Complexity: $ O(1) $
+* Time Complexity: $ O(n) $ 
+
+    The `for` loop iterates over each character in the string `s`, resulting in a time complexity of $O(n)$.
+* Space Complexity: $ O(n) $
+
+    The `diff` array, which has a size of `len` (the length of the string `s`), 
+    contributes $O(n)$ to the space complexity. 
+    
+    Other variables require constant space, resulting in an overall space complexity of $O(n)$.
+
+### Sliding Window Solution
+// TODO Analyze the sliding window solution
