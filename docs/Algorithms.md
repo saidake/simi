@@ -1571,6 +1571,8 @@ class Solution {
     Therefore, the total space complexity is $ O(n) $
 # Uncategorized Problems
 ## Jump Game VII
+[Back to Top](#table-of-contents)  
+### Overview
 You are given a 0-indexed binary string `s` and two integers `minJump` and `maxJump`. 
 In the beginning, you are standing at index `0`, which is equal to `'0'`. 
 You can move from index `i` to index `j` if the following conditions are fulfilled:
@@ -1607,6 +1609,7 @@ Instead of checking the entire reachable range, use a `diff` array to mark the s
 Utilize an accumulatable falg `acc` to track the reachable range:
 * Increment `acc` by `1` (`acc += 1`) upon entering a range 
 * Decrement `acc` by `1` (`acc -= 1`) upon leaving.
+
 Example:
 ```text
 Two non-overlapping reachable areas:
@@ -1667,4 +1670,82 @@ class Solution {
     Other variables require constant space, resulting in an overall space complexity of $O(n)$.
 
 ### Sliding Window Solution
-// TODO Analyze the sliding window solution
+Maintain a sliding window from `left` to `right` to record the number of points `nbp` that can reach a specific point `i` and move the sliding window to right in the string `s`.
+if the `nbp` is greater than `0`, the point `i` is reachable from the sliding window range.
+Once the lengh of the sliding window exceeds `maxJump - minJump + 1`, exclude the character at the left boundary and recalculate the number of points `npb`.
+
+Example: 
+```text
+minJump = 3, maxJump = 5
+
+Step 1:
+s:    0 0 1 1 1 1 1 0 1 1
+      L
+      R     i
+nbp = 1
+
+Step 2:
+s:    0 0 1 1 1 1 1 0 1 1
+      L
+        R     i
+nbp = 2
+
+Step 3:
+s:    0 0 1 1 1 1 1 0 1 1
+      L
+          R     i
+nbp = 2
+
+Step 4:
+s:    0 0 1 1 1 1 1 0 1 1
+        L
+            R     i
+nbp = 1
+dp[R]=?
+```
+
+//TODO Finalize the solution analysis.
+
+#### Implementation
+```java
+class Solution {
+    public boolean canReach(String s, int minJump, int maxJump) {
+        if (s.charAt(0) != '0' || s.charAt(s.length() - 1) != '0') {
+            return false;
+        }
+
+        boolean[] dp = new boolean[s.length()];
+        dp[0] = true;
+
+        int nbp = 1;
+        int left = 0;
+        int right = 0;
+        // Check if points are reachable from index minJump
+        for (int i = minJump; i < dp.length; i++) {
+            if (s.charAt(i) == '0') {
+                if (nbp > 0) {
+                    dp[i] = true;
+                }
+            }
+            // Move the left boundary of the sliding window to the right by 1 when the length of sliding window reaches `maxJump - minJump + 1`.
+            if (right - left + 1 == maxJump - minJump + 1) {
+                if (dp[left]) {
+                    nbp--;
+                }
+                left++;
+            }
+            // Move the right boundary of the sliding window to the right by 1 along with the traversal
+            right++;
+            if (dp[right]) {
+                nbp++;
+            }
+        }
+        return dp[s.length() - 1];
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $ 
+
+* Space Complexity: $ O(n) $
+
