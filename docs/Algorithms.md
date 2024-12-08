@@ -1671,45 +1671,66 @@ class Solution {
     Other variables require constant space, resulting in an overall space complexity of $O(n)$.
 
 ### Sliding Window Solution
-Maintain a sliding window from `left` to `right` to record the number of points `nbp` that can reach a specific point `i` and move the sliding window to right in the string `s`.
-if the `nbp` is greater than `0`, the point `i` is reachable from the sliding window range.
-Once the lengh of the sliding window exceeds `maxJump - minJump + 1`, exclude the character at the left boundary and recalculate the number of points `npb`.
+Maintain a sliding window from `left` to `right` to track the count of indices `nbp` for a specific index `i` as the sliding window moves along the string `s`.  
+if  `nbp > 0`, the index `i` is reachable from the sliding window range, otherwise, it is not.  
+When the window's length exceeds `maxJump - minJump + 1`, remove the character at the left boundary and update `npb` accordingly.
 
 Example: 
 ```text
 minJump = 3, maxJump = 5
 
-Step 1:
-s:    0 0 1 1 1 1 1 0 1 1
-      L
-      R     i
-nbp = 1
-dp[i] = false
+Step 1 (Initialization):
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+           L
+           R     i
+    nbp = 1
+    dp[0] = true
+    dp[1] = false (initialized to false by default)
+    dp[2] = false (initialized to false by default)
+    dp[3] = false
 
 Step 2:
-s:    0 0 1 1 1 1 1 0 1 1
-      L
-        R     i
-nbp = 2
-dp[i] = false
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+           L
+             R     i
+    nbp = 1
+    dp[4] = true
 
 Step 3:
-s:    0 0 1 1 1 1 1 0 1 1
-      L
-          R     i
-nbp = 2
-dp[i] = false
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+           L
+               R     i
+    nbp = 1
+    dp[5] = false
 
 Step 4:
-s:    0 0 1 1 1 1 1 0 1 1
-        L
-            R     i
-nbp = 1
-dp[i] = false
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+             L
+                 R     i
+    nbp = 0 (decremented by 1 as dp[0] is true and has been excluded)
+    dp[6] = false
+
+Step 5:
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+               L
+                   R     i
+    nbp = 1 (incremented by 1 as dp[4] is true and has been included)
+    dp[7] = true
+
+... 
+
+Step n:
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+                   L
+                       R     i
+    Return dp[9]
 ```
-
-//TODO Finalize the solution analysis.
-
 #### Implementation
 ```java
 class Solution {
@@ -1722,21 +1743,21 @@ class Solution {
         int nbp = 1;
         int left = 0;
         int right = 0;
-        // Check if points are reachable from index minJump
+        // Check if indices are reachable from index minJump
         for (int i = minJump; i < len; i++) {
             if (s.charAt(i) == '0') {
                 if (nbp > 0) {
                     dp[i] = true;
                 }
             }
-            // Move the left boundary of the sliding window to the right by 1 when the length of sliding window reaches `maxJump - minJump + 1`.
+            // Move the left boundary of the sliding window rightward by 1 when its length reaches `maxJump - minJump + 1`.
             if (right - left + 1 == maxJump - minJump + 1) {
                 if (dp[left]) {
                     nbp--;
                 }
                 left++;
             }
-            // Move the right boundary of the sliding window to the right by 1 along with the traversal
+            // Move the right boundary of the sliding window rightward duiring the traversal
             right++;
             if (dp[right]) {
                 nbp++;
