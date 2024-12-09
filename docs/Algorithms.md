@@ -1769,9 +1769,12 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $ O(n) $ 
+    
+    The `for` loop iterates from `minJump` to `len` (the length of the string s), resulting in a time complexity of $O(n)$.
 
 * Space Complexity: $ O(n) $
 
+    The `dp` array has a size of len, contributing $O(n)$ to the space complexity.
 
 ## Range Product Queries of Powers
 [Back to Top](#table-of-contents)  
@@ -1801,8 +1804,41 @@ Return an array `answers`, equal in length to `queries`, where `answers[i]` is t
 ### Analysis
 #### Implementation
 ```java
+class Solution {
+    // private class PrefixTree {
+    //     private int product;
+    //     private Map<Integer, PrefixTree> children;
+    // }
+    int MOD=1_000_000_007;
+    public int[] productQueries(int n, int[][] queries) {
+        int bc=Integer.bitCount(n);
+        int[] powers=new int[bc];
+        int[] output=new int[queries.length];
+        // Populate these powerw of two into array powers
+        for(int i=1,j=0; j<bc; i<<=1){
+            if((i&n)==i){
+                powers[j]=i;
+                j++;
+            }
+        }
+        // Cache these products to avoid 
+        for(int i=0; i<queries.length; i++){
+            output[i]=rangeProduct(queries[i][0], queries[i][1], powers);
+        }
+        return output;
+    }
 
+    private int rangeProduct(int start, int end, int[] powers){
+        long res=powers[start];
+        for(int i=start+1; i<=end; i++){
+            res*=powers[i];
+            res%=MOD;
+        }
+        return (int)res;
+    }
+}
 ```
+
 
 
 
