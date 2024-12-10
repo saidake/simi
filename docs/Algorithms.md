@@ -1802,42 +1802,75 @@ Return an array `answers`, equal in length to `queries`, where `answers[i]` is t
 > For n = 2, powers = [2].  
 > The answer to the only query is powers[0] = 2. The answer modulo $10^9 + 7$ is the same, so [2] is returned.
 ### Analysis
+
+//TODO Add analysis content.
+
 #### Implementation
 ```java
 class Solution {
-    // private class PrefixTree {
-    //     private int product;
-    //     private Map<Integer, PrefixTree> children;
-    // }
     int MOD=1_000_000_007;
     public int[] productQueries(int n, int[][] queries) {
         int bc=Integer.bitCount(n);
-        int[] powers=new int[bc];
-        int[] output=new int[queries.length];
-        // Populate these powerw of two into array powers
+        int[] powers=new int[bc];        
+        // Populate these powers of two into array powers
         for(int i=1,j=0; j<bc; i<<=1){
             if((i&n)==i){
                 powers[j]=i;
                 j++;
             }
         }
-        // Cache these products to avoid 
+
+        // Precompute the product results for all subarrays
+        int[][] productRes = new int[bc][bc];
+        for (int i = 0; i < bc; i++) {
+            productRes[i][i] = powers[i]; 
+            for (int j = i + 1; j < bc; j++) {
+                productRes[i][j] = (int) ((long) productRes[i][j - 1] * powers[j] % MOD);
+            }
+        }
+
+        // Answer each query
+        int[] output=new int[queries.length];
         for(int i=0; i<queries.length; i++){
-            output[i]=rangeProduct(queries[i][0], queries[i][1], powers);
+            int l = queries[i][0];
+            int r = queries[i][1];
+            output[i] = productRes[l][r];
         }
         return output;
     }
-
-    private int rangeProduct(int start, int end, int[] powers){
-        long res=powers[start];
-        for(int i=start+1; i<=end; i++){
-            res*=powers[i];
-            res%=MOD;
-        }
-        return (int)res;
-    }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O((logn)^2+q)$
+    * Integer.bitCount(n)
+    
+        Counts the number of set bits in the binary representation of integer `n`. This runs in most $O(log n)$, where $log n$ is the number of bits in `n`.
+
+    * Populate these powers of two into array powers
+        
+        The `for` runs `bc` times, resulting a time complexity $O(bc)$.
+
+        For the purpose of analyzing time complexity, $O(bc)$ is treated as $O(logn)$ because it grows at the same rate as $logn$.
+
+    * Precompute the product results for all subarrays
+        
+        The outer `for` loop runs `bc` times, and the number of iterations times of the inner `for` loop depends on the outer loop, so the total number of runs is:
+        $$ \sum_{i=0}^{bc-1} (bc-1-i) = (bc-1) + (bc-2) + (bc-3) + ... + 1 = \frac{(bc-1)\times bc}{2} $$
+        Therefore, the time complexity is $ O(bc^2) $, which is $O((logn)^2)$. 
+
+    * Answer each query
+
+        The `for` loop runs `queries.length` times, so the time complexity is $O(q)$ for `q` queries.
+
+    Total time compleixty: $O((logn)^2+q)$
+
+* Space Complexity: $O((log n)^2 + q)$
+    * `powers` array taks $O(logn)$ space.  
+    * `productRes ` array taks $O((logn)^2)$ space.  
+    * `output ` array taks $O(q)$ space.
+
+    Total space complexity: $O((log n)^2 + q)$.
+
 
 
 
