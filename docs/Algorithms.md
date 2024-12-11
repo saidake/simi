@@ -20,6 +20,8 @@
     - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
 - [String](#string)
     - [License Key Formatting](#license-key-formatting)
+- [SQL](#sql)
+    - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
 
 # Array
@@ -1882,9 +1884,75 @@ class Solution {
     `s.toCharArray()` creates a new character array of size $ O(n) $,
     `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
     Therefore, the total space complexity is $ O(n) $
+
+# SQL
+## Odd and Even Transactions
+[Back to Top](#table-of-contents)  
+### Overview
+Table: `transactions`
+```
++------------------+------+  
+| Column Name      | Type |   
++------------------+------+  
+| transaction_id   | int  |  
+| amount           | int  |  
+| transaction_date | date |  
++------------------+------+  
+```
+The `transactions_id` column uniquely identifies each row in this table.  
+Each row of this table contains the transaction id, amount and transaction date.
+
+Write a solution to find the `sum of amounts` for `odd` and `even` transactions for each day. If there are no odd or even transactions for a specific date, display as `0`.
+
+Return the result table ordered by `transaction_date` in **ascending** order.
+The result format is in the following example.
+
+**Example:**
+> **Input:**  
+> `transactions` table:  
+> ```text
+> +----------------+--------+------------------+
+> | transaction_id | amount | transaction_date |
+> +----------------+--------+------------------+
+> | 1              | 150    | 2024-07-01       |
+> | 2              | 200    | 2024-07-01       |
+> | 3              | 75     | 2024-07-01       |
+> | 4              | 300    | 2024-07-02       |
+> | 5              | 50     | 2024-07-02       |
+> | 6              | 120    | 2024-07-03       |
+> +----------------+--------+------------------+
+> ```
+> **Output:**  
+> ```text
+> +------------------+---------+----------+
+> | transaction_date | odd_sum | even_sum |
+> +------------------+---------+----------+
+> | 2024-07-01       | 75      | 350      |
+> | 2024-07-02       | 0       | 350      |
+> | 2024-07-03       | 0       | 120      |
+> +------------------+---------+----------+
+> ```
+> **Explanation:**
+> * For transaction dates:
+>   * 2024-07-01:
+>       * Sum of amounts for odd transactions: 75
+>       * Sum of amounts for even transactions: 150 + 200 = 350
+>   * 2024-07-02:
+>       * Sum of amounts for odd transactions: 0
+>       * Sum of amounts for even transactions: 300 + 50 = 350
+>   * 2024-07-03:
+>       * Sum of amounts for odd transactions: 0
+>       * Sum of amounts for even transactions: 120  
+>
+> **Note:** The output table is ordered by `transaction_date` in ascending order.
+### Analysis
+### Implementation
+```sql
+SELECT transaction_date, 
+SUM(CASE WHEN amount % 2=0 THEN 0 ELSE amount END) OVER( PARTITION BY transaction_date  ) AS odd_sum,
+SUM(CASE WHEN amount % 2=0 THEN amount ELSE 0 END) OVER( PARTITION BY transaction_date  ) AS even_sum
+FROM transactions
+```
 # Uncategorized Problems
-
-
-
 
 
