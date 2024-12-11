@@ -2,6 +2,8 @@
 [Back to Main Project README](../README.md)
 - [Array](#array)
     - [Array Partition](#array-partition)
+- [Difference Array](#difference-array)
+    - [Jump Game VII](#jump-game-vii)
 - [Dynamic Programming](#dynamic-programming)
     - [Climbing Stairs](#climbing-stairs)
     - [Decode Ways II](#decode-ways-ii)
@@ -12,13 +14,14 @@
     - [Construct the Minimum Bitwise Array II](#construct-the-minimum-bitwise-array-ii)
     - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
     - [Minimum Moves to Capture The Queen](#minimum-moves-to-capture-the-queen)
+- [Precomputation](#precomputation)
+    - [Range Product Queries of Powers](#range-product-queries-of-powers)
 - [Sliding Window](#sliding-window)
     - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
 - [String](#string)
     - [License Key Formatting](#license-key-formatting)
 - [Uncategorized Problems](#uncategorized-problems)
-    - [Jump Game VII](#jump-game-vii)
-    - [Range Product Queries of Powers](#range-product-queries-of-powers)
+
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -78,6 +81,212 @@ class Solution {
     The Arrays.sort() method uses $ O(1) $ space for primitive data types like integers in Java, as it utilizes a variation of quicksort (dual-pivot quicksort).
     There is no additional space used apart from the input array and a few variables.   
     Therefore, the total space complexity is $ O(1) $.
+# Difference Array
+## Jump Game VII
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a 0-indexed binary string `s` and two integers `minJump` and `maxJump`. 
+In the beginning, you are standing at index `0`, which is equal to `'0'`. 
+You can move from index `i` to index `j` if the following conditions are fulfilled:
+* `i + minJump <= j <= min(i + maxJump, s.length - 1)`, and
+* `s[j] == '0'`. 
+
+Return true if you can reach index `s.length - 1` in `s`, or `false` otherwise.
+
+**Example 1:**
+
+> **Input:** s = "011010", minJump = 2, maxJump = 3  
+> **Output:** true  
+> **Explanation:**  
+> In the first step, move from index 0 to index 3.   
+> In the second step, move from index 3 to index 5.
+
+**Example 2:** 
+
+> **Input:** s = "01101110", minJump = 2, maxJump = 3  
+> **Output:** false
+
+**Constraints:** 
+* 2 <= s.length <= $10^5$
+* `s[i]` is either `'0'` or `'1'`.
+* `s[0] == '0'`
+* `1 <= minJump <= maxJump < s.length`
+
+### Analysis
+The `minJump` and `maxJump` define the reachable range for each index `i` in the string `s`. 
+Directly applying dynamic programming or depth-first search to traverse the entire range would result in high time complexity.
+
+### Difference Array Solution
+Instead of checking the entire reachable range, use a `diff` array to mark the start(`+1`) and the end(`-1`) of each reachable range.  
+Utilize an accumulatable falg `acc` to track the reachable range:
+* Increment `acc` by `1` (`acc += 1`) upon entering a range 
+* Decrement `acc` by `1` (`acc -= 1`) upon leaving.
+
+Example:
+```text
+Two non-overlapping reachable areas:
+minJump = 3, maxJump = 4
+s:      0 1 1 0 1 1 1 1 1 1
+              a a   b b
+acc:          + -   + -
+
+Two overlapping reachable areas:
+minJump = 2, maxJump = 5
+s:      0 1 0 1 1 1 1 1 1 1
+            a a a a  
+                b b b b
+acc:        +     -
+                +     -
+```
+In both cases, the `diff` array enables distinguishing whether current index is within a reachable range, even when multiple ranges overlap.
+#### Implementation
+```java
+class Solution {
+
+    public boolean canReach(String s, int minJump, int maxJump) {
+        int len = s.length();
+        if ( s.charAt(len - 1) == '1' || minJump > len) {
+            return false;
+        }
+        int[] diff = new int[len];
+        diff[0] = 1;
+        diff[1] = -1;
+        int acc = 0;
+        // Accumulated prefix sum to track reachability
+        for (int i = 0; i < len; i++) {
+            acc += diff[i];
+            if (acc > 0 && s.charAt(i) == '0') {
+                // Mark the start of the reachable range from i + minJump
+                if (i + minJump < len) {
+                    diff[i + minJump] += 1;
+                } 
+                // Mark the end of the reachable range after i + maxJump
+                if (i + maxJump + 1 < len) {
+                    diff[i + maxJump + 1] -= 1;
+                }
+            }
+        }
+        return acc > 0;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $ 
+
+    The `for` loop iterates over each character in the string `s`, resulting in a time complexity of $O(n)$.
+* Space Complexity: $ O(n) $
+
+    The `diff` array, which has a size of `len` (the length of the string `s`), 
+    contributes $O(n)$ to the space complexity. 
+    
+    Other variables require constant space, resulting in an overall space complexity of $O(n)$.
+
+### Sliding Window Solution
+Maintain a sliding window from `left` to `right` to track the count of indices `nbp` for a specific index `i` as the sliding window moves along the string `s`.  
+if  `nbp > 0`, the index `i` is reachable from the sliding window range, otherwise, it is not.  
+When the window's length exceeds `maxJump - minJump + 1`, remove the character at the left boundary and update `npb` accordingly.
+
+Example: 
+```text
+minJump = 3, maxJump = 5
+
+Step 1 (Initialization):
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+           L
+           R     i
+    nbp = 1
+    dp[0] = true
+    dp[1] = false (initialized to false by default)
+    dp[2] = false (initialized to false by default)
+    dp[3] = false
+
+Step 2:
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+           L
+             R     i
+    nbp = 1
+    dp[4] = true
+
+Step 3:
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+           L
+               R     i
+    nbp = 1
+    dp[5] = false
+
+Step 4:
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+             L
+                 R     i
+    nbp = 0 (decremented by 1 as dp[0] is true and has been excluded)
+    dp[6] = false
+
+Step 5:
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+               L
+                   R     i
+    nbp = 1 (incremented by 1 as dp[4] is true and has been included)
+    dp[7] = true
+
+... 
+
+Step n:
+    index: 0 1 2 3 4 5 6 7 8 9 
+    s:     0 0 1 1 0 1 0 0 0 0 
+                   L
+                       R     i
+    Return dp[9]
+```
+#### Implementation
+```java
+class Solution {
+    public boolean canReach(String s, int minJump, int maxJump) {
+        int len=s.length();
+        if (s.charAt(len - 1) == '1') return false;
+        boolean[] dp = new boolean[len];
+        dp[0] = true;
+
+        int nbp = 1;
+        int left = 0;
+        int right = 0;
+        // Check if indices are reachable from index minJump
+        for (int i = minJump; i < len; i++) {
+            if (s.charAt(i) == '0') {
+                if (nbp > 0) {
+                    dp[i] = true;
+                }
+            }
+            // Move the left boundary of the sliding window rightward by 1 when its length reaches `maxJump - minJump + 1`.
+            if (right - left + 1 == maxJump - minJump + 1) {
+                if (dp[left]) {
+                    nbp--;
+                }
+                left++;
+            }
+            // Move the right boundary of the sliding window rightward duiring the traversal
+            right++;
+            if (dp[right]) {
+                nbp++;
+            }
+        }
+        return dp[len - 1];
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $ 
+    
+    The `for` loop iterates from `minJump` to `len` (the length of the string s), resulting in a time complexity of $O(n)$.
+
+* Space Complexity: $ O(n) $
+
+    The `dp` array has a size of len, contributing $O(n)$ to the space complexity.
+
 # Dynamic Programming
 ## Climbing Stairs
 [Back to Top](#table-of-contents)  
@@ -1370,6 +1579,109 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(1) $
 * Space Complexity: $ O(1) $
+# Precomputation
+## Range Product Queries of Powers
+[Back to Top](#table-of-contents)  
+### Overview
+Given a positive integer `n`, there exists a **0-indexed** array called `powers`, composed of the **minimum** number of powers of `2` that sum to `n`. The array is sorted in **non-decreasing** order, and there is only one way to form the array.
+
+You are also given a **0-indexed** 2D integer array `queries`, where `queries[i] = [lefti, righti]`. Each `queries[i]` represents a query where you have to find the product of all `powers[j]` with $ left_i <= j <= right_i $.
+
+Return an array `answers`, equal in length to `queries`, where `answers[i]` is the answer to the $i^{th}$ query. Since the answer to the $i^{th}$  query may be too large, each `answers[i]`should be returned modulo $10^9 + 7$.
+
+**Example 1:**
+> **Input:** n = 15, queries = [[0,1],[2,2],[0,3]]  
+> **Output:** [2,4,64]  
+> **Explanation:**  
+> For n = 15, powers = [1,2,4,8]. It can be shown that powers cannot be a smaller size.  
+> Answer to 1st query: powers[0] * powers[1] = 1 * 2 = 2.  
+> Answer to 2nd query: powers[2] = 4.  
+> Answer to 3rd query: powers[0] * powers[1] * powers[2] * powers[3] = 1 * 2 * 4 * 8 = 64.  
+> Each answer modulo $10^9 + 7$ yields the same answer, so [2,4,64] is returned.
+
+**Example 2:**
+> **Input:** n = 2, queries = [[0,0]]  
+> **Output:** [2]  
+> **Explanation:**  
+> For n = 2, powers = [2].  
+> The answer to the only query is powers[0] = 2. The answer modulo $10^9 + 7$ is the same, so [2] is returned.
+### Analysis
+In the problem description, "the minimum number of powers of 2 that sum to n" corresponds to the number of set bits in the binary representation of the integer `n`.
+
+Example:
+```text
+40 = 0010 1000 (two's complement) = 32 + 8
+```
+The two set bits represent the desired result,
+with each set bit's value added to the array `powers`.
+Using a mask value of `0001` and shift it left to isolate the set bits.
+
+Since the array `powers` is small (<32), precomputing all products for possible query ranges ensures efficiency with small time complexity.
+#### Implementation
+```java
+class Solution {
+    int MOD=1_000_000_007;
+    public int[] productQueries(int n, int[][] queries) {
+        int bc=Integer.bitCount(n);
+        int[] powers=new int[bc];        
+        // Populate these powers of two into array powers
+        for(int i=1,j=0; j<bc; i<<=1){
+            if((i&n)==i){
+                powers[j]=i;
+                j++;
+            }
+        }
+
+        // Precompute the product results for all subarrays
+        int[][] productRes = new int[bc][bc];
+        for (int i = 0; i < bc; i++) {
+            productRes[i][i] = powers[i]; 
+            for (int j = i + 1; j < bc; j++) {
+                productRes[i][j] = (int) ((long) productRes[i][j - 1] * powers[j] % MOD);
+            }
+        }
+
+        // Answer each query
+        int[] output=new int[queries.length];
+        for(int i=0; i<queries.length; i++){
+            int l = queries[i][0];
+            int r = queries[i][1];
+            output[i] = productRes[l][r];
+        }
+        return output;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O((logn)^2+q)$
+    * Integer.bitCount(n)
+    
+        Counts the number of set bits in the binary representation of integer `n`. This runs in most $O(log n)$, where $log n$ is the number of bits in `n`.
+
+    * Populate these powers of two into array powers
+        
+        The `for` runs `bc` times, resulting a time complexity $O(bc)$.
+
+        For the purpose of analyzing time complexity, $O(bc)$ is treated as $O(logn)$ because it grows at the same rate as $logn$.
+
+    * Precompute the product results for all subarrays
+        
+        The outer `for` loop runs `bc` times, and the number of iterations times of the inner `for` loop depends on the outer loop, so the total number of runs is:
+        $$ \sum_{i=0}^{bc-1} (bc-1-i) = (bc-1) + (bc-2) + (bc-3) + ... + 1 = \frac{(bc-1)\times bc}{2} $$
+        Therefore, the time complexity is $ O(bc^2) $, which is $O((logn)^2)$. 
+
+    * Answer each query
+
+        The `for` loop runs `queries.length` times, so the time complexity is $O(q)$ for `q` queries.
+
+    Total time compleixty: $O((logn)^2+q)$
+
+* Space Complexity: $O((log n)^2 + q)$
+    * `powers` array taks $O(logn)$ space.  
+    * `productRes ` array taks $O((logn)^2)$ space.  
+    * `output ` array taks $O(q)$ space.
+
+    Total space complexity: $O((log n)^2 + q)$.
 
 # Sliding Window
 ## Find the Longest Equal Subarray
@@ -1571,313 +1883,6 @@ class Solution {
     `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
     Therefore, the total space complexity is $ O(n) $
 # Uncategorized Problems
-## Jump Game VII
-[Back to Top](#table-of-contents)  
-### Overview
-You are given a 0-indexed binary string `s` and two integers `minJump` and `maxJump`. 
-In the beginning, you are standing at index `0`, which is equal to `'0'`. 
-You can move from index `i` to index `j` if the following conditions are fulfilled:
-* `i + minJump <= j <= min(i + maxJump, s.length - 1)`, and
-* `s[j] == '0'`. 
-
-Return true if you can reach index `s.length - 1` in `s`, or `false` otherwise.
-
-**Example 1:**
-
-> **Input:** s = "011010", minJump = 2, maxJump = 3  
-> **Output:** true  
-> **Explanation:**  
-> In the first step, move from index 0 to index 3.   
-> In the second step, move from index 3 to index 5.
-
-**Example 2:** 
-
-> **Input:** s = "01101110", minJump = 2, maxJump = 3  
-> **Output:** false
-
-**Constraints:** 
-* 2 <= s.length <= $10^5$
-* `s[i]` is either `'0'` or `'1'`.
-* `s[0] == '0'`
-* `1 <= minJump <= maxJump < s.length`
-
-### Analysis
-The `minJump` and `maxJump` define the reachable range for each index `i` in the string `s`. 
-Directly applying dynamic programming or depth-first search to traverse the entire range would result in high time complexity.
-
-### Diff Array Solution
-Instead of checking the entire reachable range, use a `diff` array to mark the start(`+1`) and the end(`-1`) of each reachable range.  
-Utilize an accumulatable falg `acc` to track the reachable range:
-* Increment `acc` by `1` (`acc += 1`) upon entering a range 
-* Decrement `acc` by `1` (`acc -= 1`) upon leaving.
-
-Example:
-```text
-Two non-overlapping reachable areas:
-minJump = 3, maxJump = 4
-s:      0 1 1 0 1 1 1 1 1 1
-              a a   b b
-acc:          + -   + -
-
-Two overlapping reachable areas:
-minJump = 2, maxJump = 5
-s:      0 1 0 1 1 1 1 1 1 1
-            a a a a  
-                b b b b
-acc:        +     -
-                +     -
-```
-In both cases, the `diff` array enables distinguishing whether current index is within a reachable range, even when multiple ranges overlap.
-#### Implementation
-```java
-class Solution {
-
-    public boolean canReach(String s, int minJump, int maxJump) {
-        int len = s.length();
-        if ( s.charAt(len - 1) == '1' || minJump > len) {
-            return false;
-        }
-        int[] diff = new int[len];
-        diff[0] = 1;
-        diff[1] = -1;
-        int acc = 0;
-        // Accumulated prefix sum to track reachability
-        for (int i = 0; i < len; i++) {
-            acc += diff[i];
-            if (acc > 0 && s.charAt(i) == '0') {
-                // Mark the start of the reachable range from i + minJump
-                if (i + minJump < len) {
-                    diff[i + minJump] += 1;
-                } 
-                // Mark the end of the reachable range after i + maxJump
-                if (i + maxJump + 1 < len) {
-                    diff[i + maxJump + 1] -= 1;
-                }
-            }
-        }
-        return acc > 0;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $ 
-
-    The `for` loop iterates over each character in the string `s`, resulting in a time complexity of $O(n)$.
-* Space Complexity: $ O(n) $
-
-    The `diff` array, which has a size of `len` (the length of the string `s`), 
-    contributes $O(n)$ to the space complexity. 
-    
-    Other variables require constant space, resulting in an overall space complexity of $O(n)$.
-
-### Sliding Window Solution
-Maintain a sliding window from `left` to `right` to track the count of indices `nbp` for a specific index `i` as the sliding window moves along the string `s`.  
-if  `nbp > 0`, the index `i` is reachable from the sliding window range, otherwise, it is not.  
-When the window's length exceeds `maxJump - minJump + 1`, remove the character at the left boundary and update `npb` accordingly.
-
-Example: 
-```text
-minJump = 3, maxJump = 5
-
-Step 1 (Initialization):
-    index: 0 1 2 3 4 5 6 7 8 9 
-    s:     0 0 1 1 0 1 0 0 0 0 
-           L
-           R     i
-    nbp = 1
-    dp[0] = true
-    dp[1] = false (initialized to false by default)
-    dp[2] = false (initialized to false by default)
-    dp[3] = false
-
-Step 2:
-    index: 0 1 2 3 4 5 6 7 8 9 
-    s:     0 0 1 1 0 1 0 0 0 0 
-           L
-             R     i
-    nbp = 1
-    dp[4] = true
-
-Step 3:
-    index: 0 1 2 3 4 5 6 7 8 9 
-    s:     0 0 1 1 0 1 0 0 0 0 
-           L
-               R     i
-    nbp = 1
-    dp[5] = false
-
-Step 4:
-    index: 0 1 2 3 4 5 6 7 8 9 
-    s:     0 0 1 1 0 1 0 0 0 0 
-             L
-                 R     i
-    nbp = 0 (decremented by 1 as dp[0] is true and has been excluded)
-    dp[6] = false
-
-Step 5:
-    index: 0 1 2 3 4 5 6 7 8 9 
-    s:     0 0 1 1 0 1 0 0 0 0 
-               L
-                   R     i
-    nbp = 1 (incremented by 1 as dp[4] is true and has been included)
-    dp[7] = true
-
-... 
-
-Step n:
-    index: 0 1 2 3 4 5 6 7 8 9 
-    s:     0 0 1 1 0 1 0 0 0 0 
-                   L
-                       R     i
-    Return dp[9]
-```
-#### Implementation
-```java
-class Solution {
-    public boolean canReach(String s, int minJump, int maxJump) {
-        int len=s.length();
-        if (s.charAt(len - 1) == '1') return false;
-        boolean[] dp = new boolean[len];
-        dp[0] = true;
-
-        int nbp = 1;
-        int left = 0;
-        int right = 0;
-        // Check if indices are reachable from index minJump
-        for (int i = minJump; i < len; i++) {
-            if (s.charAt(i) == '0') {
-                if (nbp > 0) {
-                    dp[i] = true;
-                }
-            }
-            // Move the left boundary of the sliding window rightward by 1 when its length reaches `maxJump - minJump + 1`.
-            if (right - left + 1 == maxJump - minJump + 1) {
-                if (dp[left]) {
-                    nbp--;
-                }
-                left++;
-            }
-            // Move the right boundary of the sliding window rightward duiring the traversal
-            right++;
-            if (dp[right]) {
-                nbp++;
-            }
-        }
-        return dp[len - 1];
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $ 
-    
-    The `for` loop iterates from `minJump` to `len` (the length of the string s), resulting in a time complexity of $O(n)$.
-
-* Space Complexity: $ O(n) $
-
-    The `dp` array has a size of len, contributing $O(n)$ to the space complexity.
-
-## Range Product Queries of Powers
-[Back to Top](#table-of-contents)  
-### Overview
-Given a positive integer `n`, there exists a **0-indexed** array called `powers`, composed of the **minimum** number of powers of `2` that sum to `n`. The array is sorted in **non-decreasing** order, and there is only one way to form the array.
-
-You are also given a **0-indexed** 2D integer array `queries`, where `queries[i] = [lefti, righti]`. Each `queries[i]` represents a query where you have to find the product of all `powers[j]` with $ left_i <= j <= right_i $.
-
-Return an array `answers`, equal in length to `queries`, where `answers[i]` is the answer to the $i^{th}$ query. Since the answer to the $i^{th}$  query may be too large, each `answers[i]`should be returned modulo $10^9 + 7$.
-
-**Example 1:**
-> **Input:** n = 15, queries = [[0,1],[2,2],[0,3]]  
-> **Output:** [2,4,64]  
-> **Explanation:**  
-> For n = 15, powers = [1,2,4,8]. It can be shown that powers cannot be a smaller size.  
-> Answer to 1st query: powers[0] * powers[1] = 1 * 2 = 2.  
-> Answer to 2nd query: powers[2] = 4.  
-> Answer to 3rd query: powers[0] * powers[1] * powers[2] * powers[3] = 1 * 2 * 4 * 8 = 64.  
-> Each answer modulo $10^9 + 7$ yields the same answer, so [2,4,64] is returned.
-
-**Example 2:**
-> **Input:** n = 2, queries = [[0,0]]  
-> **Output:** [2]  
-> **Explanation:**  
-> For n = 2, powers = [2].  
-> The answer to the only query is powers[0] = 2. The answer modulo $10^9 + 7$ is the same, so [2] is returned.
-### Analysis
-In the problem description, "the minimum number of powers of 2 that sum to n" corresponds to the number of set bits in the binary representation of the integer `n`.
-
-Example:
-```text
-40 = 0010 1000 (two's complement) = 32 + 8
-```
-The two set bits represent the desired result,
-with each set bit's value added to the array `powers`.
-Using a mask value of `0001` and shift it left to isolate the set bits.
-
-Since the array `powers` is small (<32), precomputing all products for possible query ranges ensures efficiency with small time complexity.
-#### Implementation
-```java
-class Solution {
-    int MOD=1_000_000_007;
-    public int[] productQueries(int n, int[][] queries) {
-        int bc=Integer.bitCount(n);
-        int[] powers=new int[bc];        
-        // Populate these powers of two into array powers
-        for(int i=1,j=0; j<bc; i<<=1){
-            if((i&n)==i){
-                powers[j]=i;
-                j++;
-            }
-        }
-
-        // Precompute the product results for all subarrays
-        int[][] productRes = new int[bc][bc];
-        for (int i = 0; i < bc; i++) {
-            productRes[i][i] = powers[i]; 
-            for (int j = i + 1; j < bc; j++) {
-                productRes[i][j] = (int) ((long) productRes[i][j - 1] * powers[j] % MOD);
-            }
-        }
-
-        // Answer each query
-        int[] output=new int[queries.length];
-        for(int i=0; i<queries.length; i++){
-            int l = queries[i][0];
-            int r = queries[i][1];
-            output[i] = productRes[l][r];
-        }
-        return output;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $O((logn)^2+q)$
-    * Integer.bitCount(n)
-    
-        Counts the number of set bits in the binary representation of integer `n`. This runs in most $O(log n)$, where $log n$ is the number of bits in `n`.
-
-    * Populate these powers of two into array powers
-        
-        The `for` runs `bc` times, resulting a time complexity $O(bc)$.
-
-        For the purpose of analyzing time complexity, $O(bc)$ is treated as $O(logn)$ because it grows at the same rate as $logn$.
-
-    * Precompute the product results for all subarrays
-        
-        The outer `for` loop runs `bc` times, and the number of iterations times of the inner `for` loop depends on the outer loop, so the total number of runs is:
-        $$ \sum_{i=0}^{bc-1} (bc-1-i) = (bc-1) + (bc-2) + (bc-3) + ... + 1 = \frac{(bc-1)\times bc}{2} $$
-        Therefore, the time complexity is $ O(bc^2) $, which is $O((logn)^2)$. 
-
-    * Answer each query
-
-        The `for` loop runs `queries.length` times, so the time complexity is $O(q)$ for `q` queries.
-
-    Total time compleixty: $O((logn)^2+q)$
-
-* Space Complexity: $O((log n)^2 + q)$
-    * `powers` array taks $O(logn)$ space.  
-    * `productRes ` array taks $O((logn)^2)$ space.  
-    * `output ` array taks $O(q)$ space.
-
-    Total space complexity: $O((log n)^2 + q)$.
 
 
 
