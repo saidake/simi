@@ -1802,9 +1802,17 @@ Return an array `answers`, equal in length to `queries`, where `answers[i]` is t
 > For n = 2, powers = [2].  
 > The answer to the only query is powers[0] = 2. The answer modulo $10^9 + 7$ is the same, so [2] is returned.
 ### Analysis
+In the problem description, "the minimum number of powers of 2 that sum to n" corresponds to the number of set bits in the binary representation of the integer `n`.
 
-//TODO Add analysis content.
+Example:
+```text
+40 = 0010 1000 (two's complement) = 32 + 8
+```
+The two set bits represent the desired result,
+with each set bit's value added to the array `powers`.
+Using a mask value of `0001` and shift it left to isolate the set bits.
 
+Since the array `powers` is small (<32), precomputing all products for possible query ranges ensures efficiency with small time complexity.
 #### Implementation
 ```java
 class Solution {
