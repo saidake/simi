@@ -1946,13 +1946,13 @@ The result format is in the following example.
 >
 > **Note:** The output table is ordered by `transaction_date` in ascending order.
 ### Analysis
-### Implementation
+Group the data by the `transaction_date` field (using `GROUP BY` or `PARTITION BY`), and calculate the total amounts for odd and even transactions on each transaction_date.
+### MySQL Implementation
 ```sql
-SELECT transaction_date, 
+SELECT DISTINCT transaction_date, 
 SUM(CASE WHEN amount % 2=0 THEN 0 ELSE amount END) OVER( PARTITION BY transaction_date  ) AS odd_sum,
 SUM(CASE WHEN amount % 2=0 THEN amount ELSE 0 END) OVER( PARTITION BY transaction_date  ) AS even_sum
-FROM transactions
+FROM transactions;
 ```
 # Uncategorized Problems
-
 
