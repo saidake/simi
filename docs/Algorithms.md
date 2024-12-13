@@ -25,7 +25,7 @@
 - [SQL](#sql)
     - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
-    
+    - [Distribute Elements Into Two Arrays II](#distribute-elements-into-two-arrays-ii)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -2016,3 +2016,100 @@ SUM(CASE WHEN amount % 2=0 THEN amount ELSE 0 END) OVER( PARTITION BY transactio
 FROM transactions;
 ```
 # Uncategorized Problems
+## Distribute Elements Into Two Arrays II
+### Overview
+You are given a **1-indexed** array of integers `nums` of length `n`.
+
+We define a function `greaterCount` such that `greaterCount(arr, val)` returns the number of elements in `arr` that are strictly greater than `val`.
+
+You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `n` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
+
+* If `greaterCount(arr1, nums[i]) > greaterCount(arr2, nums[i])`, append `nums[i]` to `arr1`.
+* If `greaterCount(arr1, nums[i]) < greaterCount(arr2, nums[i])`, append `nums[i]` to `arr2`.
+* If `greaterCount(arr1, nums[i]) == greaterCount(arr2, nums[i])`, append `nums[i]` to the array with a lesser number of elements.
+* If there is still a tie, append `nums[i]` to `arr1`.
+
+The array result is formed by concatenating the arrays `arr1` and `arr2`. For example, if `arr1 == [1,2,3]` and `arr2 == [4,5,6]`, then `result = [1,2,3,4,5,6]`.
+
+Return the integer array `result`.
+
+**Example 1:**
+
+> **Input:** nums = [2,1,3,3]  
+> **Output:** [2,3,1,3]  
+> **Explanation:** After the first 2 operations, arr1 = [2] and arr2 = [1].  
+> In the 3rd operation, the number of elements greater than 3 is zero in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
+> In the 4th operation, the number of elements greater than 3 is zero in both arrays. As the length of arr2 is lesser, hence, append nums[4] to arr2.  
+> After 4 operations, arr1 = [2,3] and arr2 = [1,3].  
+> Hence, the array result formed by concatenation is [2,3,1,3].  
+
+**Example 2:**
+
+> **Input:** nums = [5,14,3,1,2]  
+> **Output:** [5,3,1,2,14]  
+> **Explanation:** After the first 2 operations, arr1 = [5] and arr2 = [14].  
+> In the 3rd operation, the number of elements greater than 3 is one in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
+> In the 4th operation, the number of elements greater than 1 is greater in arr1 than arr2 (2 > 1). Hence, append nums[4] to arr1.  
+> In the 5th operation, the number of elements greater than 2 is greater in arr1 than arr2 (2 > 1). Hence, append nums[5] to arr1.  
+> After 5 operations, arr1 = [5,3,1,2] and arr2 = [14].  
+> Hence, the array result formed by concatenation is [5,3,1,2,14].
+
+**Example 3:**
+
+> **Input:** nums = [3,3,3,3]  
+> **Output:** [3,3,3,3]  
+> **Explanation:** At the end of 4 operations, arr1 = [3,3] and arr2 = [3,3].  
+> Hence, the array result formed by concatenation is [3,3,3,3].
+
+Constraints:
+* `3 <= n <= 10^5`
+* `1 <= nums[i] <= 10^9`
+
+### Analysis
+#### Implementation
+```java
+import java.util.Collection;
+class Solution {
+    public int[] resultArray(int[] nums) {
+        Queue<Integer> que1=new LinkedList();
+        List<Integer> sortedList1=new ArrayList();
+        Queue<Integer> que2=new LinkedList();
+        List<Integer> sortedList2=new ArrayList();
+        que1.offer(nums[0]);
+        sortedList1.add(nums[0]);
+        que2.offer(nums[1]);
+        sortedList2.add(nums[1]);
+        // 3 <= n <= 10^5
+        for(int i=2; i<nums.length;i++){
+            int c1=greaterCount(sortedList1, nums[i]);
+            int c2=greaterCount(sortedList2, nums[i]);
+            if(c1 > c2){
+                que1.offer(nums[i]);
+                sortedList1.add(nums[0]);
+            }else if(c1 < c2){
+                que2.offer(nums[i]);
+                sortedList2.add(nums[1]);
+            }else if(que1.size()<=que2.size()){
+                que1.offer(nums[i]);
+                sortedList1.add(nums[0]);
+            }else{
+                que2.offer(nums[i]);
+                sortedList2.add(nums[1]);
+            }
+        }
+        que1.addAll(que2);
+        return que1.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    /**
+     * Return the number of elements in arr that are strictly greater than val starting from index 1
+     */
+    private int greaterCount(List<Integer> sortedList, int val){
+        int leftLen=sortedList.size()/2;
+        int rightLen=sortedList.size()-leftLen;
+        //TODO Complete the count logic
+        return count;
+    }
+}
+```
+#### Time and Space Complexity
