@@ -20,10 +20,12 @@
     - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
 - [String](#string)
     - [License Key Formatting](#license-key-formatting)
+- [Traversal](#traversal)
+    - [Maximum Number of Operations With the Same Score I](#maximum-number-of-operations-with-the-same-score-i)
 - [SQL](#sql)
     - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
-    - [Maximum Number of Operations With the Same Score I](#maximum-number-of-operations-with-the-same-score-i)
+    
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -80,7 +82,7 @@ class Solution {
     Hence, The total time complexity is $ O(n \log n) $.
 * Space Complexity: $ O(1) $
 
-    The Arrays.sort() method uses $ O(1) $ space for primitive data types like integers in Java, as it utilizes a variation of quicksort (dual-pivot quicksort).
+    The `Arrays.sort()` method uses $ O(1) $ space for primitive data types like integers in Java, as it utilizes a variation of quicksort (dual-pivot quicksort).
     There is no additional space used apart from the input array and a few variables.   
     Therefore, the total space complexity is $ O(1) $.
 # Difference Array
@@ -1884,7 +1886,66 @@ class Solution {
     `s.toCharArray()` creates a new character array of size $ O(n) $,
     `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
     Therefore, the total space complexity is $ O(n) $
+# Traversal
+## Maximum Number of Operations With the Same Score I
+You are given an array of integers `nums`. Consider the following operation:
 
+* Delete the first two elements `nums` and define the score of the operation as the sum of these two elements.
+You can perform this operation until `nums` contains fewer than two elements. Additionally, the **same** score must be achieved in **all** operations.
+
+Return the **maximum** number of operations you can perform.
+
+**Example 1:**
+> Input: nums = [3,2,1,4,5]  
+> Output: 2  
+> Explanation:  
+> * We can perform the first operation with the score `3 + 2 = 5`. After this operation, `nums = [1,4,5]`.
+> * We can perform the second operation as its score is `4 + 1 = 5`, the same as the previous operation. After this operation, `nums = [5]`.
+> * As there are fewer than two elements, we can't perform more operations.
+
+**Example 2:**
+> Input: nums = [1,5,3,3,4,1,3,2,2,3]  
+> Output: 2  
+> Explanation:  
+> * We can perform the first operation with the score 1 + 5 = 6. After this operation, nums = [3,3,4,1,3,2,2,3].
+> * We can perform the second operation as its score is 3 + 3 = 6, the same as the previous operation. After this operation, nums = [4,1,3,2,2,3].
+> * We cannot perform the next operation as its score is 4 + 1 = 5, which is different from the previous scores.
+
+**Example 3:**
+> Input: nums = [5,3]
+> Output: 1  
+
+**Constraints:**
+* `2 <= nums.length <= 100`
+* `1 <= nums[i] <= 1000`
+
+### Analysis
+Since `2 <= nums.length <= 100`, the operation score can be determined using the first two elements of the array nums.   
+Traverse the array `nums` to evaluate the maximum number of operations you can perform sequentially.
+#### Implementation
+```java
+class Solution {
+    public int maxOperations(int[] nums) {
+        //2 <= nums.length <= 100
+        int sum=nums[0]+nums[1];
+        int nb=1;
+        for(int i=2;i+1<nums.length; i+=2){
+            if(nums[i]+nums[i+1]==sum)++nb;
+            else break;
+        }
+        return nb;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    The `for` loop iterates `nums.length/2 - 2` times, leading to a time complexity of $O(n)$.
+
+
+* Space Complexity: $ O(1) $
+
+    Only a constant amount of additional space is used.
 # SQL
 ## Odd and Even Transactions
 [Back to Top](#table-of-contents)  
@@ -1955,57 +2016,3 @@ SUM(CASE WHEN amount % 2=0 THEN amount ELSE 0 END) OVER( PARTITION BY transactio
 FROM transactions;
 ```
 # Uncategorized Problems
-## Maximum Number of Operations With the Same Score I
-You are given an array of integers `nums`. Consider the following operation:
-
-* Delete the first two elements `nums` and define the score of the operation as the sum of these two elements.
-You can perform this operation until `nums` contains fewer than two elements. Additionally, the **same** score must be achieved in **all** operations.
-
-Return the **maximum** number of operations you can perform.
-
-
-**Example 1:**
-> Input: nums = [3,2,1,4,5]  
-> Output: 2  
-> Explanation:  
-> * We can perform the first operation with the score `3 + 2 = 5`. After this operation, `nums = [1,4,5]`.
-> * We can perform the second operation as its score is `4 + 1 = 5`, the same as the previous operation. After this operation, `nums = [5]`.
-> * As there are fewer than two elements, we can't perform more operations.
-
-**Example 2:**
-> Input: nums = [1,5,3,3,4,1,3,2,2,3]  
-> Output: 2  
-> Explanation:  
-> * We can perform the first operation with the score 1 + 5 = 6. After this operation, nums = [3,3,4,1,3,2,2,3].
-> * We can perform the second operation as its score is 3 + 3 = 6, the same as the previous operation. After this operation, nums = [4,1,3,2,2,3].
-> * We cannot perform the next operation as its score is 4 + 1 = 5, which is different from the previous scores.
-
-**Example 3:**
-> Input: nums = [5,3]
-> Output: 1  
-
-**Constraints:**
-* `2 <= nums.length <= 100`
-* `1 <= nums[i] <= 1000`
-
-### Analysis
-Since `2 <= nums.length <= 100`, the operation score can be determined using the first two elements of the array nums.   
-Traverse the array `nums` to evaluate the maximum number of operations you can perform sequentially.
-#### Implementation
-```java
-class Solution {
-    public int maxOperations(int[] nums) {
-        //2 <= nums.length <= 100
-        int sum=nums[0]+nums[1];
-        int nb=1;
-        for(int i=2;i+1<nums.length; i+=2){
-            if(nums[i]+nums[i+1]==sum)++nb;
-            else break;
-        }
-        return nb;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $
-* Space Complexity: $ O(1) $
