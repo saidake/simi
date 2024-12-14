@@ -2018,11 +2018,11 @@ FROM transactions;
 # Uncategorized Problems
 ## Distribute Elements Into Two Arrays II
 ### Overview
-You are given a **1-indexed** array of integers `nums` of length `n`.
+You are given a **1-indexed** array of integers `nums` of length `len`.
 
 We define a function `greaterCount` such that `greaterCount(arr, val)` returns the number of elements in `arr` that are strictly greater than `val`.
 
-You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `n` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
+You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `len` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
 
 * If `greaterCount(arr1, nums[i]) > greaterCount(arr2, nums[i])`, append `nums[i]` to `arr1`.
 * If `greaterCount(arr1, nums[i]) < greaterCount(arr2, nums[i])`, append `nums[i]` to `arr2`.
@@ -2066,58 +2066,71 @@ Constraints:
 * `1 <= nums[i] <= 10^9`
 
 ### Analysis
+
+//TODO Analyze the standard solution
 #### Implementation
 ```java
-import java.util.Collection;
-class Solution {
-    public int[] resultArray(int[] nums) {
-        Queue<Integer> que1=new LinkedList();
-        List<Integer> sortedList1=new ArrayList();
-        Queue<Integer> que2=new LinkedList();
-        List<Integer> sortedList2=new ArrayList();
-        que1.offer(nums[0]);
-        sortedList1.add(nums[0]);
-        que2.offer(nums[1]);
-        sortedList2.add(nums[1]);
-        // 3 <= n <= 10^5
-        for(int i=2; i<nums.length;i++){
-            int c1=greaterCount(sortedList1, nums[i]);
-            int c2=greaterCount(sortedList2, nums[i]);
-            if(c1 > c2){
-                que1.offer(nums[i]);
-                sortedList1.add(sortedList1.size()-c1, nums[i]);
-            }else if(c1 < c2){
-                que2.offer(nums[i]);
-                sortedList2.add(sortedList2.size()-c2, nums[i]);
-            }else if(que1.size()<=que2.size()){
-                que1.offer(nums[i]);
-                sortedList1.add(sortedList1.size()-c1, nums[i]);
-            }else{
-                que2.offer(nums[i]);
-                sortedList2.add(sortedList2.size()-c2, nums[i]);
-            }
-        }
-        que1.addAll(que2);
-        return que1.stream().mapToInt(Integer::intValue).toArray();
+class BinaryIndexedTree {
+    private final int[] tree;
+
+    public BinaryIndexedTree(int len) {
+        tree = new int[len];
     }
 
-    /**
-     * Return the number of elements in arr that are strictly greater than val starting from index 1
-     */
-    private int greaterCount(List<Integer> sortedList, int val){
-        if(sortedList.size()==1){
-            return sortedList.get(0)>val?1:0;
+    public void add(int i) {
+        while (i < tree.length) {
+            tree[i]++;
+            i += i & -i;
         }
-        int leftLen=sortedList.size()/2;
-        int rightLen=sortedList.size()-leftLen;
-        if(sortedList.get(leftLen)<=val){
-            return greaterCount(sortedList.subList(leftLen,leftLen+rightLen), val);
-        }else{
-            return greaterCount(sortedList.subList(0, leftLen), val) + rightLen;
+    }
+
+    public int pre(int i) {
+        int res = 0;
+        while (i > 0) {
+            res += tree[i];
+            i &= i - 1;
         }
+        return res;
+    }
+}
+
+class Solution {
+    public int[] resultArray(int[] nums) {
+        int[] sortedArr = nums.clone();
+        Arrays.sort(sortedArr); 
+        int len = nums.length;
+
+        List<Integer> list1 = new ArrayList<>(len);
+        List<Integer> list2 = new ArrayList<>();
+        list1.add(nums[0]);
+        list2.add(nums[1]);
+
+        BinaryIndexedTree bit1 = new BinaryIndexedTree(len + 1);
+        BinaryIndexedTree bit2 = new BinaryIndexedTree(len + 1);
+        bit1.add(Arrays.binarySearch(sortedArr, nums[0]) + 1);
+        bit2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
+
+        for (int i = 2; i < nums.length; i++) {
+            int x = nums[i];
+            int v = Arrays.binarySearch(sortedArr, x) + 1;
+            int gc1 = list1.size() - bit1.pre(v); 
+            int gc2 = list2.size() - bit2.pre(v); 
+            if (gc1 > gc2 || gc1 == gc2 && list1.size() <= list2.size()) {
+                list1.add(x);
+                bit1.add(v);
+            } else {
+                list2.add(x);
+                bit2.add(v);
+            }
+        }
+        list1.addAll(list2);
+        for (int i = 0; i < len; i++) {
+            nums[i] = list1.get(i);
+        }
+        return nums;
     }
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n^2) $
+* Time Complexity: $ O(nlogn) $
 * Space Complexity: $ O(n) $
