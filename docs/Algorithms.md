@@ -2085,16 +2085,16 @@ class Solution {
             int c2=greaterCount(sortedList2, nums[i]);
             if(c1 > c2){
                 que1.offer(nums[i]);
-                sortedList1.add(nums[0]);
+                sortedList1.add(sortedList1.size()-c1, nums[i]);
             }else if(c1 < c2){
                 que2.offer(nums[i]);
-                sortedList2.add(nums[1]);
+                sortedList2.add(sortedList2.size()-c2, nums[i]);
             }else if(que1.size()<=que2.size()){
                 que1.offer(nums[i]);
-                sortedList1.add(nums[0]);
+                sortedList1.add(sortedList1.size()-c1, nums[i]);
             }else{
                 que2.offer(nums[i]);
-                sortedList2.add(nums[1]);
+                sortedList2.add(sortedList2.size()-c2, nums[i]);
             }
         }
         que1.addAll(que2);
@@ -2105,11 +2105,19 @@ class Solution {
      * Return the number of elements in arr that are strictly greater than val starting from index 1
      */
     private int greaterCount(List<Integer> sortedList, int val){
+        if(sortedList.size()==1){
+            return sortedList.get(0)>val?1:0;
+        }
         int leftLen=sortedList.size()/2;
         int rightLen=sortedList.size()-leftLen;
-        //TODO Complete the count logic
-        return count;
+        if(sortedList.get(leftLen)<=val){
+            return greaterCount(sortedList.subList(leftLen,leftLen+rightLen), val);
+        }else{
+            return greaterCount(sortedList.subList(0, leftLen), val) + rightLen;
+        }
     }
 }
 ```
 #### Time and Space Complexity
+* Time Complexity: $ O(n^2) $
+* Space Complexity: $ O(n) $
