@@ -648,7 +648,7 @@ $$ pa[i+1][x]=pa[i][pa[i][x]] $$
 This relation allows us to efficiently compute the receiver after $2^{i+1}$ passes using previously calculated results.
 
 As initialization, we can directly determine the receiver for each element after $2^0$ pass, which represents the immediate next receiver in a single pass.
-#### Passing Process
+#### Passing Process (#bitwise-operation-kandk-1)
 Using bitwise operations can significantly improve the efficiency of the passing process:
 * `k & k -1`  
 
@@ -2066,8 +2066,25 @@ Constraints:
 * `1 <= nums[i] <= 10^9`
 
 ### Analysis
+Follow the problem description, the key point is to find the number of elements in array `nums` that are strictly greater than val.
 
-//TODO Analyze the standard solution
+
+A Binary Indexed Tree (BIT) is ideal for scenarios that require frequent updates to an array and efficient calculation of prefix sums or ranges, making it a suitable choice here.
+
+To achieve this, define an array `tree` within a `BinaryIndexedTree` class. 
+* i += i & -i
+    
+    Isolate the least significant set bit (LSB) of `i` and add it to `i`.
+* i &= i - 1
+
+    A detailed introduction to this bitwise operation can be found in the analysis of the problem [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game), 
+    specifically in the section on [k & k-1](#bitwise-operation-kandk-1).
+
+This `tree` corresponds to a sorted version of the array `nums`, called `sortedArr`, and stores prefix sums rather than actual values.
+
+When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`. 
+This update allows the tree to maintain a count of elements before index `i` in the array `tree`, which represents the number of elements in `nums` that are less than `sortedArr[i]`.
+
 #### Implementation
 ```java
 class BinaryIndexedTree {
@@ -2084,7 +2101,7 @@ class BinaryIndexedTree {
         }
     }
 
-    public int pre(int i) {
+    public int prefixSum(int i) {
         int res = 0;
         while (i > 0) {
             res += tree[i];
@@ -2111,16 +2128,16 @@ class Solution {
         bit2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
 
         for (int i = 2; i < nums.length; i++) {
-            int x = nums[i];
-            int v = Arrays.binarySearch(sortedArr, x) + 1;
-            int gc1 = list1.size() - bit1.pre(v); 
-            int gc2 = list2.size() - bit2.pre(v); 
+            int cu = nums[i];
+            int sInd = Arrays.binarySearch(sortedArr, cu) + 1;
+            int gc1 = list1.size() - bit1.prefixSum(sInd); 
+            int gc2 = list2.size() - bit2.prefixSum(sInd); 
             if (gc1 > gc2 || gc1 == gc2 && list1.size() <= list2.size()) {
-                list1.add(x);
-                bit1.add(v);
+                list1.add(cu);
+                bit1.add(sInd);
             } else {
-                list2.add(x);
-                bit2.add(v);
+                list2.add(cu);
+                bit2.add(sInd);
             }
         }
         list1.addAll(list2);
@@ -2134,3 +2151,6 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(nlogn) $
 * Space Complexity: $ O(n) $
+
+#### Consideration
+
