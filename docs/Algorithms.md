@@ -648,7 +648,7 @@ $$ pa[i+1][x]=pa[i][pa[i][x]] $$
 This relation allows us to efficiently compute the receiver after $2^{i+1}$ passes using previously calculated results.
 
 As initialization, we can directly determine the receiver for each element after $2^0$ pass, which represents the immediate next receiver in a single pass.
-#### Passing Process (#bitwise-operation-kandk-1)
+#### Passing Process
 Using bitwise operations can significantly improve the efficiency of the passing process:
 * `k & k -1`  
 
@@ -2071,18 +2071,39 @@ Follow the problem description, the key point is to find the number of elements 
 
 A Binary Indexed Tree (BIT) is ideal for scenarios that require frequent updates to an array and efficient calculation of prefix sums or ranges, making it a suitable choice here.
 
-To achieve this, define an array `tree` within a `BinaryIndexedTree` class. 
+To achieve this, define an array `tree` within a `BinaryIndexedTree` class and use bitwise operation to identify the indexes to update and compute the prefix sum.
 * i += i & -i
     
     Isolate the least significant set bit (LSB) of `i` and add it to `i`.
+    Example:
+    ```text
+    40 + (40 & -40) 
+        = 0010 1000 + (0010 1000  & 1101 1000)
+        = 0010 1000 + 0000 1000 
+        = 48
+    ```
 * i &= i - 1
 
-    A detailed introduction to this bitwise operation can be found in the analysis of the problem [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game), 
-    specifically in the section on [k & k-1](#bitwise-operation-kandk-1).
+    The operation clears the rightmost set bit (1) in the binary representation of `i`, it is equivalent to `i -= i & -i`.
 
+    Example:
+    ```text
+    11 & 10 
+        = 1011 & 1010 
+        = 1010 
+        = 10
+    48 & 47
+        = 0011 0000 & 0010 1111
+        = 0010 0000
+        = 32
+    11 & 10
+        = 1011 & 1010
+        = 1010
+    ```
+    
 This `tree` corresponds to a sorted version of the array `nums`, called `sortedArr`, and stores prefix sums rather than actual values.
 
-When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`. 
+When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`.  
 This update allows the tree to maintain a count of elements before index `i` in the array `tree`, which represents the number of elements in `nums` that are less than `sortedArr[i]`.
 
 #### Implementation
@@ -2115,8 +2136,8 @@ class Solution {
     public int[] resultArray(int[] nums) {
         int[] sortedArr = nums.clone();
         Arrays.sort(sortedArr); 
-        int len = nums.length;
 
+        int len = nums.length;
         List<Integer> list1 = new ArrayList<>(len);
         List<Integer> list2 = new ArrayList<>();
         list1.add(nums[0]);
@@ -2126,9 +2147,10 @@ class Solution {
         BinaryIndexedTree bit2 = new BinaryIndexedTree(len + 1);
         bit1.add(Arrays.binarySearch(sortedArr, nums[0]) + 1);
         bit2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
-
+        // Traverse array 'nums'
         for (int i = 2; i < nums.length; i++) {
             int cu = nums[i];
+            // Search the index of value 'cu' in array 'sortedArr'.
             int sInd = Arrays.binarySearch(sortedArr, cu) + 1;
             int gc1 = list1.size() - bit1.prefixSum(sInd); 
             int gc2 = list2.size() - bit2.prefixSum(sInd); 
@@ -2140,7 +2162,10 @@ class Solution {
                 bit2.add(sInd);
             }
         }
+        // Concatenate the two lists
         list1.addAll(list2);
+
+        // Convert the list into a primitive array
         for (int i = 0; i < len; i++) {
             nums[i] = list1.get(i);
         }
@@ -2149,8 +2174,22 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(nlogn) $
+* Time Complexity: $ O(nlogn) $\
+    * Traverse array 'nums'
+        The `for` loop iterates over the array `nums`, taking $O(n)$ time.
+        The `binarySearch` and `prefixSum` methods each contribute $O(logn)$ time complexity.
+
+        Therefore, the overall time complexity for this part is $O(nlogn)$.
+    * Convert the list into a primitive array
+
+        Traversing the array `nums` takes $O(n)$ time.
+
+    Thus, the overall time complexity is $O(nlog)$.
+
 * Space Complexity: $ O(n) $
 
-#### Consideration
+    The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `bit1` and `bit2` each contribute $O(n)$ to the space complexity.  
+    Therefore, the total space complexity is $O(n)$.
 
+#### Consideration
+* If using a queue to store distributed elements, avoid using the `size()` method frequently, as it has a time complexity of $O(n)$.
