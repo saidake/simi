@@ -3,62 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.simi</groupId>
-        <artifactId>simi</artifactId>
-        <version>1.0</version>
-    </parent>
     <packaging>pom</packaging>
+    <groupId>com.simi</groupId>
     <artifactId>simi-sandbox</artifactId>
     <version>1.0</version>
 
     <modules>
-        <module>simi-main</module>
-        <module>simi-mysql</module>
-        <module>simi-oracle</module>
-        <module>simi-nodb</module>
-        <module>simi-jpa</module>
-        <module>simi-cap</module>
-        <module>simi-aws</module>
-        <module>simi-consumer</module>
         <module>simi-extensions</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>         <!-- maven打包插件（子工程引入父工程时，会引入这个插件导致打包）-->
-                <version>2.7.3</version>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <!--可以把依赖的包都打包到生成的Jar包中，默认goal，mvn package 执行之后，先将生成的JAR重命名为 XXX.origin，再次使用spring-boot:repackage打包生成可执行的 JAR -->
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

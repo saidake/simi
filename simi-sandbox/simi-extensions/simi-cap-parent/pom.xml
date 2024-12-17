@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-    <artifactId>simi-test-maven</artifactId>
-    <groupId>com.simi</groupId>
-    <version>1.0</version>
-  </parent>
+		<groupId>com.simi</groupId>
+		<artifactId>simi-extensions</artifactId>
+		<version>1.0</version>
+	</parent>
 
-	<groupId>com.simi</groupId>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>customer</groupId>
 	<artifactId>simi-cap-parent</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
-
 	<name>simi-cap parent</name>
 
 	<properties>
 		<!-- OUR VERSION -->
-		<revision>1.0</revision>
+		<revision>1.0.0-SNAPSHOT</revision>
 
 		<!-- DEPENDENCIES VERSION -->
 		<jdk.version>21</jdk.version>
-		<cds.services.version>3.4.0</cds.services.version>
-		<spring.boot.version>3.3.5</spring.boot.version>
-		<cds.install-cdsdk.version>8.4.0-2024101010155372-SNAPSHOT</cds.install-cdsdk.version>
+		<cds.services.version>3.3.1</cds.services.version>
+		<spring.boot.version>3.3.4</spring.boot.version>
+		<cds.install-cdsdk.version>8.2.3</cds.install-cdsdk.version>
 
 		<cds.install-node.downloadUrl>https://nodejs.org/dist/</cds.install-node.downloadUrl>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<modules>
-		<module>srv</module>
+		<module>simi-cap</module>
 	</modules>
 
 	<dependencyManagement>
@@ -79,7 +80,7 @@
 			<!-- SUREFIRE VERSION -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.5.1</version>
+				<version>3.5.0</version>
 			</plugin>
 
 			<!-- POM FLATTENING FOR CI FRIENDLY VERSIONS -->
