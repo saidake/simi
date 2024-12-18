@@ -1222,6 +1222,9 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(n×neg) $   (with neg being dependent on the input values).  
 * Space Complexity: $ O(n×neg) $
+
+//TODO Correct the previous content.
+
 ### Optimized Dynamic Programming Solution
 
 Since the current `dp` expression is only related to the previous one, 
@@ -1285,8 +1288,8 @@ Example 2:
 > * For `i = 2`, the smallest `ans[2]` that satisfies `ans[2] OR (ans[2] + 1) = 31` is `15`, because `15 OR (15 + 1) = 31`.
 
 Constraints:
-* 1 <= nums.length <= 100
-* 2 <= nums[i] <= $10^9$
+* `1 <= nums.length <= 100`
+* `2 <= nums[i] <= 10^9`
 * `nums[i]` is a prime number.
 
 ### Analysis
@@ -1352,7 +1355,11 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $ O(n) $  
+
+    The `for` loop takes $O(n)$ time.
 * Space Complexity: $ O(n) $
+
+    The array `ans` takes $O(n)$ space.
 
 ## Find Number of Ways to Reach the K-th Stair
 [Back to Top](#table-of-contents)  
@@ -1401,7 +1408,7 @@ Note that it is possible that Alice reaches the stair `k`, and performs some ope
 >   * Using an operation of the first type, she goes down 1 stair to reach stair 1.
 
 **Constraints:**
-* $0 <= k <= 10^9$
+* `0 <= k <= 10^9`
 
 ### Analysis
 Based on the formula for the sum of a geometric series:
@@ -1508,7 +1515,7 @@ Given that you can only move the white pieces, return the **minimum** number of 
 > - Move the white bishop to (5, 2).
 
 Constraints:
-* 1 <= a, b, c, d, e, f <= 8
+* `1 <= a, b, c, d, e, f <= 8`
 * No two pieces are on the same square.
 
 ### Analysis
@@ -1610,6 +1617,12 @@ Return an array `answers`, equal in length to `queries`, where `answers[i]` is t
 > **Explanation:**  
 > For n = 2, powers = [2].  
 > The answer to the only query is powers[0] = 2. The answer modulo $10^9 + 7$ is the same, so [2] is returned.
+
+**Constraints:**
+* `1 <= n <= 10^9`
+* `1 <= queries.length <= 10^5`
+* `0 <= start_i <= end_i < powers.length`
+
 ### Analysis
 In the problem description, "the minimum number of powers of 2 that sum to n" corresponds to the number of set bits in the binary representation of the integer `n`.
 
@@ -1658,35 +1671,33 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $O((logn)^2+q)$
+* Time Complexity: $O(bc^2)$
     * Integer.bitCount(n)
     
-        Counts the number of set bits in the binary representation of integer `n`. This runs in most $O(log n)$, where $log n$ is the number of bits in `n`.
+        Counts the number of set bits in the binary representation of integer `n`. This runs in $O(1)$ time.
 
     * Populate these powers of two into array powers
         
         The `for` runs `bc` times, resulting a time complexity $O(bc)$.
 
-        For the purpose of analyzing time complexity, $O(bc)$ is treated as $O(logn)$ because it grows at the same rate as $logn$.
-
     * Precompute the product results for all subarrays
         
         The outer `for` loop runs `bc` times, and the number of iterations times of the inner `for` loop depends on the outer loop, so the total number of runs is:
         $$ \sum_{i=0}^{bc-1} (bc-1-i) = (bc-1) + (bc-2) + (bc-3) + ... + 1 = \frac{(bc-1)\times bc}{2} $$
-        Therefore, the time complexity is $ O(bc^2) $, which is $O((logn)^2)$. 
+        Therefore, the time complexity is $ O(bc^2) $. 
 
     * Answer each query
 
         The `for` loop runs `queries.length` times, so the time complexity is $O(q)$ for `q` queries.
 
-    Total time compleixty: $O((logn)^2+q)$
+     Since $O(q)$ grows slower than O(bc^2) and can be omitted, the total time compleixty is $O(bc^2)$
 
-* Space Complexity: $O((log n)^2 + q)$
-    * `powers` array taks $O(logn)$ space.  
-    * `productRes ` array taks $O((logn)^2)$ space.  
-    * `output ` array taks $O(q)$ space.
+* Space Complexity: $O(bc^2)$
+    * `powers` array takes $O(bc)$ space.  
+    * `productRes ` array takes $O(bc^2)$ space.  
+    * `output ` array takes $O(q)$ space.
 
-    Total space complexity: $O((log n)^2 + q)$.
+    Because $O(q)$ grows slower than $O(bc^2)$ and can be omitted, the total space complexity is $O(bc^2)$.
 
 # Sliding Window
 ## Find the Longest Equal Subarray
@@ -1716,9 +1727,9 @@ A **subarray** is a contiguous, possibly empty sequence of elements within an ar
 > It can be proven that no longer equal subarrays can be created.
 
 **Constraints:**  
-* 1 <= nums.length <= 105
-* 1 <= nums[i] <= nums.length
-* 0 <= k <= nums.length
+* `1 <= nums.length <= 10^5`
+* `1 <= nums[i] <= nums.length`
+* `0 <= k <= nums.length`
 ### Analysis
 Finding the longest possible equal subarray involves counting the number of identical numbers.   
 Since we can delete at most `k` elements, 
@@ -1851,9 +1862,9 @@ Return the reformatted license key.
  
 
 **Constraints:**
-* 1 <= s.length <= 105
-* s consists of English letters, digits, and dashes '-'.
-* 1 <= k <= 104
+* `1 <= s.length <= 10^5`
+* `s` consists of English letters, digits, and dashes `'-'`.
+* `1 <= k <= 10^4`
 ### Analysis
 First, capitalize the entire string and remove all `'-'` characters.
 Determine the length of the first substring using `s.length % k`, then append the remaining substrings of length `k`.
@@ -2248,15 +2259,19 @@ The final sorted array should not be returned by the function, but instead be st
 * `-10^9 <= nums1[i], nums2[j] <= 10^9`
 
 ### Analysis
+Copy a new array `nums1Cp` from `nums1` as a comparing array, and merge elements from arrays 'nums1Cp' and 'nums2' into 'nums1':
+Copy the array `nums1` into a new array `nums1Cp` for comparison, and merge elements from `nums1Cp` and `nums2` into `nums1` as follows:
 
+* If both array `nums1Cp` and `nums2` have remaining elements and `nums1Cp[i] < nums2[k]`, insert the smaller value from `numsCp` into `nums1`.
+* If `nums2` has no remaining elements, insert the current element from `nums1Cp` directly into `nums1`;
+* If `nums1Cp` is empty or `nums2` contains the smaller value, insert the value from `nums2` into `nums1`.
 ### Implementation
 ```java
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        // If there is no overlap between array 'nums1' and 'nums'2
         int[] nums1Cp=Arrays.copyOf(nums1, m);
-        // 0 <= m, n <= 200
-        for(int i=0, j=0, k=0; i<nums1.length; i++){
+        // Merge elements from arrays 'nums1Cp' and 'nums2' into 'nums1'.
+        for(int i=0, j=0, k=0; i<nums1.length; i++){ 
             if( j<m && k<n && nums1Cp[j]<nums2[k] || j<m  && k>=n  ){
                 nums1[i]=nums1Cp[j];
                 j++;
@@ -2264,14 +2279,17 @@ class Solution {
                 nums1[i]=nums2[k];
                 k++;
             }
-
         }
     }
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $\
+* Time Complexity: $ O(m + n) $\
 
-    Both the `for` loop  and the `Arrays.copyOf` method take $O(n)$ time, the overall time complexity is $O(n)$.
+    The `Arrays.copyOf` method take $O(m)$ time and the `for` loop take $O(n)$ time, 
+    resulting in an overall time complexity of $O(m + n)$.
 
-* Space Complexity: $ O(n) $
+* Space Complexity: $ O(m) $
+
+    The array `nums1Cp` occupies $O(m)$ space where `m` is the first `m` integers in array `nums1`.
+
