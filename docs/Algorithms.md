@@ -947,6 +947,9 @@ class Solution {
 
     The size of one-dimensional array `dp` is `n`, corresponding to the length of the input array.
     The space requried for this array is $ O(n) $.
+
+//TODO Check previous analysis.
+
 ## Target Sum
 [Back to Top](#table-of-contents) 
 ### Overview
@@ -958,25 +961,26 @@ before each integer in nums and then concatenate all the integers.
 them to build the expression `"+2-1"`.
 + Return the number of different expressions that you can build, which evaluates to target.
 
-Example 1:  
-    Input: nums = [1,1,1,1,1], target = 3
-    Output: 5
-    Explanation: There are 5 ways to assign symbols to make the sum of nums be target 3.
-    -1 + 1 + 1 + 1 + 1 = 3
-    +1 - 1 + 1 + 1 + 1 = 3
-    +1 + 1 - 1 + 1 + 1 = 3
-    +1 + 1 + 1 - 1 + 1 = 3
-    +1 + 1 + 1 + 1 - 1 = 3
+**Example 1:**  
+> **Input:** nums = [1,1,1,1,1], target = 3  
+> **Output:** 5  
+> **Explanation:**  
+    There are 5 ways to assign symbols to make the sum of nums be target 3.  
+    -1 + 1 + 1 + 1 + 1 = 3  
+    +1 - 1 + 1 + 1 + 1 = 3  
+    +1 + 1 - 1 + 1 + 1 = 3  
+    +1 + 1 + 1 - 1 + 1 = 3  
+    +1 + 1 + 1 + 1 - 1 = 3  
 
 **Example 2:**
-    Input: nums = [1], target = 1
-    Output: 1
+> **Input:** nums = [1], target = 1  
+> **Output:** 1
 
 **Constraints:**
-* 1 <= nums.length <= 20
-* 0 <= nums[i] <= 1000
-* 0 <= sum(nums[i]) <= 1000
-* -1000 <= target <= 1000
+* `1 <= nums.length <= 20`
+* `0 <= nums[i] <= 1000`
+* `0 <= sum(nums[i]) <= 1000`
+* `-1000 <= target <= 1000`
 ### Depth-first Search Solution
 Each element of the array nums can be added either a `+` or `-` sign, 
 resulting in `2` choices per element and a total of $2^n$ combinations for `n` elements.  
@@ -1094,7 +1098,11 @@ public class Solution {
 * Time Complexity: $ O(2^n)$  
     
     The worst-case time complexity remains the same, but it is faster than the original solution in general cases.
-* Space Complexity: $ O(n) $
+* Space Complexity: $ O(n \times neg) $ 
+    * Recursive call stack takes $O(n)$ space.
+    * For the memoization map, the key takes `n` possible values (`0` to `n-1`).
+     the value can range from `0` to the value of `neg`, which is `(sum-target)-2`.  
+     Hence, the map `memo` takes a time complexity $O(n \times neg)$.
 
 ### Dynamic Programming Solution
 Define a two-dimensional array `dp`, where `dp[i][j]` represents the number of **solutions** 
@@ -1203,6 +1211,7 @@ class Solution {
         if (diff < 0 || diff % 2 != 0) {
             return 0;
         }
+        // Iterate through the array 'nums' and compute all possible DP results for each index.
         int n = nums.length, neg = diff / 2;
         int[][] dp = new int[n + 1][neg + 1];
         dp[0][0] = 1;
@@ -1220,10 +1229,19 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n×neg) $   (with neg being dependent on the input values).  
-* Space Complexity: $ O(n×neg) $
+* Time Complexity: $ O(n \times neg) $ 
+    * Calculate the sum of nums.
 
-//TODO Correct the previous content.
+        Traversing array `nums` takes $O(n)$ time.
+    * Iterate through the array 'nums' and compute all possible DP results for each index.
+
+        The combined time complexity for the outer and inner `for` loop is $O(n \times neg)$.
+
+     Therefore, the total time complexity is $O(n \times neg)$.
+
+* Space Complexity: $ O(n \times neg) $
+
+    The `dp` array requires $O(n \times neg)$ space.
 
 ### Optimized Dynamic Programming Solution
 
@@ -1256,8 +1274,19 @@ public class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n×neg) $  (with neg being dependent on the input values).  
+* Time Complexity: $ O(n×neg) $ 
+    * Calculate the sum of nums.
+
+        Traversing array `nums` takes $O(n)$ time.
+    * Prepare DP results for subsequent traversal.
+
+        The combined time complexity for the outer and inner `for` loop is $O(n \times neg)$.
+
+     Therefore, the total time complexity is $O(n \times neg)$.
 * Space Complexity: $ O(neg) $
+
+    The `dp` array requires $O(neg)$ space.
+
 # Math
 ## Construct the Minimum Bitwise Array II
 ### Overview
