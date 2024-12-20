@@ -778,24 +778,24 @@ at which point the person with the most stones wins.
 Assuming Alice and Bob play optimally, return true if Alice wins the game, or false if Bob wins.
 
 **Example 1:**
-> Input: piles = [5,3,4,5]  
-> Output: true  
-> Explanation:  
-> Alice starts first, and can only take the first 5 or the last 5.  
-> Say she takes the first 5, so that the row becomes [3, 4, 5].  
-> If Bob takes 3, then the board is [4, 5], and Alice takes 5 to win with 10 points.  
-> If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 to win with 9 points.  
-> This demonstrated that taking the first 5 was a winning move for Alice, so we return true.
+> **Input:** piles = [5,3,4,5]  
+> **Output:** true  
+> **Explanation:**  
+    Alice starts first, and can only take the first 5 or the last 5.  
+    Say she takes the first 5, so that the row becomes [3, 4, 5].  
+    If Bob takes 3, then the board is [4, 5], and Alice takes 5 to win with 10 points.  
+    If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 to win with 9 points.  
+    This demonstrated that taking the first 5 was a winning move for Alice, so we return true.
 
 **Example 2:** 
-> Input: piles = [3,7,2,3]  
-> Output: true
+> **Input:** piles = [3,7,2,3]  
+> **Output:** true
 
 **Constraints:**
-* 2 <= piles.length <= 500
-* piles.length is even.
-* 1 <= piles[i] <= 500
-* sum(piles[i]) is odd.
+* `2 <= piles.length <= 500`
+* `piles.length` is even.
+* `1 <= piles[i] <= 500`
+* `sum(piles[i])` is odd.
 ### Depth-first Search Solution
 Recursively evaluate the `piles` array from both the start and end,
 using a flag variable `isAliceTurn` to track whose turn it is and only calculate the sum for Alice.  
@@ -822,7 +822,7 @@ class Solution {
   private boolean dfs(int[] piles, double hsum, int left, int right, int aliceSum, boolean isAliceTurn){
     // If Alice's current sum exceeds half of the total sum, she wins.
     if(aliceSum>hsum)return true;
-    if(left>=piles.length || right<0 || left >= right )return false;
+    if(left >= right)return false;
     if(piles[left]>piles[right]){
       return dfs(piles, hsum, left+1, right, aliceSum+piles[left], !isAliceTurn);
     }else if(piles[left]<piles[right]){
@@ -835,7 +835,17 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $O(2^n)$
-* Space Complexity: $ O(n) $ (for the recursion stack)
+
+    Alice and Bob can make two possible choices at each step, and the total number of choices is `right-left`,
+    Therefore, the overall time complexity is $O(2^n)$.
+    
+* Space Complexity: $ O(n) $ 
+
+    The depth of the recursive call stack is `right-left`, representing the number of choices for Alice and Bob,
+    resulting in a total space complexity of $O(n)$.
+
+
+
 ### Dynamic Programming Solution
 #### Initialization  
 Define a two-dimensional array `dp`, where both the rows and columns correspond to the indices of the array `piles`.  
@@ -2315,7 +2325,7 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(m + n) $\
 
-    The `Arrays.copyOf` method take $O(m)$ time and the `for` loop take $O(n)$ time, 
+    The `Arrays.copyOf` method takes $O(m)$ time and the `for` loop takes $O(n)$ time, 
     resulting in an overall time complexity of $O(m + n)$.
 
 * Space Complexity: $ O(m) $
