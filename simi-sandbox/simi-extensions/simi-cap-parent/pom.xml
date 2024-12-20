@@ -9,7 +9,6 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>customer</groupId>
 	<artifactId>simi-cap-parent</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
@@ -20,7 +19,7 @@
 		<revision>1.0.0-SNAPSHOT</revision>
 
 		<!-- DEPENDENCIES VERSION -->
-		<jdk.version>21</jdk.version>
+		<jdk.version>17</jdk.version>
 		<cds.services.version>3.3.1</cds.services.version>
 		<spring.boot.version>3.3.4</spring.boot.version>
 		<cds.install-cdsdk.version>8.2.3</cds.install-cdsdk.version>
@@ -30,7 +29,7 @@
 	</properties>
 
 	<modules>
-		<module>simi-cap</module>
+		<module>srv</module>
 	</modules>
 
 	<dependencyManagement>
@@ -122,9 +121,6 @@
 						</goals>
 						<configuration>
 							<rules>
-								<requireMavenVersion>
-									<version>3.6.3</version>
-								</requireMavenVersion>
 								<requireJavaVersion>
 									<version>${jdk.version}</version>
 								</requireJavaVersion>

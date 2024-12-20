@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>simi-temporal</module>
         <module>simi-cap-parent</module>
     </modules>
 </project>

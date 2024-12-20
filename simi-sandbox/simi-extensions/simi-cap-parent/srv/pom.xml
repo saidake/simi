@@ -3,14 +3,13 @@
 
 	<parent>
 		<artifactId>simi-cap-parent</artifactId>
-		<groupId>customer</groupId>
+		<groupId>com.simi</groupId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>simi-cap</artifactId>
+	<artifactId>srv</artifactId>
 	<packaging>jar</packaging>
-
-	<name>simi-cap</name>
+	<name>srv</name>
 
 	<!-- ACTUAL DEPENDENCIES -->
 	<dependencies>
@@ -111,7 +110,7 @@
 						<configuration>
 							<commands>
 								<command>build --for java</command>
-								<command>deploy --to h2 --dry &gt; "${project.basedir}/src/main/resources/schema-h2.sql"</command>
+<!--								<command>deploy &#45;&#45;to h2 &#45;&#45;dry &gt; "${project.basedir}/src/main/resources/schema-h2.sql"</command>-->
 							</commands>
 						</configuration>
 					</execution>
