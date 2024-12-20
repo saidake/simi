@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>simi-cap-parent</artifactId>
 		<groupId>com.simi</groupId>
-		<version>${revision}</version>
+		<version>1.0</version>
 	</parent>
 
 	<artifactId>srv</artifactId>
