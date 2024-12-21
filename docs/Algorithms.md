@@ -36,9 +36,9 @@ group these integers into `n` pairs `(a1, b1), (a2, b2), ..., (an, bn)` such tha
 Return the maximized sum.
 
 **Example 1:**
-> Input: nums = [1,4,3,2]  
-> Output: 4  
-> Explanation: All possible pairings (ignoring the ordering of elements) are:
+> **Input:** nums = [1,4,3,2]  
+> **Output:** 4  
+> **Explanation:** All possible pairings (ignoring the ordering of elements) are:
 > 1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
 > 2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
 > 3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
@@ -46,15 +46,15 @@ Return the maximized sum.
 > So the maximum possible sum is 4.
 
 **Example 2:**
-> Input: nums = [6,2,6,5,1,2]  
-> Output: 9  
-> Explanation:   
+> **Input:** nums = [6,2,6,5,1,2]  
+> **Output:** 9  
+> **Explanation:**   
 > The optimal pairing is (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9.
 
 **Constraints:**
-* 1 <= n <= 104
-* nums.length == 2 * n
-* -104 <= nums[i] <= 104
+* `1 <= n <= 10^4`
+* `nums.length == 2 * n`
+* `-10^4 <= nums[i] <= 10^4`
 ### Analysis
 In each group, the larger integer will be omitted, and we need to maximize the `sum`.
 Therefore, The omitted value must be smaller.
@@ -112,7 +112,7 @@ Return true if you can reach index `s.length - 1` in `s`, or `false` otherwise.
 > **Output:** false
 
 **Constraints:** 
-* 2 <= s.length <= $10^5$
+* `2 <= s.length <= 10^5`
 * `s[i]` is either `'0'` or `'1'`.
 * `s[0] == '0'`
 * `1 <= minJump <= maxJump < s.length`
@@ -300,24 +300,24 @@ You are climbing a staircase. It takes `n` steps to reach the top.
 
 Each time you can either climb `1` or `2` steps. In how many distinct ways can you climb to the top?
 
-Example 1:
-> Input: n = 2  
-> Output: 2  
-> Explanation: There are two ways to climb to the top.
+**Example 1:**
+> **Input:** n = 2  
+> **Output:** 2  
+> **Explanation:** There are two ways to climb to the top.
 > 1. 1 step + 1 step  
 > 2. 2 steps
 
-Example 2:
-> Input: n = 3  
-> Output: 3  
-> Explanation: There are three ways to climb to the top.  
+**Example 2:**
+> **Input:** n = 3  
+> **Output:** 3  
+> **Explanation:** There are three ways to climb to the top.  
 > 1. 1 step + 1 step + 1 step  
 > 2. 1 step + 2 steps  
 > 3. 2 steps + 1 step
 
 
 **Constraints:**
-* 1 <= n <= 45
+* `1 <= n <= 45`
 
 ### Analysis
 Here is a simple example when `n=5`:
@@ -345,6 +345,7 @@ class Solution {
         int pre1=1;
         int pre2=2;
         int current=0;
+        // Calculate the number of ways to reach a specific stair.
         for(int i=3;i<=n;i++){
             current=pre1+pre2;
             pre1=pre2;
@@ -357,6 +358,8 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $ O(n) $
+
+    The `for` loop iterate over the stairs starting from `3`, yielding a time complexity of $O(n)$.
 * Space Complexity: $ O(1) $
 ## Decode Ways II
 [Back to Top](#table-of-contents)  
@@ -381,30 +384,30 @@ Given a string `s` consisting of digits and `'*'` characters, return the **numbe
 Since the answer may be very large, return it **modulo** $ 10^9+7 $.
 
 **Example 1:**
-> Input: s = "*"  
-> Output: 9  
-> Explanation: The encoded message can represent any of the encoded messages "1", "2", "3","4", "5", "6", "7", "8", or "9".  
+> **Input:** s = "*"  
+> **Output:** 9  
+> **Explanation:** The encoded message can represent any of the encoded messages "1", "2", "3","4", "5", "6", "7", "8", or "9".  
 > Each of these can be decoded to the strings "A", "B", "C", "D", "E", "F", "G", "H", and"I" respectively.  
 > Hence, there are a total of 9 ways to decode "*".  
 
 **Example 2:**
-> Input: s = "1*"  
-> Output: 18  
-> Explanation: The encoded message can represent any of the encoded messages "11", "12", "13", "14", "15", "16", "17", "18", or "19".  
+> **Input:** s = "1*"  
+> **Output:** 18  
+> **Explanation:** The encoded message can represent any of the encoded messages "11", "12", "13", "14", "15", "16", "17", "18", or "19".  
 > Each of these encoded messages have 2 ways to be decoded (e.g. "11" can be decoded to "AA" or "K").  
 > Hence, there are a total of 9 * 2 = 18 ways to decode "1*".
 
 **Example 3:**
-> Input: s = "2*"  
-> Output: 15  
-> Explanation:  
+> **Input:** s = "2*"  
+> **Output:** 15  
+> **Explanation:**  
 > The encoded message can represent any of the encoded messages "21", "22","23", "24", "25", "26", "27", "28", or "29".  
 > "21", "22", "23", "24", "25", and "26" have 2 ways of being decoded, but "27", "28", and"29" only have 1 way.  
 > Hence, there are a total of (6 * 2) + (3 * 1) = 12 + 3 = 15 ways to decode "2*".
 
-Constraints:
-* 1 <= s.length <= 105
-* s[i] is a digit or '*'.
+**Constraints:**
+* `1 <= s.length <= 10^5`
+* `s[i]` is a digit or `'*'`.
 ### Analysis
 Here is a random example to demonstrate the decode process:
 ```text
@@ -514,10 +517,11 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(n) $
 
-    The main loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where `len` is the length of the string `s`.
+    The `for` loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where `len` is the length of the string `s`, resulting in a time complexity of $O(n)$
 * Space Complexity: $ O(n) $
 
     The `dp` array is of size `𝑛+1`, where `𝑛` is the length of the string.
+    Thus, the overall space complexity is $O(n)$.
 #### Consideration
 * Calculate the single-digit decoding cases first to avoid redundant calculations.
 * The time complexity of `s.toCharArray()` is O(n), while the `s.charAt()` has a time complexity of O(1), making `charAt()` more efficient.
@@ -567,11 +571,11 @@ Return the `maximum` possible score.
 > | 3    | 2            | 1              | 10    |
 
 **Constraints:**
-* `1 <= receiver.length == n <= 105`
+* `1 <= receiver.length == n <= 10^5`
 
 * `0 <= receiver[i] <= n - 1`
 
-* `1 <= k <= 1010`
+* `1 <= k <= 10^10`
 ### Analysis
 Using simple enumeration, we can calculate the sum at each index and compare them to determine the maximum sum.  
 However, calculating for each index involves a significant amount of repeat computation, resulting in very low performance, we need to minimize the number of passes and avoid redundant calculations.
@@ -958,8 +962,6 @@ class Solution {
     The size of one-dimensional array `dp` is `n`, corresponding to the length of the input array.
     The space requried for this array is $ O(n) $.
 
-//TODO Check previous analysis.
-
 ## Target Sum
 [Back to Top](#table-of-contents) 
 ### Overview
@@ -1308,25 +1310,25 @@ Additionally, you must minimize each value of `ans[i]` in the resulting array.
 
 If it is not possible to find such a value for `ans[i]` that satisfies the condition, then set `ans[i] = -1`.
 
-Example 1:
+**Example 1:**
 
-> Input: nums = [2,3,5,7]  
-> Output: [-1,1,4,3]  
-> Explanation:
+> **Input:** nums = [2,3,5,7]  
+> **Output:** [-1,1,4,3]  
+> **Explanation:**
 > * For `i = 0`, as there is no value for `ans[0]` that satisfies `ans[0] OR (ans[0] + 1) = 2`, so `ans[0] = -1`.
 > * For `i = 1`, the smallest `ans[1]` that satisfies `ans[1] OR (ans[1] + 1) = 3` is `1`, because `1 OR (1 + 1) = 3`.
 > * For `i = 2`, the smallest `ans[2]` that satisfies `ans[2] OR (ans[2] + 1) = 5` is `4`, because `4 OR (4 + 1) = 5`.
 > * For `i = 3`, the smallest `ans[3]` that satisfies `ans[3] OR (ans[3] + 1) = 7` is `3`, because `3 OR (3 + 1) = 7`.
 
-Example 2:
-> Input: nums = [11,13,31]  
-> Output: [9,12,15]  
-> Explanation:  
+**Example 2:**
+> **Input:** nums = [11,13,31]  
+> **Output:** [9,12,15]  
+> **Explanation:**  
 > * For `i = 0`, the smallest `ans[0]` that satisfies `ans[0] OR (ans[0] + 1) = 11` is `9`, because `9 OR (9 + 1) = 11`.
 > * For `i = 1`, the smallest `ans[1]` that satisfies `ans[1] OR (ans[1] + 1) = 13` is `12`, because `12 OR (12 + 1) = 13`.
 > * For `i = 2`, the smallest `ans[2]` that satisfies `ans[2] OR (ans[2] + 1) = 31` is `15`, because `15 OR (15 + 1) = 31`.
 
-Constraints:
+**Constraints:**
 * `1 <= nums.length <= 100`
 * `2 <= nums[i] <= 10^9`
 * `nums[i]` is a prime number.
@@ -1416,9 +1418,9 @@ Return the total number of ways Alice can reach stair `k`.
 Note that it is possible that Alice reaches the stair `k`, and performs some operations to reach the stair `k` again.
 
 **Example 1:**
-> Input: k = 0  
-> Output: 2  
-> Explanation:  
+> **Input:** k = 0  
+> **Output:** 2  
+> **Explanation:**  
 > The 2 possible ways of reaching stair 0 are:
 > * Alice starts at stair 1.
 >   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
@@ -1428,9 +1430,9 @@ Note that it is possible that Alice reaches the stair `k`, and performs some ope
 >   * Using an operation of the first type, she goes down 1 stair to reach stair 0.
 
 **Example 2:**
-> Input: k = 1  
-> Output: 4  
-> Explanation:  
+> **Input:** k = 1  
+> **Output:** 4  
+> **Explanation:**  
 > The 4 possible ways of reaching stair 1 are:
 > * Alice starts at stair 1. Alice is at stair 1.  
 > * Alice starts at stair 1.  
@@ -1540,20 +1542,20 @@ Given that you can only move the white pieces, return the **minimum** number of 
 **Example 1:**   
 ![mmtctq1](assets/Algorithms/mmtctq1.png)
 
-> Input: a = 1, b = 1, c = 8, d = 8, e = 2, f = 3  
-> Output: 2  
-> Explanation: We can capture the black queen in two moves by moving the white rook to (1, 3) then to (2, 3).  
+> **Input:** a = 1, b = 1, c = 8, d = 8, e = 2, f = 3  
+> **Output:** 2  
+> **Explanation:** We can capture the black queen in two moves by moving the white rook to (1, 3) then to (2, 3).  
 > It is impossible to capture the black queen in less than two moves since it is not being attacked by any of the pieces at the beginning.  
 
 **Example 2:**  
 ![mmtctq2](assets/Algorithms/mmtctq2.png)
-> Input: a = 5, b = 3, c = 3, d = 4, e = 5, f = 2  
-> Output: 1  
-> Explanation: We can capture the black queen in a single move by doing one of the following: 
+> **Input:** a = 5, b = 3, c = 3, d = 4, e = 5, f = 2  
+> **Output:** 1  
+> **Explanation:** We can capture the black queen in a single move by doing one of the following: 
 > - Move the white rook to (5, 2).
 > - Move the white bishop to (5, 2).
 
-Constraints:
+**Constraints:**
 * `1 <= a, b, c, d, e, f <= 8`
 * No two pieces are on the same square.
 
@@ -1748,18 +1750,18 @@ Return the length of the **longest** possible equal subarray after deleting **at
 A **subarray** is a contiguous, possibly empty sequence of elements within an array.
 
 **Example 1:**
-> Input: nums = [1,3,2,3,1,3], k = 3  
-> Output: 3  
-> Explanation:   
+> **Input:** nums = [1,3,2,3,1,3], k = 3  
+> **Output:** 3  
+> **Explanation:**   
 > It's optimal to delete the elements at index 2 and index 4.  
 > After deleting them, nums becomes equal to [1, 3, 3, 3].  
 > The longest equal subarray starts at i = 1 and ends at j = 3 with length equal to 3.  
 > It can be proven that no longer equal subarrays can be created.
 
 **Example 2:**
-> Input: nums = [1,1,2,2,1,1], k = 2  
-> Output: 4  
-> Explanation:   
+> **Input:** nums = [1,1,2,2,1,1], k = 2  
+> **Output:** 4  
+> **Explanation:**   
 > It's optimal to delete the elements at index 2 and index 3.  
 > After deleting them, nums becomes equal to [1, 1, 1, 1].  
 > The array itself is an equal subarray, so the answer is 4.  
@@ -1889,15 +1891,15 @@ Furthermore, there must be a dash inserted between two groups, and you should co
 Return the reformatted license key.
 
 **Example 1:**
-> Input: s = "5F3Z-2e-9-w", k = 4  
-> Output: "5F3Z-2E9W"  
-> Explanation: The string s has been split into two parts, each part has 4 characters.   
+> **Input:** s = "5F3Z-2e-9-w", k = 4  
+> **Output:** "5F3Z-2E9W"  
+> **Explanation:** The string s has been split into two parts, each part has 4 characters.   
 > Note that the two extra dashes are not needed and can be removed.
 
 **Example 2:**
-> Input: s = "2-5g-3-J", k = 2  
-> Output: "2-5G-3J"  
-> Explanation: The string s has been split into three parts, each part has 2 characters except the first part as it could be shorter as mentioned above.
+> **Input:** s = "2-5g-3-J", k = 2  
+> **Output:** "2-5G-3J"  
+> **Explanation:** The string s has been split into three parts, each part has 2 characters except the first part as it could be shorter as mentioned above.
  
 
 **Constraints:**
@@ -1947,24 +1949,24 @@ You can perform this operation until `nums` contains fewer than two elements. Ad
 Return the **maximum** number of operations you can perform.
 
 **Example 1:**
-> Input: nums = [3,2,1,4,5]  
-> Output: 2  
-> Explanation:  
+> **Input:** nums = [3,2,1,4,5]  
+> **Output:** 2  
+> **Explanation:**  
 > * We can perform the first operation with the score `3 + 2 = 5`. After this operation, `nums = [1,4,5]`.
 > * We can perform the second operation as its score is `4 + 1 = 5`, the same as the previous operation. After this operation, `nums = [5]`.
 > * As there are fewer than two elements, we can't perform more operations.
 
 **Example 2:**
-> Input: nums = [1,5,3,3,4,1,3,2,2,3]  
-> Output: 2  
-> Explanation:  
+> **Input:** nums = [1,5,3,3,4,1,3,2,2,3]  
+> **Output:** 2  
+> **Explanation:**  
 > * We can perform the first operation with the score 1 + 5 = 6. After this operation, nums = [3,3,4,1,3,2,2,3].
 > * We can perform the second operation as its score is 3 + 3 = 6, the same as the previous operation. After this operation, nums = [4,1,3,2,2,3].
 > * We cannot perform the next operation as its score is 4 + 1 = 5, which is different from the previous scores.
 
 **Example 3:**
-> Input: nums = [5,3]
-> Output: 1  
+> **Input:** nums = [5,3]  
+> **Output:** 1  
 
 **Constraints:**
 * `2 <= nums.length <= 100`
@@ -2087,6 +2089,7 @@ ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
 ## Distribute Elements Into Two Arrays II
+[Back to Top](#table-of-contents) 
 ### Overview
 You are given a **1-indexed** array of integers `nums` of length `len`.
 
@@ -2131,7 +2134,7 @@ Return the integer array `result`.
 > **Explanation:** At the end of 4 operations, arr1 = [3,3] and arr2 = [3,3].  
 > Hence, the array result formed by concatenation is [3,3,3,3].
 
-Constraints:
+**Constraints:**
 * `3 <= n <= 10^5`
 * `1 <= nums[i] <= 10^9`
 
