@@ -2370,3 +2370,35 @@ We have now a = 9 and b = 1 and max difference = 8
 * `1 <= num <= 10^8`
 
 ### Analysis
+### Implementation
+```java
+class Solution {
+    public int maxDiff(int num) {
+        // 19853253
+        // 1 -> 9
+        // 99853253
+        // 9 -> 0
+        // 10853253
+        String nStr=String.valueOf(num);
+        int step1=num;
+        int step2=num;
+        for(int i=0; i< nStr.length(); i++){
+            if(nStr.charAt(i)<'9'&&step1==num){
+                step1=Integer.parseInt(nStr.replaceAll(""+nStr.charAt(i), "9"));
+                if(step2!=num)break;
+            }
+            if(i==0&&nStr.charAt(i)>'1'&&step2==num){
+                step2=Integer.parseInt(nStr.replaceAll(""+nStr.charAt(i), "1"));
+                if(step1!=num)break;
+            }else if(i>0&&nStr.charAt(i)>'0'&& nStr.charAt(i)!=nStr.charAt(0) && step2==num){
+                step2=Integer.parseInt(nStr.replaceAll(""+nStr.charAt(i), "0"));
+                if(step1!=num)break;
+            }
+        }
+        return Math.abs(step1-step2);
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+* Space Complexity: $ O(1) $
