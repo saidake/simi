@@ -580,29 +580,6 @@ Return the `maximum` possible score.
 ### Analysis
 Using simple enumeration, we can calculate the sum at each index and compare them to determine the maximum sum.  
 However, calculating for each index involves a significant amount of repeat computation, resulting in very low performance, we need to minimize the number of passes and avoid redundant calculations.
-
-Simple Enumeration Implementation:  
-```java
-class Solution {
-    private long score=0;
-    public long getMaxFunctionValue(List<Integer> receiver, long k) {
-        long max=0;
-        // Select an index to pass the ball
-        for(int i=0; i<receiver.size(); i++){
-            long sum=i;
-            int ind=i;
-            // Start passing the ball
-            for(int j=0; j<k; j++){
-                // Pass the ball to the next receiver
-                ind=receiver.get(ind);
-                sum+=ind;
-            }
-            max=Math.max(max,sum);
-        }
-        return max;
-    }
-}
-```
 ### Dynamic Programming Solution
 
 Define a two-dimensional array `pa[i][x]` to store the receiver value `x` reached from the initial receiver after $ 2^i $ passings.
@@ -1463,6 +1440,15 @@ Rearranging gives:
 $$ f = 2^e - k$$ 
 Since there are `e+1` positions where these downward jumps can occur, the result is:
 $$ C(e+1, 2^e - k) $$
+Probability Formula:
+* Order doesn't matter (Combinations):
+    $$ C(n,m)= \frac{n!}{m! \times (n-m)!} $$
+* Order matters (Permutations)
+    $$ P(n,m)= \frac{n!}{(n-m)!} $$
+    
+    * **n**: Total number of elements in the set.  
+    * **m**: Number of elements to choose.  
+    * **!**: Factorial (e.g. $5!=5 \times 4 \times 3 \times 2 \times 1 $)
 
 Using `Integer.highestOneBit(k)` to determine the nearest lower power of two (`nlp`) for `k`, 
 consider the following cases:
@@ -2405,3 +2391,42 @@ class Solution {
     Since the `replace` method has a time complexity of $O(n)$ and is executed at most twice, while `charAt` and `Integer.parseInt` take $O(1)$ time, the overall time complexity of the `for` is $O(n)$.
 * Space Complexity: $ O(1) $
 
+## Egg Drop With 2 Eggs and N Floors
+[Back to Top](#table-of-contents)  
+### Overview
+You are given two identical eggs and you have access to a building with `n` floors labeled from `1` to `n`.
+
+You know that there exists a floor `f` where `0 <= f <= n` such that any egg dropped at a floor higher than `f` will break, and any egg dropped at or below floor `f` will not break.
+
+In each move, you may take an unbroken egg and drop it from any floor `x` (where `1 <= x <= n`). If the egg breaks, you can no longer use it. However, if the egg does not break, you may reuse it in future moves.
+
+Return the minimum number of moves that you need to determine with certainty what the value of `f` is.
+
+
+**Example 1:**
+> **Input:** n = 2  
+> **Output:** 2  
+> **Explanation:**  
+ We can drop the first egg from floor 1 and the second egg from floor 2.  
+If the first egg breaks, we know that f = 0.  
+If the second egg breaks but the first egg didn't, we know that f = 1.  
+Otherwise, if both eggs survive, we know that f = 2.
+
+**Example 2:**
+> **Input:** n = 100  
+> **Output:** 14  
+> **Explanation:** One optimal strategy is:  
+> - Drop the 1st egg at floor 9. If it breaks, we know f is between 0 and 8.  
+    Drop the 2nd egg starting from floor 1 and going up one at a time to find f within 8 more drops.  
+    Total drops is 1 + 8 = 9.
+> - If the 1st egg does not break, drop the 1st egg again at floor 22.  
+    If it breaks, we know f is between 9 and 21. Drop the 2nd egg starting from floor 10 and going up one at a time to find f within 12 more drops.  
+    Total drops is 2 + 12 = 14.
+> - If the 1st egg does not break again, follow a similar process dropping the 1st egg from floors 34, 45, 55, 64, 72, 79, 85, 90, 94, 97, 99, and 100.  
+    Regardless of the outcome, it takes at most 14 drops to determine f.
+
+**Constraints:**
+* `1 <= n <= 1000`
+
+### Analysis
+#### Implementation
