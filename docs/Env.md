@@ -28,12 +28,11 @@
 </tr>
 <tr>
     <td>Oracle23ai</td>
-    <td>Local</td>
-    <td>127.0.0.1</td>
+    <td>Docker Container</td>
+    <td>127.0.0.1:1521</td>
     <td>Oracle23ai</td>
     <td> 
-        FREE (sid) = SYS, SYSTEM, PDBADMIN (dba) = Simi110120%  <br/>
-        FREE (sid) = simi (dba) = Simi110120%  
+        FREE (sid) = SYS, SYSTEM = Simi110120% 
     </td>
 </tr>
 </tbody>
