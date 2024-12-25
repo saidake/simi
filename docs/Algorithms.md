@@ -2429,4 +2429,42 @@ Otherwise, if both eggs survive, we know that f = 2.
 * `1 <= n <= 1000`
 
 ### Analysis
+
+Dropping the egg from floor `1` to the top floor `n` is the simplest way, but we also have another egg, it can be used to determine an aproximate range where the floor `f` is.
+
+* Case 1 
+
+    Assuming there are `100` floors, If the egg is dropped from floor `1` with a gap of `4`, the drop sequence will be::
+    ```text
+    1, 4, 8, 12 ... 100.
+    ```
+    In the worst case, the first egg may need to be dropped `24` times, and the second egg `4` times.
+* Case 2
+    
+    If dropping the egg with a gap of `10`, The first egg will be dropped `9` times and the second egg `10` times in the worst cases, but the total dropping times is significantly decreased.
+    ```text
+    1, 10, 20, 30, ... 100.
+    ```
+    By analyzing the pattern of the number of times to drop the egg, the worst case requires highest drop times.
+    We can concentrate some drop chances to those front floors so that we can always get the same worst drop times no matter when the first egg breaks in each check floor.
+    For example, in the current case, the great case is to drop the first egg at floor `10`, it breaks, and then drop the second egg from floor `1` to floor `9`.
+    so the greatest drop time is `10` and the worst is `19`.
+    We expect to distribute these 9 drop actions to other checkpoints.
+* Case 3
+
+    If the next drop in a gap decreased by 1, the current worst drop times will be the same with the next drop.
+    So let's increase the drop gap by 1 starting from the highest floor `n` such that the worst drop times in each check floor will be the same.
+    Directly inspect the part with insufficient gap at the end.
+
+Assuming we need drop the first egg `j` times, we will get:
+
+$$ 1+2+3+...+j = n $$
+Based on the formula of geometric series:
+$$ (a + b)^n = \sum_{k=0}^n C(n, k) \times a^{n-k} \times b^k $$
+
+$$ \sum_{j=0}^j = 1+2+3+...+j = \frac{j \times (j+1)}{2}   $$
+we have:
+$$  $$
+$$ j^2+j = 2n $$
+
 #### Implementation
