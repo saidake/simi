@@ -2429,8 +2429,7 @@ Otherwise, if both eggs survive, we know that f = 2.
 * `1 <= n <= 1000`
 
 ### Analysis
-
-Dropping the egg from floor `1` to the top floor `n` is the simplest way, but we also have another egg, it can be used to determine an aproximate range where the floor `f` is.
+Dropping the egg from floor `1` to the top floor `n` is the simplest method, but with the second egg, we can narrow down the approximate range where the floor `f` is located.
 
 * Case 1 
 
@@ -2438,33 +2437,55 @@ Dropping the egg from floor `1` to the top floor `n` is the simplest way, but we
     ```text
     1, 4, 8, 12 ... 100.
     ```
-    In the worst case, the first egg may need to be dropped `24` times, and the second egg `4` times.
+    In the worst case, the first egg may require `24` drops, and the second egg `4` drops.
 * Case 2
     
-    If dropping the egg with a gap of `10`, The first egg will be dropped `9` times and the second egg `10` times in the worst cases, but the total dropping times is significantly decreased.
+    If the egg is dropped with a gap of `10`, The first egg will be dropped `9` times and the second egg `10` times in the worst case, significantly reducing the total number of drops.
     ```text
     1, 10, 20, 30, ... 100.
     ```
-    By analyzing the pattern of the number of times to drop the egg, the worst case requires highest drop times.
-    We can concentrate some drop chances to those front floors so that we can always get the same worst drop times no matter when the first egg breaks in each check floor.
-    For example, in the current case, the great case is to drop the first egg at floor `10`, it breaks, and then drop the second egg from floor `1` to floor `9`.
-    so the greatest drop time is `10` and the worst is `19`.
-    We expect to distribute these 9 drop actions to other checkpoints.
+    By analyzing the pattern of egg drops, we aim to minimize the worst-case number of drops.
+    We can allocate drop chances to lower floors to ensure the worst-case number of drops remains consistent, regardless of when the first egg breaks.
+
+    For example, If the first egg breaks at floor `10`, we drop the second egg from floor `1` to `9`, resulting in a maximum of 10 drops.
+    However, the wrost-case total drops would be `19`.
+    We aim to keep the worst number of drops consistent across all first drop locations.
+
 * Case 3
+    If the drop gap decreases by `1` with each subsequent drop, the worst drop times will remain the same for each check floor.
+    Therefore, we start with the highest possible floor `n` and gradually increase the gap by `1`, ensuring the worst drop times are consistent.
 
-    If the next drop in a gap decreased by 1, the current worst drop times will be the same with the next drop.
-    So let's increase the drop gap by 1 starting from the highest floor `n` such that the worst drop times in each check floor will be the same.
-    Directly inspect the part with insufficient gap at the end.
+    If The remaining floors, which are fewer thant the last gap, result in fewer worst-case drops, they will still be treated as regular drops.
 
-Assuming we need drop the first egg `j` times, we will get:
+Assuming we need to drop the first egg `j` times, we get:
 
 $$ 1+2+3+...+j = n $$
 Based on the formula of geometric series:
-$$ (a + b)^n = \sum_{k=0}^n C(n, k) \times a^{n-k} \times b^k $$
-
 $$ \sum_{j=0}^j = 1+2+3+...+j = \frac{j \times (j+1)}{2}   $$
 we have:
-$$  $$
 $$ j^2+j = 2n $$
 
+Based on the formula for the sum of a geometric series:
+$$ ax^2+bx+c=0 $$
+$$ x=\frac{-b \plusmn \sqrt{b^2-4ac}}{2a} $$
+We have:
+$$ j=\frac{-1 \plusmn \sqrt{1+8n}}{2} $$ 
+
+Because we expect a positive number, the formula will be:
+
+$$ j=\frac{-1 + \sqrt{1+8n}}{2} $$ 
+This gives the smallest integer $j$, where the fractional part is treated as a full drop.
+
 #### Implementation
+```java
+class Solution {
+    public int twoEggDrop(int n) {
+        double sqrt=Math.sqrt((double)(1+8*n));
+        double j=(-1+sqrt)/2;
+        return (int)Math.ceil(j);
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(1) $
+* Space Complexity: $ O(1) $
