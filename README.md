@@ -40,7 +40,7 @@ A folder containing bash and batch files required by other modules.
 The simi-sandbox is a dedicated Maven module designed as a versatile environment for testing, experimenting, and showcasing various code implementations.
 ### simi-cap  
 Simi Cap is a CAP demo application.  
-The [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap/docs/java/getting-started) is a framework of languages, libraries, and tools for building enterprise-grade services and applications.
+The [Cloud Application Programming Model (CAP)](https://cap.cloud.sap/docs/java/getting-started) is a framework of languages, libraries, and tools for building enterprise-grade services and applications.
 ## simi-app
 Some simple applications that includes specific functionalities.
 ### simi-initializer-app  

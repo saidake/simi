@@ -17,16 +17,6 @@
     <td>Test LocalStack Server for debugging Amazon Services</td>
 </tr>
 <tr>
-    <td>test-sap-hana</td>
-    <td>Vmware</td>
-    <td>192.168.127.129</td>
-    <td>Test SAP HANA Express Database, it is a full Hana database with features but with restrictions (max memory 32GB). </td>
-    <td> 
-        hxeadm = Simi110120% (admin) <br/> 
-        SYSTEM, XSA_ADMIN, XSA_DEV = Simi110119% (admin)
-    </td>
-</tr>
-<tr>
     <td>Oracle23ai</td>
     <td>Docker Container</td>
     <td>127.0.0.1:1521</td>
