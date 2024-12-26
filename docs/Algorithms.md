@@ -28,6 +28,8 @@
     - [Distribute Elements Into Two Arrays II](#distribute-elements-into-two-arrays-ii)
     - [Merge Sorted Array](#merge-sorted-array)
     - [Max Difference You Can Get From Changing an Integer](#max-difference-you-can-get-from-changing-an-integer)
+    - [Egg Drop With 2 Eggs and N Floors](#egg-drop-with-2-eggs-and-n-floors)
+    - [Maximum Length of Subarray With Positive Product](#maximum-length-of-subarray-with-positive-product)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -2452,6 +2454,7 @@ Dropping the egg from floor `1` to the top floor `n` is the simplest method, but
     We aim to keep the worst number of drops consistent across all first drop locations.
 
 * Case 3
+
     If the drop gap decreases by `1` with each subsequent drop, the worst drop times will remain the same for each check floor.
     Therefore, we start with the highest possible floor `n` and gradually increase the gap by `1`, ensuring the worst drop times are consistent.
 
@@ -2461,7 +2464,7 @@ Assuming we need to drop the first egg `j` times, we get:
 
 $$ 1+2+3+...+j = n $$
 Based on the formula of geometric series:
-$$ \sum_{j=0}^j = 1+2+3+...+j = \frac{j \times (j+1)}{2}   $$
+$$ \sum_{j=1}^j = 1+2+3+...+j = \frac{j \times (j+1)}{2}   $$
 we have:
 $$ j^2+j = 2n $$
 
@@ -2488,4 +2491,82 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $ O(1) $
+* Space Complexity: $ O(1) $
+
+## Maximum Length of Subarray With Positive Product
+[Back to Top](#table-of-contents)
+### Overview
+Given an array of integers `nums`, find the maximum length of a subarray where the product of all its elements is positive.
+
+A subarray of an array is a consecutive sequence of zero or more values taken out of that array.
+
+Return the maximum length of a subarray with positive product.
+
+**Example 1:**
+> **Input:** nums = [1,-2,-3,4]  
+> **Output:** 4  
+> **Explanation:** The array nums already has a positive product of 24.
+
+**Example 2:**
+> **Input:** nums = [0,1,-2,-3,-4]  
+> **Output:** 3  
+> **Explanation:** The longest subarray with positive product is [1,-2,-3] which has a product of 6.
+Notice that we cannot include 0 in the subarray since that'll make the product 0 which is not positive.
+
+**Example 3:**
+> **Input:** nums = [-1,-2,-3,0,1]  
+> **Output:** 2  
+> **Explanation:** The longest subarray with positive product is [-1,-2] or [-2,-3].
+
+**Constraints:**
+* `1 <= nums.length <= 10^5`
+* `-10^9 <= nums[i] <= 10^9`
+
+### Analysis
+let's analyze all cases where split the subarray from array `num`.
+* If `num[i]` is positive, increase the current length of the subarray by `1`.
+* If `nums[i]` equals to `0`, start a new turn to check the maximum length of the subarray.
+* If `nums[i]` is nagative, start a new turn to check the maximum length of the subarray.
+    And if the current subarray is valid and the intger before the subarray is not `0`, merge the previous subarray and the current subarray.
+
+### Implementation
+```java
+class Solution {
+    public int getMaxLen(int[] nums) {
+        int pre=0;
+        int cur=0;
+        int res=0;
+        boolean neg=false;
+        boolean zeroStart=false;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]>0){
+                // Start a new turn
+                cur++;
+            }else if(nums[i]==0){
+                // Start a new turn
+                res=Math.max(pre,res);
+                pre=cur;
+                cur=0;
+            }else if(nums[i]<0&&!neg) {
+                // Start a new turn
+                if(pre==0)zeroStart=true;
+                res=Math.max(pre,res);
+                pre=cur;
+                cur=0;
+                neg=true;
+            }else if(nums[i]<0&&neg) {
+                cur+=2;
+                neg=false;
+                // End the current turn, Merge the previous result
+                if(!zeroStart){
+                    cur+=pre;
+                }
+            }
+        }
+        return Math.max(cur,res);
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
 * Space Complexity: $ O(1) $
