@@ -2523,24 +2523,38 @@ Notice that we cannot include 0 in the subarray since that'll make the product 0
 * `-10^9 <= nums[i] <= 10^9`
 
 ### Analysis
-let's analyze all cases where split the subarray from array `num`.
-* If `num[i]` is positive, increase the current length of the subarray by `1`.
+Let's analyze all possible cases for splitting the subarray from the array `num`.
+* If `num[i]` is positive, extend the current subarray length by `1`.
     ```
     1, 2, 0, 36, -32, -10
        i 
     ```
-* If `nums[i]` equals to `0`, start a new turn to check the maximum length of the subarray.
+* If `nums[i]` is `0`, begin a new sequence to determine the maximum subarray length.
     ```
     -39, -5, 0, 36, -32, -10
              i 
     ```
-* If `nums[i]` is nagative, start a new turn to check the maximum length of the subarray.
-    And if the current subarray is valid and the intger before the subarray is not `0`, merge the previous subarray and the current subarray.
+* If `nums[i]` is nagative, initiate a new sequence to evaluate the maximum subarray length.
     ```
-    7,-10,-7,21,20,-12,-34,26,2
-        i  *
+    6, 7, -10, -7, -21, 20, -12, -34, 26, 2
+            i 
     ```
+    * If another negative number is encountered next, combine the current subarray length with the previous valid length, provided the previous sequence is not `0`.
 
+        Example:
+        ```
+        6, 7, -10, -7, -21, 20, -12, -34, 26, 2
+                    i 
+        ```
+        The subarray `-10, -7` will be merged with `6, 7`.
+    * If no additional negative number is found, split the previous subarray starting from its first negative integer and merge this portion with the current subarray, provided the previous sequence is not `0`.
+        Example:
+        ```
+        6, 7, -10, -7, -21, 20, -12, -34, 26, 2
+                                              i 
+        ```
+        The subarray `6, 7, -10, -7, -21, 20, -12` is split into `-7, -21, 20, -12`, which is then merged with `-34, 26, 2`, The resulting subarray is:  
+        `-7, -21, 20, -12, -34, 26, 2`
 ### Implementation
 ```java
 class Solution {
@@ -2593,4 +2607,7 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $ O(n) $
+
+    The `for` loop has time complexity $O(n)$, resulting in an overall time complexity of $O(n)$.
+
 * Space Complexity: $ O(1) $
