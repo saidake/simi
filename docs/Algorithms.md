@@ -2525,9 +2525,21 @@ Notice that we cannot include 0 in the subarray since that'll make the product 0
 ### Analysis
 let's analyze all cases where split the subarray from array `num`.
 * If `num[i]` is positive, increase the current length of the subarray by `1`.
+    ```
+    1, 2, 0, 36, -32, -10
+       i 
+    ```
 * If `nums[i]` equals to `0`, start a new turn to check the maximum length of the subarray.
+    ```
+    -39, -5, 0, 36, -32, -10
+             i 
+    ```
 * If `nums[i]` is nagative, start a new turn to check the maximum length of the subarray.
     And if the current subarray is valid and the intger before the subarray is not `0`, merge the previous subarray and the current subarray.
+    ```
+    7,-10,-7,21,20,-12,-34,26,2
+        i  *
+    ```
 
 ### Implementation
 ```java
@@ -2537,31 +2549,43 @@ class Solution {
         int cur=0;
         int res=0;
         boolean neg=false;
-        boolean zeroStart=false;
+        int preNegLen=-1;
+        boolean validPreNegLen=false;
         for(int i=0; i<nums.length; i++){
             if(nums[i]>0){
-                // Start a new turn
                 cur++;
             }else if(nums[i]==0){
                 // Start a new turn
-                res=Math.max(pre,res);
-                pre=cur;
+                res=Math.max(Math.max(pre,cur),res);
+                if(neg&&cur>0&&validPreNegLen){
+                   res=Math.max(pre-preNegLen+cur-1,res);     
+                   preNegLen=-1;
+                }
+                pre=0;
                 cur=0;
+                neg=false;
+                validPreNegLen=false;
             }else if(nums[i]<0&&!neg) {
                 // Start a new turn
-                if(pre==0)zeroStart=true;
-                res=Math.max(pre,res);
+                res=Math.max(Math.max(pre,cur),res);
+                if(preNegLen==-1)preNegLen=cur;
                 pre=cur;
                 cur=0;
                 neg=true;
             }else if(nums[i]<0&&neg) {
                 cur+=2;
                 neg=false;
+                if(preNegLen!=-1)validPreNegLen=true;
                 // End the current turn, Merge the previous result
-                if(!zeroStart){
+                if(pre!=0){
                     cur+=pre;
+                    res=Math.max(pre,res);
+                    pre=0;
                 }
             }
+        }
+        if(neg&&cur>0&&validPreNegLen){
+           res=Math.max(pre-preNegLen+cur-1,res);     
         }
         return Math.max(cur,res);
     }
