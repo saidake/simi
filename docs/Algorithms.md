@@ -2558,9 +2558,9 @@ class Solution {
                 // Start a new turn
                 res=Math.max(Math.max(pre,cur),res);
                 if(neg&&cur>0&&validPreNegLen){
-                   res=Math.max(pre-preNegLen+cur-1,res);     
-                   preNegLen=-1;
+                   res=Math.max(pre-preNegLen+cur,res);     
                 }
+                preNegLen=-1;
                 pre=0;
                 cur=0;
                 neg=false;
@@ -2585,7 +2585,7 @@ class Solution {
             }
         }
         if(neg&&cur>0&&validPreNegLen){
-           res=Math.max(pre-preNegLen+cur-1,res);     
+           res=Math.max(pre-preNegLen+cur,res);     
         }
         return Math.max(cur,res);
     }
