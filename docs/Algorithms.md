@@ -2535,28 +2535,54 @@ Use two variables (`positiveLen` and `negativeLen`) to track the length of subar
              i 
     ```
 * If `nums[i]` is nagative, swap `positiveLen` and `negativeLen`.  
-
-    Step 1:   
-    ```
-    6, 7, -10, 6, -7, -34, 26, 2
-       i 
-    positveLen=2
-    negativeLen=0
-    ```
-    Step 2:   
-    ```
-    6, 7, -10, 6, -7,  -34, 26, 2
-            i 
-    positveLen=0
-    negativeLen=3
-    ```
-    Step 3:   
-    ```
-    6, 7, -10, 6, -7,  -34, 26, 2
-            i 
-    positveLen=0
-    negativeLen=3
-    ```
+    Example: 
+     * Step 1:   
+        ```
+        7, -10, -7, -34, 26, 2
+        i 
+        positveLen=1
+        negativeLen=0
+    * Step 2:   
+        ```
+        7, -10, -7, -34, 26, 2
+             i 
+        positveLen=0
+        negativeLen=2
+        ```
+        Swap the lengths when encountering a negative number and reset `positiveLen` when encountering the first neagative number.
+    * Step 3:   
+        ```
+        7, -10, -7, -34, 26, 2
+                 i 
+        positveLen=3
+        negativeLen=1
+        ```
+        Swap the lengths when encountering a negative number.
+        Since `posiitonLen` was reset in the previous step, `negativeLen` will be recalculated duiring the swap process.  
+        The first negative number is the key point when encountering a sequence like `-34, 26, 2` **at the end**.  
+        In this case, we aim to remove the first negative number `-10` and its left part `7` to obtain the valid subarray `-7, -34, 26, 2`.  
+    * Step 4:   
+        ```
+        7, -10, -7, -34, 26, 2
+                      i 
+        positveLen=2
+        negativeLen=4
+        ```
+        Swap the lengths as before.
+    * Step 5:   
+        ```
+        7, -10, -7, -34, 26, 2
+                          i 
+        positveLen=3
+        negativeLen=5
+        ```
+    * Step 6:   
+        ```
+        7, -10, -7, -34, 26, 2
+                             i 
+        positveLen=4
+        negativeLen=6
+        ```
 ### Implementation
 ```java
 class Solution {
@@ -2574,6 +2600,7 @@ class Solution {
             } else if (nums[i] < 0) {
                 // Swap the lengths when encountering a negative number
                 int temp = positiveLen;
+                // Reset positiveLen when encountering the first negative number
                 positiveLen = negativeLen > 0 ? negativeLen + 1 : 0;
                 negativeLen = temp+1;
             } else {
