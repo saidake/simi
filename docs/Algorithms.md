@@ -2523,7 +2523,7 @@ Notice that we cannot include 0 in the subarray since that'll make the product 0
 * `-10^9 <= nums[i] <= 10^9`
 
 ### Analysis
-Let's analyze all possible cases for splitting the subarray from the array `num`.
+Use two variables (`positiveLen` and `negativeLen`) to track the length of subarrays with positive and negative products:
 * If `num[i]` is positive, extend the current subarray length by `1`.
     ```
     1, 2, 0, 36, -32, -10
@@ -2534,74 +2534,56 @@ Let's analyze all possible cases for splitting the subarray from the array `num`
     -39, -5, 0, 36, -32, -10
              i 
     ```
-* If `nums[i]` is nagative, initiate a new sequence to evaluate the maximum subarray length.
-    ```
-    6, 7, -10, -7, -21, 20, -12, -34, 26, 2
-            i 
-    ```
-    * If another negative number is encountered next, combine the current subarray length with the previous valid length, provided the previous sequence is not `0`.
+* If `nums[i]` is nagative, swap `positiveLen` and `negativeLen`.  
 
-        Example:
-        ```
-        6, 7, -10, -7, -21, 20, -12, -34, 26, 2
-                    i 
-        ```
-        The subarray `-10, -7` will be merged with `6, 7`.
-    * If no additional negative number is found, split the previous subarray starting from its first negative integer and merge this portion with the current subarray, provided the previous sequence is not `0`.
-        Example:
-        ```
-        6, 7, -10, -7, -21, 20, -12, -34, 26, 2
-                                              i 
-        ```
-        The subarray `6, 7, -10, -7, -21, 20, -12` is split into `-7, -21, 20, -12`, which is then merged with `-34, 26, 2`, The resulting subarray is:  
-        `-7, -21, 20, -12, -34, 26, 2`
+    Step 1:   
+    ```
+    6, 7, -10, 6, -7, -34, 26, 2
+       i 
+    positveLen=2
+    negativeLen=0
+    ```
+    Step 2:   
+    ```
+    6, 7, -10, 6, -7,  -34, 26, 2
+            i 
+    positveLen=0
+    negativeLen=3
+    ```
+    Step 3:   
+    ```
+    6, 7, -10, 6, -7,  -34, 26, 2
+            i 
+    positveLen=0
+    negativeLen=3
+    ```
 ### Implementation
 ```java
 class Solution {
     public int getMaxLen(int[] nums) {
-        int pre=0;
-        int cur=0;
-        int res=0;
-        boolean neg=false;
-        int preNegLen=-1;
-        boolean validPreNegLen=false;
-        for(int i=0; i<nums.length; i++){
-            if(nums[i]>0){
-                cur++;
-            }else if(nums[i]==0){
-                // Start a new turn
-                res=Math.max(Math.max(pre,cur),res);
-                if(neg&&cur>0&&validPreNegLen){
-                   res=Math.max(pre-preNegLen+cur,res);     
-                }
-                preNegLen=-1;
-                pre=0;
-                cur=0;
-                neg=false;
-                validPreNegLen=false;
-            }else if(nums[i]<0&&!neg) {
-                // Start a new turn
-                res=Math.max(Math.max(pre,cur),res);
-                if(preNegLen==-1)preNegLen=cur;
-                pre=cur;
-                cur=0;
-                neg=true;
-            }else if(nums[i]<0&&neg) {
-                cur+=2;
-                neg=false;
-                if(preNegLen!=-1)validPreNegLen=true;
-                // End the current turn, Merge the previous result
-                if(pre!=0){
-                    cur+=pre;
-                    res=Math.max(pre,res);
-                    pre=0;
-                }
+        int len = nums.length;
+        // Track the length of the subarray with a positive product
+        int positiveLen = 0;
+        // Track the length of the subarray with a negative product 
+        int negativeLen = 0;
+        int maxLen = positiveLen;
+        for (int i = 0; i < len; i++) {
+            if (nums[i] > 0) {
+                positiveLen++;
+                negativeLen = negativeLen > 0 ? negativeLen + 1 : 0;
+            } else if (nums[i] < 0) {
+                // Swap the lengths when encountering a negative number
+                int temp = positiveLen;
+                positiveLen = negativeLen > 0 ? negativeLen + 1 : 0;
+                negativeLen = temp+1;
+            } else {
+                // Reset the lengths to zero when a zero is encountered.
+                positiveLen = 0;
+                negativeLen = 0;
             }
+            maxLen = Math.max(maxLen, positiveLen);
         }
-        if(neg&&cur>0&&validPreNegLen){
-           res=Math.max(pre-preNegLen+cur,res);     
-        }
-        return Math.max(cur,res);
+        return maxLen;
     }
 }
 ```
