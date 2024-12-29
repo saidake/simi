@@ -30,6 +30,7 @@
     - [Max Difference You Can Get From Changing an Integer](#max-difference-you-can-get-from-changing-an-integer)
     - [Egg Drop With 2 Eggs and N Floors](#egg-drop-with-2-eggs-and-n-floors)
     - [Maximum Length of Subarray With Positive Product](#maximum-length-of-subarray-with-positive-product)
+    - [Add Edges to Make Degrees of All Nodes Even](#add-edges-to-make-degrees-of-all-nodes-even)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -2557,7 +2558,7 @@ Use two variables (`positiveLen` and `negativeLen`) to track the length of subar
         positveLen=3
         negativeLen=1
         ```
-        Swap the lengths when encountering a negative number.
+        Swap the lengths when encountering a negative number.  
         Since `posiitonLen` was reset in the previous step, `negativeLen` will be recalculated duiring the swap process.  
         The first negative number is the key point when encountering a sequence like `-34, 26, 2` **at the end**.  
         In this case, we aim to remove the first negative number `-10` and its left part `7` to obtain the valid subarray `-7, -34, 26, 2`.  
@@ -2620,3 +2621,85 @@ class Solution {
     The `for` loop has time complexity $O(n)$, resulting in an overall time complexity of $O(n)$.
 
 * Space Complexity: $ O(1) $
+
+## Add Edges to Make Degrees of All Nodes Even
+[Back to Top](#table-of-contents)
+### Overview
+There is an **undirected** graph consisting of `n` nodes numbered from `1` to `n`. 
+You are given the integer `n` and `a` **2D** array `edges` where `edges[i] = [a_i, b_i]` indicates that there is an edge between nodes `a_i` and `b_i`. The graph can be disconnected.
+
+You can add at most two additional edges (possibly none) to this graph so that there are no repeated edges and no self-loops.
+
+Return `true` if it is possible to make the degree of each node in the graph even, otherwise return `false`.
+
+The degree of a node is the number of edges connected to it.
+
+**Example 1:**  
+![aetmdoane1](assets/Algorithms/aetmdoane1.png)  
+> **Input:** n = 5, edges = [[1,2],[2,3],[3,4],[4,2],[1,4],[2,5]]  
+> **Output:** true  
+> **Explanation:** The above diagram shows a valid way of adding an edge.
+Every node in the resulting graph is connected to an even number of edges.
+
+**Example 2:**  
+![aetmdoane2](assets/Algorithms/aetmdoane2.png)  
+> **Input:** n = 4, edges = [[1,2],[3,4]]  
+> **Output:** true  
+> **Explanation:** The above diagram shows a valid way of adding two edges.
+
+**Example 3:**  
+![aetmdoane3](assets/Algorithms/aetmdoane3.png)  
+**Input:** n = 4, edges = [[1,2],[1,3],[1,4]]  
+**Output:** false  
+**Explanation:** It is not possible to obtain a valid graph with adding at most 2 edges.
+
+**Constraints:**
+* `3 <= n <= 10^5`
+* `2 <= edges.length <= 10^5`
+* `edges[i].length == 2`
+* `1 <= a_i, b_i <= n`
+* `a_i != b_i`
+* There are no repeated edges.
+
+### Analysis
+```java
+class Solution {
+    public boolean isPossible(int n, List<List<Integer>> edges) {
+        boolean[] oddEdges=new boolean[n];
+        int m=edges.size();
+        // Find all nodes with odd number of edges
+        for(int i=0; i<m; i++){
+            int node1 = edges.get(i).get(0)-1;
+            int node2 = edges.get(i).get(1)-1;
+            oddEdges[node1]=!oddEdges[node1];
+            oddEdges[node2]=!oddEdges[node2];
+        }
+        // Count the number of nodes with odd number of edges
+        int nodeWithOddEdges=0;
+        for(int i=0; i<n; i++){
+            if(oddEdges[i]){
+                nodeWithOddEdges++;
+                //oddNodes.add(i);
+            }
+        }
+        if(nodeWithOddEdges%2==1)return false;
+        // Check whether there are two nodes with odd number of edges connected
+        for(int i=0; i<m; i++){
+            int node1 = edges.get(i).get(0)-1;
+            int node2 = edges.get(i).get(1)-1;
+            if(oddEdges[node1]&&oddEdges[node2]){
+                nodeWithOddEdges--;
+            }
+        }
+        if(nodeWithOddEdges%2==1 || nodeWithOddEdges>4)return false;
+        return true;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(2m+n) $
+* Space Complexity: $ O(n) $
+
+
+
+
