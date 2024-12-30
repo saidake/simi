@@ -2682,16 +2682,33 @@ class Solution {
                 //oddNodes.add(i);
             }
         }
-        if(nodeWithOddEdges%2==1)return false;
-        // Check whether there are two nodes with odd number of edges connected
-        for(int i=0; i<m; i++){
-            int node1 = edges.get(i).get(0)-1;
-            int node2 = edges.get(i).get(1)-1;
-            if(oddEdges[node1]&&oddEdges[node2]){
-                nodeWithOddEdges--;
+        if(nodeWithOddEdges%2==1||nodeWithOddEdges>4)return false;
+        // Check if there is a node connected to all other nodes with odd number of edges
+        if(nodeWithOddEdges==4){
+            Map<Integer, Integer> countEdges=new HashMap();
+            for(int i=0; i<m; i++){
+                int node1 = edges.get(i).get(0)-1;
+                int node2 = edges.get(i).get(1)-1;
+                if(oddEdges[node1]&&oddEdges[node2]){
+                    countEdges.compute(node1, (key,val)->{
+                        return val==null?1:val+1;
+                    });
+                    countEdges.compute(node2, (key,val)->{
+                        return val==null?1:val+1;
+                    });
+                    if(countEdges.get(node1)==3||countEdges.get(node2)==3)return false;
+                }
             }
         }
-        if(nodeWithOddEdges%2==1 || nodeWithOddEdges>4)return false;
+        if(nodeWithOddEdges==2){
+            for(int i=0; i<m; i++){
+                int node1 = edges.get(i).get(0)-1;
+                int node2 = edges.get(i).get(1)-1;
+                if(oddEdges[node1]&&oddEdges[node2]){
+                    return false;
+                }
+            }
+        }
         return true;
     }
 }
