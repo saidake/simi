@@ -94,7 +94,6 @@
     <dependencyManagement>
         <dependencies>
             <!--======================================================================================================= core -->
-
             <dependency>
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-bom</artifactId>
@@ -123,7 +122,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--==================================================================================================== custom dep -->
+            <!--==================================================================================================== Custom dep -->
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-common-simulator</artifactId>

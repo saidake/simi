@@ -9,6 +9,8 @@
     <version>1.0</version>
 
     <modules>
+        <module>simi-aaa</module>
         <module>simi-extensions</module>
+        <module>simi-data-utils</module>
     </modules>
 </project>

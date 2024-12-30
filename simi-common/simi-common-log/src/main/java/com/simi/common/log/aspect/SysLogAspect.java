@@ -53,32 +53,27 @@ public class SysLogAspect {
             try {
                 // Evaluate the expression and set the value
                 value = SysLogUtils.getValue(context, expression, String.class);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 log.info("@SysLog  {} Exception.", expression);  // Log any exception encountered during SpEL evaluation
             }
         }
 
-        // Create a new SysLog object to hold the log information
         SysLog logVo = SysLogUtils.getSysLog();
-        logVo.setTitle(value);  // Set the title from the annotation value or expression
+        logVo.setTitle(value);
 
-        // Record the start time for execution time measurement
         Long startTime = System.currentTimeMillis();
         Object obj;
 
         try {
-            // Proceed with the method execution
             obj = point.proceed();
         }
         catch (Exception e) {
-            // If an exception occurs, log the error type and the exception message
             logVo.setType(LogTypeEnum.ERROR.getType());
             logVo.setException(e.getMessage());
-            throw e;  // Rethrow the exception to allow it to propagate
+            // Rethrow the exception to allow it to propagate
+            throw e;
         }
         finally {
-            // Measure the execution time and set it on the SysLog object
             Long endTime = System.currentTimeMillis();
             logVo.setTime(endTime - startTime);
 
@@ -86,7 +81,6 @@ public class SysLogAspect {
             SpringContextUtil.publishEvent(new SysLogEvent(logVo));
         }
 
-        // Return the result of the method execution
         return obj;
     }
 }

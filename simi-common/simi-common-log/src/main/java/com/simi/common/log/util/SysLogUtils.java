@@ -62,6 +62,7 @@ public class SysLogUtils {
 		if (parameterNames == null) {
 			return context;
 		}
+		// Populate method parameters into evaluation context
 		for (int i = 0; i < arguments.length; i++) {
 			context.setVariable(parameterNames[i], arguments[i]);
 		}
