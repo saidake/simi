@@ -2662,61 +2662,79 @@ Every node in the resulting graph is connected to an even number of edges.
 * There are no repeated edges.
 
 ### Analysis
+To make all node degrees in the graph even by adding only two edges, the following conditions must be met:
+* The number of nodes with odd degrees must be even and cannot exceed 4.
+    * If there are 4 such nodes, two distinct pairs must exist that can be connected.
+    * If there are 2 such nodes, they must either be unconnected, or a third node must exist that can connect to both.
+#### Implementation
 ```java
 class Solution {
     public boolean isPossible(int n, List<List<Integer>> edges) {
-        boolean[] oddEdges=new boolean[n];
-        int m=edges.size();
-        // Find all nodes with odd number of edges
-        for(int i=0; i<m; i++){
-            int node1 = edges.get(i).get(0)-1;
-            int node2 = edges.get(i).get(1)-1;
-            oddEdges[node1]=!oddEdges[node1];
-            oddEdges[node2]=!oddEdges[node2];
+        Set[] connectedNodes = new Set[n + 1];
+        Arrays.setAll(connectedNodes, item -> new HashSet<Integer>());
+
+        // Record all nodes connected to each node
+        for (List<Integer> edge : edges) {
+            int node1 = edge.get(0), node2 = edge.get(1);
+            connectedNodes[node1].add(node2);
+            connectedNodes[node2].add(node1);
         }
-        // Count the number of nodes with odd number of edges
-        int nodeWithOddEdges=0;
-        for(int i=0; i<n; i++){
-            if(oddEdges[i]){
-                nodeWithOddEdges++;
-                //oddNodes.add(i);
+        List<Integer> nodeWithOddEdges = new ArrayList<Integer>();
+
+        // Identify all nodes with an odd degree
+        for (int node = 1; node <= n; ++node){
+            if(connectedNodes[node].size()%2>0){
+                nodeWithOddEdges.add(node);
+                if(nodeWithOddEdges.size()>4)return false;
             }
         }
-        if(nodeWithOddEdges%2==1||nodeWithOddEdges>4)return false;
-        // Check if there is a node connected to all other nodes with odd number of edges
-        if(nodeWithOddEdges==4){
-            Map<Integer, Integer> countEdges=new HashMap();
-            for(int i=0; i<m; i++){
-                int node1 = edges.get(i).get(0)-1;
-                int node2 = edges.get(i).get(1)-1;
-                if(oddEdges[node1]&&oddEdges[node2]){
-                    countEdges.compute(node1, (key,val)->{
-                        return val==null?1:val+1;
-                    });
-                    countEdges.compute(node2, (key,val)->{
-                        return val==null?1:val+1;
-                    });
-                    if(countEdges.get(node1)==3||countEdges.get(node2)==3)return false;
+        int len = nodeWithOddEdges.size();
+        if (len == 0) return true;
+        if (len == 2) {
+            int node1 = nodeWithOddEdges.get(0), node2 = nodeWithOddEdges.get(1);
+            // Verify if the two nodes are not connected
+            if (!connectedNodes[node1].contains(node2)) return true;
+
+            // Check if there is a third node that can conect to the two nodes
+            for (int node = 1; node <= n; ++node){
+                if (
+                    node != node1 && node != node2 
+                    && !connectedNodes[node].contains(node1) && !connectedNodes[node].contains(node2)){
+                    return true;
                 }
             }
+            return false;
         }
-        if(nodeWithOddEdges==2){
-            for(int i=0; i<m; i++){
-                int node1 = edges.get(i).get(0)-1;
-                int node2 = edges.get(i).get(1)-1;
-                if(oddEdges[node1]&&oddEdges[node2]){
-                    return false;
-                }
-            }
+
+        if (len == 4) {
+            int a = nodeWithOddEdges.get(0), b = nodeWithOddEdges.get(1), c = nodeWithOddEdges.get(2), d = nodeWithOddEdges.get(3);
+            return !connectedNodes[a].contains(b) && !connectedNodes[c].contains(d) ||
+                    !connectedNodes[a].contains(c) && !connectedNodes[b].contains(d) ||
+                    !connectedNodes[a].contains(d) && !connectedNodes[b].contains(c);
         }
-        return true;
     }
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(2m+n) $
-* Space Complexity: $ O(n) $
+* Time Complexity: $ O(m+n) $  (`m` is the length of array `edges`)
+    * `Arrays.setAll`   
+    
+        Method `Arrays.setAll` takes a time complexiyt of $O(n)$.
+    * Record all nodes connected to each node
 
+        The `for` loop has a time complexity of $O(m)$ where `m` is the length of `edges` array.
+    * Identify all nodes with an odd degree
+        
+        The `for` loop takes a time complexiyt of $O(n)$.
+    * Check if there is a third node that can conect to the two nodes
+        
+        The `for` loop takes a time complexiyt of $O(n)$.
 
+    Therefore, the overall time complexity is $O(m+n)$.
+* Space Complexity: $ O(m+n) $
+    * The `connectedNodes` Set array takes $O(m+n)$ space in the worst case, where each node is connected to almost every other node.
+    * The `nodeWithOddEdges` array has a size of at most `4`, so its space complexity is constant and can be omitted.
+
+    Thus, the total space complexity is $O(m+n)$.
 
 
