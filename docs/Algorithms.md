@@ -2440,17 +2440,17 @@ Dropping the egg from floor `1` to the top floor `n` is the simplest method, but
     ```text
     1, 4, 8, 12 ... 100.
     ```
-    In the worst case, the first egg may require `24` drops, and the second egg `4` drops.
+    In the worst case, the first egg may require `25` drops, and the second egg `3` drops.
 * Case 2
     
-    If the egg is dropped with a gap of `10`, The first egg will be dropped `9` times and the second egg `10` times in the worst case, significantly reducing the total number of drops.
+    If the egg is dropped with a gap of `10`, The first egg will be dropped `10` times and the second egg `9` times in the worst case, significantly reducing the total number of drops.
     ```text
     1, 10, 20, 30, ... 100.
     ```
     By analyzing the pattern of egg drops, we aim to minimize the worst-case number of drops.
     We can allocate drop chances to lower floors to ensure the worst-case number of drops remains consistent, regardless of when the first egg breaks.
 
-    For example, If the first egg breaks at floor `10`, we drop the second egg from floor `1` to `9`, resulting in a maximum of 10 drops.
+    For example, If the first egg breaks at floor `10`, we drop the second egg from floor `1` to `9`, resulting in a maximum of `10` drops.  
     However, the wrost-case total drops would be `19`.
     We aim to keep the worst number of drops consistent across all first drop locations.
 
@@ -2737,4 +2737,79 @@ class Solution {
 
     Thus, the total space complexity is $O(m+n)$.
 
+## Amount of Time for Binary Tree to Be Infected
+[Back to Top](#table-of-contents)
+### Overview
+You are given the `root` of a binary tree with unique values, and an integer `start`. 
+At minute `0`, an infection starts from the node with value `start`.
 
+Each minute, a node becomes infected if:
+* The node is currently uninfected.
+* The node is adjacent to an infected node.
+Return the number of minutes needed for the entire tree to be infected.
+
+**Example 1:**
+
+![aoftfbttb1](assets/Algorithms/aoftfbttb1.png)
+> **Input:** root = [1,5,3,null,4,10,6,9,2], start = 3  
+> **Output:** 4  
+> **Explanation:** The following nodes are infected during:  
+    - Minute 0: Node 3  
+    - Minute 1: Nodes 1, 10 and 6  
+    - Minute 2: Node 5  
+    - Minute 3: Node 4  
+    - Minute 4: Nodes 9 and 2  
+    It takes 4 minutes for the whole tree to be infected so we return 4.
+
+**Example 2:**
+
+![aoftfbttb2](assets/Algorithms/aoftfbttb2.png)
+> **Input:** root = [1], start = 1  
+> **Output:** 0  
+> **Explanation:** At minute 0, the only node in the tree is infected so we return 0.
+
+**Constraints:**
+* The number of nodes in the tree is in the range `[1, 10^5]`.
+* `1 <= Node.val <= 10^5`
+* Each node has a unique value.
+* A node with a value of `start` exists in the tree.
+
+### Analysis
+#### Implementation
+```java
+class Solution {
+    private Class Vo{
+        public boolean hasStartNode;
+        public int pathLen;
+        public Vo(boolean hasStartNode, int pathLen){
+            this.hasStartNode=hasStartNode;
+            this.pathLen=pathLen;
+        }
+    }
+
+    private int longestPath=0;
+
+    public int amountOfTime(TreeNode root, int start) {
+        return dfs(root, start, new Vo(false,0));
+    }
+
+    public Vo dfs(TreeNode root, int start, Vo vo) {
+        if(root==null)return vo;
+        if(root.val==start){
+            vo.hasStartNode=true;
+        }
+        Vo vo1=dfs(root.left, start, new Vo(vo.hasStartNode, ++vo.pathLen));
+        Vo vo2=dfs(root.right, start, new Vo(vo.hasStartNode, ++vo.pathLen));
+
+        // Reuse the recursion result
+        if(vo.hasStartNode){
+            longestPath=Math.max(longestPath, vo2.pathLen + ) 
+        }
+        if(vo1.hasStartNode){
+        }
+        if(vo2.hasStartNode){
+        }
+        // TODO Merge the pathLen from left and right nodes.
+    }
+}
+```
