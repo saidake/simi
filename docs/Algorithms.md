@@ -2776,21 +2776,29 @@ Return the number of minutes needed for the entire tree to be infected.
 
 ### Analysis
 #### Implementation
-```java
+```text
 class Solution {
-    private Class Vo{
+    private class Vo {
         public boolean hasStartNode;
         public int pathLen;
-        public Vo(boolean hasStartNode, int pathLen){
+        public int pathLenToStart;
+        public Vo(Vo vo){
+            this.hasStartNode=vo.hasStartNode;
+            this.pathLen=vo.pathLen+1;
+            this.pathLenToStart=vo.hasStartNode?vo.pathLenToStart:vo.pathLenToStart+1;
+        }
+        public Vo(boolean hasStartNode, int pathLen, int pathLenToStart){
             this.hasStartNode=hasStartNode;
             this.pathLen=pathLen;
+            this.pathLenToStart=pathLenToStart;
         }
     }
 
     private int longestPath=0;
 
     public int amountOfTime(TreeNode root, int start) {
-        return dfs(root, start, new Vo(false,0));
+        dfs(root,start,new Vo(false,0,0));
+        return this.longestPath;
     }
 
     public Vo dfs(TreeNode root, int start, Vo vo) {
@@ -2798,18 +2806,28 @@ class Solution {
         if(root.val==start){
             vo.hasStartNode=true;
         }
-        Vo vo1=dfs(root.left, start, new Vo(vo.hasStartNode, ++vo.pathLen));
-        Vo vo2=dfs(root.right, start, new Vo(vo.hasStartNode, ++vo.pathLen));
+        Vo vo1=dfs(root.left, start, new Vo(vo));
+        Vo vo2=dfs(root.right, start, new Vo(vo));
 
-        // Reuse the recursion result
-        if(vo.hasStartNode){
-            longestPath=Math.max(longestPath, vo2.pathLen + ) 
-        }
+        /* 
+        if(root.val==start){
+            longestPath=Math.max(Math.max(longestPath,vo1.pathLen), vo2.pathLen);
+        } 
+        */
         if(vo1.hasStartNode){
+            longestPath=Math.max(longestPath, vo1.pathLenToStart-vo.pathLenToStart+vo2.pathLen-vo.pathLen);
+            return vo1;
         }
         if(vo2.hasStartNode){
+            System.out.println("root.val "+root.val);
+            System.out.println("vo1.pathLen "+vo1.pathLen);
+            System.out.println("vo.pathLen "+vo.pathLen);
+            System.out.println("vo2.pathLenToStart "+vo2.pathLenToStart);
+            System.out.println("vo.pathLenToStart "+vo.pathLenToStart);
+            longestPath=Math.max(longestPath, vo1.pathLen-vo.pathLen+vo2.pathLenToStart-vo.pathLenToStart);
+            return vo2;
         }
-        // TODO Merge the pathLen from left and right nodes.
+        return vo1.pathLen>vo2.pathLen?vo1:vo2;
     }
 }
 ```
