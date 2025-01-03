@@ -2774,9 +2774,33 @@ Return the number of minutes needed for the entire tree to be infected.
 * Each node has a unique value.
 * A node with a value of `start` exists in the tree.
 
-### Analysis
+### Depth-first Search Solution
+The number of minutes required to infect the entire tree corresponds to the longest infection path starting from the node with the value `start`. 
+
+Traverse the tree from the `root` node, defining two variables:
+- `pathLen`: Tracks the path length from the current node.
+- `pathLenToStart`: Tracks the path length to the node with the value `start`.
+
+For each node, the following cases apply:
+
+- If the current node has the value `start`:
+
+  The longest path length will be the maximum path length between the left child nodes and the right child nodes.
+
+- If the node with the value `start` is in the left child nodes:
+
+  The longest path length will be the sum of:
+  - The path length from the current node to the start node (`pathLenToStart` of the left child nodes).
+  - The deepest path length of the right child nodes.
+
+- If the node with the value `start` is in the right child nodes:
+
+  The longest path length will be the sum of:
+  - The path length from the current node to the start node (`pathLenToStart` of the right child nodes).
+  - The deepest path length of the left child nodes.
+
 #### Implementation
-```text
+```java
 class Solution {
     private class Vo {
         public boolean hasStartNode;
@@ -2795,39 +2819,41 @@ class Solution {
     }
 
     private int longestPath=0;
-
     public int amountOfTime(TreeNode root, int start) {
         dfs(root,start,new Vo(false,0,0));
         return this.longestPath;
     }
 
     public Vo dfs(TreeNode root, int start, Vo vo) {
-        if(root==null)return vo;
-        if(root.val==start){
-            vo.hasStartNode=true;
+        if(root==null){
+            --vo.pathLen;
+            return vo;
         }
+        // Check if the current node is the start node
+        if(root.val==start)vo.hasStartNode=true;
         Vo vo1=dfs(root.left, start, new Vo(vo));
         Vo vo2=dfs(root.right, start, new Vo(vo));
 
-        /* 
         if(root.val==start){
-            longestPath=Math.max(Math.max(longestPath,vo1.pathLen), vo2.pathLen);
-        } 
-        */
-        if(vo1.hasStartNode){
+            // If the current node has the value 'start'
+            this.longestPath=Math.max(Math.max(longestPath,vo1.pathLen-vo.pathLen), vo2.pathLen-vo.pathLen);
+        }else if(vo1.hasStartNode){
+            // If the node with value 'start' is among the left child nodes
             longestPath=Math.max(longestPath, vo1.pathLenToStart-vo.pathLenToStart+vo2.pathLen-vo.pathLen);
-            return vo1;
-        }
-        if(vo2.hasStartNode){
-            System.out.println("root.val "+root.val);
-            System.out.println("vo1.pathLen "+vo1.pathLen);
-            System.out.println("vo.pathLen "+vo.pathLen);
-            System.out.println("vo2.pathLenToStart "+vo2.pathLenToStart);
-            System.out.println("vo.pathLenToStart "+vo.pathLenToStart);
+        }else if(vo2.hasStartNode){
+            // If the node with value 'start' is among the right child nodes
             longestPath=Math.max(longestPath, vo1.pathLen-vo.pathLen+vo2.pathLenToStart-vo.pathLenToStart);
-            return vo2;
         }
-        return vo1.pathLen>vo2.pathLen?vo1:vo2;
+        return new Vo(
+            vo1.hasStartNode||vo2.hasStartNode, 
+            Math.max(vo1.pathLen,vo2.pathLen), 
+            vo1.hasStartNode?vo1.pathLenToStart:vo2.pathLenToStart
+        );
     }
 }
 ```
+
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+* Space Complexity: $ O(n) $
