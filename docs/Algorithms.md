@@ -2348,8 +2348,8 @@ The second time pick x = 5 and y = 1 and store the new integer in b.
 We have now a = 999 and b = 111 and max difference = 888
 
 **Example 2:**
-> **Input:** num = 9
-> **Output:** 8
+> **Input:** num = 9  
+> **Output:** 8  
 > **Explanation:** The first time pick x = 9 and y = 9 and store the new integer in a.  
 The second time pick x = 9 and y = 1 and store the new integer in b.  
 We have now a = 9 and b = 1 and max difference = 8
@@ -2785,17 +2785,17 @@ For each node, the following cases apply:
 
 - If the current node has the value `start`:
 
-  The longest path length will be the maximum path length between the left child nodes and the right child nodes.
+  The answer will be the maximum path length between the left child nodes and the right child nodes.
 
 - If the node with the value `start` is in the left child nodes:
 
-  The longest path length will be the sum of:
+  The answer will be the sum of:
   - The path length from the current node to the start node (`pathLenToStart` of the left child nodes).
   - The deepest path length of the right child nodes.
 
 - If the node with the value `start` is in the right child nodes:
 
-  The longest path length will be the sum of:
+  The answer will be the sum of:
   - The path length from the current node to the start node (`pathLenToStart` of the right child nodes).
   - The deepest path length of the left child nodes.
 
@@ -2818,10 +2818,10 @@ class Solution {
         }
     }
 
-    private int longestPath=0;
+    private int ans=0;
     public int amountOfTime(TreeNode root, int start) {
         dfs(root,start,new Vo(false,0,0));
-        return this.longestPath;
+        return this.ans;
     }
 
     public Vo dfs(TreeNode root, int start, Vo vo) {
@@ -2829,20 +2829,20 @@ class Solution {
             --vo.pathLen;
             return vo;
         }
-        // Check if the current node is the start node
+        // Check if the current node has the value 'start'
         if(root.val==start)vo.hasStartNode=true;
         Vo vo1=dfs(root.left, start, new Vo(vo));
         Vo vo2=dfs(root.right, start, new Vo(vo));
 
         if(root.val==start){
             // If the current node has the value 'start'
-            this.longestPath=Math.max(Math.max(longestPath,vo1.pathLen-vo.pathLen), vo2.pathLen-vo.pathLen);
+            this.ans=Math.max(Math.max(ans, vo1.pathLen-vo.pathLen), vo2.pathLen-vo.pathLen);
         }else if(vo1.hasStartNode){
             // If the node with value 'start' is among the left child nodes
-            longestPath=Math.max(longestPath, vo1.pathLenToStart-vo.pathLenToStart+vo2.pathLen-vo.pathLen);
+            ans=Math.max(ans, vo1.pathLenToStart-vo.pathLenToStart+vo2.pathLen-vo.pathLen);
         }else if(vo2.hasStartNode){
             // If the node with value 'start' is among the right child nodes
-            longestPath=Math.max(longestPath, vo1.pathLen-vo.pathLen+vo2.pathLenToStart-vo.pathLenToStart);
+            ans=Math.max(ans, vo1.pathLen-vo.pathLen+vo2.pathLenToStart-vo.pathLenToStart);
         }
         return new Vo(
             vo1.hasStartNode||vo2.hasStartNode, 
@@ -2852,8 +2852,97 @@ class Solution {
     }
 }
 ```
-
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+- Time Complexity: $ O(n) $
 
-* Space Complexity: $ O(n) $
+    In the worst case, DFS visits all nodes in the tree, leading to a time complexity of $O(n)$, where $n$ is the number of nodes in the tree.
+
+- Space Complexity: $ O(n) $
+    - Recursion Stack
+        
+        The DFS traversal uses recursion. In the worst case, the recursion depth can be $O(n)$, leading to a space complexity of $O(n)$ for the recursion stack.
+
+    - Vo Objects
+        
+        Each node in the tree creates a new Vo object during the DFS. 
+        This results in $O(n)$ Vo objects being created, adding to the space complexity.
+
+    - Auxiliary Space
+    
+        The `ans` variable uses constant extra space.
+
+    Therefore, the overall space complexity of the solution is $O(n)$.
+### Optimized Depth-first Search Solution
+Instead of creating a `Vo` object in each recursion, 
+use a positive path length to indicate that the node with value `start` is in the current path, 
+and a negative path length to indicate that the node is not part of the current path.  
+This eliminates the need for the `hasStartNode` and `pathLenToStart` variables from the previous solution.  
+The logic can be summarized as follows:
+
+- If the current node has the value `start`:
+
+  Reset the path length to `1` and begin accumulating it from the current node.  
+  Any previous path length, whether negative or `0`, will be reset to `1`.  
+  Recalculate the longest infection path length if either the left or right child tree produces a larger value.
+
+- If the node with the value `start` is in the left child nodes:
+
+  The answer is the sum of:
+  - The path length from the current node to the start node (`lLen`).
+  - The deepest path length of the right child nodes (`-rLen`).
+
+- If the node with the value `start` is in the right child nodes:
+
+  The answer is the sum of:
+  - The path length from the current node to the start node (`rLen`).
+  - The deepest path length of the left child nodes (`-lLen`).
+
+The second and third cases can be verified together using `Math.abs`.
+
+#### Implementation
+```java
+class Solution {
+    private int ans;
+
+    public int amountOfTime(TreeNode root, int start) {
+        dfs(root, start);
+        return ans;
+    }
+
+    private int dfs(TreeNode node, int start) {
+        if (node == null) {
+            return 0;
+        }
+        int lLen = dfs(node.left, start);
+        int rLen = dfs(node.right, start);
+        // Check if the current node has the value 'start'
+        if (node.val == start) {
+            this.ans = -Math.min(lLen, rLen); 
+            // Reset the path length upon encountering the node with the value 'start'.
+            return 1; 
+        }
+        if (lLen > 0 || rLen > 0) {
+            this.ans = Math.max(ans, Math.abs(lLen) + Math.abs(rLen)); 
+            // Accumulate the path length beginning at the node with the value 'start'.
+            return Math.max(lLen, rLen) + 1; 
+        }
+        // The path length is negative if the node with value 'start' is not in the current path.
+        return Math.min(lLen, rLen) - 1; 
+    }
+}
+```
+#### Time and Space Complexity
+- Time Complexity: $ O(n) $
+
+    Similar to the previous solution, visiting all nodes in the tree in the worst case results in a time complexity of $O(n)$, where $n$ is the total number of nodes.
+
+- Space Complexity: $ O(n) $
+    - Recursion Stack
+        
+        The DFS traversal utilizes recursion. In the worst case, the recursion depth can be $O(n)$, leading to a space complexity of $O(n)$ for the recursion stack.
+
+    - Auxiliary Space
+    
+        The `ans` variable uses constant extra space.
+
+    Therefore, the overall space complexity of the solution is $O(n)$.
