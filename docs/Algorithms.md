@@ -37,6 +37,7 @@
 - [SQL](#sql)
     - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
+    - [Minimum Deletions to Make String Balanced](#minimum-deletions-to-make-string-balanced)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -2859,7 +2860,7 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(m + n) $\
+* Time Complexity: $ O(m + n) $
 
     The `Arrays.copyOf` method takes $O(m)$ time and the `for` loop takes $O(n)$ time, 
     resulting in an overall time complexity of $O(m + n)$.
@@ -2957,3 +2958,63 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
+## Minimum Deletions to Make String Balanced
+[Back to Top](#table-of-contents)  
+You are given a string `s` consisting only of characters `'a'` and `'b'`.
+
+You can delete any number of characters in `s` to make `s` **balanced**. `s` is **balanced** if there is no pair of indices `(i,j)` such that `i < j` and `s[i] = 'b'` and `s[j]= 'a'`.
+
+Return the **minimum** number of deletions needed to make `s` **balanced**.
+
+
+**Example 1:**
+> **Input:** s = "aababbab"  
+> **Output:** 2  
+> **Explanation:** You can either:  
+Delete the characters at 0-indexed positions 2 and 6 ("aababbab" -> "aaabbb"), or  
+Delete the characters at 0-indexed positions 3 and 6 ("aababbab" -> "aabbbb").
+
+**Example 2:**
+> **Input:** s = "bbaaaaabb"  
+> **Output:** 2  
+> **Explanation:** The only solution is to delete the first two characters.
+
+**Constraints:**
+* 1 <= s.length <= 10^5
+* `s[i]` is `'a'` or `'b'`.
+
+### Analysis
+#### Implementation
+```java
+class Solution {
+    public int minimumDeletions(String s) {
+        // "aaaabaaaabaa"
+        // "aaaababaa"
+        // "aaaaaababa"
+        // "ababaaaabbbbbaaababbbbbbaaabbaababbabbbbaabbbbaabbabbabaabbbababaa"
+
+        // 1 <= s.length <= 10^5
+        int len=s.length();
+        // Delete all 'b' before the last 'a'
+        int countB=0;
+        int lastA=0;
+        // Delete all 'a' after the first 'b'
+        int countA=0;
+        int firstB=0; 
+        // Traverse string 's'
+        for(int i=0; i<len; i++){
+            if(s.charAt(i)=='b'){
+                ++countB;
+            }else{
+                lastA=i;
+            }
+            if(s.charAt(len-1-i)=='a'){
+                ++countA;
+            }else{
+                firstB=len-1-i;
+            }
+        }
+        return Math.min(countB-(len-1-lastA), countA-firstB);
+    }
+}
+```
