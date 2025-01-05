@@ -2,6 +2,10 @@
 [Back to Main Project README](../README.md)
 - [Array](#array)
     - [Array Partition](#array-partition)
+- [Conditional Logic](#conditional-logic)
+    - [Add Edges to Make Degrees of All Nodes Even](#add-edges-to-make-degrees-of-all-nodes-even)
+- [Depth-first Search](#depth-first-search)
+    - [Amount of Time for Binary Tree to Be Infected](#amount-of-time-for-binary-tree-to-be-infected)
 - [Difference Array](#difference-array)
     - [Jump Game VII](#jump-game-vii)
 - [Dynamic Programming](#dynamic-programming)
@@ -10,8 +14,14 @@
     - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
     - [Stone Game](#stone-game)
     - [Target Sum](#target-sum)
+- [Fenwick Tree](#fenwick-tree)
+    - [Distribute Elements Into Two Arrays II](#distribute-elements-into-two-arrays-ii)
+- [Greedy](#greedy)
+    - [Max Difference You Can Get From Changing an Integer](#max-difference-you-can-get-from-changing-an-integer)
+    - [Maximum Length of Subarray With Positive Product](#maximum-length-of-subarray-with-positive-product)
 - [Math](#math)
     - [Construct the Minimum Bitwise Array II](#construct-the-minimum-bitwise-array-ii)
+    - [Egg Drop With 2 Eggs and N Floors](#egg-drop-with-2-eggs-and-n-floors)
     - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
     - [Minimum Moves to Capture The Queen](#minimum-moves-to-capture-the-queen)
 - [Precomputation](#precomputation)
@@ -22,15 +32,11 @@
     - [License Key Formatting](#license-key-formatting)
 - [Traversal](#traversal)
     - [Maximum Number of Operations With the Same Score I](#maximum-number-of-operations-with-the-same-score-i)
+- [Two Pointer](#two-pointer)
+    - [Merge Sorted Array](#merge-sorted-array)
 - [SQL](#sql)
     - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
-    - [Distribute Elements Into Two Arrays II](#distribute-elements-into-two-arrays-ii)
-    - [Merge Sorted Array](#merge-sorted-array)
-    - [Max Difference You Can Get From Changing an Integer](#max-difference-you-can-get-from-changing-an-integer)
-    - [Egg Drop With 2 Eggs and N Floors](#egg-drop-with-2-eggs-and-n-floors)
-    - [Maximum Length of Subarray With Positive Product](#maximum-length-of-subarray-with-positive-product)
-    - [Add Edges to Make Degrees of All Nodes Even](#add-edges-to-make-degrees-of-all-nodes-even)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -90,6 +96,510 @@ class Solution {
     The `Arrays.sort()` method uses $ O(1) $ space for primitive data types like integers in Java, as it utilizes a variation of quicksort (dual-pivot quicksort).
     There is no additional space used apart from the input array and a few variables.   
     Therefore, the total space complexity is $ O(1) $.
+# Fenwick Tree
+## Distribute Elements Into Two Arrays II
+[Back to Top](#table-of-contents) 
+### Overview
+You are given a **1-indexed** array of integers `nums` of length `len`.
+
+We define a function `greaterCount` such that `greaterCount(arr, val)` returns the number of elements in `arr` that are strictly greater than `val`.
+
+You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `len` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
+
+* If `greaterCount(arr1, nums[i]) > greaterCount(arr2, nums[i])`, append `nums[i]` to `arr1`.
+* If `greaterCount(arr1, nums[i]) < greaterCount(arr2, nums[i])`, append `nums[i]` to `arr2`.
+* If `greaterCount(arr1, nums[i]) == greaterCount(arr2, nums[i])`, append `nums[i]` to the array with a lesser number of elements.
+* If there is still a tie, append `nums[i]` to `arr1`.
+
+The array result is formed by concatenating the arrays `arr1` and `arr2`. For example, if `arr1 == [1,2,3]` and `arr2 == [4,5,6]`, then `result = [1,2,3,4,5,6]`.
+
+Return the integer array `result`.
+
+**Example 1:**
+
+> **Input:** nums = [2,1,3,3]  
+> **Output:** [2,3,1,3]  
+> **Explanation:** After the first 2 operations, arr1 = [2] and arr2 = [1].  
+> In the 3rd operation, the number of elements greater than 3 is zero in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
+> In the 4th operation, the number of elements greater than 3 is zero in both arrays. As the length of arr2 is lesser, hence, append nums[4] to arr2.  
+> After 4 operations, arr1 = [2,3] and arr2 = [1,3].  
+> Hence, the array result formed by concatenation is [2,3,1,3].  
+
+**Example 2:**
+
+> **Input:** nums = [5,14,3,1,2]  
+> **Output:** [5,3,1,2,14]  
+> **Explanation:** After the first 2 operations, arr1 = [5] and arr2 = [14].  
+> In the 3rd operation, the number of elements greater than 3 is one in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
+> In the 4th operation, the number of elements greater than 1 is greater in arr1 than arr2 (2 > 1). Hence, append nums[4] to arr1.  
+> In the 5th operation, the number of elements greater than 2 is greater in arr1 than arr2 (2 > 1). Hence, append nums[5] to arr1.  
+> After 5 operations, arr1 = [5,3,1,2] and arr2 = [14].  
+> Hence, the array result formed by concatenation is [5,3,1,2,14].
+
+**Example 3:**
+
+> **Input:** nums = [3,3,3,3]  
+> **Output:** [3,3,3,3]  
+> **Explanation:** At the end of 4 operations, arr1 = [3,3] and arr2 = [3,3].  
+> Hence, the array result formed by concatenation is [3,3,3,3].
+
+**Constraints:**
+* `3 <= n <= 10^5`
+* `1 <= nums[i] <= 10^9`
+
+### Analysis
+Follow the problem description, the key point is to find the number of elements in array `nums` that are strictly greater than val.
+
+
+A Binary Indexed Tree (BIT), also known as a Fenwick Tree, is ideal for scenarios that require frequent updates to an array and efficient calculation of prefix sums or ranges, making it a suitable choice here.
+
+To achieve this, define an array `tree` within a `FenwickTree` class and use bitwise operation to identify the indexes to update and compute the prefix sum.
+* i += i & -i
+    
+    Isolate the least significant set bit (LSB) of `i` and add it to `i`.
+    Example:
+    ```text
+    40 + (40 & -40) 
+        = 0010 1000 + (0010 1000  & 1101 1000)
+        = 0010 1000 + 0000 1000 
+        = 48
+    ```
+* i &= i - 1
+
+    The operation clears the rightmost set bit (1) in the binary representation of `i`, it is equivalent to `i -= i & -i`.
+
+    Example:
+    ```text
+    11 & 10 
+        = 1011 & 1010 
+        = 1010 
+        = 10
+    48 & 47
+        = 0011 0000 & 0010 1111
+        = 0010 0000
+        = 32
+    11 & 10
+        = 1011 & 1010
+        = 1010
+    ```
+    
+This `tree` corresponds to a sorted version of the array `nums`, called `sortedArr`, and stores prefix sums rather than actual values.
+
+When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`.  
+This update allows the tree to maintain a count of elements before index `i` in the array `tree`, which represents the number of elements in `nums` that are less than `sortedArr[i]`.
+
+#### Implementation
+```java
+class FenwickTree {
+    private final int[] tree;
+
+    public FenwickTree(int len) {
+        tree = new int[len];
+    }
+
+    public void add(int i) {
+        while (i < tree.length) {
+            tree[i]++;
+            i += i & -i;
+        }
+    }
+
+    public int prefixSum(int i) {
+        int res = 0;
+        while (i > 0) {
+            res += tree[i];
+            i &= i - 1;
+        }
+        return res;
+    }
+}
+
+class Solution {
+    public int[] resultArray(int[] nums) {
+        int[] sortedArr = nums.clone();
+        Arrays.sort(sortedArr); 
+
+        int len = nums.length;
+        List<Integer> list1 = new ArrayList<>(len);
+        List<Integer> list2 = new ArrayList<>();
+        list1.add(nums[0]);
+        list2.add(nums[1]);
+
+        FenwickTree ft1 = new FenwickTree(len + 1);
+        FenwickTree ft2 = new FenwickTree(len + 1);
+        ft1.add(Arrays.binarySearch(sortedArr, nums[0]) + 1);
+        ft2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
+        // Traverse array 'nums'
+        for (int i = 2; i < nums.length; i++) {
+            int cu = nums[i];
+            // Search the index of value 'cu' in array 'sortedArr'.
+            int sInd = Arrays.binarySearch(sortedArr, cu) + 1;
+            int gc1 = list1.size() - ft1.prefixSum(sInd); 
+            int gc2 = list2.size() - ft2.prefixSum(sInd); 
+            if (gc1 > gc2 || gc1 == gc2 && list1.size() <= list2.size()) {
+                list1.add(cu);
+                ft1.add(sInd);
+            } else {
+                list2.add(cu);
+                ft2.add(sInd);
+            }
+        }
+        // Concatenate the two lists
+        list1.addAll(list2);
+
+        // Convert the list into a primitive array
+        for (int i = 0; i < len; i++) {
+            nums[i] = list1.get(i);
+        }
+        return nums;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(nlogn) $\
+    * Traverse array 'nums'
+        The `for` loop iterates over the array `nums`, taking $O(n)$ time.
+        The `binarySearch` and `prefixSum` methods each contribute $O(logn)$ time complexity.
+
+        Therefore, the overall time complexity for this part is $O(nlogn)$.
+    * Convert the list into a primitive array
+
+        Traversing the array `nums` takes $O(n)$ time.
+
+    Thus, the overall time complexity is $O(nlogn)$.
+
+* Space Complexity: $ O(n) $
+
+    The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `ft1` and `ft2` each contribute $O(n)$ to the space complexity.  
+    Therefore, the total space complexity is $O(n)$.
+
+# Conditional Logic
+## Add Edges to Make Degrees of All Nodes Even
+[Back to Top](#table-of-contents)
+### Overview
+There is an **undirected** graph consisting of `n` nodes numbered from `1` to `n`. 
+You are given the integer `n` and `a` **2D** array `edges` where `edges[i] = [a_i, b_i]` indicates that there is an edge between nodes `a_i` and `b_i`. The graph can be disconnected.
+
+You can add at most two additional edges (possibly none) to this graph so that there are no repeated edges and no self-loops.
+
+Return `true` if it is possible to make the degree of each node in the graph even, otherwise return `false`.
+
+The degree of a node is the number of edges connected to it.
+
+**Example 1:**  
+![aetmdoane1](assets/Algorithms/aetmdoane1.png)  
+> **Input:** n = 5, edges = [[1,2],[2,3],[3,4],[4,2],[1,4],[2,5]]  
+> **Output:** true  
+> **Explanation:** The above diagram shows a valid way of adding an edge.
+Every node in the resulting graph is connected to an even number of edges.
+
+**Example 2:**  
+![aetmdoane2](assets/Algorithms/aetmdoane2.png)  
+> **Input:** n = 4, edges = [[1,2],[3,4]]  
+> **Output:** true  
+> **Explanation:** The above diagram shows a valid way of adding two edges.
+
+**Example 3:**  
+![aetmdoane3](assets/Algorithms/aetmdoane3.png)  
+**Input:** n = 4, edges = [[1,2],[1,3],[1,4]]  
+**Output:** false  
+**Explanation:** It is not possible to obtain a valid graph with adding at most 2 edges.
+
+**Constraints:**
+* `3 <= n <= 10^5`
+* `2 <= edges.length <= 10^5`
+* `edges[i].length == 2`
+* `1 <= a_i, b_i <= n`
+* `a_i != b_i`
+* There are no repeated edges.
+
+### Analysis
+To make all node degrees in the graph even by adding only two edges, the following conditions must be met:
+* The number of nodes with odd degrees must be even and cannot exceed 4.
+    * If there are 4 such nodes, two distinct pairs must exist that can be connected.
+    * If there are 2 such nodes, they must either be unconnected, or a third node must exist that can connect to both.
+#### Implementation
+```java
+class Solution {
+    public boolean isPossible(int n, List<List<Integer>> edges) {
+        Set[] connectedNodes = new Set[n + 1];
+        Arrays.setAll(connectedNodes, item -> new HashSet<Integer>());
+
+        // Record all nodes connected to each node
+        for (List<Integer> edge : edges) {
+            int node1 = edge.get(0), node2 = edge.get(1);
+            connectedNodes[node1].add(node2);
+            connectedNodes[node2].add(node1);
+        }
+        List<Integer> nodeWithOddEdges = new ArrayList<Integer>();
+
+        // Identify all nodes with an odd degree
+        for (int node = 1; node <= n; ++node){
+            if(connectedNodes[node].size()%2>0){
+                nodeWithOddEdges.add(node);
+                if(nodeWithOddEdges.size()>4)return false;
+            }
+        }
+        int len = nodeWithOddEdges.size();
+        if (len == 0) return true;
+        if (len == 2) {
+            int node1 = nodeWithOddEdges.get(0), node2 = nodeWithOddEdges.get(1);
+            // Verify if the two nodes are not connected
+            if (!connectedNodes[node1].contains(node2)) return true;
+
+            // Check if there is a third node that can conect to the two nodes
+            for (int node = 1; node <= n; ++node){
+                if (
+                    node != node1 && node != node2 
+                    && !connectedNodes[node].contains(node1) && !connectedNodes[node].contains(node2)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (len == 4) {
+            int a = nodeWithOddEdges.get(0), b = nodeWithOddEdges.get(1), c = nodeWithOddEdges.get(2), d = nodeWithOddEdges.get(3);
+            return !connectedNodes[a].contains(b) && !connectedNodes[c].contains(d) ||
+                    !connectedNodes[a].contains(c) && !connectedNodes[b].contains(d) ||
+                    !connectedNodes[a].contains(d) && !connectedNodes[b].contains(c);
+        }
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(m+n) $  (`m` is the length of array `edges`)
+    * `Arrays.setAll`   
+    
+        Method `Arrays.setAll` takes a time complexiyt of $O(n)$.
+    * Record all nodes connected to each node
+
+        The `for` loop has a time complexity of $O(m)$ where `m` is the length of `edges` array.
+    * Identify all nodes with an odd degree
+        
+        The `for` loop takes a time complexiyt of $O(n)$.
+    * Check if there is a third node that can conect to the two nodes
+        
+        The `for` loop takes a time complexiyt of $O(n)$.
+
+    Therefore, the overall time complexity is $O(m+n)$.
+* Space Complexity: $ O(m+n) $
+    * The `connectedNodes` Set array takes $O(m+n)$ space in the worst case, where each node is connected to almost every other node.
+    * The `nodeWithOddEdges` array has a size of at most `4`, so its space complexity is constant and can be omitted.
+
+    Thus, the total space complexity is $O(m+n)$.
+
+# Depth-first Search
+## Amount of Time for Binary Tree to Be Infected
+[Back to Top](#table-of-contents)
+### Overview
+You are given the `root` of a binary tree with unique values, and an integer `start`. 
+At minute `0`, an infection starts from the node with value `start`.
+
+Each minute, a node becomes infected if:
+* The node is currently uninfected.
+* The node is adjacent to an infected node.
+Return the number of minutes needed for the entire tree to be infected.
+
+**Example 1:**
+
+![aoftfbttb1](assets/Algorithms/aoftfbttb1.png)
+> **Input:** root = [1,5,3,null,4,10,6,9,2], start = 3  
+> **Output:** 4  
+> **Explanation:** The following nodes are infected during:  
+    - Minute 0: Node 3  
+    - Minute 1: Nodes 1, 10 and 6  
+    - Minute 2: Node 5  
+    - Minute 3: Node 4  
+    - Minute 4: Nodes 9 and 2  
+    It takes 4 minutes for the whole tree to be infected so we return 4.
+
+**Example 2:**
+
+![aoftfbttb2](assets/Algorithms/aoftfbttb2.png)
+> **Input:** root = [1], start = 1  
+> **Output:** 0  
+> **Explanation:** At minute 0, the only node in the tree is infected so we return 0.
+
+**Constraints:**
+* The number of nodes in the tree is in the range `[1, 10^5]`.
+* `1 <= Node.val <= 10^5`
+* Each node has a unique value.
+* A node with a value of `start` exists in the tree.
+
+### Depth-first Search Solution
+The number of minutes required to infect the entire tree corresponds to the longest infection path starting from the node with the value `start`. 
+
+Traverse the tree from the `root` node, defining two variables:
+- `pathLen`: Tracks the path length from the current node.
+- `pathLenToStart`: Tracks the path length to the node with the value `start`.
+
+For each node, the following cases apply:
+
+- If the current node has the value `start`:
+
+  The answer will be the maximum path length between the left child nodes and the right child nodes.
+
+- If the node with the value `start` is in the left child nodes:
+
+  The answer will be the sum of:
+  - The path length from the current node to the start node (`pathLenToStart` of the left child nodes).
+  - The deepest path length of the right child nodes.
+
+- If the node with the value `start` is in the right child nodes:
+
+  The answer will be the sum of:
+  - The path length from the current node to the start node (`pathLenToStart` of the right child nodes).
+  - The deepest path length of the left child nodes.
+
+#### Implementation
+```java
+class Solution {
+    private class Vo {
+        public boolean hasStartNode;
+        public int pathLen;
+        public int pathLenToStart;
+        public Vo(Vo vo){
+            this.hasStartNode=vo.hasStartNode;
+            this.pathLen=vo.pathLen+1;
+            this.pathLenToStart=vo.hasStartNode?vo.pathLenToStart:vo.pathLenToStart+1;
+        }
+        public Vo(boolean hasStartNode, int pathLen, int pathLenToStart){
+            this.hasStartNode=hasStartNode;
+            this.pathLen=pathLen;
+            this.pathLenToStart=pathLenToStart;
+        }
+    }
+
+    private int ans=0;
+    public int amountOfTime(TreeNode root, int start) {
+        dfs(root,start,new Vo(false,0,0));
+        return this.ans;
+    }
+
+    public Vo dfs(TreeNode root, int start, Vo vo) {
+        if(root==null){
+            --vo.pathLen;
+            return vo;
+        }
+        // Check if the current node has the value 'start'
+        if(root.val==start)vo.hasStartNode=true;
+        Vo vo1=dfs(root.left, start, new Vo(vo));
+        Vo vo2=dfs(root.right, start, new Vo(vo));
+
+        if(root.val==start){
+            // If the current node has the value 'start'
+            this.ans=Math.max(Math.max(ans, vo1.pathLen-vo.pathLen), vo2.pathLen-vo.pathLen);
+        }else if(vo1.hasStartNode){
+            // If the node with value 'start' is among the left child nodes
+            ans=Math.max(ans, vo1.pathLenToStart-vo.pathLenToStart+vo2.pathLen-vo.pathLen);
+        }else if(vo2.hasStartNode){
+            // If the node with value 'start' is among the right child nodes
+            ans=Math.max(ans, vo1.pathLen-vo.pathLen+vo2.pathLenToStart-vo.pathLenToStart);
+        }
+        return new Vo(
+            vo1.hasStartNode||vo2.hasStartNode, 
+            Math.max(vo1.pathLen,vo2.pathLen), 
+            vo1.hasStartNode?vo1.pathLenToStart:vo2.pathLenToStart
+        );
+    }
+}
+```
+#### Time and Space Complexity
+- Time Complexity: $ O(n) $
+
+    In the worst case, DFS visits all nodes in the tree, leading to a time complexity of $O(n)$, where $n$ is the number of nodes in the tree.
+
+- Space Complexity: $ O(n) $
+    - Recursion Stack
+        
+        The DFS traversal uses recursion. In the worst case, the recursion depth can be $O(n)$, leading to a space complexity of $O(n)$ for the recursion stack.
+
+    - Vo Objects
+        
+        Each node in the tree creates a new Vo object during the DFS. 
+        This results in $O(n)$ Vo objects being created, adding to the space complexity.
+
+    - Auxiliary Space
+    
+        The `ans` variable uses constant extra space.
+
+    Therefore, the overall space complexity of the solution is $O(n)$.
+### Optimized Depth-first Search Solution
+Instead of creating a `Vo` object in each recursion, 
+use a positive path length to indicate that the node with value `start` is in the current path, 
+and a negative path length to indicate that the node is not part of the current path.  
+This eliminates the need for the `hasStartNode` and `pathLenToStart` variables from the previous solution.  
+The logic can be summarized as follows:
+
+- If the current node has the value `start`:
+
+  Reset the path length to `1` and begin accumulating it from the current node.  
+  Any previous path length, whether negative or `0`, will be reset to `1`.  
+  Recalculate the longest infection path length if either the left or right child tree produces a larger value.
+
+- If the node with the value `start` is in the left child nodes:
+
+  The answer is the sum of:
+  - The path length from the current node to the start node (`lLen`).
+  - The deepest path length of the right child nodes (`-rLen`).
+
+- If the node with the value `start` is in the right child nodes:
+
+  The answer is the sum of:
+  - The path length from the current node to the start node (`rLen`).
+  - The deepest path length of the left child nodes (`-lLen`).
+
+The second and third cases can be verified together using `Math.abs`.
+
+#### Implementation
+```java
+class Solution {
+    private int ans;
+
+    public int amountOfTime(TreeNode root, int start) {
+        dfs(root, start);
+        return ans;
+    }
+
+    private int dfs(TreeNode node, int start) {
+        if (node == null) {
+            return 0;
+        }
+        int lLen = dfs(node.left, start);
+        int rLen = dfs(node.right, start);
+        // Check if the current node has the value 'start'
+        if (node.val == start) {
+            this.ans = -Math.min(lLen, rLen); 
+            // Reset the path length upon encountering the node with the value 'start'.
+            return 1; 
+        }
+        if (lLen > 0 || rLen > 0) {
+            this.ans = Math.max(ans, Math.abs(lLen) + Math.abs(rLen)); 
+            // Accumulate the path length beginning at the node with the value 'start'.
+            return Math.max(lLen, rLen) + 1; 
+        }
+        // The path length is negative if the node with value 'start' is not in the current path.
+        return Math.min(lLen, rLen) - 1; 
+    }
+}
+```
+#### Time and Space Complexity
+- Time Complexity: $ O(n) $
+
+    Similar to the previous solution, visiting all nodes in the tree in the worst case results in a time complexity of $O(n)$, where $n$ is the total number of nodes.
+
+- Space Complexity: $ O(n) $
+    - Recursion Stack
+        
+        The DFS traversal utilizes recursion. In the worst case, the recursion depth can be $O(n)$, leading to a space complexity of $O(n)$ for the recursion stack.
+
+    - Auxiliary Space
+    
+        The `ans` variable uses constant extra space.
+
+    Therefore, the overall space complexity of the solution is $O(n)$.
+
 # Difference Array
 ## Jump Game VII
 [Back to Top](#table-of-contents)  
@@ -1279,6 +1789,204 @@ public class Solution {
 * Space Complexity: $ O(neg) $
 
     The `dp` array requires $O(neg)$ space.
+# Greedy
+## Max Difference You Can Get From Changing an Integer
+[Back to Top](#table-of-contents)  
+### Overview
+
+You are given an integer `num`. You will apply the following steps exactly **two** times:
+* Pick a digit `x` `(0 <= x <= 9)`.
+* Pick another digit `y` `(0 <= y <= 9)`. The digit `y` can be equal to `x`.
+* Replace all the occurrences of `x` in the decimal representation of `num` by `y`.
+* The new integer **cannot** have any leading zeros, also the new integer **cannot** be 0.
+
+Let `a` and `b` be the results of applying the operations to `num` the first and second times, respectively.
+
+Return the max difference between `a` and `b`.
+
+**Example 1:**
+> **Input:** num = 555  
+> **Output:** 888  
+> **Explanation:**   
+The first time pick x = 5 and y = 9 and store the new integer in a.  
+The second time pick x = 5 and y = 1 and store the new integer in b.  
+We have now a = 999 and b = 111 and max difference = 888
+
+**Example 2:**
+> **Input:** num = 9  
+> **Output:** 8  
+> **Explanation:** The first time pick x = 9 and y = 9 and store the new integer in a.  
+The second time pick x = 9 and y = 1 and store the new integer in b.  
+We have now a = 9 and b = 1 and max difference = 8
+
+**Constraints:**
+
+* `1 <= num <= 10^8`
+
+### Greedy Solution
+To find the maximum difference between `a` and `b`, we need to determine the maximum value  (`max`) and minimum value (`min`), where `a` and `b` can be any of these values.
+
+Consider the following cases:
+* To obtain the maximum value, replace the first non-`9` digit with `9` starting from the highest posiiton.
+* To obtain the minimum value, replace the first non-`0` digit with `0` starting from the highest position, except for the first digit, which cannot be `0`. If the first digit is not `1`, replace it with `1`.
+### Implementation
+```java
+class Solution {
+    public int maxDiff(int num) {
+        String nStr=String.valueOf(num);
+        int max=num;
+        int min=num;
+        for(int i=0; i< nStr.length(); i++){
+            if(nStr.charAt(i)<'9' && max==num){
+                max=Integer.parseInt(nStr.replace(nStr.charAt(i), '9'));
+                if(min!=num)break;
+            }
+            if(i==0 && nStr.charAt(i)>'1' && min==num){
+                min=Integer.parseInt(nStr.replace(nStr.charAt(i), '1'));
+                if(max!=num)break;
+            }else if(i>0 && nStr.charAt(i)>'0' && nStr.charAt(i)!=nStr.charAt(0) && min==num){
+                min=Integer.parseInt(nStr.replace(nStr.charAt(i), '0'));
+                if(max!=num)break;
+            }
+        }
+        return Math.abs(max-min);
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    Since the `replace` method has a time complexity of $O(n)$ and is executed at most twice, while `charAt` and `Integer.parseInt` take $O(1)$ time, the overall time complexity of the `for` is $O(n)$.
+* Space Complexity: $ O(1) $
+
+## Maximum Length of Subarray With Positive Product
+[Back to Top](#table-of-contents)
+### Overview
+Given an array of integers `nums`, find the maximum length of a subarray where the product of all its elements is positive.
+
+A subarray of an array is a consecutive sequence of zero or more values taken out of that array.
+
+Return the maximum length of a subarray with positive product.
+
+**Example 1:**
+> **Input:** nums = [1,-2,-3,4]  
+> **Output:** 4  
+> **Explanation:** The array nums already has a positive product of 24.
+
+**Example 2:**
+> **Input:** nums = [0,1,-2,-3,-4]  
+> **Output:** 3  
+> **Explanation:** The longest subarray with positive product is [1,-2,-3] which has a product of 6.
+Notice that we cannot include 0 in the subarray since that'll make the product 0 which is not positive.
+
+**Example 3:**
+> **Input:** nums = [-1,-2,-3,0,1]  
+> **Output:** 2  
+> **Explanation:** The longest subarray with positive product is [-1,-2] or [-2,-3].
+
+**Constraints:**
+* `1 <= nums.length <= 10^5`
+* `-10^9 <= nums[i] <= 10^9`
+
+### Greedy Solution
+Use two variables (`positiveLen` and `negativeLen`) to track the length of subarrays with positive and negative products:
+* If `num[i]` is positive, extend the current subarray length by `1`.
+    ```
+    1, 2, 0, 36, -32, -10
+       i 
+    ```
+* If `nums[i]` is `0`, begin a new sequence to determine the maximum subarray length.
+    ```
+    -39, -5, 0, 36, -32, -10
+             i 
+    ```
+* If `nums[i]` is nagative, swap `positiveLen` and `negativeLen`.  
+    Example: 
+     * Step 1:   
+        ```
+        7, -10, -7, -34, 26, 2
+        i 
+        positveLen=1
+        negativeLen=0
+    * Step 2:   
+        ```
+        7, -10, -7, -34, 26, 2
+             i 
+        positveLen=0
+        negativeLen=2
+        ```
+        Swap the lengths when encountering a negative number and reset `positiveLen` when encountering the first neagative number.
+    * Step 3:   
+        ```
+        7, -10, -7, -34, 26, 2
+                 i 
+        positveLen=3
+        negativeLen=1
+        ```
+        Swap the lengths when encountering a negative number.  
+        Since `posiitonLen` was reset in the previous step, `negativeLen` will be recalculated duiring the swap process.  
+        The first negative number is the key point when encountering a sequence like `-34, 26, 2` **at the end**.  
+        In this case, we aim to remove the first negative number `-10` and its left part `7` to obtain the valid subarray `-7, -34, 26, 2`.  
+    * Step 4:   
+        ```
+        7, -10, -7, -34, 26, 2
+                      i 
+        positveLen=2
+        negativeLen=4
+        ```
+        Swap the lengths as before.
+    * Step 5:   
+        ```
+        7, -10, -7, -34, 26, 2
+                          i 
+        positveLen=3
+        negativeLen=5
+        ```
+    * Step 6:   
+        ```
+        7, -10, -7, -34, 26, 2
+                             i 
+        positveLen=4
+        negativeLen=6
+        ```
+### Implementation
+```java
+class Solution {
+    public int getMaxLen(int[] nums) {
+        int len = nums.length;
+        // Track the length of the subarray with a positive product
+        int positiveLen = 0;
+        // Track the length of the subarray with a negative product 
+        int negativeLen = 0;
+        int maxLen = positiveLen;
+        for (int i = 0; i < len; i++) {
+            if (nums[i] > 0) {
+                positiveLen++;
+                negativeLen = negativeLen > 0 ? negativeLen + 1 : 0;
+            } else if (nums[i] < 0) {
+                // Swap the lengths when encountering a negative number
+                int temp = positiveLen;
+                // Reset positiveLen when encountering the first negative number
+                positiveLen = negativeLen > 0 ? negativeLen + 1 : 0;
+                negativeLen = temp+1;
+            } else {
+                // Reset the lengths to zero when a zero is encountered.
+                positiveLen = 0;
+                negativeLen = 0;
+            }
+            maxLen = Math.max(maxLen, positiveLen);
+        }
+        return maxLen;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    The `for` loop has time complexity $O(n)$, resulting in an overall time complexity of $O(n)$.
+
+* Space Complexity: $ O(1) $
+
 
 # Math
 ## Construct the Minimum Bitwise Array II
@@ -1382,6 +2090,105 @@ class Solution {
 * Space Complexity: $ O(n) $
 
     The array `ans` takes $O(n)$ space.
+## Egg Drop With 2 Eggs and N Floors
+[Back to Top](#table-of-contents)  
+### Overview
+You are given two identical eggs and you have access to a building with `n` floors labeled from `1` to `n`.
+
+You know that there exists a floor `f` where `0 <= f <= n` such that any egg dropped at a floor higher than `f` will break, and any egg dropped at or below floor `f` will not break.
+
+In each move, you may take an unbroken egg and drop it from any floor `x` (where `1 <= x <= n`). If the egg breaks, you can no longer use it. However, if the egg does not break, you may reuse it in future moves.
+
+Return the minimum number of moves that you need to determine with certainty what the value of `f` is.
+
+
+**Example 1:**
+> **Input:** n = 2  
+> **Output:** 2  
+> **Explanation:**  
+ We can drop the first egg from floor 1 and the second egg from floor 2.  
+If the first egg breaks, we know that f = 0.  
+If the second egg breaks but the first egg didn't, we know that f = 1.  
+Otherwise, if both eggs survive, we know that f = 2.
+
+**Example 2:**
+> **Input:** n = 100  
+> **Output:** 14  
+> **Explanation:** One optimal strategy is:  
+> - Drop the 1st egg at floor 9. If it breaks, we know f is between 0 and 8.  
+    Drop the 2nd egg starting from floor 1 and going up one at a time to find f within 8 more drops.  
+    Total drops is 1 + 8 = 9.
+> - If the 1st egg does not break, drop the 1st egg again at floor 22.  
+    If it breaks, we know f is between 9 and 21. Drop the 2nd egg starting from floor 10 and going up one at a time to find f within 12 more drops.  
+    Total drops is 2 + 12 = 14.
+> - If the 1st egg does not break again, follow a similar process dropping the 1st egg from floors 34, 45, 55, 64, 72, 79, 85, 90, 94, 97, 99, and 100.  
+    Regardless of the outcome, it takes at most 14 drops to determine f.
+
+**Constraints:**
+* `1 <= n <= 1000`
+
+### Analysis
+Dropping the egg from floor `1` to the top floor `n` is the simplest method, but with the second egg, we can narrow down the approximate range where the floor `f` is located.
+
+* Case 1 
+
+    Assuming there are `100` floors, If the egg is dropped from floor `1` with a gap of `4`, the drop sequence will be::
+    ```text
+    1, 4, 8, 12 ... 100.
+    ```
+    In the worst case, the first egg may require `25` drops, and the second egg `3` drops.
+* Case 2
+    
+    If the egg is dropped with a gap of `10`, The first egg will be dropped `10` times and the second egg `9` times in the worst case, significantly reducing the total number of drops.
+    ```text
+    1, 10, 20, 30, ... 100.
+    ```
+    By analyzing the pattern of egg drops, we aim to minimize the worst-case number of drops.
+    We can allocate drop chances to lower floors to ensure the worst-case number of drops remains consistent, regardless of when the first egg breaks.
+
+    For example, If the first egg breaks at floor `10`, we drop the second egg from floor `1` to `9`, resulting in a maximum of `10` drops.  
+    However, the wrost-case total drops would be `19`.
+    We aim to keep the worst number of drops consistent across all first drop locations.
+
+* Case 3
+
+    If the drop gap decreases by `1` with each subsequent drop, the worst drop times will remain the same for each check floor.
+    Therefore, we start with the highest possible floor `n` and gradually increase the gap by `1`, ensuring the worst drop times are consistent.
+
+    If The remaining floors, which are fewer thant the last gap, result in fewer worst-case drops, they will still be treated as regular drops.
+
+Assuming we need to drop the first egg `j` times, we get:
+
+$$ 1+2+3+...+j = n $$
+Based on the formula of geometric series:
+$$ \sum_{j=1}^j = 1+2+3+...+j = \frac{j \times (j+1)}{2}   $$
+we have:
+$$ j^2+j = 2n $$
+
+Based on the formula for the sum of a geometric series:
+$$ ax^2+bx+c=0 $$
+$$ x=\frac{-b \plusmn \sqrt{b^2-4ac}}{2a} $$
+We have:
+$$ j=\frac{-1 \plusmn \sqrt{1+8n}}{2} $$ 
+
+Because we expect a positive number, the formula will be:
+
+$$ j=\frac{-1 + \sqrt{1+8n}}{2} $$ 
+This gives the smallest integer $j$, where the fractional part is treated as a full drop.
+
+#### Implementation
+```java
+class Solution {
+    public int twoEggDrop(int n) {
+        double sqrt=Math.sqrt((double)(1+8*n));
+        double j=(-1+sqrt)/2;
+        return (int)Math.ceil(j);
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(1) $
+* Space Complexity: $ O(1) $
 
 ## Find Number of Ways to Reach the K-th Stair
 [Back to Top](#table-of-contents)  
@@ -1989,6 +2796,78 @@ class Solution {
 * Space Complexity: $ O(1) $
 
     Only a constant amount of additional space is used.
+# Two-Pointer
+## Merge Sorted Array
+[Back to Top](#table-of-contents)  
+### Overview
+You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n`, representing the number of elements in `nums1` and `nums2` respectively.
+
+Merge `nums1` and `nums2` into a single array sorted in non-decreasing order.
+
+The final sorted array should not be returned by the function, but instead be stored inside the array `nums1`. To accommodate this, `nums1` has a length of `m + n`, where the first `m` elements denote the elements that should be merged, and the last `n` elements are set to `0` and should be ignored. `nums2` has a length of `n`.
+
+**Example 1:**
+> **Input:** nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3  
+> **Output:** [1,2,2,3,5,6]  
+> **Explanation:** The arrays we are merging are [1,2,3] and [2,5,6].  
+> The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+
+**Example 2:**
+> **Input:** nums1 = [1], m = 1, nums2 = [], n = 0  
+> **Output:** [1]  
+> **Explanation:** The arrays we are merging are [1] and [].  
+> The result of the merge is [1].
+
+**Example 3:**
+> **Input:** nums1 = [0], m = 0, nums2 = [1], n = 1  
+> **Output:** [1]  
+> **Explanation:** The arrays we are merging are [] and [1].  
+> The result of the merge is [1].  
+> Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+ 
+
+**Constraints:**
+* `nums1.length == m + n`
+* `nums2.length == n`
+* `0 <= m, n <= 200`
+* `1 <= m + n <= 200`
+* `-10^9 <= nums1[i], nums2[j] <= 10^9`
+
+### Two-Pointer Solution
+Copy a new array `nums1Cp` from `nums1` as a comparing array, and merge elements from arrays 'nums1Cp' and 'nums2' into 'nums1':
+Copy the array `nums1` into a new array `nums1Cp` for comparison, and merge elements from `nums1Cp` and `nums2` into `nums1` as follows:
+
+* If both array `nums1Cp` and `nums2` have remaining elements and `nums1Cp[i] < nums2[k]`, insert the smaller value from `numsCp` into `nums1`.
+* If `nums2` has no remaining elements, insert the current element from `nums1Cp` directly into `nums1`;
+* If `nums1Cp` is empty or `nums2` contains the smaller value, insert the value from `nums2` into `nums1`.
+### Implementation
+```java
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int[] nums1Cp=Arrays.copyOf(nums1, m);
+        // Merge elements from arrays 'nums1Cp' and 'nums2' into 'nums1'.
+        for(int i=0, j=0, k=0; i<nums1.length; i++){ 
+            if( j<m && k<n && nums1Cp[j]<nums2[k] || j<m  && k>=n  ){
+                nums1[i]=nums1Cp[j];
+                j++;
+            }else {
+                nums1[i]=nums2[k];
+                k++;
+            }
+        }
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(m + n) $\
+
+    The `Arrays.copyOf` method takes $O(m)$ time and the `for` loop takes $O(n)$ time, 
+    resulting in an overall time complexity of $O(m + n)$.
+
+* Space Complexity: $ O(m) $
+
+    The array `nums1Cp` occupies $O(m)$ space where `m` is the first `m` integers in array `nums1`.
+
 # SQL
 ## Odd and Even Transactions
 [Back to Top](#table-of-contents)  
@@ -2078,871 +2957,3 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
-## Distribute Elements Into Two Arrays II
-[Back to Top](#table-of-contents) 
-### Overview
-You are given a **1-indexed** array of integers `nums` of length `len`.
-
-We define a function `greaterCount` such that `greaterCount(arr, val)` returns the number of elements in `arr` that are strictly greater than `val`.
-
-You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `len` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
-
-* If `greaterCount(arr1, nums[i]) > greaterCount(arr2, nums[i])`, append `nums[i]` to `arr1`.
-* If `greaterCount(arr1, nums[i]) < greaterCount(arr2, nums[i])`, append `nums[i]` to `arr2`.
-* If `greaterCount(arr1, nums[i]) == greaterCount(arr2, nums[i])`, append `nums[i]` to the array with a lesser number of elements.
-* If there is still a tie, append `nums[i]` to `arr1`.
-
-The array result is formed by concatenating the arrays `arr1` and `arr2`. For example, if `arr1 == [1,2,3]` and `arr2 == [4,5,6]`, then `result = [1,2,3,4,5,6]`.
-
-Return the integer array `result`.
-
-**Example 1:**
-
-> **Input:** nums = [2,1,3,3]  
-> **Output:** [2,3,1,3]  
-> **Explanation:** After the first 2 operations, arr1 = [2] and arr2 = [1].  
-> In the 3rd operation, the number of elements greater than 3 is zero in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
-> In the 4th operation, the number of elements greater than 3 is zero in both arrays. As the length of arr2 is lesser, hence, append nums[4] to arr2.  
-> After 4 operations, arr1 = [2,3] and arr2 = [1,3].  
-> Hence, the array result formed by concatenation is [2,3,1,3].  
-
-**Example 2:**
-
-> **Input:** nums = [5,14,3,1,2]  
-> **Output:** [5,3,1,2,14]  
-> **Explanation:** After the first 2 operations, arr1 = [5] and arr2 = [14].  
-> In the 3rd operation, the number of elements greater than 3 is one in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
-> In the 4th operation, the number of elements greater than 1 is greater in arr1 than arr2 (2 > 1). Hence, append nums[4] to arr1.  
-> In the 5th operation, the number of elements greater than 2 is greater in arr1 than arr2 (2 > 1). Hence, append nums[5] to arr1.  
-> After 5 operations, arr1 = [5,3,1,2] and arr2 = [14].  
-> Hence, the array result formed by concatenation is [5,3,1,2,14].
-
-**Example 3:**
-
-> **Input:** nums = [3,3,3,3]  
-> **Output:** [3,3,3,3]  
-> **Explanation:** At the end of 4 operations, arr1 = [3,3] and arr2 = [3,3].  
-> Hence, the array result formed by concatenation is [3,3,3,3].
-
-**Constraints:**
-* `3 <= n <= 10^5`
-* `1 <= nums[i] <= 10^9`
-
-### Analysis
-Follow the problem description, the key point is to find the number of elements in array `nums` that are strictly greater than val.
-
-
-A Binary Indexed Tree (BIT) is ideal for scenarios that require frequent updates to an array and efficient calculation of prefix sums or ranges, making it a suitable choice here.
-
-To achieve this, define an array `tree` within a `BinaryIndexedTree` class and use bitwise operation to identify the indexes to update and compute the prefix sum.
-* i += i & -i
-    
-    Isolate the least significant set bit (LSB) of `i` and add it to `i`.
-    Example:
-    ```text
-    40 + (40 & -40) 
-        = 0010 1000 + (0010 1000  & 1101 1000)
-        = 0010 1000 + 0000 1000 
-        = 48
-    ```
-* i &= i - 1
-
-    The operation clears the rightmost set bit (1) in the binary representation of `i`, it is equivalent to `i -= i & -i`.
-
-    Example:
-    ```text
-    11 & 10 
-        = 1011 & 1010 
-        = 1010 
-        = 10
-    48 & 47
-        = 0011 0000 & 0010 1111
-        = 0010 0000
-        = 32
-    11 & 10
-        = 1011 & 1010
-        = 1010
-    ```
-    
-This `tree` corresponds to a sorted version of the array `nums`, called `sortedArr`, and stores prefix sums rather than actual values.
-
-When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`.  
-This update allows the tree to maintain a count of elements before index `i` in the array `tree`, which represents the number of elements in `nums` that are less than `sortedArr[i]`.
-
-#### Implementation
-```java
-class BinaryIndexedTree {
-    private final int[] tree;
-
-    public BinaryIndexedTree(int len) {
-        tree = new int[len];
-    }
-
-    public void add(int i) {
-        while (i < tree.length) {
-            tree[i]++;
-            i += i & -i;
-        }
-    }
-
-    public int prefixSum(int i) {
-        int res = 0;
-        while (i > 0) {
-            res += tree[i];
-            i &= i - 1;
-        }
-        return res;
-    }
-}
-
-class Solution {
-    public int[] resultArray(int[] nums) {
-        int[] sortedArr = nums.clone();
-        Arrays.sort(sortedArr); 
-
-        int len = nums.length;
-        List<Integer> list1 = new ArrayList<>(len);
-        List<Integer> list2 = new ArrayList<>();
-        list1.add(nums[0]);
-        list2.add(nums[1]);
-
-        BinaryIndexedTree bit1 = new BinaryIndexedTree(len + 1);
-        BinaryIndexedTree bit2 = new BinaryIndexedTree(len + 1);
-        bit1.add(Arrays.binarySearch(sortedArr, nums[0]) + 1);
-        bit2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
-        // Traverse array 'nums'
-        for (int i = 2; i < nums.length; i++) {
-            int cu = nums[i];
-            // Search the index of value 'cu' in array 'sortedArr'.
-            int sInd = Arrays.binarySearch(sortedArr, cu) + 1;
-            int gc1 = list1.size() - bit1.prefixSum(sInd); 
-            int gc2 = list2.size() - bit2.prefixSum(sInd); 
-            if (gc1 > gc2 || gc1 == gc2 && list1.size() <= list2.size()) {
-                list1.add(cu);
-                bit1.add(sInd);
-            } else {
-                list2.add(cu);
-                bit2.add(sInd);
-            }
-        }
-        // Concatenate the two lists
-        list1.addAll(list2);
-
-        // Convert the list into a primitive array
-        for (int i = 0; i < len; i++) {
-            nums[i] = list1.get(i);
-        }
-        return nums;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(nlogn) $\
-    * Traverse array 'nums'
-        The `for` loop iterates over the array `nums`, taking $O(n)$ time.
-        The `binarySearch` and `prefixSum` methods each contribute $O(logn)$ time complexity.
-
-        Therefore, the overall time complexity for this part is $O(nlogn)$.
-    * Convert the list into a primitive array
-
-        Traversing the array `nums` takes $O(n)$ time.
-
-    Thus, the overall time complexity is $O(nlogn)$.
-
-* Space Complexity: $ O(n) $
-
-    The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `bit1` and `bit2` each contribute $O(n)$ to the space complexity.  
-    Therefore, the total space complexity is $O(n)$.
-
-## Merge Sorted Array
-[Back to Top](#table-of-contents)  
-### Overview
-You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n`, representing the number of elements in `nums1` and `nums2` respectively.
-
-Merge `nums1` and `nums2` into a single array sorted in non-decreasing order.
-
-The final sorted array should not be returned by the function, but instead be stored inside the array `nums1`. To accommodate this, `nums1` has a length of `m + n`, where the first `m` elements denote the elements that should be merged, and the last `n` elements are set to `0` and should be ignored. `nums2` has a length of `n`.
-
-**Example 1:**
-> **Input:** nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3  
-> **Output:** [1,2,2,3,5,6]  
-> **Explanation:** The arrays we are merging are [1,2,3] and [2,5,6].  
-> The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
-
-**Example 2:**
-> **Input:** nums1 = [1], m = 1, nums2 = [], n = 0  
-> **Output:** [1]  
-> **Explanation:** The arrays we are merging are [1] and [].  
-> The result of the merge is [1].
-
-**Example 3:**
-> **Input:** nums1 = [0], m = 0, nums2 = [1], n = 1  
-> **Output:** [1]  
-> **Explanation:** The arrays we are merging are [] and [1].  
-> The result of the merge is [1].  
-> Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
- 
-
-**Constraints:**
-* `nums1.length == m + n`
-* `nums2.length == n`
-* `0 <= m, n <= 200`
-* `1 <= m + n <= 200`
-* `-10^9 <= nums1[i], nums2[j] <= 10^9`
-
-### Analysis
-Copy a new array `nums1Cp` from `nums1` as a comparing array, and merge elements from arrays 'nums1Cp' and 'nums2' into 'nums1':
-Copy the array `nums1` into a new array `nums1Cp` for comparison, and merge elements from `nums1Cp` and `nums2` into `nums1` as follows:
-
-* If both array `nums1Cp` and `nums2` have remaining elements and `nums1Cp[i] < nums2[k]`, insert the smaller value from `numsCp` into `nums1`.
-* If `nums2` has no remaining elements, insert the current element from `nums1Cp` directly into `nums1`;
-* If `nums1Cp` is empty or `nums2` contains the smaller value, insert the value from `nums2` into `nums1`.
-### Implementation
-```java
-class Solution {
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int[] nums1Cp=Arrays.copyOf(nums1, m);
-        // Merge elements from arrays 'nums1Cp' and 'nums2' into 'nums1'.
-        for(int i=0, j=0, k=0; i<nums1.length; i++){ 
-            if( j<m && k<n && nums1Cp[j]<nums2[k] || j<m  && k>=n  ){
-                nums1[i]=nums1Cp[j];
-                j++;
-            }else {
-                nums1[i]=nums2[k];
-                k++;
-            }
-        }
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(m + n) $\
-
-    The `Arrays.copyOf` method takes $O(m)$ time and the `for` loop takes $O(n)$ time, 
-    resulting in an overall time complexity of $O(m + n)$.
-
-* Space Complexity: $ O(m) $
-
-    The array `nums1Cp` occupies $O(m)$ space where `m` is the first `m` integers in array `nums1`.
-
-## Max Difference You Can Get From Changing an Integer
-[Back to Top](#table-of-contents)  
-### Overview
-
-You are given an integer `num`. You will apply the following steps exactly **two** times:
-* Pick a digit `x` `(0 <= x <= 9)`.
-* Pick another digit `y` `(0 <= y <= 9)`. The digit `y` can be equal to `x`.
-* Replace all the occurrences of `x` in the decimal representation of `num` by `y`.
-* The new integer **cannot** have any leading zeros, also the new integer **cannot** be 0.
-
-Let `a` and `b` be the results of applying the operations to `num` the first and second times, respectively.
-
-Return the max difference between `a` and `b`.
-
-**Example 1:**
-> **Input:** num = 555  
-> **Output:** 888  
-> **Explanation:**   
-The first time pick x = 5 and y = 9 and store the new integer in a.  
-The second time pick x = 5 and y = 1 and store the new integer in b.  
-We have now a = 999 and b = 111 and max difference = 888
-
-**Example 2:**
-> **Input:** num = 9  
-> **Output:** 8  
-> **Explanation:** The first time pick x = 9 and y = 9 and store the new integer in a.  
-The second time pick x = 9 and y = 1 and store the new integer in b.  
-We have now a = 9 and b = 1 and max difference = 8
-
-**Constraints:**
-
-* `1 <= num <= 10^8`
-
-### Analysis
-To find the maximum difference between `a` and `b`, we need to determine the maximum value  (`max`) and minimum value (`min`), where `a` and `b` can be any of these values.
-
-Consider the following cases:
-* To obtain the maximum value, replace the first non-`9` digit with `9` starting from the highest posiiton.
-* To obtain the minimum value, replace the first non-`0` digit with `0` starting from the highest position, except for the first digit, which cannot be `0`. If the first digit is not `1`, replace it with `1`.
-### Implementation
-```java
-class Solution {
-    public int maxDiff(int num) {
-        String nStr=String.valueOf(num);
-        int max=num;
-        int min=num;
-        for(int i=0; i< nStr.length(); i++){
-            if(nStr.charAt(i)<'9' && max==num){
-                max=Integer.parseInt(nStr.replace(nStr.charAt(i), '9'));
-                if(min!=num)break;
-            }
-            if(i==0 && nStr.charAt(i)>'1' && min==num){
-                min=Integer.parseInt(nStr.replace(nStr.charAt(i), '1'));
-                if(max!=num)break;
-            }else if(i>0 && nStr.charAt(i)>'0' && nStr.charAt(i)!=nStr.charAt(0) && min==num){
-                min=Integer.parseInt(nStr.replace(nStr.charAt(i), '0'));
-                if(max!=num)break;
-            }
-        }
-        return Math.abs(max-min);
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $
-
-    Since the `replace` method has a time complexity of $O(n)$ and is executed at most twice, while `charAt` and `Integer.parseInt` take $O(1)$ time, the overall time complexity of the `for` is $O(n)$.
-* Space Complexity: $ O(1) $
-
-## Egg Drop With 2 Eggs and N Floors
-[Back to Top](#table-of-contents)  
-### Overview
-You are given two identical eggs and you have access to a building with `n` floors labeled from `1` to `n`.
-
-You know that there exists a floor `f` where `0 <= f <= n` such that any egg dropped at a floor higher than `f` will break, and any egg dropped at or below floor `f` will not break.
-
-In each move, you may take an unbroken egg and drop it from any floor `x` (where `1 <= x <= n`). If the egg breaks, you can no longer use it. However, if the egg does not break, you may reuse it in future moves.
-
-Return the minimum number of moves that you need to determine with certainty what the value of `f` is.
-
-
-**Example 1:**
-> **Input:** n = 2  
-> **Output:** 2  
-> **Explanation:**  
- We can drop the first egg from floor 1 and the second egg from floor 2.  
-If the first egg breaks, we know that f = 0.  
-If the second egg breaks but the first egg didn't, we know that f = 1.  
-Otherwise, if both eggs survive, we know that f = 2.
-
-**Example 2:**
-> **Input:** n = 100  
-> **Output:** 14  
-> **Explanation:** One optimal strategy is:  
-> - Drop the 1st egg at floor 9. If it breaks, we know f is between 0 and 8.  
-    Drop the 2nd egg starting from floor 1 and going up one at a time to find f within 8 more drops.  
-    Total drops is 1 + 8 = 9.
-> - If the 1st egg does not break, drop the 1st egg again at floor 22.  
-    If it breaks, we know f is between 9 and 21. Drop the 2nd egg starting from floor 10 and going up one at a time to find f within 12 more drops.  
-    Total drops is 2 + 12 = 14.
-> - If the 1st egg does not break again, follow a similar process dropping the 1st egg from floors 34, 45, 55, 64, 72, 79, 85, 90, 94, 97, 99, and 100.  
-    Regardless of the outcome, it takes at most 14 drops to determine f.
-
-**Constraints:**
-* `1 <= n <= 1000`
-
-### Analysis
-Dropping the egg from floor `1` to the top floor `n` is the simplest method, but with the second egg, we can narrow down the approximate range where the floor `f` is located.
-
-* Case 1 
-
-    Assuming there are `100` floors, If the egg is dropped from floor `1` with a gap of `4`, the drop sequence will be::
-    ```text
-    1, 4, 8, 12 ... 100.
-    ```
-    In the worst case, the first egg may require `25` drops, and the second egg `3` drops.
-* Case 2
-    
-    If the egg is dropped with a gap of `10`, The first egg will be dropped `10` times and the second egg `9` times in the worst case, significantly reducing the total number of drops.
-    ```text
-    1, 10, 20, 30, ... 100.
-    ```
-    By analyzing the pattern of egg drops, we aim to minimize the worst-case number of drops.
-    We can allocate drop chances to lower floors to ensure the worst-case number of drops remains consistent, regardless of when the first egg breaks.
-
-    For example, If the first egg breaks at floor `10`, we drop the second egg from floor `1` to `9`, resulting in a maximum of `10` drops.  
-    However, the wrost-case total drops would be `19`.
-    We aim to keep the worst number of drops consistent across all first drop locations.
-
-* Case 3
-
-    If the drop gap decreases by `1` with each subsequent drop, the worst drop times will remain the same for each check floor.
-    Therefore, we start with the highest possible floor `n` and gradually increase the gap by `1`, ensuring the worst drop times are consistent.
-
-    If The remaining floors, which are fewer thant the last gap, result in fewer worst-case drops, they will still be treated as regular drops.
-
-Assuming we need to drop the first egg `j` times, we get:
-
-$$ 1+2+3+...+j = n $$
-Based on the formula of geometric series:
-$$ \sum_{j=1}^j = 1+2+3+...+j = \frac{j \times (j+1)}{2}   $$
-we have:
-$$ j^2+j = 2n $$
-
-Based on the formula for the sum of a geometric series:
-$$ ax^2+bx+c=0 $$
-$$ x=\frac{-b \plusmn \sqrt{b^2-4ac}}{2a} $$
-We have:
-$$ j=\frac{-1 \plusmn \sqrt{1+8n}}{2} $$ 
-
-Because we expect a positive number, the formula will be:
-
-$$ j=\frac{-1 + \sqrt{1+8n}}{2} $$ 
-This gives the smallest integer $j$, where the fractional part is treated as a full drop.
-
-#### Implementation
-```java
-class Solution {
-    public int twoEggDrop(int n) {
-        double sqrt=Math.sqrt((double)(1+8*n));
-        double j=(-1+sqrt)/2;
-        return (int)Math.ceil(j);
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(1) $
-* Space Complexity: $ O(1) $
-
-## Maximum Length of Subarray With Positive Product
-[Back to Top](#table-of-contents)
-### Overview
-Given an array of integers `nums`, find the maximum length of a subarray where the product of all its elements is positive.
-
-A subarray of an array is a consecutive sequence of zero or more values taken out of that array.
-
-Return the maximum length of a subarray with positive product.
-
-**Example 1:**
-> **Input:** nums = [1,-2,-3,4]  
-> **Output:** 4  
-> **Explanation:** The array nums already has a positive product of 24.
-
-**Example 2:**
-> **Input:** nums = [0,1,-2,-3,-4]  
-> **Output:** 3  
-> **Explanation:** The longest subarray with positive product is [1,-2,-3] which has a product of 6.
-Notice that we cannot include 0 in the subarray since that'll make the product 0 which is not positive.
-
-**Example 3:**
-> **Input:** nums = [-1,-2,-3,0,1]  
-> **Output:** 2  
-> **Explanation:** The longest subarray with positive product is [-1,-2] or [-2,-3].
-
-**Constraints:**
-* `1 <= nums.length <= 10^5`
-* `-10^9 <= nums[i] <= 10^9`
-
-### Analysis
-Use two variables (`positiveLen` and `negativeLen`) to track the length of subarrays with positive and negative products:
-* If `num[i]` is positive, extend the current subarray length by `1`.
-    ```
-    1, 2, 0, 36, -32, -10
-       i 
-    ```
-* If `nums[i]` is `0`, begin a new sequence to determine the maximum subarray length.
-    ```
-    -39, -5, 0, 36, -32, -10
-             i 
-    ```
-* If `nums[i]` is nagative, swap `positiveLen` and `negativeLen`.  
-    Example: 
-     * Step 1:   
-        ```
-        7, -10, -7, -34, 26, 2
-        i 
-        positveLen=1
-        negativeLen=0
-    * Step 2:   
-        ```
-        7, -10, -7, -34, 26, 2
-             i 
-        positveLen=0
-        negativeLen=2
-        ```
-        Swap the lengths when encountering a negative number and reset `positiveLen` when encountering the first neagative number.
-    * Step 3:   
-        ```
-        7, -10, -7, -34, 26, 2
-                 i 
-        positveLen=3
-        negativeLen=1
-        ```
-        Swap the lengths when encountering a negative number.  
-        Since `posiitonLen` was reset in the previous step, `negativeLen` will be recalculated duiring the swap process.  
-        The first negative number is the key point when encountering a sequence like `-34, 26, 2` **at the end**.  
-        In this case, we aim to remove the first negative number `-10` and its left part `7` to obtain the valid subarray `-7, -34, 26, 2`.  
-    * Step 4:   
-        ```
-        7, -10, -7, -34, 26, 2
-                      i 
-        positveLen=2
-        negativeLen=4
-        ```
-        Swap the lengths as before.
-    * Step 5:   
-        ```
-        7, -10, -7, -34, 26, 2
-                          i 
-        positveLen=3
-        negativeLen=5
-        ```
-    * Step 6:   
-        ```
-        7, -10, -7, -34, 26, 2
-                             i 
-        positveLen=4
-        negativeLen=6
-        ```
-### Implementation
-```java
-class Solution {
-    public int getMaxLen(int[] nums) {
-        int len = nums.length;
-        // Track the length of the subarray with a positive product
-        int positiveLen = 0;
-        // Track the length of the subarray with a negative product 
-        int negativeLen = 0;
-        int maxLen = positiveLen;
-        for (int i = 0; i < len; i++) {
-            if (nums[i] > 0) {
-                positiveLen++;
-                negativeLen = negativeLen > 0 ? negativeLen + 1 : 0;
-            } else if (nums[i] < 0) {
-                // Swap the lengths when encountering a negative number
-                int temp = positiveLen;
-                // Reset positiveLen when encountering the first negative number
-                positiveLen = negativeLen > 0 ? negativeLen + 1 : 0;
-                negativeLen = temp+1;
-            } else {
-                // Reset the lengths to zero when a zero is encountered.
-                positiveLen = 0;
-                negativeLen = 0;
-            }
-            maxLen = Math.max(maxLen, positiveLen);
-        }
-        return maxLen;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $
-
-    The `for` loop has time complexity $O(n)$, resulting in an overall time complexity of $O(n)$.
-
-* Space Complexity: $ O(1) $
-
-## Add Edges to Make Degrees of All Nodes Even
-[Back to Top](#table-of-contents)
-### Overview
-There is an **undirected** graph consisting of `n` nodes numbered from `1` to `n`. 
-You are given the integer `n` and `a` **2D** array `edges` where `edges[i] = [a_i, b_i]` indicates that there is an edge between nodes `a_i` and `b_i`. The graph can be disconnected.
-
-You can add at most two additional edges (possibly none) to this graph so that there are no repeated edges and no self-loops.
-
-Return `true` if it is possible to make the degree of each node in the graph even, otherwise return `false`.
-
-The degree of a node is the number of edges connected to it.
-
-**Example 1:**  
-![aetmdoane1](assets/Algorithms/aetmdoane1.png)  
-> **Input:** n = 5, edges = [[1,2],[2,3],[3,4],[4,2],[1,4],[2,5]]  
-> **Output:** true  
-> **Explanation:** The above diagram shows a valid way of adding an edge.
-Every node in the resulting graph is connected to an even number of edges.
-
-**Example 2:**  
-![aetmdoane2](assets/Algorithms/aetmdoane2.png)  
-> **Input:** n = 4, edges = [[1,2],[3,4]]  
-> **Output:** true  
-> **Explanation:** The above diagram shows a valid way of adding two edges.
-
-**Example 3:**  
-![aetmdoane3](assets/Algorithms/aetmdoane3.png)  
-**Input:** n = 4, edges = [[1,2],[1,3],[1,4]]  
-**Output:** false  
-**Explanation:** It is not possible to obtain a valid graph with adding at most 2 edges.
-
-**Constraints:**
-* `3 <= n <= 10^5`
-* `2 <= edges.length <= 10^5`
-* `edges[i].length == 2`
-* `1 <= a_i, b_i <= n`
-* `a_i != b_i`
-* There are no repeated edges.
-
-### Analysis
-To make all node degrees in the graph even by adding only two edges, the following conditions must be met:
-* The number of nodes with odd degrees must be even and cannot exceed 4.
-    * If there are 4 such nodes, two distinct pairs must exist that can be connected.
-    * If there are 2 such nodes, they must either be unconnected, or a third node must exist that can connect to both.
-#### Implementation
-```java
-class Solution {
-    public boolean isPossible(int n, List<List<Integer>> edges) {
-        Set[] connectedNodes = new Set[n + 1];
-        Arrays.setAll(connectedNodes, item -> new HashSet<Integer>());
-
-        // Record all nodes connected to each node
-        for (List<Integer> edge : edges) {
-            int node1 = edge.get(0), node2 = edge.get(1);
-            connectedNodes[node1].add(node2);
-            connectedNodes[node2].add(node1);
-        }
-        List<Integer> nodeWithOddEdges = new ArrayList<Integer>();
-
-        // Identify all nodes with an odd degree
-        for (int node = 1; node <= n; ++node){
-            if(connectedNodes[node].size()%2>0){
-                nodeWithOddEdges.add(node);
-                if(nodeWithOddEdges.size()>4)return false;
-            }
-        }
-        int len = nodeWithOddEdges.size();
-        if (len == 0) return true;
-        if (len == 2) {
-            int node1 = nodeWithOddEdges.get(0), node2 = nodeWithOddEdges.get(1);
-            // Verify if the two nodes are not connected
-            if (!connectedNodes[node1].contains(node2)) return true;
-
-            // Check if there is a third node that can conect to the two nodes
-            for (int node = 1; node <= n; ++node){
-                if (
-                    node != node1 && node != node2 
-                    && !connectedNodes[node].contains(node1) && !connectedNodes[node].contains(node2)){
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        if (len == 4) {
-            int a = nodeWithOddEdges.get(0), b = nodeWithOddEdges.get(1), c = nodeWithOddEdges.get(2), d = nodeWithOddEdges.get(3);
-            return !connectedNodes[a].contains(b) && !connectedNodes[c].contains(d) ||
-                    !connectedNodes[a].contains(c) && !connectedNodes[b].contains(d) ||
-                    !connectedNodes[a].contains(d) && !connectedNodes[b].contains(c);
-        }
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(m+n) $  (`m` is the length of array `edges`)
-    * `Arrays.setAll`   
-    
-        Method `Arrays.setAll` takes a time complexiyt of $O(n)$.
-    * Record all nodes connected to each node
-
-        The `for` loop has a time complexity of $O(m)$ where `m` is the length of `edges` array.
-    * Identify all nodes with an odd degree
-        
-        The `for` loop takes a time complexiyt of $O(n)$.
-    * Check if there is a third node that can conect to the two nodes
-        
-        The `for` loop takes a time complexiyt of $O(n)$.
-
-    Therefore, the overall time complexity is $O(m+n)$.
-* Space Complexity: $ O(m+n) $
-    * The `connectedNodes` Set array takes $O(m+n)$ space in the worst case, where each node is connected to almost every other node.
-    * The `nodeWithOddEdges` array has a size of at most `4`, so its space complexity is constant and can be omitted.
-
-    Thus, the total space complexity is $O(m+n)$.
-
-## Amount of Time for Binary Tree to Be Infected
-[Back to Top](#table-of-contents)
-### Overview
-You are given the `root` of a binary tree with unique values, and an integer `start`. 
-At minute `0`, an infection starts from the node with value `start`.
-
-Each minute, a node becomes infected if:
-* The node is currently uninfected.
-* The node is adjacent to an infected node.
-Return the number of minutes needed for the entire tree to be infected.
-
-**Example 1:**
-
-![aoftfbttb1](assets/Algorithms/aoftfbttb1.png)
-> **Input:** root = [1,5,3,null,4,10,6,9,2], start = 3  
-> **Output:** 4  
-> **Explanation:** The following nodes are infected during:  
-    - Minute 0: Node 3  
-    - Minute 1: Nodes 1, 10 and 6  
-    - Minute 2: Node 5  
-    - Minute 3: Node 4  
-    - Minute 4: Nodes 9 and 2  
-    It takes 4 minutes for the whole tree to be infected so we return 4.
-
-**Example 2:**
-
-![aoftfbttb2](assets/Algorithms/aoftfbttb2.png)
-> **Input:** root = [1], start = 1  
-> **Output:** 0  
-> **Explanation:** At minute 0, the only node in the tree is infected so we return 0.
-
-**Constraints:**
-* The number of nodes in the tree is in the range `[1, 10^5]`.
-* `1 <= Node.val <= 10^5`
-* Each node has a unique value.
-* A node with a value of `start` exists in the tree.
-
-### Depth-first Search Solution
-The number of minutes required to infect the entire tree corresponds to the longest infection path starting from the node with the value `start`. 
-
-Traverse the tree from the `root` node, defining two variables:
-- `pathLen`: Tracks the path length from the current node.
-- `pathLenToStart`: Tracks the path length to the node with the value `start`.
-
-For each node, the following cases apply:
-
-- If the current node has the value `start`:
-
-  The answer will be the maximum path length between the left child nodes and the right child nodes.
-
-- If the node with the value `start` is in the left child nodes:
-
-  The answer will be the sum of:
-  - The path length from the current node to the start node (`pathLenToStart` of the left child nodes).
-  - The deepest path length of the right child nodes.
-
-- If the node with the value `start` is in the right child nodes:
-
-  The answer will be the sum of:
-  - The path length from the current node to the start node (`pathLenToStart` of the right child nodes).
-  - The deepest path length of the left child nodes.
-
-#### Implementation
-```java
-class Solution {
-    private class Vo {
-        public boolean hasStartNode;
-        public int pathLen;
-        public int pathLenToStart;
-        public Vo(Vo vo){
-            this.hasStartNode=vo.hasStartNode;
-            this.pathLen=vo.pathLen+1;
-            this.pathLenToStart=vo.hasStartNode?vo.pathLenToStart:vo.pathLenToStart+1;
-        }
-        public Vo(boolean hasStartNode, int pathLen, int pathLenToStart){
-            this.hasStartNode=hasStartNode;
-            this.pathLen=pathLen;
-            this.pathLenToStart=pathLenToStart;
-        }
-    }
-
-    private int ans=0;
-    public int amountOfTime(TreeNode root, int start) {
-        dfs(root,start,new Vo(false,0,0));
-        return this.ans;
-    }
-
-    public Vo dfs(TreeNode root, int start, Vo vo) {
-        if(root==null){
-            --vo.pathLen;
-            return vo;
-        }
-        // Check if the current node has the value 'start'
-        if(root.val==start)vo.hasStartNode=true;
-        Vo vo1=dfs(root.left, start, new Vo(vo));
-        Vo vo2=dfs(root.right, start, new Vo(vo));
-
-        if(root.val==start){
-            // If the current node has the value 'start'
-            this.ans=Math.max(Math.max(ans, vo1.pathLen-vo.pathLen), vo2.pathLen-vo.pathLen);
-        }else if(vo1.hasStartNode){
-            // If the node with value 'start' is among the left child nodes
-            ans=Math.max(ans, vo1.pathLenToStart-vo.pathLenToStart+vo2.pathLen-vo.pathLen);
-        }else if(vo2.hasStartNode){
-            // If the node with value 'start' is among the right child nodes
-            ans=Math.max(ans, vo1.pathLen-vo.pathLen+vo2.pathLenToStart-vo.pathLenToStart);
-        }
-        return new Vo(
-            vo1.hasStartNode||vo2.hasStartNode, 
-            Math.max(vo1.pathLen,vo2.pathLen), 
-            vo1.hasStartNode?vo1.pathLenToStart:vo2.pathLenToStart
-        );
-    }
-}
-```
-#### Time and Space Complexity
-- Time Complexity: $ O(n) $
-
-    In the worst case, DFS visits all nodes in the tree, leading to a time complexity of $O(n)$, where $n$ is the number of nodes in the tree.
-
-- Space Complexity: $ O(n) $
-    - Recursion Stack
-        
-        The DFS traversal uses recursion. In the worst case, the recursion depth can be $O(n)$, leading to a space complexity of $O(n)$ for the recursion stack.
-
-    - Vo Objects
-        
-        Each node in the tree creates a new Vo object during the DFS. 
-        This results in $O(n)$ Vo objects being created, adding to the space complexity.
-
-    - Auxiliary Space
-    
-        The `ans` variable uses constant extra space.
-
-    Therefore, the overall space complexity of the solution is $O(n)$.
-### Optimized Depth-first Search Solution
-Instead of creating a `Vo` object in each recursion, 
-use a positive path length to indicate that the node with value `start` is in the current path, 
-and a negative path length to indicate that the node is not part of the current path.  
-This eliminates the need for the `hasStartNode` and `pathLenToStart` variables from the previous solution.  
-The logic can be summarized as follows:
-
-- If the current node has the value `start`:
-
-  Reset the path length to `1` and begin accumulating it from the current node.  
-  Any previous path length, whether negative or `0`, will be reset to `1`.  
-  Recalculate the longest infection path length if either the left or right child tree produces a larger value.
-
-- If the node with the value `start` is in the left child nodes:
-
-  The answer is the sum of:
-  - The path length from the current node to the start node (`lLen`).
-  - The deepest path length of the right child nodes (`-rLen`).
-
-- If the node with the value `start` is in the right child nodes:
-
-  The answer is the sum of:
-  - The path length from the current node to the start node (`rLen`).
-  - The deepest path length of the left child nodes (`-lLen`).
-
-The second and third cases can be verified together using `Math.abs`.
-
-#### Implementation
-```java
-class Solution {
-    private int ans;
-
-    public int amountOfTime(TreeNode root, int start) {
-        dfs(root, start);
-        return ans;
-    }
-
-    private int dfs(TreeNode node, int start) {
-        if (node == null) {
-            return 0;
-        }
-        int lLen = dfs(node.left, start);
-        int rLen = dfs(node.right, start);
-        // Check if the current node has the value 'start'
-        if (node.val == start) {
-            this.ans = -Math.min(lLen, rLen); 
-            // Reset the path length upon encountering the node with the value 'start'.
-            return 1; 
-        }
-        if (lLen > 0 || rLen > 0) {
-            this.ans = Math.max(ans, Math.abs(lLen) + Math.abs(rLen)); 
-            // Accumulate the path length beginning at the node with the value 'start'.
-            return Math.max(lLen, rLen) + 1; 
-        }
-        // The path length is negative if the node with value 'start' is not in the current path.
-        return Math.min(lLen, rLen) - 1; 
-    }
-}
-```
-#### Time and Space Complexity
-- Time Complexity: $ O(n) $
-
-    Similar to the previous solution, visiting all nodes in the tree in the worst case results in a time complexity of $O(n)$, where $n$ is the total number of nodes.
-
-- Space Complexity: $ O(n) $
-    - Recursion Stack
-        
-        The DFS traversal utilizes recursion. In the worst case, the recursion depth can be $O(n)$, leading to a space complexity of $O(n)$ for the recursion stack.
-
-    - Auxiliary Space
-    
-        The `ans` variable uses constant extra space.
-
-    Therefore, the overall space complexity of the solution is $O(n)$.
