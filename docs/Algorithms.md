@@ -2983,38 +2983,38 @@ Delete the characters at 0-indexed positions 3 and 6 ("aababbab" -> "aabbbb").
 * 1 <= s.length <= 10^5
 * `s[i]` is `'a'` or `'b'`.
 
-### Analysis
+### Dynamic Programming Solution
+Define `f[i]` to represent the minimum deletions required for the first `i` characters of the string `s`. As we traverse the string `s`, the logic is as follows:
+
+- If the current character is `'b'`, there is no need to delete it.
+- If the current character is `'a'`:
+  - Deleting it results in `f[i] = f[i-1] + 1`, as the current character is removed.
+  - Keeping it requires deleting all `'b'` before the current `'a'`.
+
+Introduce a variable `countB` to represent the number of `'b'` characters encountered in the first `i` characters of the string `s`. 
+The dynamic programming formula will be:
+```text
+f[i] = 
+    f[i-1],                   if the current character is 'b'
+    min(f[i-1] + 1, countB),  if the current character is 'a'
+
 #### Implementation
 ```java
 class Solution {
     public int minimumDeletions(String s) {
-        // "aaaabaaaabaa"
-        // "aaaababaa"
-        // "aaaaaababa"
-        // "ababaaaabbbbbaaababbbbbbaaabbaababbabbbbaabbbbaabbabbabaabbbababaa"
-
-        // 1 <= s.length <= 10^5
-        int len=s.length();
-        // Delete all 'b' before the last 'a'
-        int countB=0;
-        int lastA=0;
-        // Delete all 'a' after the first 'b'
-        int countA=0;
-        int firstB=0; 
-        // Traverse string 's'
-        for(int i=0; i<len; i++){
-            if(s.charAt(i)=='b'){
-                ++countB;
-            }else{
-                lastA=i;
+        int f = 0, countB = 0;
+        for (char c: s.charArray())
+            if (c == 'b'){
+                ++countB; 
+            } else {
+                f = Math.min(f + 1, countB);
             }
-            if(s.charAt(len-1-i)=='a'){
-                ++countA;
-            }else{
-                firstB=len-1-i;
-            }
-        }
-        return Math.min(countB-(len-1-lastA), countA-firstB);
+        return f;
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    The `for` loop takes $O(n)$ time.
+* Space Complexity: $ O(1) $
