@@ -12,6 +12,7 @@
     - [Climbing Stairs](#climbing-stairs)
     - [Decode Ways II](#decode-ways-ii)
     - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
+    - [Minimum Deletions to Make String Balanced](#minimum-deletions-to-make-string-balanced)
     - [Stone Game](#stone-game)
     - [Target Sum](#target-sum)
 - [Fenwick Tree](#fenwick-tree)
@@ -37,7 +38,6 @@
 - [SQL](#sql)
     - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
-    - [Minimum Deletions to Make String Balanced](#minimum-deletions-to-make-string-balanced)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -1257,6 +1257,66 @@ class Solution {
     * Other variables
         
         The other variables, such as `len`, `passCount`, `i`, `x`, `k`, `ctz`, `s`, and `ans`, require constant extra space.
+## Minimum Deletions to Make String Balanced
+[Back to Top](#table-of-contents)  
+You are given a string `s` consisting only of characters `'a'` and `'b'`.
+
+You can delete any number of characters in `s` to make `s` **balanced**. `s` is **balanced** if there is no pair of indices `(i,j)` such that `i < j` and `s[i] = 'b'` and `s[j]= 'a'`.
+
+Return the **minimum** number of deletions needed to make `s` **balanced**.
+
+
+**Example 1:**
+> **Input:** s = "aababbab"  
+> **Output:** 2  
+> **Explanation:** You can either:  
+Delete the characters at 0-indexed positions 2 and 6 ("aababbab" -> "aaabbb"), or  
+Delete the characters at 0-indexed positions 3 and 6 ("aababbab" -> "aabbbb").
+
+**Example 2:**
+> **Input:** s = "bbaaaaabb"  
+> **Output:** 2  
+> **Explanation:** The only solution is to delete the first two characters.
+
+**Constraints:**
+* 1 <= s.length <= 10^5
+* `s[i]` is `'a'` or `'b'`.
+
+### Dynamic Programming Solution
+Define `f[i]` to represent the minimum deletions required for the first `i` characters of the string `s`. As we traverse the string `s`, the logic is as follows:
+
+- If the current character is `'b'`, there is no need to delete it.
+- If the current character is `'a'`:
+  - Deleting it results in `f[i] = f[i-1] + 1`, as the current character is removed.
+  - Keeping it requires deleting all `'b'` before the current `'a'`.
+
+Introduce a variable `countB` to represent the number of `'b'` characters encountered in the first `i` characters of the string `s`. 
+The dynamic programming formula will be:
+```text
+f[i] = 
+    f[i-1],                   if the current character is 'b'
+    min(f[i-1] + 1, countB),  if the current character is 'a'
+
+#### Implementation
+```java
+class Solution {
+    public int minimumDeletions(String s) {
+        int f = 0, countB = 0;
+        for (char c: s.charArray())
+            if (c == 'b'){
+                ++countB; 
+            } else {
+                f = Math.min(f + 1, countB);
+            }
+        return f;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    The `for` loop takes $O(n)$ time.
+* Space Complexity: $ O(1) $
 
 ## Stone Game
 [Back to Top](#table-of-contents)
@@ -2958,63 +3018,3 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
-## Minimum Deletions to Make String Balanced
-[Back to Top](#table-of-contents)  
-You are given a string `s` consisting only of characters `'a'` and `'b'`.
-
-You can delete any number of characters in `s` to make `s` **balanced**. `s` is **balanced** if there is no pair of indices `(i,j)` such that `i < j` and `s[i] = 'b'` and `s[j]= 'a'`.
-
-Return the **minimum** number of deletions needed to make `s` **balanced**.
-
-
-**Example 1:**
-> **Input:** s = "aababbab"  
-> **Output:** 2  
-> **Explanation:** You can either:  
-Delete the characters at 0-indexed positions 2 and 6 ("aababbab" -> "aaabbb"), or  
-Delete the characters at 0-indexed positions 3 and 6 ("aababbab" -> "aabbbb").
-
-**Example 2:**
-> **Input:** s = "bbaaaaabb"  
-> **Output:** 2  
-> **Explanation:** The only solution is to delete the first two characters.
-
-**Constraints:**
-* 1 <= s.length <= 10^5
-* `s[i]` is `'a'` or `'b'`.
-
-### Dynamic Programming Solution
-Define `f[i]` to represent the minimum deletions required for the first `i` characters of the string `s`. As we traverse the string `s`, the logic is as follows:
-
-- If the current character is `'b'`, there is no need to delete it.
-- If the current character is `'a'`:
-  - Deleting it results in `f[i] = f[i-1] + 1`, as the current character is removed.
-  - Keeping it requires deleting all `'b'` before the current `'a'`.
-
-Introduce a variable `countB` to represent the number of `'b'` characters encountered in the first `i` characters of the string `s`. 
-The dynamic programming formula will be:
-```text
-f[i] = 
-    f[i-1],                   if the current character is 'b'
-    min(f[i-1] + 1, countB),  if the current character is 'a'
-
-#### Implementation
-```java
-class Solution {
-    public int minimumDeletions(String s) {
-        int f = 0, countB = 0;
-        for (char c: s.charArray())
-            if (c == 'b'){
-                ++countB; 
-            } else {
-                f = Math.min(f + 1, countB);
-            }
-        return f;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $
-
-    The `for` loop takes $O(n)$ time.
-* Space Complexity: $ O(1) $
