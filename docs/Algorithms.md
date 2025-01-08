@@ -3051,4 +3051,34 @@ Given the array `nums` after the possible rotation and an integer `target`, retu
 
 #### Implementation
 ```java
+class Solution {
+    public int search(int[] nums, int target) {
+        return findTarget(target, nums, 0, nums.length-1);
+    }
+    private int findTarget(int target, int[] nums, int start, int end){
+        if(start>end)return -1;
+        int pivot = (start+end)/2;
+        if(nums[pivot]==target){
+            return pivot;
+        }else if(start==end){
+            return -1;
+        }
+        if(nums[pivot] >= nums[start]){
+            if(target >= nums[start] && target <= nums[pivot]){
+                return findTarget(target, nums, start, pivot);
+            }else{
+                return findTarget(target, nums, pivot+1, end);
+            }
+        }else {
+            if(target >= nums[pivot+1] && target <= nums[end]){
+                return findTarget(target, nums, pivot+1, end);
+            }else{
+                return findTarget(target, nums, start, pivot);
+            }
+        }
+    }
+}
 ```
+#### Time and Space Complexity
+* Time Complexity: $ O(logn) $
+* Space Complexity: $ O(logn) $
