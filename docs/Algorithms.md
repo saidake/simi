@@ -6,6 +6,8 @@
     - [Add Edges to Make Degrees of All Nodes Even](#add-edges-to-make-degrees-of-all-nodes-even)
 - [Depth-first Search](#depth-first-search)
     - [Amount of Time for Binary Tree to Be Infected](#amount-of-time-for-binary-tree-to-be-infected)
+- [Dichotomy](#dichotomy)
+    - [Search in Rotated Sorted Array](#search-in-rotated-sorted-array)
 - [Difference Array](#difference-array)
     - [Jump Game VII](#jump-game-vii)
 - [Dynamic Programming](#dynamic-programming)
@@ -38,7 +40,6 @@
 - [SQL](#sql)
     - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
-    - [Search in Rotated Sorted Array](#search-in-rotated-sorted-array)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -601,6 +602,88 @@ class Solution {
         The `ans` variable uses constant extra space.
 
     Therefore, the overall space complexity of the solution is $O(n)$.
+
+# Dichotomy
+## Search in Rotated Sorted Array
+### Overview
+There is an integer array `nums` sorted in ascending order (with distinct values).
+
+Prior to being passed to your function, `nums` is **possibly rotated** at an unknown pivot index `k` (`1 <= k < nums.length`) such that the resulting array is `[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]` (0-indexed). 
+For example, `[0,1,2,4,5,6,7]` might be rotated at pivot index `3` and become `[4,5,6,7,0,1,2]`.
+
+Given the array `nums` after the possible rotation and an integer `target`, return the index of `target` if it is in `nums`, or `-1` if it is not in `nums`.
+
+**Example 1:**
+> **Input:** nums = [4,5,6,7,0,1,2], target = 0  
+> **Output:** 4
+
+**Example 2:**
+> **Input:** nums = [4,5,6,7,0,1,2], target = 3  
+> **Output:** -1
+
+**Example 3:**
+> **Input:** nums = [1], target = 0  
+> **Output:** -1
+
+**Constraints:**
+* `1 <= nums.length <= 5000`
+* `-10^4 <= nums[i] <= 10^4`
+* All values of `nums` are unique.
+* `nums` is an ascending array that is possibly rotated.
+* `-10^4 <= target <= 10^4`
+
+### Analysis
+Since the original array is sorted in ascending order, even if it is rotated, splitting the array into two parts around the central element ensures that one part will always be sorted.  
+Define a central element `pivot`.  
+In each division, the approach is as follows:
+
+- If the left part is in ascending order:
+  - If `target >= nums[left] && target <= nums[pivot]`, search for `target` in the left part.
+  - Otherwise, search for `target` in the right part.
+
+- If the right part is in ascending order:
+  - If `target >= nums[pivot+1] && target <= nums[right]`, search for `target` in the right part.
+  - Otherwise, search for `target` in the left part.
+
+The key is leveraging the guaranteed existence of an ordered segment in each division.
+
+#### Implementation
+```java
+class Solution {
+    public int search(int[] nums, int target) {
+        return findTarget(target, nums, 0, nums.length-1);
+    }
+    private int findTarget(int target, int[] nums, int left, int right){
+        int pivot = (left+right)/2;
+        if(nums[pivot]==target){
+            return pivot;
+        }else if(left==right){
+            return -1;
+        }
+        if(nums[pivot] >= nums[left]){
+            if(target >= nums[left] && target <= nums[pivot]){
+                return findTarget(target, nums, left, pivot);
+            }else{
+                return findTarget(target, nums, pivot+1, right);
+            }
+        }else {
+            if(target >= nums[pivot+1] && target <= nums[right]){
+                return findTarget(target, nums, pivot+1, right);
+            }else{
+                return findTarget(target, nums, left, pivot);
+            }
+        }
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(logn) $
+
+    In each recursive call, the array range is split into **two** approximately equal part, resulting in a total recursion time of $O(logn)$.
+
+* Space Complexity: $ O(logn) $
+
+    Each recursive call adds a frame to the recursion stack, with a maximum depth of $O(logn)$, leading to a space complexity of O(logn).
 
 # Difference Array
 ## Jump Game VII
@@ -3019,88 +3102,4 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
-## Search in Rotated Sorted Array
-### Overview
-There is an integer array `nums` sorted in ascending order (with distinct values).
-
-Prior to being passed to your function, `nums` is **possibly rotated** at an unknown pivot index `k` (`1 <= k < nums.length`) such that the resulting array is `[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]` (0-indexed). 
-For example, `[0,1,2,4,5,6,7]` might be rotated at pivot index `3` and become `[4,5,6,7,0,1,2]`.
-
-Given the array `nums` after the possible rotation and an integer `target`, return the index of `target` if it is in `nums`, or `-1` if it is not in `nums`.
-
-**Example 1:**
-> **Input:** nums = [4,5,6,7,0,1,2], target = 0  
-> **Output:** 4
-
-**Example 2:**
-> **Input:** nums = [4,5,6,7,0,1,2], target = 3  
-> **Output:** -1
-
-**Example 3:**
-> **Input:** nums = [1], target = 0  
-> **Output:** -1
-
-**Constraints:**
-* `1 <= nums.length <= 5000`
-* `-10^4 <= nums[i] <= 10^4`
-* All values of `nums` are unique.
-* `nums` is an ascending array that is possibly rotated.
-* `-10^4 <= target <= 10^4`
-
-### Analysis
-Since the original array is sorted in ascending order, even if it is rotated, splitting the array into two parts around the central element ensures that one part will always be sorted.  
-Define a central element `pivot`.  
-In each division, the approach is as follows:
-
-- If the left part is in ascending order:
-  - If `target >= nums[left] && target <= nums[pivot]`, search for `target` in the left part.
-  - Otherwise, search for `target` in the right part.
-
-- If the right part is in ascending order:
-  - If `target >= nums[pivot+1] && target <= nums[right]`, search for `target` in the right part.
-  - Otherwise, search for `target` in the left part.
-
-The key is leveraging the guaranteed existence of an ordered segment in each division.
-
-#### Implementation
-```java
-class Solution {
-    public int search(int[] nums, int target) {
-        return findTarget(target, nums, 0, nums.length-1);
-    }
-    private int findTarget(int target, int[] nums, int left, int right){
-        int pivot = (left+right)/2;
-        if(nums[pivot]==target){
-            return pivot;
-        }else if(left==right){
-            return -1;
-        }
-        if(nums[pivot] >= nums[left]){
-            if(target >= nums[left] && target <= nums[pivot]){
-                return findTarget(target, nums, left, pivot);
-            }else{
-                return findTarget(target, nums, pivot+1, right);
-            }
-        }else {
-            if(target >= nums[pivot+1] && target <= nums[right]){
-                return findTarget(target, nums, pivot+1, right);
-            }else{
-                return findTarget(target, nums, left, pivot);
-            }
-        }
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(logn) $
-
-    In each recursive call, the array range is split into **two** approximately equal part, resulting in a total recursion time of $O(logn)$.
-
-* Space Complexity: $ O(logn) $
-
-    Each recursive call adds a frame to the recursion stack, with a maximum depth of $O(logn)$, leading to a space complexity of O(logn).
-
-
-
-
 
