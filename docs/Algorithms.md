@@ -3173,7 +3173,7 @@ Comparison and Updates:
   Example 2:  
   ```
   indices:  0 1 2 3 4 5 6 7 8
-  s:        d f m n b m n a
+  s:        d f m n b m n a z
                 i     j 
   k=2
   ```
@@ -3182,7 +3182,7 @@ Comparison and Updates:
         indices:  0 1 2 3 4 5 6 7 8
         s:        d f m n b m n a z
                       i           j 
-        k=1
+        k=2
         ```
 Note:
 * `len - numFriends + 1` represents the maximum length of the lexicographically smallest substring after splitting into `numFriends` parts.
