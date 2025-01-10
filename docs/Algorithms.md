@@ -3143,33 +3143,44 @@ Lexicographically largest string:
 ### Analysis
 #### Implementation
 ```java
-public class PrefixTree {
-    private String word;
-    private TreeMap<Character, PrefixTree> children;
-    public PrefixTree(){
-        this.children = new TreeMap(Character::compare);
-        this.word=null;
-    }
-    public void insert(String word){
-        // insert all characters into the prefix tree sequentially
-        for(char c: word.toCharArray()){
-            node.children.putIfAbsent(c, new PrefixTree());
-            node = node.children.get(c);
-            node.word=word;
-        }
-    }
-}
 class Solution {
     public String answerString(String word, int numFriends) {
-        int maxlen = word.length-numFriends+1;
-        // Split the word
-        for(int i=0; i<word.length()){
-            
+        int maxLen = word.length()-numFriends+1;
+        List<Character> lls=new ArrayList<>(maxLen);
+        // Initialize the 'lls' array
+        for(int i=0; i<maxLen; i++){
+            lls.add(word.charAt(i));
         }
+        // Traverse the string 'word' from index '1' to 'word.length()-maxLen'
+        for(int i=1; i<word.length(); i++){
+            if(numFriends==1)break;
+            boolean matched=false;
+            for(int j=0; j<maxLen && i+j < word.length(); j++){
+                if( word.charAt(i+j) > lls.get(j) || matched){
+                    lls.set(j, word.charAt(i+j));
+                    matched=true;
+                }else if(word.charAt(i+j) == lls.get(j)){
+                    continue;
+                }else {
+                    break;
+                }
+            }
+            if(i>=word.length()-maxLen && matched){
+                lls=lls.subList(0,word.length()-i);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Character c : lls) {
+            sb.append(c);
+        }
+        return sb.toString();
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $ O(n \times m) $
 
+* Space Complexity: $ O(m) $
 
 
 
