@@ -36,6 +36,7 @@
 - [Traversal](#traversal)
     - [Maximum Number of Operations With the Same Score I](#maximum-number-of-operations-with-the-same-score-i)
 - [Two Pointer](#two-pointer)
+    - [Find the Lexicographically Largest String From the Box I](#find-the-lexicographically-largest-string-from-the-box-i)
     - [Merge Sorted Array](#merge-sorted-array)
 - [SQL](#sql)
     - [Odd and Even Transactions](#odd-and-even-transactions)
@@ -2942,6 +2943,127 @@ class Solution {
 
     Only a constant amount of additional space is used.
 # Two-Pointer
+## Find the Lexicographically Largest String From the Box I
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a string `word`, and an integer `numFriends`.
+
+Alice is organizing a game for her `numFriends` friends. There are multiple rounds in the game, where in each round:
+
+* `word` is split into `numFriends` **non-empty** strings, such that no previous round has had the exact same split.
+
+* All the split words are put into a box.
+
+Find the lexicographically largest string from the box after all the rounds are finished.
+
+Lexicographically largest string: 
+
+* A string `a` is lexicographically smaller than a string `b` if in the first position where `a` and `b` differ, string `a` has a letter that appears earlier in the alphabet than the corresponding letter in `b`.
+* If the first `min(a.length, b.length)` characters do not differ, then the shorter string is the lexicographically smaller one.
+
+**Example 1:**
+> **Input:** word = "dbca", numFriends = 2  
+> **Output:** "dbc"  
+> **Explanation:**  
+> All possible splits are:  
+> * `"d"` and `"bca"`.
+> * `"db"` and `"ca"`.
+> * `"dbc"` and `"a"`.
+
+**Example 2:**
+> **Input:** word = "gggg", numFriends = 4  
+> **Output:** "g"  
+> **Explanation:**  
+> The only possible split is: `"g"`, `"g"`, `"g"`, and `"g"`.
+
+**Constraints:**
+* `1 <= word.length <= 5 * 10^3`
+* word consists only of lowercase English letters.
+* `1 <= numFriends <= word.length`
+
+### Two-Pointer Solution
+Define a variable `k` used to find the length of the longest common prefix between the substrings starting at `i` and `j`.
+
+Comparison and Updates:
+
+* If the substring starting at `j` is lexicographically greater than the substring starting at `i` after the common prefix:
+  
+  Example 1:  
+  ```
+  indices:  0 1 2 3 4 5 6 7 8
+  s:        d b c a a d e j q 
+                  i j 
+  k=1
+  ```
+    * Update `i` to `j` to consider the potentially better substring starting at `j`.
+        ```
+        indices:  0 1 2 3 4 5 6 7 8
+        s:        d b c a a d e j q 
+                          i 
+        k=1
+        ```
+    * Update `j` to `j + k + 1` to avoid redundant comparisons, where `k` is the length of the common prefix. 
+        ```
+        indices:  0 1 2 3 4 5 6 7 8
+        s:        d b c a a d e j q 
+                          i   j
+        k=1
+        ```
+* Otherwise:
+
+  Example 2:  
+  ```
+  indices:  0 1 2 3 4 5 6 7 8
+  s:        d f m n b m n a z
+                i     j 
+  k=2
+  ```
+    * Update `j` to `j + k + 1` to move to the position after the common prefix.
+        ```
+        indices:  0 1 2 3 4 5 6 7 8
+        s:        d f m n b m n a z
+                      i           j 
+        k=2
+        ```
+Note:
+* `len - numFriends + 1` represents the maximum length of the lexicographically smallest substring after splitting into `numFriends` parts.
+
+#### Implementation
+```java
+class Solution {
+    public String answerString(String s, int numFriends) {
+        if (numFriends == 1) {
+            return s;
+        }
+        int len = s.length();
+        int i = 0;
+        int j = 1;
+        while (j < len) {
+            int k = 0;
+            // Find the length of the longest common prefix between the substrings starting at `i` and `j`.
+            while (j + k < len && s.charAt(i + k) == s.charAt(j + k)) {
+                k++;
+            }
+            // Compare substring starting at `i` and `j`
+            if (j + k < len && s.charAt(i + k) < s.charAt(j + k)) {
+                int t = i;
+                i = j;
+                j = Math.max(j + 1, t + k + 1);
+            } else {
+                j += k + 1;
+            }
+        }
+        return s.substring(i, Math.min(i + len - numFriends + 1, len));
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    The `while` loop runs in $O(n)$ time, as index `j` skips over traversed elements in the inner loop, not affecting the total number of iterations.
+
+* Space Complexity: $ O(1) $
+
 ## Merge Sorted Array
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -3102,121 +3224,3 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
-## Find the Lexicographically Largest String From the Box I
-[Back to Top](#table-of-contents)  
-### Overview
-You are given a string `word`, and an integer `numFriends`.
-
-Alice is organizing a game for her `numFriends` friends. There are multiple rounds in the game, where in each round:
-
-* `word` is split into `numFriends` **non-empty** strings, such that no previous round has had the exact same split.
-
-* All the split words are put into a box.
-
-Find the lexicographically largest string from the box after all the rounds are finished.
-
-Lexicographically largest string: 
-
-* A string `a` is lexicographically smaller than a string `b` if in the first position where `a` and `b` differ, string `a` has a letter that appears earlier in the alphabet than the corresponding letter in `b`.
-* If the first `min(a.length, b.length)` characters do not differ, then the shorter string is the lexicographically smaller one.
-
-**Example 1:**
-> **Input:** word = "dbca", numFriends = 2  
-> **Output:** "dbc"  
-> **Explanation:**  
-> All possible splits are:  
-> * `"d"` and `"bca"`.
-> * `"db"` and `"ca"`.
-> * `"dbc"` and `"a"`.
-
-**Example 2:**
-> **Input:** word = "gggg", numFriends = 4  
-> **Output:** "g"  
-> **Explanation:**  
-> The only possible split is: `"g"`, `"g"`, `"g"`, and `"g"`.
-
-**Constraints:**
-* `1 <= word.length <= 5 * 10^3`
-* word consists only of lowercase English letters.
-* `1 <= numFriends <= word.length`
-
-### Analysis
-Define a variable `k` used to find the length of the longest common prefix between the substrings starting at `i` and `j`.
-
-Comparison and Updates:
-
-* If the substring starting at `j` is lexicographically greater than the substring starting at `i` after the common prefix:
-  
-  Example 1:  
-  ```
-  indices:  0 1 2 3 4 5 6 7 8
-  s:        d b c a a d e j q 
-                  i j 
-  k=1
-  ```
-    * Update `i` to `j` to consider the potentially better substring starting at `j`.
-        ```
-        indices:  0 1 2 3 4 5 6 7 8
-        s:        d b c a a d e j q 
-                          i 
-        k=1
-        ```
-    * Update `j` to `j + k + 1` to avoid redundant comparisons, where `k` is the length of the common prefix. 
-        ```
-        indices:  0 1 2 3 4 5 6 7 8
-        s:        d b c a a d e j q 
-                          i   j
-        k=1
-        ```
-* Otherwise:
-
-  Example 2:  
-  ```
-  indices:  0 1 2 3 4 5 6 7 8
-  s:        d f m n b m n a z
-                i     j 
-  k=2
-  ```
-    * Update `j` to `j + k + 1` to move to the position after the common prefix.
-        ```
-        indices:  0 1 2 3 4 5 6 7 8
-        s:        d f m n b m n a z
-                      i           j 
-        k=2
-        ```
-Note:
-* `len - numFriends + 1` represents the maximum length of the lexicographically smallest substring after splitting into `numFriends` parts.
-
-#### Implementation
-```java
-class Solution {
-    public String answerString(String s, int numFriends) {
-        if (numFriends == 1) {
-            return s;
-        }
-        int len = s.length();
-        int i = 0;
-        int j = 1;
-        while (j < len) {
-            int k = 0;
-            // Find the length of the longest common prefix between the substrings starting at `i` and `j`.
-            while (j + k < len && s.charAt(i + k) == s.charAt(j + k)) {
-                k++;
-            }
-            // Compare substring starting at `i` and `j`
-            if (j + k < len && s.charAt(i + k) < s.charAt(j + k)) {
-                int t = i;
-                i = j;
-                j = Math.max(j + 1, t + k + 1);
-            } else {
-                j += k + 1;
-            }
-        }
-        return s.substring(i, Math.min(i + len - numFriends + 1, len));
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $
-
-* Space Complexity: $ O(1) $
