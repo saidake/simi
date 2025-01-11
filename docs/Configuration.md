@@ -1,11 +1,11 @@
 # Table of Contents
 [Back to Main Project README](../README.md)
 - [Database](#database)
-  - [Oracle](#oracle)
+  - [Oracle 23ai](#oracle-23ai)
+- [Server](#server)
+  - [Temporal](#temporal) 
 # Database
-## Oracle
-
-### Run Oracle 23ai in Docker
+## Oracle 23ai
 Reference:  
   * https://www.oracle.com/cn/database/technologies/oracle-database-software-downloads.html
 
@@ -23,6 +23,27 @@ Reference:
     container-registry.oracle.com/database/free:23c
     ```
     `ORACLE_PWD` is an environment variable used to set the initial password for the default administrative users (SYS, SYSTEM, and other privileged accounts)
-3. Create a new database
-
-
+3. Open a terminal session inside the container
+    ```text
+    docker exec -it <container-name-or-id>  bash
+    ```
+# Server
+## Temporal
+1. Prerequisites
+    * Docker: Ensure Docker is installed and running.
+    * Docker Compose: Make sure you have Docker Compose installed.
+2. Download the Official Temporal Docker Compose File
+    ```text
+    git clone https://github.com/temporalio/docker-compose.git
+    cd docker-compose
+    ```
+3. Start the Temporal Server  
+   Run the following command to start all required services:
+   ```text
+    docker-compose up
+    ```
+4. Access the Temporal Web UI  
+   Once the server is running, access the Temporal Web UI in your browser:
+    ```text
+    http://localhost:8080
+    ```
