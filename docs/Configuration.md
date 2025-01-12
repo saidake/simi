@@ -3,7 +3,7 @@
 - [Database](#database)
   - [Oracle 23ai](#oracle-23ai)
 - [Server](#server)
-  - [Temporal](#temporal) 
+  - [Temporal](#temporal)
 # Database
 ## Oracle 23ai
 Reference:  
@@ -32,11 +32,27 @@ Reference:
 1. Prerequisites
     * Docker: Ensure Docker is installed and running.
     * Docker Compose: Make sure you have Docker Compose installed.
-2. Download the Official Temporal Docker Compose File
+2. Download and Modify the Official Temporal Docker Compose File
     ```text
     git clone https://github.com/temporalio/docker-compose.git
     cd docker-compose
     ```
+    Update the docker-compose.yml file to adjust the temporal server port and avoid port conflicts:
+    ```
+     temporal-ui:
+     container_name: temporal-ui
+     depends_on:
+       - temporal
+     environment:
+       - TEMPORAL_ADDRESS=temporal:7233
+       - TEMPORAL_CORS_ORIGINS=http://localhost:3000
+     image: temporalio/ui:${TEMPORAL_UI_VERSION}
+     networks:
+       - temporal-network
+     ports:
+       - <your-ui-port>:8080
+    ```
+   Replace the <your-ui-port> to yours.
 3. Start the Temporal Server  
    Run the following command to start all required services:
    ```text

@@ -9,15 +9,14 @@ import io.temporal.workflow.WorkflowMethod;
 import java.time.Duration;
 
 public class SimiWorkflowImpl implements SimiWorkflow {
-    private final SimiActivity activities = Workflow.newActivityStub(SimiActivity.class, ActivityOptions.newBuilder()
+    private final SimiActivity simiActivities = Workflow.newActivityStub(SimiActivity.class, ActivityOptions.newBuilder()
             .setStartToCloseTimeout(Duration.ofMinutes(1))
             .build());
 
     @WorkflowMethod
     @Override
     public void executeWorkflow(String input) {
-        String result = activities.performTask(input);
+        String result = simiActivities.performTask(input);
         System.out.println("Activity result: " + result);
     }
-
 }
