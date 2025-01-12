@@ -41,6 +41,7 @@
 - [SQL](#sql)
     - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
+    - [Count All Valid Pickup and Delivery Options](#count-all-valid-pickup-and-delivery-options)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -3254,22 +3255,43 @@ This is an invalid order (P1,D2,P2,D1) because Pickup 2 is after of Delivery 2.
 ### Analysis
 ```text
 n=3
-P D PDP D
+P DPDPD
     3*2 = 6
-P D PPD D
-    3*2*2 = 12
-P P DDP D
-    6*2 = 12
-P P DPD D
-    6*2*2 = 24
-P P PDD D
-    6*6= 36
+P DPP DD
+    3*2 *2 = 12
+P P DD PD
+    3*2 *2 = 12
+P PDP DD
+    3*2 *2*2 = 24
+P PP DDD
+    3*2 *6= 36
 ```
-Total number of combinations: $C(3,1) * C(2,1) * $ 
+Total number of combinations: 
+$$ 
+    C(3,1)*C(2,1)* ( C(3,3)*C(3,1)*C(2,1) + C()  )
+
+$$
+
 * Select the first 'P'
 * Select the second 'P'
+* Select an arrangement
+    * Select 'DDD' from the remaining positions
+    * Select 'DD' from 
 
 #### Implementation
 ```java
-
+class Solution {
+    private int MODULO=1_000_000_007;
+    public int countOrders(int n) {
+        long res=1;
+        // Select the first 'P'
+        for(int i=n; i>0; i--){
+            res*=i;
+            res%=MODULO;
+        }
+        // Choose an arrangement
+        res*=
+        return (int)res;
+    }
+}
 ```
