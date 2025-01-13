@@ -3253,45 +3253,65 @@ This is an invalid order (P1,D2,P2,D1) because Pickup 2 is after of Delivery 2.
 **Constraints:**
 * `1 <= n <= 500`
 ### Analysis
-```text
-n=3
-P DPDPD
-    3*2 = 6
-P DPP DD
-    3*2 *2 = 12
-P P DD PD
-    3*2 *2 = 12
-P PDP DD
-    3*2 *2*2 = 24
-P PP DDD
-    3*2 *6= 36
-```
-Total number of combinations: 
-$$ 
-    C(3,1)*C(2,1)* ( C(3,3)*C(3,1)*C(2,1) + C()  )
+Probability Combinations for `n=3`: 
 
-$$
+Combinations Breakdown:
+* PDPDPD
 
-* Select the first 'P'
-* Select the second 'P'
-* Select an arrangement
-    * Select 'DDD' from the remaining positions
-    * Select 'DD' from 
+   Calculation:  3 × 2 × 1 = 6
+
+* PPPDDD
+
+   Calculation:  3 × 2 × 1 × 3 × 2 = 36 
+
+* PDPPDD
+
+   Calculation:  3 × 2 × 1 × 2 = 12 
+
+* PPDDPD
+
+   Calculation:  3 × 2 × 1 × 2 = 12
+
+* PPDPDD
+
+   Calculation:  3 × 2 × 1 × 2 × 2 = 24 
+
+Selection Process:
+1. Select the 'P' Characters:
+   - Choose the first 'P' from \( P_1, P_2, P_3 \).
+   - Choose the second 'P' from the remaining options.
+   - Choose the third 'P' from the remaining options.
+
+2. Insert Corresponding 'D' Characters:
+   - Insert the first 'D' between the selected 'P's.
+   - Insert the second 'D' considering the new positions created by the first 'D'.
+   - Insert the third 'D' considering the positions created by the first two 'D's.
+
+Dynamic Programming Optimization:
+
+To simplify the process, use dynamic programming by leveraging previous combinations:
+
+For Example:
+
+When `n=2`, adding a new 'P' and 'D':**
+1. Insert 'PD' Together:
+     - Number of valid positions: $C(5, 1)$
+
+2. Insert 'PD' Separately:
+     - Number of valid positions: $C(5, 2)$
 
 #### Implementation
 ```java
 class Solution {
-    private int MODULO=1_000_000_007;
+    private int MOD=1_000_000_007;
     public int countOrders(int n) {
-        long res=1;
-        // Select the first 'P'
-        for(int i=n; i>0; i--){
-            res*=i;
-            res%=MODULO;
+        long res = 1;
+        for (int i = 2; i <= n; i++) {
+            long a = 2 * (i - 1) + 1;
+            long b = a * (a - 1) / 2 + a;
+            res = (b * res) % MOD;
         }
-        // Choose an arrangement
-        res*=
-        return (int)res;
+        return (int) res;
     }
 }
 ```
