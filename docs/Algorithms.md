@@ -3253,52 +3253,41 @@ This is an invalid order (P1,D2,P2,D1) because Pickup 2 is after of Delivery 2.
 **Constraints:**
 * `1 <= n <= 500`
 ### Analysis
-Probability Combinations for `n=3`: 
+When `n=2`, the following are all possible combinations:
+```text
+P1,P2,D1,D2
+P1,P2,D2,D1
+P2,P1,D1,D2
+P2,P1,D2,D1
 
-Combinations Breakdown:
-* PDPDPD
+P1,D1,P2,D2
+P2,D2,P1,D1
+```
 
-   Calculation:  3 × 2 × 1 = 6
+Adding a new `'P'` and `'D'`:
+1. Insert `'PD'` Together:
 
-* PPPDDD
+    For example, using `'L'` represents a location:
+    ```text
+    <> L <> L <> L <> L <>
+    ```
+    No matter whether it's `'P'` or `'D'` in the above `'L'` location, the number of valid gap positions that can be inserted for `'PD'`: 
+    $$ C(5, 1) $$
 
-   Calculation:  3 × 2 × 1 × 3 × 2 = 36 
+2. Insert `'PD'` Separately:
+    ```text
+    <> L <> L <> L <> L <>
+    ```
+    Select two valid gap positions from 5 gap positions (Order doesn't matter) :
+     $$ C(5,2) $$
 
-* PDPPDD
+Define `F(n)` as the number of valid pickup/delivery possible sequences, The formula is:
+$$F(n)=F(n-1) \times ( C(2(n-1)+1, 1) + C(2(n-1)+1, 2) )$$
 
-   Calculation:  3 × 2 × 1 × 2 = 12 
+$$F(n)=F(n-1) \times ( 2n-1 + (2n-1)*(2n-2)/2 )$$
 
-* PPDDPD
-
-   Calculation:  3 × 2 × 1 × 2 = 12
-
-* PPDPDD
-
-   Calculation:  3 × 2 × 1 × 2 × 2 = 24 
-
-Selection Process:
-1. Select the 'P' Characters:
-   - Choose the first 'P' from \( P_1, P_2, P_3 \).
-   - Choose the second 'P' from the remaining options.
-   - Choose the third 'P' from the remaining options.
-
-2. Insert Corresponding 'D' Characters:
-   - Insert the first 'D' between the selected 'P's.
-   - Insert the second 'D' considering the new positions created by the first 'D'.
-   - Insert the third 'D' considering the positions created by the first two 'D's.
-
-Dynamic Programming Optimization:
-
-To simplify the process, use dynamic programming by leveraging previous combinations:
-
-For Example:
-
-When `n=2`, adding a new 'P' and 'D':**
-1. Insert 'PD' Together:
-     - Number of valid positions: $C(5, 1)$
-
-2. Insert 'PD' Separately:
-     - Number of valid positions: $C(5, 2)$
+The initial condition is: 
+$$F(1)=1$$
 
 #### Implementation
 ```java
@@ -3315,3 +3304,9 @@ class Solution {
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    The `for` loop runs in $O(n)$ time.
+
+* Space Complexity: $ O(1) $
