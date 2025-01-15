@@ -42,6 +42,7 @@
     - [Odd and Even Transactions](#odd-and-even-transactions)
 - [Uncategorized Problems](#uncategorized-problems)
     - [Count All Valid Pickup and Delivery Options](#count-all-valid-pickup-and-delivery-options)
+    - [Make the XOR of All Segments Equal to Zero](#make-the-xor-of-all-segments-equal-to-zero)
 # Array
 ## Array Partition
 [Back to Top](#table-of-contents)  
@@ -3313,3 +3314,67 @@ class Solution {
     The `for` loop runs in $O(n)$ time.
 
 * Space Complexity: $ O(1) $
+
+## Make the XOR of All Segments Equal to Zero
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an array `nums` and an integer `k`. The `XOR` of a segment `[left, right]` where `left <= right` is the `XOR` of all the elements with indices between `left` and `right`, inclusive: `nums[left] XOR nums[left+1] XOR ... XOR nums[right]`.
+
+Return the minimum number of elements to change in the array such that the `XOR` of all segments of size `k` is equal to zero.
+
+**Example 1:**
+> **Input:** nums = [1,2,0,3,0], k = 1  
+> **Output:** 3  
+> **Explanation:** Modify the array from [1,2,0,3,0] to from [0,0,0,0,0].
+
+**Example 2:**
+> **Input:** nums = [3,4,5,2,1,7,3,4,7], k = 3  
+> **Output:** 3  
+> **Explanation:** Modify the array from [3,4,5,2,1,7,3,4,7] to [3,4,7,3,4,7,3,4,7].
+
+**Example 3:**
+> **Input:** nums = [1,2,4,1,2,5,1,2,6], k = 3  
+> **Output:** 3  
+> **Explanation:** Modify the array from [1,2,4,1,2,5,1,2,6] to [1,2,3,1,2,3,1,2,3].
+
+**Constraints:**
+* `1 <= k <= nums.length <= 2000`
+* `0 <= nums[i] < 2^10`
+
+
+#### Implementation
+```java
+class Solution {
+    public int minChanges(int[] nums, int k) {
+        int len=nums.length;
+        int sLen=len-k+1;
+        int[] dp=new int[sLen];
+        dp[0]=0;
+        int xor=nums[0];
+        int or=nums[0];
+        // initialization
+        Map<Integer, Integer> bitCounts=new HashMap();
+        int maxNumKey=-1;
+        for(int i=0; i<k; i++){
+            int cu=nums[i];
+            int lsb=cu&-cu;
+            bitCounts.compute(lsb,(key, val)->val!=null?val+1:1);
+            if(maxNumKey==-1)maxNumKey=lsb;
+            if(bitCounts.get(maxNumKey)<bitCounts.get(lsb)){
+                maxNumKey=lsb;
+            }
+            while((cu&cu-1)!=0){
+                cu=cu&-cu;
+                lsb=cu&-cu;
+                bitCounts.compute(lsb,(key, val)->val!=null?val+1:1);
+                if(bitCounts.get(maxNumKey)<bitCounts.get(lsb)){
+                    maxNumKey=lsb;
+                }
+            }
+        }
+        System.out.println("maxNumKey: "+maxNumKey);
+ 
+        return 0;
+    }
+}
+```
