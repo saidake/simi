@@ -3348,33 +3348,62 @@ class Solution {
     public int minChanges(int[] nums, int k) {
         int len=nums.length;
         int sLen=len-k+1;
-        int[] dp=new int[sLen];
+        int[] dp=new int[sLen+1];
         dp[0]=0;
-        int xor=nums[0];
-        int or=nums[0];
-        // initialization
+        // Find the maxinum number of common bits
         Map<Integer, Integer> bitCounts=new HashMap();
-        int maxNumKey=-1;
+        int maxNumKey=nums[0]&-nums[0];
         for(int i=0; i<k; i++){
             int cu=nums[i];
-            int lsb=cu&-cu;
-            bitCounts.compute(lsb,(key, val)->val!=null?val+1:1);
-            if(maxNumKey==-1)maxNumKey=lsb;
-            if(bitCounts.get(maxNumKey)<bitCounts.get(lsb)){
-                maxNumKey=lsb;
-            }
-            while((cu&cu-1)!=0){
-                cu=cu&-cu;
-                lsb=cu&-cu;
+            do{
+                int lsb=cu&-cu;
                 bitCounts.compute(lsb,(key, val)->val!=null?val+1:1);
                 if(bitCounts.get(maxNumKey)<bitCounts.get(lsb)){
                     maxNumKey=lsb;
                 }
+                cu=cu&cu-1;
+            }while(cu!=0);
+        }
+        // Make sure each integer contains the common bit with the maximum number
+        for(int i=0; i<k; i++){
+            int cu=nums[i];
+            if((cu&maxNumKey)==0){
+                nums[i]=cu|maxNumKey;
+                dp[i]=dp[i-1]+1;
+            }else{
+                dp[i]=i-1>=0?dp[i-1]:0;
             }
         }
-        System.out.println("maxNumKey: "+maxNumKey);
- 
-        return 0;
+        // Make sure each integer contains the common bit with the maximum number
+        for(int j=k; j<len; j++){
+            // Remove the leftmost element
+            int left=nums[j-k];
+            do{
+                int lsb=left&-left;
+                bitCounts.compute(lsb,(key, val)->val-1>=0?val-1:0);
+                left=left&left-1;
+            }while(left!=0);
+            // Add a new element
+            int right=nums[j];
+            do{
+                int lsb=right&-right;
+                bitCounts.compute(lsb,(key, val)->val!=null?val+1:1);
+                right=right&right-1;
+            }while(right!=0);
+            // Find the maxinum number of common bits.
+            Map.Entry<Integer, Integer> maxEntry=bitCounts.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
+            // Make sure each integer contains the common bit with the maximum number
+            // for(int m=j-k; m<k; m++){
+            //     int cu=nums[m];
+            //     if((cu&maxEntry.getKey())==0){
+            //         nums[m]=cu|maxEntry.getKey();
+            //         dp[m]=m-1>=0?dp[m-1]+1:0;
+            //     }else{
+            //         dp[m]=m-1>=0?dp[m-1]:0;
+            //     }
+            // }
+        }
+        return dp[sLen];
     }
 }
 ```
