@@ -4,6 +4,7 @@
   - [Oracle 23ai](#oracle-23ai)
 - [Server](#server)
   - [Temporal](#temporal)
+  - [Spark](#spark)
 # Database
 ## Oracle 23ai
 Reference:  
@@ -37,22 +38,22 @@ Reference:
     git clone https://github.com/temporalio/docker-compose.git
     cd docker-compose
     ```
-    Update the docker-compose.yml file to adjust the temporal server port and avoid port conflicts:
+    Modify the docker-compose.yml file to adjust the temporal server port and avoid port conflicts:
+    ```yaml
+    temporal-ui:
+    container_name: temporal-ui
+    depends_on:
+      - temporal
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CORS_ORIGINS=http://localhost:3000
+    image: temporalio/ui:${TEMPORAL_UI_VERSION}
+    networks:
+      - temporal-network
+    ports:
+      - <ui-port>:8080
     ```
-     temporal-ui:
-     container_name: temporal-ui
-     depends_on:
-       - temporal
-     environment:
-       - TEMPORAL_ADDRESS=temporal:7233
-       - TEMPORAL_CORS_ORIGINS=http://localhost:3000
-     image: temporalio/ui:${TEMPORAL_UI_VERSION}
-     networks:
-       - temporal-network
-     ports:
-       - <your-ui-port>:8080
-    ```
-   Replace the <your-ui-port> to yours.
+   Replace `<ui-port>` with your ui port.
 3. Start the Temporal Server  
    Run the following command to start all required services:
    ```text
@@ -61,5 +62,40 @@ Reference:
 4. Access the Temporal Web UI  
    Once the server is running, access the Temporal Web UI in your browser:
     ```text
-    http://localhost:8080
+    http://localhost:<your-ui-port>
     ```
+## Spark
+1. Prerequisites
+   * Docker: Ensure Docker is installed and running.
+   * Docker Compose: Make sure you have Docker Compose installed.
+2. Setup Spark Server using Docker Compose
+   Create a docker-compose.yml file
+   ```yaml 
+   version: '3.8'
+   services:
+     spark-master:
+       image: bitnami/spark:latest
+       container_name: spark-master
+       hostname: spark-master
+       networks:
+         - spark-network
+       ports:
+         - "<ui-port>:8080"
+         - "7077:7077"
+       command: bash -c "/opt/bitnami/scripts/spark/run.sh && /opt/bitnami/spark/bin/spark-class org.apache.spark.deploy.master.Master"
+
+     spark-worker:
+       image: bitnami/spark:latest
+       depends_on:
+         - spark-master
+       networks:
+         - spark-network
+       environment:
+         - SPARK_MASTER_URL=spark://spark-master:7077
+       command: bash -c "/opt/bitnami/scripts/spark/run.sh && /opt/bitnami/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077"
+
+   networks:
+     spark-network:
+       driver: bridge
+   ```
+   Replace `<ui-port>` with your ui port to avoid port conflicts.

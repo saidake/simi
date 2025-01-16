@@ -37,6 +37,14 @@
     <td>Test temporal server</td>
     <td>N/A</td>
 </tr>
+<tr>
+    <td>Spark 4.9.0 </td>
+    <td>Docker Container</td>
+    <td>127.0.0.1:7077</td>
+    <td><a href="http://127.0.0.1:48161">http://127.0.0.1:48161</a></td>
+    <td>Test Spark server</td>
+    <td>N/A</td>
+</tr>
 </tbody>
 </table>
 
