@@ -3341,69 +3341,53 @@ Return the minimum number of elements to change in the array such that the `XOR`
 * `1 <= k <= nums.length <= 2000`
 * `0 <= nums[i] < 2^10`
 
+### Dynamic Programming Solution
+Define an array `dp` where`dp[i]`represents the minimum changes required for the first `i` groups.
+Utilize a frequency map `freq` to eliminate redundant calculations.
 
 #### Implementation
 ```java
+import java.util.*;
+
 class Solution {
     public int minChanges(int[] nums, int k) {
-        int len=nums.length;
-        int sLen=len-k+1;
-        int[] dp=new int[sLen+1];
-        dp[0]=0;
-        // Find the maxinum number of common bits
-        Map<Integer, Integer> bitCounts=new HashMap();
-        int maxNumKey=nums[0]&-nums[0];
-        for(int i=0; i<k; i++){
-            int cu=nums[i];
-            do{
-                int lsb=cu&-cu;
-                bitCounts.compute(lsb,(key, val)->val!=null?val+1:1);
-                if(bitCounts.get(maxNumKey)<bitCounts.get(lsb)){
-                    maxNumKey=lsb;
-                }
-                cu=cu&cu-1;
-            }while(cu!=0);
-        }
-        // Make sure each integer contains the common bit with the maximum number
-        for(int i=0; i<k; i++){
-            int cu=nums[i];
-            if((cu&maxNumKey)==0){
-                nums[i]=cu|maxNumKey;
-                dp[i]=dp[i-1]+1;
-            }else{
-                dp[i]=i-1>=0?dp[i-1]:0;
+        int len = nums.length;
+        // Since nums[i] <= 1024, the maximum number of bits is 10
+        int maxNum = 1 << 10; 
+
+        int[] dp = new int[maxNum];
+        Arrays.fill(dp, Integer.MAX_VALUE / 2);
+        dp[0] = 0;
+
+        for (int i = 0; i < k; i++) {
+            // Frequency map for the i-th group.
+            Map<Integer, Integer> freq = new HashMap<>();
+            int total = 0;
+
+            // Calculate the frequency of each number
+            for (int j = i; j < len; j += k) {
+                freq.put(nums[j], freq.getOrDefault(nums[j], 0) + 1);
+                total++;
             }
+
+            // Find the minimum value in dp
+            int minDp = Arrays.stream(dp).min().orElse(Integer.MAX_VALUE / 2);
+
+            // Temporary array for the new dp values
+            int[] newDp = new int[maxNum];
+            Arrays.fill(newDp, minDp + total);
+
+            for (int key : freq.keySet()) {
+                int count = freq.get(key);
+
+                for (int x = 0; x < maxNum; x++) {
+                    newDp[x ^ key] = Math.min(newDp[x ^ key], dp[x] + total - count);
+                }
+            }
+            dp = newDp;
         }
-        // Make sure each integer contains the common bit with the maximum number
-        for(int j=k; j<len; j++){
-            // Remove the leftmost element
-            int left=nums[j-k];
-            do{
-                int lsb=left&-left;
-                bitCounts.compute(lsb,(key, val)->val-1>=0?val-1:0);
-                left=left&left-1;
-            }while(left!=0);
-            // Add a new element
-            int right=nums[j];
-            do{
-                int lsb=right&-right;
-                bitCounts.compute(lsb,(key, val)->val!=null?val+1:1);
-                right=right&right-1;
-            }while(right!=0);
-            // Find the maxinum number of common bits.
-            Map.Entry<Integer, Integer> maxEntry=bitCounts.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
-            // Make sure each integer contains the common bit with the maximum number
-            // for(int m=j-k; m<k; m++){
-            //     int cu=nums[m];
-            //     if((cu&maxEntry.getKey())==0){
-            //         nums[m]=cu|maxEntry.getKey();
-            //         dp[m]=m-1>=0?dp[m-1]+1:0;
-            //     }else{
-            //         dp[m]=m-1>=0?dp[m-1]:0;
-            //     }
-            // }
-        }
-        return dp[sLen];
+        return dp[0];
     }
 }
 ```
+#### Time and Space Complexity
