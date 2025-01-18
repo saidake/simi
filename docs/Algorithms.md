@@ -3279,7 +3279,7 @@ Adding a new `'P'` and `'D'`:
     ```text
     <> L <> L <> L <> L <>
     ```
-    Select two valid gap positions from 5 gap positions (Order doesn't matter) :
+    Select two valid gap positions from 5 gap positions in a fixed order:
      $$ C(5,2) $$
 
 Define `F(n)` as the number of valid pickup/delivery possible sequences where `'n'` represents the total number of pickups (`'P'`).  
@@ -3342,18 +3342,33 @@ Return the minimum number of elements to change in the array such that the `XOR`
 * `0 <= nums[i] < 2^10`
 
 ### Dynamic Programming Solution
-Define an array `dp` where`dp[i]`represents the minimum changes required for the first `i` groups.
+Define an array `dp` where`dp[i]` represents the minimum number of elements to change in the array such that the XOR of all segments of size `k` is equal to `i`.
+
 Utilize a frequency map `freq` to eliminate redundant calculations.
+
+```text
+nums =   [4, 7, 3, 8, 6, 5, 9]
+indices:  0  1  2  3  4  5  6
+
+k = 3
+
+i = 0
+    j = 0,3,6
+
+i = 1
+    j = 7,6
+
+i = 2
+    j = 3,5
+```
 
 #### Implementation
 ```java
-import java.util.*;
-
 class Solution {
     public int minChanges(int[] nums, int k) {
         int len = nums.length;
-        // Since nums[i] <= 1024, the maximum number of bits is 10
-        int maxNum = 1 << 10; 
+        // Since nums[i] <= 2^10, the maximum number of bits is 10
+        int maxNum = 1024; 
 
         int[] dp = new int[maxNum];
         Arrays.fill(dp, Integer.MAX_VALUE / 2);
@@ -3362,6 +3377,7 @@ class Solution {
         for (int i = 0; i < k; i++) {
             // Frequency map for the i-th group.
             Map<Integer, Integer> freq = new HashMap<>();
+            // Count the distinct elements
             int total = 0;
 
             // Calculate the frequency of each number
@@ -3377,9 +3393,9 @@ class Solution {
             int[] newDp = new int[maxNum];
             Arrays.fill(newDp, minDp + total);
 
+            // Traverse these distict elements of array 'nums'
             for (int key : freq.keySet()) {
                 int count = freq.get(key);
-
                 for (int x = 0; x < maxNum; x++) {
                     newDp[x ^ key] = Math.min(newDp[x ^ key], dp[x] + total - count);
                 }
