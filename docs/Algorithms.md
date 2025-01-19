@@ -3342,25 +3342,32 @@ Return the minimum number of elements to change in the array such that the `XOR`
 * `0 <= nums[i] < 2^10`
 
 ### Dynamic Programming Solution
-Define an array `dp` where`dp[i]` represents the minimum number of elements to change in the array such that the XOR of all segments of size `k` is equal to `i`.
-
-Utilize a frequency map `freq` to eliminate redundant calculations.
-
+Divide the array nums into `k` groups. 
+The **i-th** group consists of all elements where the index `j % k = i`.  
+Example: 
 ```text
 nums =   [4, 7, 3, 8, 6, 5, 9]
 indices:  0  1  2  3  4  5  6
 
 k = 3
 
-i = 0
-    j = 0,3,6
+i = 0 (Group 0)
+    j = 0,3,6 
 
-i = 1
-    j = 7,6
+i = 1 (Group 1)
+    j = 1,4
 
-i = 2
-    j = 3,5
+i = 2 (Group 2)
+    j = 2,5
 ```
+
+Define an array `dp` where`dp[x]` represents the minimum number of changes required to achieve an XOR value of `x` from the elements that have been processed so far.
+
+the minimum changes required to make the XOR of groups from `0` to `i` equal to `x`.  
+
+Initially, `dp[0] = 0`, meaning no changes are needed to achieve an `XOR` of 0 before processing any group.
+
+Utilize a frequency map `freq` to eliminate redundant calculations.
 
 #### Implementation
 ```java
@@ -3368,9 +3375,9 @@ class Solution {
     public int minChanges(int[] nums, int k) {
         int len = nums.length;
         // Since nums[i] <= 2^10, the maximum number of bits is 10
-        int maxNum = 1024; 
+        int maxVal = 1024; 
 
-        int[] dp = new int[maxNum];
+        int[] dp = new int[maxVal];
         Arrays.fill(dp, Integer.MAX_VALUE / 2);
         dp[0] = 0;
 
@@ -3380,7 +3387,7 @@ class Solution {
             // Count the distinct elements
             int total = 0;
 
-            // Calculate the frequency of each number
+            // Calculate the frequency of each number at index `j`
             for (int j = i; j < len; j += k) {
                 freq.put(nums[j], freq.getOrDefault(nums[j], 0) + 1);
                 total++;
@@ -3390,14 +3397,14 @@ class Solution {
             int minDp = Arrays.stream(dp).min().orElse(Integer.MAX_VALUE / 2);
 
             // Temporary array for the new dp values
-            int[] newDp = new int[maxNum];
+            int[] newDp = new int[maxVal];
             Arrays.fill(newDp, minDp + total);
 
-            // Traverse these distict elements of array 'nums'
-            for (int key : freq.keySet()) {
-                int count = freq.get(key);
-                for (int x = 0; x < maxNum; x++) {
-                    newDp[x ^ key] = Math.min(newDp[x ^ key], dp[x] + total - count);
+            // Precompute the XOR result of the current 'nums[j]' value 'item' and all possible values.
+            for (int item : freq.keySet()) {
+                int count = freq.get(item);
+                for (int x = 0; val < maxVal; x++) {
+                    newDp[x ^ item] = Math.min(newDp[x ^ item], dp[x] + total - count);
                 }
             }
             dp = newDp;
