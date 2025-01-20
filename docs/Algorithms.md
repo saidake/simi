@@ -3342,74 +3342,88 @@ Return the minimum number of elements to change in the array such that the `XOR`
 * `0 <= nums[i] < 2^10`
 
 ### Dynamic Programming Solution
+Since the `XOR` result of any segments of length `k` equals to `0`, for index `i`, we have:
+$$ nums[i] \oplus nums[i+1] \oplus ... \oplus nums[i+k-1] =0 $$
+And another equation:
+$$ nums[i+1] \oplus nums[i+2] \oplus ... \oplus nums[i+k] =0 $$
+
+The $\oplus$ means `XOR` operation. Based on the formula $a \oplus b \oplus b =a $ ,the `XOR` result of the above two equations is:  
+$$ nums[i] \oplus nums[i+k]=0 $$
+
 Divide the array nums into `k` groups. 
 The **i-th** group consists of all elements where the index `j % k = i`.  
-Example: 
+<!-- Example: 
 ```text
 nums =   [4, 7, 3, 8, 6, 5, 9]
 indices:  0  1  2  3  4  5  6
 
 k = 3
 
-i = 0 (Group 0)
+j = 0 (Group 0)
     j = 0,3,6 
 
-i = 1 (Group 1)
+j = 1 (Group 1)
     j = 1,4
 
-i = 2 (Group 2)
+j = 2 (Group 2)
     j = 2,5
-```
+``` -->
 
-Define an array `dp` where`dp[x]` represents the minimum number of changes required to achieve an XOR value of `x` from the elements that have been processed so far.
+<!-- Define a two-dimensional array `dp` where`dp[m][x]` represents the minimum number of changes required to achieve an XOR value of `x` from the elements that have been processed so far. -->
 
-the minimum changes required to make the XOR of groups from `0` to `i` equal to `x`.  
+<!-- the minimum changes required to make the XOR of groups from `0` to `i` equal to `x`.  
 
 Initially, `dp[0] = 0`, meaning no changes are needed to achieve an `XOR` of 0 before processing any group.
 
-Utilize a frequency map `freq` to eliminate redundant calculations.
+Utilize a frequency map `freq` to eliminate redundant calculations. -->
 
 #### Implementation
 ```java
 class Solution {
     public int minChanges(int[] nums, int k) {
-        int len = nums.length;
-        // Since nums[i] <= 2^10, the maximum number of bits is 10
-        int maxVal = 1024; 
+        int maxVal = 1024;
 
-        int[] dp = new int[maxVal];
-        Arrays.fill(dp, Integer.MAX_VALUE / 2);
-        dp[0] = 0;
-
-        for (int i = 0; i < k; i++) {
-            // Frequency map for the i-th group.
-            Map<Integer, Integer> freq = new HashMap<>();
-            // Count the distinct elements
-            int total = 0;
-
-            // Calculate the frequency of each number at index `j`
-            for (int j = i; j < len; j += k) {
-                freq.put(nums[j], freq.getOrDefault(nums[j], 0) + 1);
-                total++;
+        // Create a HashMap for each group to store the frequency of each element
+        Map<Integer, Integer>[] maps = new Map[k];
+        for (int i = 0; i < nums.length; i++) {
+            int mod = i % k;
+            if (maps[mod] == null) {
+                maps[mod] = new HashMap<>();
             }
+            maps[mod].put(nums[i], maps[mod].getOrDefault(nums[i], 0) + 1);
+        }
 
-            // Find the minimum value in dp
-            int minDp = Arrays.stream(dp).min().orElse(Integer.MAX_VALUE / 2);
-
-            // Temporary array for the new dp values
-            int[] newDp = new int[maxVal];
-            Arrays.fill(newDp, minDp + total);
-
-            // Precompute the XOR result of the current 'nums[j]' value 'item' and all possible values.
-            for (int item : freq.keySet()) {
-                int count = freq.get(item);
-                for (int x = 0; val < maxVal; x++) {
-                    newDp[x ^ item] = Math.min(newDp[x ^ item], dp[x] + total - count);
+        // Find the minimum number of elements to keep unchanged within each group
+        int min = Integer.MAX_VALUE / 2;
+        int sum = 0;
+        for (int j = 0; j < k; j++) {
+            Map<Integer, Integer> map = maps[j];
+            int maxFreq = 0;
+            // the number of distinct elements
+            int count = 0;
+            for (int freq : map.values()) {
+                // Find the maximum frequency within the group
+                maxFreq = Math.max(freq, maxFreq);
+                count += freq;
+            }
+            sum += maxFreq;
+            min = Math.min(min, maxFreq);
+        }
+        sum -= min;
+        int[][] dp = new int[k][maxVal];
+        for (Map.Entry<Integer, Integer> e : maps[0].entrySet()) {
+            dp[0][e.getKey()] = e.getValue();
+        }
+        for (int m = 1; m < k; m++) {
+            for (Map.Entry<Integer, Integer> e : maps[m % k].entrySet()) {
+                int num = e.getKey();
+                int count = e.getValue();
+                for (int n = 0; n < maxVal; n++) {
+                    dp[m][n ^ num] = Math.max(dp[m][n ^ num], dp[m - 1][n] + count);
                 }
             }
-            dp = newDp;
         }
-        return dp[0];
+        return nums.length - Math.max(sum, dp[dp.length - 1][0]);
     }
 }
 ```
