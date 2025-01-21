@@ -3350,32 +3350,11 @@ $$ nums[i+1] \oplus nums[i+2] \oplus ... \oplus nums[i+k] =0 $$
 The $\oplus$ means `XOR` operation. Based on the formula $a \oplus b \oplus b =a $ ,the `XOR` result of the above two equations is:  
 $$ nums[i] \oplus nums[i+k]=0 $$
 
-Divide the array nums into `k` groups. 
-The **i-th** group consists of all elements where the index `j % k = i`.  
-<!-- Example: 
-```text
-nums =   [4, 7, 3, 8, 6, 5, 9]
-indices:  0  1  2  3  4  5  6
+Divide the array nums into `k` groups, The **i-th** group consists of all elements where the index `j % k = i`.  
+<!-- Based on the previous equation, the relation between these groups will be:
+$$ group_0 \oplus group_1 \oplus ... \oplus group_{k-1} = 0 $$  -->
 
-k = 3
-
-j = 0 (Group 0)
-    j = 0,3,6 
-
-j = 1 (Group 1)
-    j = 1,4
-
-j = 2 (Group 2)
-    j = 2,5
-``` -->
-
-<!-- Define a two-dimensional array `dp` where`dp[m][x]` represents the minimum number of changes required to achieve an XOR value of `x` from the elements that have been processed so far. -->
-
-<!-- the minimum changes required to make the XOR of groups from `0` to `i` equal to `x`.  
-
-Initially, `dp[0] = 0`, meaning no changes are needed to achieve an `XOR` of 0 before processing any group.
-
-Utilize a frequency map `freq` to eliminate redundant calculations. -->
+Define a two-dimensional array `dp` where`dp[m][x]` represents maximum number of elements that can be kept **unchanged** in the first `m` groups to achieve a `XOR` result of `x`.
 
 #### Implementation
 ```java
@@ -3393,16 +3372,16 @@ class Solution {
             maps[mod].put(nums[i], maps[mod].getOrDefault(nums[i], 0) + 1);
         }
 
-        // Find the minimum number of elements to keep unchanged within each group
+        // The minimum number of elements to keep unchanged within each group
         int min = Integer.MAX_VALUE / 2;
         int sum = 0;
         for (int j = 0; j < k; j++) {
             Map<Integer, Integer> map = maps[j];
+            // The maximum frequency of a specific element in the current group.
             int maxFreq = 0;
-            // the number of distinct elements
+            // The number of distinct elements in the current group.
             int count = 0;
             for (int freq : map.values()) {
-                // Find the maximum frequency within the group
                 maxFreq = Math.max(freq, maxFreq);
                 count += freq;
             }
@@ -3414,10 +3393,15 @@ class Solution {
         for (Map.Entry<Integer, Integer> e : maps[0].entrySet()) {
             dp[0][e.getKey()] = e.getValue();
         }
+
         for (int m = 1; m < k; m++) {
-            for (Map.Entry<Integer, Integer> e : maps[m % k].entrySet()) {
+            // Traverse all elements in the group `m`
+            for (Map.Entry<Integer, Integer> e : maps[m].entrySet()) {
+                // The current element
                 int num = e.getKey();
+                // The frequence of the current element
                 int count = e.getValue();
+                // Traverse all possible values
                 for (int n = 0; n < maxVal; n++) {
                     dp[m][n ^ num] = Math.max(dp[m][n ^ num], dp[m - 1][n] + count);
                 }
