@@ -3347,14 +3347,64 @@ $$ nums[i] \oplus nums[i+1] \oplus ... \oplus nums[i+k-1] =0 $$
 And another equation:
 $$ nums[i+1] \oplus nums[i+2] \oplus ... \oplus nums[i+k] =0 $$
 
-The $\oplus$ means `XOR` operation. Based on the formula $a \oplus b \oplus b =a $ ,the `XOR` result of the above two equations is:  
+The $\oplus$ means `XOR` operation. Based on the formula $a \oplus b \oplus b =a$ ,the `XOR` result of the above two equations is:  
 $$ nums[i] \oplus nums[i+k]=0 $$
+The above equation is equal to:
+$$ nums[i]=nums[i+k] $$
+The `nums` array needs to satisfy:
+$$\forall i \in [0, n-k), nums[i] = nums[i+k]$$
+* $\forall$  
 
-Divide the array nums into `k` groups, The **i-th** group consists of all elements where the index `j % k = i`.  
-<!-- Based on the previous equation, the relation between these groups will be:
-$$ group_0 \oplus group_1 \oplus ... \oplus group_{k-1} = 0 $$  -->
+    This symbol represents "for all" and is rendered as the universal quantifier in LaTeX.
+* $i \in [0, n-k)$
 
-Define a two-dimensional array `dp` where`dp[m][x]` represents maximum number of elements that can be kept **unchanged** in the first `m` groups to achieve a `XOR` result of `x`.
+    This denotes that `'i'` is an element of the set of integers from `0` to `n-k` (inclusive of `0` but exclusive of `n-k`).  
+    The symbol $\in$ in LaTeX represents "element of" or "belongs to".
+
+Divide the array nums into `k` groups, The **i-th** group consists of all elements where the index `j % k = i`.
+The elements in each group must be exactly identical.  
+
+Define a two-dimensional array `dp` where`dp[m][x]` represents maximum number of elements that can be kept **unchanged** for the elements we traversed so far in the first `m` groups to achieve a `XOR` result of `x`.
+* If there is a XOR value of `x` in the previous group, keep `num` unchanged.
+<!-- * Change "num" to be equal to an element in the previous group, that is, the element at the current index minus k. -->
+<!-- dp[m][n ^ num] = Math.max(dp[m][n ^ num], dp[m - 1][n] + count); -->
+
+The DP formula will be:
+```text
+dp[m][x ^ num ] = 
+    dp[m-1][x] + count(num),    Keep `num` unchanged
+    dp[m][x ^ num],             Change "num" to be equal to an element in the previous group, that is, the element at the current index minus k.
+```
+Example: 
+```text
+nums =  [3,4,5,2,1,7,3,4,7]
+indices: 0 1 2 3 4 5 6 7 8
+k = 3
+
+Group 0:
+  3,2,3
+Group 1:
+  4,1,4
+Group 2:
+  5,7,7
+
+Step 1 (Initialization):
+    dp[0][3] = 2 (keep all `3` unchanged)
+    dp[0][2] = 1 (keep `2` unchanged)
+
+Step 2:
+    dp[1][0^4] = Math.max( dp[1][0^4], dp[0][0]+2 )
+    dp[1][1^4] = Math.max( dp[1][1^4], dp[0][1]+2 )
+    dp[1][2^4] = Math.max( dp[1][2^4], dp[0][2]+2 )
+    dp[1][3^4] = Math.max( dp[1][3^4], dp[0][3]+2 )
+    ...
+    dp[1][1024^4] = Math.max( dp[1][1024^4], dp[0][1024]+2 )
+
+Step 3: 
+
+
+```
+
 
 #### Implementation
 ```java
@@ -3390,6 +3440,8 @@ class Solution {
         }
         sum -= min;
         int[][] dp = new int[k][maxVal];
+
+        // No elements in group 0 are changed
         for (Map.Entry<Integer, Integer> e : maps[0].entrySet()) {
             dp[0][e.getKey()] = e.getValue();
         }
@@ -3402,6 +3454,7 @@ class Solution {
                 // The frequence of the current element
                 int count = e.getValue();
                 // Traverse all possible values
+                // Transform the XOR value `n` in the previous group to `n ^ num`.
                 for (int n = 0; n < maxVal; n++) {
                     dp[m][n ^ num] = Math.max(dp[m][n ^ num], dp[m - 1][n] + count);
                 }
