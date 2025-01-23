@@ -3342,14 +3342,14 @@ Return the minimum number of elements to change in the array such that the `XOR`
 * `0 <= nums[i] < 2^10`
 
 ### Dynamic Programming Solution
-Since the `XOR` result of any segments of length `k` equals to `0`, for index `i`, we have:
+Since the `XOR` result of any segments with a length `k` equals `0`, for index `i`, the following holds:
 $$ nums[i] \oplus nums[i+1] \oplus ... \oplus nums[i+k-1] =0 $$
-And another equation:
+Additionally, another equation applies:
 $$ nums[i+1] \oplus nums[i+2] \oplus ... \oplus nums[i+k] =0 $$
 
-The $\oplus$ means `XOR` operation. Based on the formula $a \oplus b \oplus b =a$ ,the `XOR` result of the above two equations is:  
+The symbol $\oplus$ represents the `XOR` operation. Based on the formula $a \oplus b \oplus b =a$ ,the `XOR` result of the two equations is:  
 $$ nums[i] \oplus nums[i+k]=0 $$
-The above equation is equal to:
+The equation is equivalent to:
 $$ nums[i]=nums[i+k] $$
 The `nums` array needs to satisfy:
 $$\forall i \in [0, n-k), nums[i] = nums[i+k]$$
@@ -3361,13 +3361,12 @@ $$\forall i \in [0, n-k), nums[i] = nums[i+k]$$
     This denotes that `'i'` is an element of the set of integers from `0` to `n-k` (inclusive of `0` but exclusive of `n-k`).  
     The symbol $\in$ in LaTeX represents "element of" or "belongs to".
 
-Divide the array nums into `k` groups, The **i-th** group consists of all elements where the index `j % k = i`.
+Divide the array nums into `k` groups, the **m-th** group contains all elements where the index `i` satisfies `i % k = m`.
 The elements in each group must be exactly identical.  
-
 
 Define a two-dimensional array `dp` where`dp[m][x]` represents maximum number of elements that can be kept **unchanged** in the first `m` groups to achieve a `XOR` result of `x`.
 
-Assuming there is a element `x` in the group `m`, the number of `x` in the group `m` is `count[m][x]`, and the `XOR` result of the retainted elements in previous groups is `o`, we have:
+Assuming there is an element `x` in group `m` with a count of `count[m][x]`, and the `XOR` result of the retainted elements from the previous groups is `o`, then:
 <!-- dp[m][o ^ x] = Math.max(dp[m][o ^ x], dp[m - 1][o] + count); -->
 $$
 dp[m][x] = 
@@ -3389,15 +3388,15 @@ Group 1:
 Group 2:
   5,7,7
 ```
-If we keep `3` changed in group `0` and `4` unchanged in group `1`, the `XOR` result of the retainted elements in the first `2` groups is `3^4`, that is `o` for the first `2` groups.
+If we keep `3` changed in group `0` and `4` unchanged in group `1`, the `XOR` result of the retainted elements from the first two groups is `3^4`, which is `o` for the first two groups.
 
-We expect that the `XOR` result of all retained elements is `o`.
+The `XOR` result of retained elements across all divided groups must equal `0`.
 
-Explain the DP formula in detail: 
-* If `m=0`, keep the current `x` unchanged.
-* If `m>0`, keep the current `x` unchanged, add the number of unchanged elements will be `count[m][x]`.
+Below is a detailed explanation of the dynamic programming (DP) formula:
+* If `m=0`, retain the current `x` without changes.
+* If `m>0`, retain the current `x` and add the count of unchanged elements, `count[m][x]`.
 
-    but if a larger number of retained elements exists in the current group `m`, ignore the current `x` as we expect to keep as many elements as possible.
+    However, if the current group `m` contains a greater number of retained elements, skip the current `x` since the goal is to preserve as many elements as possible.
 #### Implementation
 ```java
 class Solution {
