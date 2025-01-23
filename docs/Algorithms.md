@@ -3364,17 +3364,18 @@ $$\forall i \in [0, n-k), nums[i] = nums[i+k]$$
 Divide the array nums into `k` groups, The **i-th** group consists of all elements where the index `j % k = i`.
 The elements in each group must be exactly identical.  
 
-Define a two-dimensional array `dp` where`dp[m][x]` represents maximum number of elements that can be kept **unchanged** for the elements we traversed so far in the first `m` groups to achieve a `XOR` result of `x`.
-* If there is a XOR value of `x` in the previous group, keep `num` unchanged.
-<!-- * Change "num" to be equal to an element in the previous group, that is, the element at the current index minus k. -->
-<!-- dp[m][n ^ num] = Math.max(dp[m][n ^ num], dp[m - 1][n] + count); -->
 
-The DP formula will be:
-```text
-dp[m][x ^ num ] = 
-    dp[m-1][x] + count(num),    Keep `num` unchanged
-    dp[m][x ^ num],             Change "num" to be equal to an element in the previous group, that is, the element at the current index minus k.
-```
+Define a two-dimensional array `dp` where`dp[m][x]` represents maximum number of elements that can be kept **unchanged** in the first `m` groups to achieve a `XOR` result of `x`.
+
+Assuming there is a element `x` in the group `m`, the number of `x` in the group `m` is `count[m][x]`, and the `XOR` result of the retainted elements in previous groups is `o`, we have:
+<!-- dp[m][o ^ x] = Math.max(dp[m][o ^ x], dp[m - 1][o] + count); -->
+$$
+dp[m][x] = 
+\begin{cases} 
+    count[0][x] & m = 0 \\
+    \max(dp[m][o \oplus x], dp[m-1][o] + count[m][x]),   & m > 0
+\end{cases}
+$$
 Example: 
 ```text
 nums =  [3,4,5,2,1,7,3,4,7]
@@ -3387,25 +3388,16 @@ Group 1:
   4,1,4
 Group 2:
   5,7,7
-
-Step 1 (Initialization):
-    dp[0][3] = 2 (keep all `3` unchanged)
-    dp[0][2] = 1 (keep `2` unchanged)
-
-Step 2:
-    dp[1][0^4] = Math.max( dp[1][0^4], dp[0][0]+2 )
-    dp[1][1^4] = Math.max( dp[1][1^4], dp[0][1]+2 )
-    dp[1][2^4] = Math.max( dp[1][2^4], dp[0][2]+2 )
-    dp[1][3^4] = Math.max( dp[1][3^4], dp[0][3]+2 )
-    ...
-    dp[1][1024^4] = Math.max( dp[1][1024^4], dp[0][1024]+2 )
-
-Step 3: 
-
-
 ```
+If we keep `3` changed in group `0` and `4` unchanged in group `1`, the `XOR` result of the retainted elements in the first `2` groups is `3^4`, that is `o` for the first `2` groups.
 
+We expect that the `XOR` result of all retained elements is `o`.
 
+Explain the DP formula in detail: 
+* If `m=0`, keep the current `x` unchanged.
+* If `m>0`, keep the current `x` unchanged, add the number of unchanged elements will be `count[m][x]`.
+
+    but if a larger number of retained elements exists in the current group `m`, ignore the current `x` as we expect to keep as many elements as possible.
 #### Implementation
 ```java
 class Solution {
@@ -3450,13 +3442,12 @@ class Solution {
             // Traverse all elements in the group `m`
             for (Map.Entry<Integer, Integer> e : maps[m].entrySet()) {
                 // The current element
-                int num = e.getKey();
+                int x = e.getKey();
                 // The frequence of the current element
                 int count = e.getValue();
                 // Traverse all possible values
-                // Transform the XOR value `n` in the previous group to `n ^ num`.
-                for (int n = 0; n < maxVal; n++) {
-                    dp[m][n ^ num] = Math.max(dp[m][n ^ num], dp[m - 1][n] + count);
+                for (int o = 0; o < maxVal; o++) {
+                    dp[m][o ^ x] = Math.max(dp[m][o ^ x], dp[m - 1][o] + count);
                 }
             }
         }
@@ -3465,3 +3456,4 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
+
