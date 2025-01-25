@@ -938,7 +938,7 @@ The number of ways to reach stair `1` is `1` and stair `2` is `2`, so:
 $$ F(1) = 1,  F(2) = 2 $$
 #### Filling the DP Table
 Since this process only depends on the previous two stairs, we can just define two variables to store the number of ways for the previous two stairs.
-#### Dynamic Programming Implementation
+#### Implementation
 ```java
 class Solution {
     public int climbStairs(int n) {
@@ -1032,7 +1032,7 @@ $$F(n)=F(n-1) \times ( 2n^2-n )$$
 The initial condition is: 
 $$F(1)=1$$
 
-#### Dynamic Programming Implementation
+#### Implementation
 ```java
 class Solution {
     private int MOD=1_000_000_007;
@@ -1136,13 +1136,13 @@ The dynamic programming equation can be expressed as follows:
 
 Single-digit decoding (current character only):
 ```text
-dp[i] += 
+d1 = 
     dp[i-1],    s[i] = 1-9
     dp[i-1]×9,  s[i] = * 
 ```
 Two-digit decoding (current and previous character together):
 ```text
-dp[i] += 
+d2 = 
     dp[i-2],    s[i] = 7~9 and s[i-1]=1 or *
     0,          s[i] = 7~9 and s[i-1] = 3~9 or 0 or 2
     dp[i-2],    s[i] = 0~6 and s[i-1] = 1 or 2
@@ -1153,10 +1153,13 @@ dp[i] +=
     dp[1-2]*15, s[i] = * and s[i-1] = *
     0,          s[i] = * and s[i-1] = 3~9 or 0
 ```
+```
+dp[i] = d1 + d2
+```
 #### Result
 The `dp[len]` is the number of ways to decode the string `s`.
 
-#### Dynamic Programming Implementation
+#### Implementation
 ```java
 class Solution {
     static final int MOD = 1000000007;
@@ -1425,6 +1428,7 @@ class Solution {
         - The second inner loop iterates over all possible values (bounded by `maxVal` = 1024).
         
         The total time complexity is $O(\sum_k^{m-1}{d_m} \times 1024 )$, where $d_m$ denote the number of distinct elements in group `m`, simplifing to $O(n)$ since $\sum{d_m} \approx n$.
+
     Therefore, the overall time complexity is $O(n)$.
 * Space Complexity: $O(n+k)$
     * `maps` array
@@ -1690,7 +1694,7 @@ The dynamic programming formula will be:
 f[i] = 
     f[i-1],                   if the current character is 'b'
     min(f[i-1] + 1, countB),  if the current character is 'a'
-
+```
 #### Implementation
 ```java
 class Solution {
@@ -3253,6 +3257,71 @@ class Solution {
 
     Only a constant amount of additional space is used.
 # Two-Pointer
+## Boats to Save People
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an array `people` where `people[i]` is the weight of the **i-th** person, 
+and an infinite number of boats where each boat can carry a maximum weight of `limit`. 
+Each boat carries at most two people at the same time, provided the sum of the weight of those people is at most `limit`.
+
+Return the minimum number of boats to carry every given person.
+
+**Example 1:**
+> **Input:** people = [1,2], limit = 3  
+> **Output:** 1  
+> **Explanation:** 1 boat (1, 2)
+
+**Example 2:**
+> **Input:** people = [3,2,2,1], limit = 3  
+> **Output:** 3  
+> **Explanation:** 3 boats (1, 2), (2) and (3)
+
+**Example 3:**
+> **Input:** people = [3,5,3,4], limit = 5  
+> **Output:** 4  
+> **Explanation:** 4 boats (3), (3), (4), (5)
+
+**Constraints:**
+* `1 <= people.length <= 5 * 10^4`
+* `1 <= people[i] <= limit <= 3 * 10^4` 
+
+### Analysis
+Since each boat can carry a maximum weight of `limit`, carry the heaviest person first.   
+Then, look for another person whose weight is closest to the difference between `limit` and the weight of the heaviest person.
+
+The lightest person is the person most likely to meet this condition for carrying two people at once.  
+if not, only take the heaviest person.
+
+### Implementation
+```java
+class Solution {
+    public int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int res=0;
+        // Traverse the array `people`  using two pointers, left and right.
+        // `left` and `right` refer to the lightest and heaviest person, respectively.
+        for(int left=0, right = people.length - 1; left <= right; --right, ++res ){
+            if(people[left] + people[right] <= limit){
+                left++;
+            }
+        }
+        return res;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(nlogn) $
+    * `Arrays.sort` has a time complexity of $O(nlogn)$.
+    * Traverse the array `people`  using two pointers, left and right.
+
+        The loop traverses all elements in the `people` array using two pointers, resulting in a time complexity of $O(n)$.
+
+    Therefore, the overall time complexity is $O(nlogn)$;
+* Space Complexity: $ O(logn) $
+    * `Arrays.sort` typically requires $O(logn)$ space for sorting.
+
+    The total time complexity is $O(logn)$.
+
 ## Find the Lexicographically Largest String From the Box I
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -3534,4 +3603,7 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
+
+    
+
 
