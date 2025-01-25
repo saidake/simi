@@ -12,6 +12,7 @@
     - [Jump Game VII](#jump-game-vii)
 - [Dynamic Programming](#dynamic-programming)
     - [Climbing Stairs](#climbing-stairs)
+    - [Count All Valid Pickup and Delivery Options](#count-all-valid-pickup-and-delivery-options)
     - [Decode Ways II](#decode-ways-ii)
     - [Make the XOR of All Segments Equal to Zero](#make-the-xor-of-all-segments-equal-to-zero)
     - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
@@ -25,7 +26,6 @@
     - [Maximum Length of Subarray With Positive Product](#maximum-length-of-subarray-with-positive-product)
 - [Math](#math)
     - [Construct the Minimum Bitwise Array II](#construct-the-minimum-bitwise-array-ii)
-    - [Count All Valid Pickup and Delivery Options](#count-all-valid-pickup-and-delivery-options)
     - [Egg Drop With 2 Eggs and N Floors](#egg-drop-with-2-eggs-and-n-floors)
     - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
     - [Minimum Moves to Capture The Queen](#minimum-moves-to-capture-the-queen)
@@ -938,7 +938,7 @@ The number of ways to reach stair `1` is `1` and stair `2` is `2`, so:
 $$ F(1) = 1,  F(2) = 2 $$
 #### Filling the DP Table
 Since this process only depends on the previous two stairs, we can just define two variables to store the number of ways for the previous two stairs.
-#### Implementation
+#### Dynamic Programming Implementation
 ```java
 class Solution {
     public int climbStairs(int n) {
@@ -963,6 +963,96 @@ class Solution {
 
     The `for` loop iterate over the stairs starting from `3`, yielding a time complexity of $O(n)$.
 * Space Complexity: $ O(1) $
+## Count All Valid Pickup and Delivery Options
+[Back to Top](#table-of-contents)  
+### Overview
+Given `n` orders, each order consists of a pickup and a delivery service.
+
+Count all valid pickup/delivery possible sequences such that delivery(i) is always after of pickup(i). 
+
+Since the answer may be too large, return it modulo 10^9 + 7.
+
+**Example 1:**
+> **Input:** n = 1  
+> **Output:** 1  
+> **Explanation:** Unique order (P1, D1), Delivery 1 always is after of Pickup 1.
+
+**Example 2:**
+> **Input:** n = 2  
+> **Output:** 6  
+> **Explanation:** All possible orders:   
+(P1,P2,D1,D2), (P1,P2,D2,D1), (P1,D1,P2,D2), (P2,P1,D1,D2), (P2,P1,D2,D1) and (P2,D2,P1,D1).  
+This is an invalid order (P1,D2,P2,D1) because Pickup 2 is after of Delivery 2.
+
+**Example 3:**
+> **Input:** n = 3  
+> **Output:** 90
+
+**Constraints:**
+* `1 <= n <= 500`
+### Analysis
+When `n=2`, the following are all possible combinations:
+```text
+P1,P2,D1,D2
+P1,P2,D2,D1
+P2,P1,D1,D2
+P2,P1,D2,D1
+
+P1,D1,P2,D2
+P2,D2,P1,D1
+```
+
+Adding a new `'P'` and `'D'`:
+1. Insert `'PD'` Together:
+
+    For example, using `'L'` represents a location and `'<>'` represents a gap location:
+    ```text
+    <> L <> L <> L <> L <>
+    ```
+    No matter whether it's `'P'` or `'D'` in the above `'L'` location, the number of valid gap positions (`'<>'`) that can be inserted for `'PD'` is: 
+    $$ C(5, 1) $$
+
+2. Insert `'PD'` Separately:
+    ```text
+    <> L <> L <> L <> L <>
+    ```
+    Select two valid gap positions from 5 gap positions in a fixed order:
+     $$ C(5,2) $$
+
+Define `F(n)` as the number of valid pickup/delivery possible sequences where `'n'` represents the total number of pickups (`'P'`).  
+The formula is:
+$$F(n)=F(n-1) \times ( C(2(n-1)+1, 1) + C(2(n-1)+1, 2) )$$
+
+$$F(n)=F(n-1) \times ( 2n-1 + \frac{(2n-1) \times (2n-2)}{2} )$$
+
+$$F(n)=F(n-1) \times ( n\times(2n-1) )$$
+
+$$F(n)=F(n-1) \times ( 2n^2-n )$$
+
+The initial condition is: 
+$$F(1)=1$$
+
+#### Dynamic Programming Implementation
+```java
+class Solution {
+    private int MOD=1_000_000_007;
+    public int countOrders(int n) {
+        long res = 1;
+        for (int i = 2; i <= n; i++) {
+            res = res * (2*i*i-i) % MOD;
+        }
+        return (int) res;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $ O(n) $
+
+    The `for` loop runs in $O(n)$ time.
+
+* Space Complexity: $ O(1) $
+
+
 ## Decode Ways II
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -1066,7 +1156,7 @@ dp[i] +=
 #### Result
 The `dp[len]` is the number of ways to decode the string `s`.
 
-#### Implementation
+#### Dynamic Programming Implementation
 ```java
 class Solution {
     static final int MOD = 1000000007;
@@ -2455,95 +2545,6 @@ class Solution {
 * Space Complexity: $ O(n) $
 
     The array `ans` takes $O(n)$ space.
-
-## Count All Valid Pickup and Delivery Options
-[Back to Top](#table-of-contents)  
-### Overview
-Given `n` orders, each order consists of a pickup and a delivery service.
-
-Count all valid pickup/delivery possible sequences such that delivery(i) is always after of pickup(i). 
-
-Since the answer may be too large, return it modulo 10^9 + 7.
-
-**Example 1:**
-> **Input:** n = 1  
-> **Output:** 1  
-> **Explanation:** Unique order (P1, D1), Delivery 1 always is after of Pickup 1.
-
-**Example 2:**
-> **Input:** n = 2  
-> **Output:** 6  
-> **Explanation:** All possible orders:   
-(P1,P2,D1,D2), (P1,P2,D2,D1), (P1,D1,P2,D2), (P2,P1,D1,D2), (P2,P1,D2,D1) and (P2,D2,P1,D1).  
-This is an invalid order (P1,D2,P2,D1) because Pickup 2 is after of Delivery 2.
-
-**Example 3:**
-> **Input:** n = 3  
-> **Output:** 90
-
-**Constraints:**
-* `1 <= n <= 500`
-### Analysis
-When `n=2`, the following are all possible combinations:
-```text
-P1,P2,D1,D2
-P1,P2,D2,D1
-P2,P1,D1,D2
-P2,P1,D2,D1
-
-P1,D1,P2,D2
-P2,D2,P1,D1
-```
-
-Adding a new `'P'` and `'D'`:
-1. Insert `'PD'` Together:
-
-    For example, using `'L'` represents a location and `'<>'` represents a gap location:
-    ```text
-    <> L <> L <> L <> L <>
-    ```
-    No matter whether it's `'P'` or `'D'` in the above `'L'` location, the number of valid gap positions (`'<>'`) that can be inserted for `'PD'` is: 
-    $$ C(5, 1) $$
-
-2. Insert `'PD'` Separately:
-    ```text
-    <> L <> L <> L <> L <>
-    ```
-    Select two valid gap positions from 5 gap positions in a fixed order:
-     $$ C(5,2) $$
-
-Define `F(n)` as the number of valid pickup/delivery possible sequences where `'n'` represents the total number of pickups (`'P'`).  
-The formula is:
-$$F(n)=F(n-1) \times ( C(2(n-1)+1, 1) + C(2(n-1)+1, 2) )$$
-
-$$F(n)=F(n-1) \times ( 2n-1 + \frac{(2n-1) \times (2n-2)}{2} )$$
-
-$$F(n)=F(n-1) \times ( n\times(2n-1) )$$
-
-$$F(n)=F(n-1) \times ( 2n^2-n )$$
-
-The initial condition is: 
-$$F(1)=1$$
-
-#### Math Implementation
-```java
-class Solution {
-    private int MOD=1_000_000_007;
-    public int countOrders(int n) {
-        long res = 1;
-        for (int i = 2; i <= n; i++) {
-            res = res * (2*i*i-i) % MOD;
-        }
-        return (int) res;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $ O(n) $
-
-    The `for` loop runs in $O(n)$ time.
-
-* Space Complexity: $ O(1) $
 
 ## Egg Drop With 2 Eggs and N Floors
 [Back to Top](#table-of-contents)  
