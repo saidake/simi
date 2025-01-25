@@ -3361,7 +3361,7 @@ $$\forall i \in [0, n-k), nums[i] = nums[i+k]$$
     This denotes that `'i'` is an element of the set of integers from `0` to `n-k` (inclusive of `0` but exclusive of `n-k`).  
     The symbol $\in$ in LaTeX represents "element of" or "belongs to".
 
-Divide the array nums into `k` groups, the **m-th** group contains all elements where the index `i` satisfies `i % k = m`.
+Divide the array `nums` into `k` groups, the **m-th** group contains all elements where the index `i` satisfies `i % k = m`.
 The elements in each group must be exactly identical.  
 
 Define a two-dimensional array `dp` where`dp[m][x]` represents maximum number of elements that can be kept **unchanged** in the first `m` groups to achieve a `XOR` result of `x`.
@@ -3377,9 +3377,9 @@ dp[m][x] =
 $$
 Below is a detailed explanation of the dynamic programming (DP) formula:
 * If `m=0`, retain the current `x` without changes.
-* If `m>0`, retain the current `x` and add the count of unchanged elements, `count[m][x]`.
+* If `m>0`, retain the current `x` and add its count, `count[m][x]`.
 
-    However, if the current group `m` contains a greater number of retained elements, skip the current `x` since the goal is to preserve as many elements as possible.
+    However, if the current group `m` contains a greater number of another retained element matching the $o \oplus x$ result, skip the current `x` since the goal is to preserve as many elements as possible.
 * A general solution for all scenarios is to retain the element with the highest frequency in each group while modifying only the element with the lowest frequency to match the `XOR` result of the other groups.   
     If this approach results in a greater number of retained elements, use it as the final solution.
 
@@ -3458,8 +3458,8 @@ class Solution {
         int min = Integer.MAX_VALUE / 2;
         int rnum = 0;
         // Traverse the divided groups
-        for (int j = 0; j < k; j++) {
-            Map<Integer, Integer> map = maps[j];
+        for (int m = 0; m < k; m++) {
+            Map<Integer, Integer> map = maps[m];
             // The maximum frequency of elements in the current group
             int maxFreq = 0;
             // The number of distinct elements in the current group
@@ -3474,7 +3474,7 @@ class Solution {
         rnum -= min;
         int[][] dp = new int[k][maxVal];
 
-        // Initialize the DP values
+        // Initialize the DP state
         for (Map.Entry<Integer, Integer> e : maps[0].entrySet()) {
             dp[0][e.getKey()] = e.getValue();
         }
@@ -3484,7 +3484,7 @@ class Solution {
             for (Map.Entry<Integer, Integer> e : maps[m].entrySet()) {
                 // The current element
                 int x = e.getKey();
-                // The frequence of the current element
+                // The frequency of the current element
                 int count = e.getValue();
                 // Traverse all possible values
                 for (int o = 0; o < maxVal; o++) {
@@ -3497,22 +3497,36 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
-    * Create a HashMap for each group to store the frequency of each element
-        This loop iterates over all elements in `nums` , resulting in a time compleixty of $O(n)$ where `n` represents the length of array `nums`.
-    * Traverse the divided groups
-        The outer loop traverse all divided groups of size `k`, the inner loop traverse all unique elements in each group,
-        In the worest case, all elements is unique in each group, resulting in a time complexity of $O(n)$.
-    * Initialize the DP values
-        This loop iterates over all unique elements in each group, 
+    * Create a HashMap for each group to store the frequency of each element  
+    
+        This loop iterates over all elements in array `nums` , resulting in a time compleixty of $O(n)$ where `n` represents the length of array `nums`.
+    * Traverse the divided groups  
+    
+        The outer loop iterates through the `k` groups, and the inner loop traverses all unique elements within each group.  
+        Let $d_m$ denote the number of distinct elements in group `m`.
+        The total cost for traversing across all groups is approximately:
+        $$O(\sum_k^{m-1}{d_m})$$
+
+        Given that $\sum{d_m} \approx n$, the time complexity for this loop simplifies to $O(n)$.
+    * Initialize the DP state  
+    
+        This loop iterates over all unique elements in each group, in the worst case, it runs in a $O(n)$ time.
     * Traverse the frequency of elements in each group, starting from group `1`
-* Space Complexity: $ O(n+k) $
+
+        - The outer loop runs `k` times (for each group).  
+        - The first inner loop iterates over the distinct elements in the current group.
+        - The second inner loop iterates over all possible values (bounded by `maxVal` = 1024).
+        
+        The total time complexity is $O(\sum_k^{m-1}{d_m} \times 1024 )$, where $d_m$ denote the number of distinct elements in group `m`, simplifing to $O(n)$ since $\sum{d_m} \approx n$.
+    Therefore, the overall time complexity is $O(n)$.
+* Space Complexity: $O(n+k)$
     * `maps` array
-        * Stores `k` HashMaps, each with up to `n/k` entries on average where `n` represents the length of array `nums`.
-        * Total space: $O(n)$.
+        Stores `k` HashMaps, each with up to `n/k` entries on average where `n` represents the length of array `nums`,
+        taking $O(n)$ space.
     * `dp` array
-        * A 2D array of size $k \times 1024$.
-        * Total space: $O(k)$
+    
+        A 2D array of size $k \times 1024$, requiring $O(k)$ space.
     * Other variables:
         Includes variables like sum, min, and loop variables. These require $O(1)$ space.
