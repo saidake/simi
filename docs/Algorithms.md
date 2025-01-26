@@ -38,6 +38,7 @@
 - [Traversal](#traversal)
     - [Maximum Number of Operations With the Same Score I](#maximum-number-of-operations-with-the-same-score-i)
 - [Two Pointer](#two-pointer)
+    - [Boats to Save People](#boats-to-save-people)
     - [Find the Lexicographically Largest String From the Box I](#find-the-lexicographically-largest-string-from-the-box-i)
     - [Merge Sorted Array](#merge-sorted-array)
 - [SQL](#sql)
@@ -1212,10 +1213,10 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $ O(n) $
 
-    The `for` loop runs from `𝑖=2` to `𝑖=𝑙𝑒𝑛`, where `len` is the length of the string `s`, resulting in a time complexity of $O(n)$
+    The `for` loop runs from `i=2` to `i=len`, where `len` is the length of the string `s`, resulting in a time complexity of $O(n)$
 * Space Complexity: $ O(n) $
 
-    The `dp` array is of size `𝑛+1`, where `𝑛` is the length of the string.
+    The `dp` array is of size `n+1`, where `n` is the length of the string.
     Thus, the overall space complexity is $O(n)$.
 #### Consideration
 * Calculate the single-digit decoding cases first to avoid redundant calculations.
@@ -1270,7 +1271,7 @@ $$\forall i \in [0, n-k), nums[i] = nums[i+k]$$
     The symbol $\in$ in LaTeX represents "element of" or "belongs to".
 
 Divide the array `nums` into `k` groups, the **m-th** group contains all elements where the index `i` satisfies `i % k = m`.
-The elements in each group must be exactly identical.  
+The elements in each group must be exactly identical after their values are modified.
 
 Define a two-dimensional array `dp` where`dp[m][x]` represents maximum number of elements that can be kept **unchanged** in the first `m` groups to achieve a `XOR` result of `x`.
 
@@ -3310,14 +3311,14 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(nlogn) $
+* Time Complexity: $O(nlogn)$
     * `Arrays.sort` has a time complexity of $O(nlogn)$.
     * Traverse the array `people`  using two pointers, left and right.
 
         The loop traverses all elements in the `people` array using two pointers, resulting in a time complexity of $O(n)$.
 
     Therefore, the overall time complexity is $O(nlogn)$;
-* Space Complexity: $ O(logn) $
+* Space Complexity: $O(logn)$
     * `Arrays.sort` typically requires $O(logn)$ space for sorting.
 
     The total time complexity is $O(logn)$.
@@ -3603,7 +3604,121 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
+## Find the Number of Ways to Place People I
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a 2D array `points` of size `n x 2` representing integer coordinates of some points on a 2D plane, where `points[i] = [xi, yi]`.
 
-    
+Count the number of pairs of points `(A, B)`, where
 
+* `A` is on the **upper left** side of `B`, and
+* there are no other points in the rectangle (or line) they make (**including the border**).
+Return the count.
+
+**Example 1:**
+
+> **Input:** points = [[1,1],[2,2],[3,3]]  
+> **Output:** 0  
+> **Explanation:**  
+![ftnowtppI1](assets/Algorithms/ftnowtppI1.png)  
+    There is no way to choose `A` and `B` so `A` is on the upper left side of `B`.
+
+**Example 2:** 
+> **Input:** points = [[6,2],[4,4],[2,6]]  
+> **Output:** 2  
+> **Explanation:**
+![ftnowtppI2](assets/Algorithms/ftnowtppI2.png)  
+> * The left one is the pair `(points[1], points[0])`, where `points[1]` is on the upper left side of `points[0]` and the rectangle is empty.
+> * The middle one is the pair `(points[2], points[1])`, same as the left one it is a valid pair.
+> * The right one is the pair `(points[2], points[0])`, where `points[2]` is on the upper left side of `points[0]`, but `points[1]` is inside the rectangle so it's not a valid pair.
+
+**Example 3:**
+> **Input:** points = [[3,1],[1,3],[1,1]]  
+> **Output:** 2  
+> **Explanation:**
+![ftnowtppI3](assets/Algorithms/ftnowtppI3.png)  
+* The left one is the pair `(points[2], points[0])`, where `points[2]` is on the upper left side of `points[0]` and there are no other points on the line they form.  
+    Note that it is a valid state when the two points form a line.
+* The middle one is the pair `(points[1], points[2])`, it is a valid pair same as the left one.
+* The right one is the pair `(points[1], points[0])`, it is not a valid pair as `points[2]` is on the border of the rectangle.
+
+**Constraints:**
+
+* `2 <= n <= 50`
+* `points[i].length == 2`
+* `0 <= points[i][0], points[i][1] <= 50`
+* All `points[i]` are distinct.
+
+### Analysis
+### Implementation
+``` java
+class Solution {
+    public int numberOfPairs(int[][] points) {
+        // 2 <= n <= 50
+        // 0 <= points[i][0], points[i][1] <= 50
+        Arrays.sort(points, 
+            Comparator.comparingInt((int[] point)->point[0])
+                .thenComparing((int[] point)->point[1])
+        );
+        // maxy: the maxinum 'y' in loop `i`.
+        // py:   The 'y' of a specific point in loop `j`
+        // minY: The minum `y` in loop `j`
+        // tpy:  The 'y' of a specific point before `py`
+
+        /* 
+        loop i:
+          x == preX (valid line)
+          y > maxy (skip)
+          y <= maxy 
+          loop j: 
+            py > y && py < minY (valid rectangle)
+               [Avoid] py == py 
+
+        */
+
+
+        int res=0;   
+        int maxy=0;  
+        maxy=points[0][1];
+        // Traverse `points` array
+        for(int i=1; i<points.length; i++){
+            int preX=points[i-1][0];
+            int x=points[i][0];
+            int y=points[i][1];
+            // Skip overlapped `x`
+            if(x==preX){
+                res++;
+                System.out.println("test1");
+                maxy=Math.max(y, maxy);
+                // TODO Do not skip in this step
+                continue;
+            }
+            if(y>maxy){
+                maxy=Math.max(y, maxy);
+                continue;
+            }
+            // y < maxy
+            int minY=Integer.MAX_VALUE;
+            int tpy=-1;
+            for(int j=i-1; j>=0; j--){
+                int px=points[j][0];
+                int py=points[j][1];
+                if(py==tpy)continue;
+                if(py>=y && ( py<minY || minY==Integer.MAX_VALUE ) ){
+                    if(j-1>=0 && points[j-1][0]==px && points[j-1][1]>=y){
+                        // Do nothing
+                    }else{
+                        System.out.println("test2: "+j+" "+i);
+                        res++;
+                    }
+                }
+                if(py>=y)minY=Math.min(py, minY);
+                tpy=py;
+            }
+            maxy=Math.max(y, maxy);
+        }
+        return res;
+    }
+}
+```
 
