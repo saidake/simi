@@ -92,18 +92,19 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n \log n) $
+* Time Complexity: $O(n \log n)$
+    * `Arrays.sort` has a time complexity of O(nlogn);
+    * The loop iterates through the array with a step of 2, so it runs $n/2$ times, resulting a time complexity of $O(n)$.  
+    
+    Hence, The total time complexity is $O(n \log n)$.
+* Space Complexity: $O(logn)$
+    * `Arrays.sort` typically requires $O(logn)$ space for sorting a primitive array.  
+    
+    Therefore, the total space complexity is $O(logn)$.
 
-    The time complexity of `Arrays.sort(nums)` is $ O(n \log n) $.  
-    The loop iterates through the array with a step of 2, so it runs $ 𝑛/2 $ times. 
-    The time complexity of this loop is $ O(n) $.  
-    The sorting step dominates the iteration step. 
-    Hence, The total time complexity is $ O(n \log n) $.
-* Space Complexity: $ O(1) $
-
-    The `Arrays.sort()` method uses $ O(1) $ space for primitive data types like integers in Java, as it utilizes a variation of quicksort (dual-pivot quicksort).
-    There is no additional space used apart from the input array and a few variables.   
-    Therefore, the total space complexity is $ O(1) $.
+Note that the space complexity of `Arrays.sort` is:
+* $O(logn)$ for sorting primitive arrays.
+* $O(n)$ for sorting object arrays.
 # Fenwick Tree
 ## Distribute Elements Into Two Arrays II
 [Back to Top](#table-of-contents) 
@@ -3245,57 +3246,53 @@ Return the count.
 * All `points[i]` are distinct.
 
 ### Analysis
+Sort the `points` array in ascending order by the `x` coordinate, and in descending order by the `y` coordinate when `x` coordinates are the same.
+
+Traverse the points from left to right. 
+For each point `points[i]`, attempt to find a point at the lower right (`points[j][1] <= points[i][1]`) through a child traversal:
+- If `points[j][1]` is greater than any previously traversed point in the child traversal, no other points exist within the rectangle.
+- If `points[j][1]` is smaller than a previously traversed point, other points exist in the rectangle, violating the requirements.
+
 ### Implementation
 ``` java
 class Solution {
     public int numberOfPairs(int[][] points) {
-        // 2 <= n <= 50
-        // 0 <= points[i][0], points[i][1] <= 50
-        Arrays.sort(points, 
-            Comparator.comparingInt((int[] point)->point[0])
-                .thenComparing((int[] point)->point[1])
-        );
-
-        int res=0;   
-        int maxy=0;  
-        maxy=points[0][1];
-        // Traverse `points` array
-        for(int i=1; i<points.length; i++){
-            int preX=points[i-1][0];
-            int x=points[i][0];
-            int y=points[i][1];
-            //  vertical line
-            if(x==preX){
-                res++;
-                maxy=Math.max(y, maxy);
-            }
-            if(y>maxy){
-                maxy=Math.max(y, maxy);
-                continue;
-            }
-            maxy=Math.max(y, maxy);
-            // y < maxy
-            int minN = i+1<points.length && x==points[i+1][0] ?points[i+1][1]:Integer.MAX_VALUE;
-            int preM=x;
-            int preN=-1;
-            // Go back for checking whether valid rectangles exist
-            for(int j=i-1; j>=0; j--){
-                int m=points[j][0];
-                int n=points[j][1];
-                if(n==preN)continue;
-                if(
-                    n>=y && ( n<minN || minN==Integer.MAX_VALUE ) 
-                    && !(j-1>=0 && points[j-1][0]==m && points[j-1][1]>=y)){
-                        res++;
+        Arrays.sort(points, (p, q) -> p[0] != q[0] ? p[0] - q[0] : q[1] - p[1]);
+        int ans = 0;
+        for (int i = 0; i < points.length; i++) {
+            int y0 = points[i][1];
+            int maxY = Integer.MIN_VALUE;
+            for (int j = i + 1; j < points.length; j++) {
+                int y = points[j][1];
+                if (y <= y0 && y > maxY) {
+                    maxY = y;
+                    ans++;
                 }
-                if(n>=y)minN=Math.min(n, minN);
-                preN=n;
             }
         }
-        return res;
+        return ans;
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(n^2)$
+    * `Arrays.sort` has a time complexity of $O(nlogn)$.
+
+    * The main loop
+        The loop iterate over all remaining elements in the worst case, with a total execution time of $\sum_{j=1}^n j = \frac{n^2+n}{2}$, resulting a time complexity of $O(n^2)$.
+    
+    Thus, the overall time time complexity is $O(n^2)$
+* Space Complexity: $ O(logn) $
+  
+  `Arrays.sort` typically requires $O(logn)$ space for sorting a primitive array.
+    
+    The total time complexity is $O(logn)$.
+
+Note that the space complexity of `Arrays.sort` is:
+* $O(logn)$ for sorting primitive arrays.
+* $O(n)$ for sorting object arrays.
+
+
 ## Maximum Number of Operations With the Same Score I
 You are given an array of integers `nums`. Consider the following operation:
 
@@ -3421,6 +3418,9 @@ class Solution {
 
     The total time complexity is $O(logn)$.
 
+Note that the space complexity of `Arrays.sort` is:
+* $O(logn)$ for sorting primitive arrays.
+* $O(n)$ for sorting object arrays.
 ## Find the Lexicographically Largest String From the Box I
 [Back to Top](#table-of-contents)  
 ### Overview
