@@ -3660,22 +3660,6 @@ class Solution {
             Comparator.comparingInt((int[] point)->point[0])
                 .thenComparing((int[] point)->point[1])
         );
-        // maxy: the maxinum 'y' in loop `i`.
-        // py:   The 'y' of a specific point in loop `j`
-        // minY: The minum `y` in loop `j`
-        // tpy:  The 'y' of a specific point before `py`
-
-        /* 
-        loop i:
-          x == preX (valid line)
-          y > maxy (skip)
-          y <= maxy 
-          loop j: 
-            py > y && py < minY (valid rectangle)
-               [Avoid] py == py 
-
-        */
-
 
         int res=0;   
         int maxy=0;  
@@ -3685,37 +3669,33 @@ class Solution {
             int preX=points[i-1][0];
             int x=points[i][0];
             int y=points[i][1];
-            // Skip overlapped `x`
+            //  vertical line
             if(x==preX){
                 res++;
-                System.out.println("test1");
                 maxy=Math.max(y, maxy);
-                // TODO Do not skip in this step
-                continue;
             }
             if(y>maxy){
                 maxy=Math.max(y, maxy);
                 continue;
             }
-            // y < maxy
-            int minY=Integer.MAX_VALUE;
-            int tpy=-1;
-            for(int j=i-1; j>=0; j--){
-                int px=points[j][0];
-                int py=points[j][1];
-                if(py==tpy)continue;
-                if(py>=y && ( py<minY || minY==Integer.MAX_VALUE ) ){
-                    if(j-1>=0 && points[j-1][0]==px && points[j-1][1]>=y){
-                        // Do nothing
-                    }else{
-                        System.out.println("test2: "+j+" "+i);
-                        res++;
-                    }
-                }
-                if(py>=y)minY=Math.min(py, minY);
-                tpy=py;
-            }
             maxy=Math.max(y, maxy);
+            // y < maxy
+            int minN = i+1<points.length && x==points[i+1][0] ?points[i+1][1]:Integer.MAX_VALUE;
+            int preM=x;
+            int preN=-1;
+            // Go back for checking whether valid rectangles exist
+            for(int j=i-1; j>=0; j--){
+                int m=points[j][0];
+                int n=points[j][1];
+                if(n==preN)continue;
+                if(
+                    n>=y && ( n<minN || minN==Integer.MAX_VALUE ) 
+                    && !(j-1>=0 && points[j-1][0]==m && points[j-1][1]>=y)){
+                        res++;
+                }
+                if(n>=y)minN=Math.min(n, minN);
+                preN=n;
+            }
         }
         return res;
     }
