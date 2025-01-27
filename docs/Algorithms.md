@@ -36,6 +36,7 @@
 - [String](#string)
     - [License Key Formatting](#license-key-formatting)
 - [Traversal](#traversal)
+    - [Find the Number of Ways to Place People I](#find-the-number-of-ways-to-place-people-i)
     - [Maximum Number of Operations With the Same Score I](#maximum-number-of-operations-with-the-same-score-i)
 - [Two Pointer](#two-pointer)
     - [Boats to Save People](#boats-to-save-people)
@@ -3198,6 +3199,103 @@ class Solution {
     `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
     Therefore, the total space complexity is $ O(n) $
 # Traversal
+## Find the Number of Ways to Place People I
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a 2D array `points` of size `n x 2` representing integer coordinates of some points on a 2D plane, where `points[i] = [xi, yi]`.
+
+Count the number of pairs of points `(A, B)`, where
+
+* `A` is on the **upper left** side of `B`, and
+* there are no other points in the rectangle (or line) they make (**including the border**).
+Return the count.
+
+**Example 1:**
+
+> **Input:** points = [[1,1],[2,2],[3,3]]  
+> **Output:** 0  
+> **Explanation:**  
+![ftnowtppI1](assets/Algorithms/ftnowtppI1.png)  
+    There is no way to choose `A` and `B` so `A` is on the upper left side of `B`.
+
+**Example 2:** 
+> **Input:** points = [[6,2],[4,4],[2,6]]  
+> **Output:** 2  
+> **Explanation:**
+![ftnowtppI2](assets/Algorithms/ftnowtppI2.png)  
+> * The left one is the pair `(points[1], points[0])`, where `points[1]` is on the upper left side of `points[0]` and the rectangle is empty.
+> * The middle one is the pair `(points[2], points[1])`, same as the left one it is a valid pair.
+> * The right one is the pair `(points[2], points[0])`, where `points[2]` is on the upper left side of `points[0]`, but `points[1]` is inside the rectangle so it's not a valid pair.
+
+**Example 3:**
+> **Input:** points = [[3,1],[1,3],[1,1]]  
+> **Output:** 2  
+> **Explanation:**
+![ftnowtppI3](assets/Algorithms/ftnowtppI3.png)  
+* The left one is the pair `(points[2], points[0])`, where `points[2]` is on the upper left side of `points[0]` and there are no other points on the line they form.  
+    Note that it is a valid state when the two points form a line.
+* The middle one is the pair `(points[1], points[2])`, it is a valid pair same as the left one.
+* The right one is the pair `(points[1], points[0])`, it is not a valid pair as `points[2]` is on the border of the rectangle.
+
+**Constraints:**
+
+* `2 <= n <= 50`
+* `points[i].length == 2`
+* `0 <= points[i][0], points[i][1] <= 50`
+* All `points[i]` are distinct.
+
+### Analysis
+### Implementation
+``` java
+class Solution {
+    public int numberOfPairs(int[][] points) {
+        // 2 <= n <= 50
+        // 0 <= points[i][0], points[i][1] <= 50
+        Arrays.sort(points, 
+            Comparator.comparingInt((int[] point)->point[0])
+                .thenComparing((int[] point)->point[1])
+        );
+
+        int res=0;   
+        int maxy=0;  
+        maxy=points[0][1];
+        // Traverse `points` array
+        for(int i=1; i<points.length; i++){
+            int preX=points[i-1][0];
+            int x=points[i][0];
+            int y=points[i][1];
+            //  vertical line
+            if(x==preX){
+                res++;
+                maxy=Math.max(y, maxy);
+            }
+            if(y>maxy){
+                maxy=Math.max(y, maxy);
+                continue;
+            }
+            maxy=Math.max(y, maxy);
+            // y < maxy
+            int minN = i+1<points.length && x==points[i+1][0] ?points[i+1][1]:Integer.MAX_VALUE;
+            int preM=x;
+            int preN=-1;
+            // Go back for checking whether valid rectangles exist
+            for(int j=i-1; j>=0; j--){
+                int m=points[j][0];
+                int n=points[j][1];
+                if(n==preN)continue;
+                if(
+                    n>=y && ( n<minN || minN==Integer.MAX_VALUE ) 
+                    && !(j-1>=0 && points[j-1][0]==m && points[j-1][1]>=y)){
+                        res++;
+                }
+                if(n>=y)minN=Math.min(n, minN);
+                preN=n;
+            }
+        }
+        return res;
+    }
+}
+```
 ## Maximum Number of Operations With the Same Score I
 You are given an array of integers `nums`. Consider the following operation:
 
@@ -3604,101 +3702,4 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
-## Find the Number of Ways to Place People I
-[Back to Top](#table-of-contents)  
-### Overview
-You are given a 2D array `points` of size `n x 2` representing integer coordinates of some points on a 2D plane, where `points[i] = [xi, yi]`.
-
-Count the number of pairs of points `(A, B)`, where
-
-* `A` is on the **upper left** side of `B`, and
-* there are no other points in the rectangle (or line) they make (**including the border**).
-Return the count.
-
-**Example 1:**
-
-> **Input:** points = [[1,1],[2,2],[3,3]]  
-> **Output:** 0  
-> **Explanation:**  
-![ftnowtppI1](assets/Algorithms/ftnowtppI1.png)  
-    There is no way to choose `A` and `B` so `A` is on the upper left side of `B`.
-
-**Example 2:** 
-> **Input:** points = [[6,2],[4,4],[2,6]]  
-> **Output:** 2  
-> **Explanation:**
-![ftnowtppI2](assets/Algorithms/ftnowtppI2.png)  
-> * The left one is the pair `(points[1], points[0])`, where `points[1]` is on the upper left side of `points[0]` and the rectangle is empty.
-> * The middle one is the pair `(points[2], points[1])`, same as the left one it is a valid pair.
-> * The right one is the pair `(points[2], points[0])`, where `points[2]` is on the upper left side of `points[0]`, but `points[1]` is inside the rectangle so it's not a valid pair.
-
-**Example 3:**
-> **Input:** points = [[3,1],[1,3],[1,1]]  
-> **Output:** 2  
-> **Explanation:**
-![ftnowtppI3](assets/Algorithms/ftnowtppI3.png)  
-* The left one is the pair `(points[2], points[0])`, where `points[2]` is on the upper left side of `points[0]` and there are no other points on the line they form.  
-    Note that it is a valid state when the two points form a line.
-* The middle one is the pair `(points[1], points[2])`, it is a valid pair same as the left one.
-* The right one is the pair `(points[1], points[0])`, it is not a valid pair as `points[2]` is on the border of the rectangle.
-
-**Constraints:**
-
-* `2 <= n <= 50`
-* `points[i].length == 2`
-* `0 <= points[i][0], points[i][1] <= 50`
-* All `points[i]` are distinct.
-
-### Analysis
-### Implementation
-``` java
-class Solution {
-    public int numberOfPairs(int[][] points) {
-        // 2 <= n <= 50
-        // 0 <= points[i][0], points[i][1] <= 50
-        Arrays.sort(points, 
-            Comparator.comparingInt((int[] point)->point[0])
-                .thenComparing((int[] point)->point[1])
-        );
-
-        int res=0;   
-        int maxy=0;  
-        maxy=points[0][1];
-        // Traverse `points` array
-        for(int i=1; i<points.length; i++){
-            int preX=points[i-1][0];
-            int x=points[i][0];
-            int y=points[i][1];
-            //  vertical line
-            if(x==preX){
-                res++;
-                maxy=Math.max(y, maxy);
-            }
-            if(y>maxy){
-                maxy=Math.max(y, maxy);
-                continue;
-            }
-            maxy=Math.max(y, maxy);
-            // y < maxy
-            int minN = i+1<points.length && x==points[i+1][0] ?points[i+1][1]:Integer.MAX_VALUE;
-            int preM=x;
-            int preN=-1;
-            // Go back for checking whether valid rectangles exist
-            for(int j=i-1; j>=0; j--){
-                int m=points[j][0];
-                int n=points[j][1];
-                if(n==preN)continue;
-                if(
-                    n>=y && ( n<minN || minN==Integer.MAX_VALUE ) 
-                    && !(j-1>=0 && points[j-1][0]==m && points[j-1][1]>=y)){
-                        res++;
-                }
-                if(n>=y)minN=Math.min(n, minN);
-                preN=n;
-            }
-        }
-        return res;
-    }
-}
-```
 
