@@ -3702,4 +3702,53 @@ GROUP BY transaction_date
 ORDER BY transaction_date ASC;
 ```
 # Uncategorized Problems
+## Power Set LCCI
+[Back to Top](#table-of-contents)  
+### Overview
+Write a method to return all subsets of a set. The elements in a set are pairwise distinct.
+
+Note: The result set should not contain duplicated subsets.
+
+**Example:**  
+> **Input:**  nums = [1,2,3]  
+> **Output:**  
+> ```
+> [  
+>   [3],  
+>   [1],  
+>   [2],  
+>   [1,2,3],  
+>   [1,3],  
+>   [2,3],  
+>   [1,2],  
+>   []  
+> ]
+> ```
+### Analysis
+#### Implementation
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ans=new LinkedList();
+        // Find all subsets by specifiying its length
+        for(int len=0; len<=nums.length; len++){
+            findSubsets(len, nums, 0, new LinkedList(), ans);
+        }
+        return ans;
+    }
+
+    private void findSubsets(int len, int[] nums, int start, List<Integer> list, List<List<Integer>> ans){
+        if(len==0){
+            ans.add(list);
+            return;
+        };
+        for(int i=start; i<nums.length; i++){
+            // Create a new list at each recursion step
+            List<Integer> cList= new LinkedList(list);
+            cList.add(nums[i]);
+            findSubsets(len-1, nums, i+1, cList, ans);
+        }
+    }
+}
+```
 
