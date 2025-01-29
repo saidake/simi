@@ -3724,31 +3724,129 @@ Note: The result set should not contain duplicated subsets.
 >   []  
 > ]
 > ```
-### Analysis
+### Backtracking Solution
+Using a recursive process to add subsets to the result array `ans`.
+
+let's use `nums = [1,2,3]` as an example and illustrate the process using the following symbols:
+* `*` indicates creating a new list by copying `path` array into `ans`,
+* `^` represents adding the current element to the shared `path` array.
+* `#` denotes removing the last element from the shared `path` array.
+```
+Step 1:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                            * 
+    path: []
+    ans:  [[]]
+Step 2:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                       2 <- 3
+                       ^
+    path: [3]
+    ans:  [[]]
+Step 3:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                       2 <- 3
+                       2 -> 3  (Restart the recursive process at index `2`)
+                            * 
+    path: [3]
+    ans:  [[],[3]]
+Step 4 (Recursion at index 2 completed):
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                       2 <- 3
+                       2 -> 3
+                       2 <- 3
+                       #     
+    path: []
+    ans:  [[],[3]]
+    The first time the recursion returns to index `2`, it adds the current element to the `path` array.
+    The second time it returns to index `2`, it removes the last element from the `path` array.
+Step 5:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                  1 <- 2 <- 3
+                  ^     
+    path: [2]
+    ans:  [[],[3]]
+Step 6:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                  1 <- 2 <- 3
+                  1 -> 2 -> 3 (Restart the recursive process at index `1`)
+                            *     
+    path: [2]
+    ans:  [[],[3],[2]]
+Step 7:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                  1 <- 2 <- 3
+                  1 -> 2 -> 3 
+                       2 <- 3
+                       ^
+    path: [2,3]
+    ans:  [[],[3],[2]]
+Step 8:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                  1 <- 2 <- 3
+                  1 -> 2 -> 3 
+                       2 <- 3
+                       2 -> 3 (Restart the recursive process at index `2`)
+                            *
+    path: [2,3]
+    ans:  [[],[3],[2],[2,3]]
+Step 9 (Recursion at index 2 completed):
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                  1 <- 2 <- 3
+                  1 -> 2 -> 3 
+                       2 <- 3
+                       2 -> 3
+                       2 <- 3
+                       #
+    path: [2]
+    ans:  [[],[3],[2],[2,3]]
+Step 10 (Recursion at index 1 completed):
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3
+                  1 <- 2 <- 3
+                  1 -> 2 -> 3 
+                       2 <- 3
+                       2 -> 3
+                  1 <- 2 <- 3
+                  #
+    path: []
+    ans:  [[],[3],[2],[2,3]]
+...
+```
 #### Implementation
 ```java
 class Solution {
+    private final List<List<Integer>> ans = new ArrayList<>();
+    private final List<Integer> path = new ArrayList<>();
+    private int[] nums;
+
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ans=new LinkedList();
-        // Find all subsets by specifiying its length
-        for(int len=0; len<=nums.length; len++){
-            findSubsets(len, nums, 0, new LinkedList(), ans);
-        }
+        this.nums = nums;
+        dfs(0);
         return ans;
     }
-
-    private void findSubsets(int len, int[] nums, int start, List<Integer> list, List<List<Integer>> ans){
-        if(len==0){
-            ans.add(list);
+    
+    private void dfs(int i) {
+        // End condition
+        if (i == nums.length) { 
+            ans.add(new ArrayList<>(path)); 
             return;
-        };
-        for(int i=start; i<nums.length; i++){
-            // Create a new list at each recursion step
-            List<Integer> cList= new LinkedList(list);
-            cList.add(nums[i]);
-            findSubsets(len-1, nums, i+1, cList, ans);
         }
+        // Start recursive process at index `i`
+        dfs(i + 1);
+        path.add(nums[i]);
+        // Restart recursive process at index `i`
+        dfs(i + 1);
+        path.remove(path.size() - 1); 
     }
 }
 ```
-
