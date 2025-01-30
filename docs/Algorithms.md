@@ -2650,8 +2650,8 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(1) $
-* Space Complexity: $ O(1) $
+* Time Complexity: $O(1)$
+* Space Complexity: $O(1)$
 
 ## Find Number of Ways to Reach the K-th Stair
 [Back to Top](#table-of-contents)  
@@ -2776,10 +2776,10 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(1) $
+* Time Complexity: $O(1)$
  
     The time and space used duiring the precomputation process are not factored into the solution.
-* Space Complexity: $ O(1) $
+* Space Complexity: $O(1)$
 ## Minimum Moves to Capture The Queen
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -2890,8 +2890,8 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(1) $
-* Space Complexity: $ O(1) $
+* Time Complexity: $O(1)$
+* Space Complexity: $O(1)$
 # Precomputation
 ## Range Product Queries of Powers
 [Back to Top](#table-of-contents)  
@@ -3115,7 +3115,7 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $  
+* Time Complexity: $O(n)$  
     * Traverse array nums
     
         The outer `for` loop iterates over each element of the `nums` array once, making the time complexity $ O(n) $.  
@@ -3125,8 +3125,8 @@ class Solution {
 
         This loop only traverses the remaining integers after the sliding window reaches the end of the nums array, with a time complexity of $O(1)$ corresponding to the size of the sliding window.
 
-    Therefore, the overall time complexity of the algorithm is $ O(n) $
-* Space Complexity: $ O(n) $
+    Therefore, the overall time complexity of the algorithm is $O(n)$
+* Space Complexity: $O(n)$
     * valCount Array
     
         The valCount array has a size of `nums.size() + 1`. In the worst case, where the values in nums are distinct and large, the space required for valCount would be proportional to the size of nums, i.e., $ O(n) $.
@@ -3135,7 +3135,7 @@ class Solution {
     
         The rest of the variables (left, res, neq) are scalar integers, each taking constant space.
    
-   Since the primary space usage comes from the `valCount` array, the space complexity is $ O(n) $
+   Since the primary space usage comes from the `valCount` array, the space complexity is $O(n)$
 
 ## License Key Formatting
 [Back to Top](#table-of-contents)  
@@ -3344,12 +3344,12 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
     The `for` loop iterates `nums.length/2 - 2` times, leading to a time complexity of $O(n)$.
 
 
-* Space Complexity: $ O(1) $
+* Space Complexity: $O(1)$
 
     Only a constant amount of additional space is used.
 # Two-Pointer
@@ -3536,11 +3536,11 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
     The `while` loop runs in $O(n)$ time, as index `j` skips over traversed elements in the inner loop, not affecting the total number of iterations.
 
-* Space Complexity: $ O(1) $
+* Space Complexity: $O(1)$
 
 ## Merge Sorted Array
 [Back to Top](#table-of-contents)  
@@ -3604,12 +3604,12 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(m + n) $
+* Time Complexity: $O(m + n)$
 
     The `Arrays.copyOf` method takes $O(m)$ time and the `for` loop takes $O(n)$ time, 
     resulting in an overall time complexity of $O(m + n)$.
 
-* Space Complexity: $ O(m) $
+* Space Complexity: $O(m)$
 
     The array `nums1Cp` occupies $O(m)$ space where `m` is the first `m` integers in array `nums1`.
 
@@ -3725,7 +3725,7 @@ Note: The result set should not contain duplicated subsets.
 > ]
 > ```
 ### Backtracking Solution
-Using a recursive process to add subsets to the result array `ans`.
+Use two backtracking processes to find subsets for result array `ans`.
 
 let's use `nums = [1,2,3]` as an example and illustrate the process using the following symbols:
 * `*` indicates creating a new list by copying `path` array into `ans`,
@@ -3740,25 +3740,25 @@ Step 1:
     ans:  [[]]
 Step 2:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
                        2 <- 3
                        ^
     path: [3]
     ans:  [[]]
 Step 3:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
                        2 <- 3
-                       2 -> 3  (Restart the recursive process at index `2`)
+                       2 -> 3 
                             * 
     path: [3]
     ans:  [[],[3]]
-Step 4 (Recursion at index 2 completed):
+Step 4:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
                        2 <- 3
                        2 -> 3
-                       2 <- 3
+                       2 <- 3 (Recursion at index 2 completed)
                        #     
     path: []
     ans:  [[],[3]]
@@ -3766,60 +3766,100 @@ Step 4 (Recursion at index 2 completed):
     The second time it returns to index `2`, it removes the last element from the `path` array.
 Step 5:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
-                  1 <- 2 <- 3
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
+                       2 <- 3
+                       2 -> 3
+                  1 <- 2 <- 3 (Recursion at index 2 completed)
                   ^     
     path: [2]
     ans:  [[],[3]]
 Step 6:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
-                  1 <- 2 <- 3
-                  1 -> 2 -> 3 (Restart the recursive process at index `1`)
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
+                       2 <- 3
+                       2 -> 3
+                  1 <- 2 <- 3 (Recursion at index 2 completed)
+                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
                             *     
     path: [2]
     ans:  [[],[3],[2]]
 Step 7:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
-                  1 <- 2 <- 3
-                  1 -> 2 -> 3 
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
+                       2 <- 3
+                       2 -> 3
+                  1 <- 2 <- 3 (Recursion at index 2 completed)
+                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
                        2 <- 3
                        ^
     path: [2,3]
     ans:  [[],[3],[2]]
 Step 8:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
-                  1 <- 2 <- 3
-                  1 -> 2 -> 3 
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
                        2 <- 3
-                       2 -> 3 (Restart the recursive process at index `2`)
+                       2 -> 3
+                  1 <- 2 <- 3 (Recursion at index 2 completed)
+                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
+                       2 <- 3
+                       2 -> 3
                             *
     path: [2,3]
     ans:  [[],[3],[2],[2,3]]
-Step 9 (Recursion at index 2 completed):
+Step 9:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
-                  1 <- 2 <- 3
-                  1 -> 2 -> 3 
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
                        2 <- 3
                        2 -> 3
+                  1 <- 2 <- 3 (Recursion at index 2 completed)
+                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
                        2 <- 3
+                       2 -> 3
+                       2 <- 3 (Recursion at index 2 completed)
                        #
     path: [2]
     ans:  [[],[3],[2],[2,3]]
-Step 10 (Recursion at index 1 completed):
+Step 10:
     nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
-                  1 <- 2 <- 3
-                  1 -> 2 -> 3 
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0, 1, and 2 started)
                        2 <- 3
                        2 -> 3
-                  1 <- 2 <- 3
+                  1 <- 2 <- 3 (Recursion at index 2 completed)
+                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
+                       2 <- 3 
+                       2 -> 3 
+                  1 <- 2 <- 3 (Recursion at index 1 and 2 completed)
                   #
     path: []
     ans:  [[],[3],[2],[2,3]]
+Step 11:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0, 1, and 2 started)
+                       2 <- 3
+                       2 -> 3
+                  1 <- 2 <- 3 (Recursion at index 2 completed)
+                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
+                       2 <- 3 
+                       2 -> 3 
+             0 <- 1 <- 2 <- 3 (Recursion at index 1 and 2 completed)
+             ^
+    path: [1]
+    ans:  [[],[3],[2],[2,3]]
+Step 12:
+    nums:    1    2    3  
+    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0, 1, and 2 started)
+                       2 <- 3
+                       2 -> 3
+                  1 <- 2 <- 3 (Recursion at index 2 completed)
+                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
+                       2 <- 3 
+                       2 -> 3 
+             0 <- 1 <- 2 <- 3 (Recursion at index 1 and 2 completed) 
+             0 -> 1 -> 2 -> 3
+                            *
+    path: [1]
+    ans:  [[],[3],[2],[2,3],[1]]
+    
 ...
 ```
 #### Implementation
@@ -3850,3 +3890,14 @@ class Solution {
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(n \times 2^n)$
+    
+* Space Complexity: $O(n)$
+    * Recursive Stack
+    
+        The recursion depth is at most `n` where `n` is the length of `nums`, leading to a stack space of $O(n)$.
+    * `ans` array.
+
+    * `path` array.
+    * `nums` array.
