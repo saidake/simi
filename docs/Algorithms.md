@@ -265,7 +265,7 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(nlogn) $\
+* Time Complexity: $O(nlogn)$\
     * Traverse array 'nums'
         The `for` loop iterates over the array `nums`, taking $O(n)$ time.
         The `binarySearch` and `prefixSum` methods each contribute $O(logn)$ time complexity.
@@ -277,7 +277,7 @@ class Solution {
 
     Thus, the overall time complexity is $O(nlogn)$.
 
-* Space Complexity: $ O(n) $
+* Space Complexity: $O(n)$
 
     The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `ft1` and `ft2` each contribute $O(n)$ to the space complexity.  
     Therefore, the total space complexity is $O(n)$.
@@ -377,7 +377,7 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(m+n) $  (`m` is the length of array `edges`)
+* Time Complexity: $O(m+n)$  (`m` is the length of array `edges`)
     * `Arrays.setAll`   
     
         Method `Arrays.setAll` takes a time complexiyt of $O(n)$.
@@ -392,7 +392,7 @@ class Solution {
         The `for` loop takes a time complexiyt of $O(n)$.
 
     Therefore, the overall time complexity is $O(m+n)$.
-* Space Complexity: $ O(m+n) $
+* Space Complexity: $O(m+n)$
     * The `connectedNodes` Set array takes $O(m+n)$ space in the worst case, where each node is connected to almost every other node.
     * The `nodeWithOddEdges` array has a size of at most `4`, so its space complexity is constant and can be omitted.
 
@@ -515,11 +515,11 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-- Time Complexity: $ O(n) $
+- Time Complexity: $O(n)$
 
     In the worst case, DFS visits all nodes in the tree, leading to a time complexity of $O(n)$, where $n$ is the number of nodes in the tree.
 
-- Space Complexity: $ O(n) $
+- Space Complexity: $O(n)$
     - Recursion Stack
         
         The DFS traversal uses recursion. In the worst case, the recursion depth can be $O(n)$, leading to a space complexity of $O(n)$ for the recursion stack.
@@ -594,11 +594,11 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-- Time Complexity: $ O(n) $
+- Time Complexity: $O(n)$
 
     Similar to the previous solution, visiting all nodes in the tree in the worst case results in a time complexity of $O(n)$, where $n$ is the total number of nodes.
 
-- Space Complexity: $ O(n) $
+- Space Complexity: $O(n)$
     - Recursion Stack
         
         The DFS traversal utilizes recursion. In the worst case, the recursion depth can be $O(n)$, leading to a space complexity of $O(n)$ for the recursion stack.
@@ -683,11 +683,11 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(logn) $
+* Time Complexity: $O(logn)$
 
     In each recursive call, the array range is split into **two** approximately equal part, resulting in a total recursion time of $O(logn)$.
 
-* Space Complexity: $ O(logn) $
+* Space Complexity: $O(logn)$
 
     Each recursive call adds a frame to the recursion stack, with a maximum depth of $O(logn)$, leading to a space complexity of O(logn).
 
@@ -781,10 +781,10 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $ 
+* Time Complexity: $O(n)$ 
 
     The `for` loop iterates over each character in the string `s`, resulting in a time complexity of $O(n)$.
-* Space Complexity: $ O(n) $
+* Space Complexity: $O(n)$
 
     The `diff` array, which has a size of `len` (the length of the string `s`), 
     contributes $O(n)$ to the space complexity. 
@@ -889,11 +889,11 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $ 
+* Time Complexity: $O(n)$ 
     
     The `for` loop iterates from `minJump` to `len` (the length of the string s), resulting in a time complexity of $O(n)$.
 
-* Space Complexity: $ O(n) $
+* Space Complexity: $O(n)$
 
     The `dp` array has a size of len, contributing $O(n)$ to the space complexity.
 
@@ -962,10 +962,10 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
     The `for` loop iterate over the stairs starting from `3`, yielding a time complexity of $O(n)$.
-* Space Complexity: $ O(1) $
+* Space Complexity: $O(1)$
 ## Count All Valid Pickup and Delivery Options
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -1049,11 +1049,11 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
     The `for` loop runs in $O(n)$ time.
 
-* Space Complexity: $ O(1) $
+* Space Complexity: $O(1)$
 
 
 ## Decode Ways II
@@ -1213,10 +1213,10 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
     The `for` loop runs from `i=2` to `i=len`, where `len` is the length of the string `s`, resulting in a time complexity of $O(n)$
-* Space Complexity: $ O(n) $
+* Space Complexity: $O(n)$
 
     The `dp` array is of size `n+1`, where `n` is the length of the string.
     Thus, the overall space complexity is $O(n)$.
@@ -1636,7 +1636,7 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n \log k) $
+* Time Complexity: $O(n \log k)$
     * Precomputation
 
         The outer loop takes $O(log k)$ time, as it calcualtes the powers of 2 up to $k$.
@@ -1648,12 +1648,12 @@ class Solution {
 
         The inner loop iterates at most $O(log k)$ times to calculate the final sum for each starting index, using the precomputed values.
 
-    Therefore, the overall time complexity of the algorithm is $ O(n \log k) $
+    Therefore, the overall time complexity of the algorithm is $O(n \log k)$
 
-* Space Complexity: $ O(n \log k) $
+* Space Complexity: $O(n \log k)$
     * `pa` and `sum` arrays 
         
-        These two arrays store information for each power of `2` up to `k`, and each entry in the array corresponds to a receiver, So the space complexity of these arrays is $ O(n \log k) $.
+        These two arrays store information for each power of `2` up to `k`, and each entry in the array corresponds to a receiver, So the space complexity of these arrays is $O(n \log k)$.
 
     * Other variables
         
@@ -1714,10 +1714,10 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
     The `for` loop takes $O(n)$ time.
-* Space Complexity: $ O(1) $
+* Space Complexity: $O(1)$
 
 ## Stone Game
 [Back to Top](#table-of-contents)
@@ -1796,7 +1796,7 @@ class Solution {
     Alice and Bob can make two possible choices at each step, and the total number of choices is `right-left`,
     Therefore, the overall time complexity is $O(2^n)$.
     
-* Space Complexity: $ O(n) $ 
+* Space Complexity: $O(n)$ 
 
     The depth of the recursive call stack is `right-left`, representing the number of choices for Alice and Bob,
     resulting in a total space complexity of $O(n)$.
@@ -1879,14 +1879,14 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n^2)$ 
+* Time Complexity: $O(n^2)$ 
 
     The sum of iterations for both loop is:  
     $$ 1+2+3+...+(n-1) = \frac{(n-1) \times n}{2} =  O(n^2)$$
-* Space Complexity: $ O(n^2)$ 
+* Space Complexity: $O(n^2)$ 
 
     The algorithm uses a two-dimensional array `dp` of size `n×n`, where `n` is the length of the input array `piles`.
-    The space required for this array is $ O(n^2)$ .
+    The space required for this array is $O(n^2)$ .
 ### Optimized Dynamic Programming Solution
 The computation of each cell `dp[i][j]` only depends on values from the current row `i` and the next row `i + 1`,
 Thus, We can reuse values in a single one-dimensional array.
@@ -1906,14 +1906,14 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n^2)$ 
+* Time Complexity: $O(n^2)$ 
 
     The sum of iterations for both loop is:  
     $$ 1+2+3+...+(n-1) = \frac{(n-1) \times n}{2} =  O(n^2)$$
-* Space Complexity: $ O(n) $  
+* Space Complexity: $O(n)$  
 
     The size of one-dimensional array `dp` is `n`, corresponding to the length of the input array.
-    The space requried for this array is $ O(n) $.
+    The space requried for this array is $O(n)$.
 
 ## Target Sum
 [Back to Top](#table-of-contents) 
@@ -1978,11 +1978,11 @@ public class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(2^n)$ 
+* Time Complexity: $O(2^n)$ 
 
     The total number of recursive calls is proportional to $2^n$, 
     as each element can either contribute positively or negatively to the sum.
-* Space Complexity: $ O(n) $ (for the recursion stack)
+* Space Complexity: $O(n)$ (for the recursion stack)
 ### Optimized Depth-first Search Solution
 Define the sum of the elements of the array `nums` as `sum`, the sum of the elements with a `-` sign is `neg`.  
 According to the conditions, we can get the following expression:   
@@ -2060,10 +2060,10 @@ public class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(2^n)$  
+* Time Complexity: $O(2^n)$  
     
     The worst-case time complexity remains the same, but it is faster than the original solution in general cases.
-* Space Complexity: $ O(n \times neg) $ 
+* Space Complexity: $O(n \times neg)$ 
     * Recursive call stack takes $O(n)$ space.
     * For the memoization map, the key takes `n` possible values (`0` to `n-1`).
      the value can range from `0` to the value of `neg`, which is `(sum-target)-2`.  
@@ -2194,7 +2194,7 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n \times neg) $ 
+* Time Complexity: $O(n \times neg)$ 
     * Calculate the sum of nums.
 
         Traversing array `nums` takes $O(n)$ time.
@@ -2204,7 +2204,7 @@ class Solution {
 
      Therefore, the total time complexity is $O(n \times neg)$.
 
-* Space Complexity: $ O(n \times neg) $
+* Space Complexity: $O(n \times neg)$
 
     The `dp` array requires $O(n \times neg)$ space.
 
@@ -2239,7 +2239,7 @@ public class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n×neg) $ 
+* Time Complexity: $O(n \times neg)$ 
     * Calculate the sum of nums.
 
         Traversing array `nums` takes $O(n)$ time.
@@ -2248,7 +2248,7 @@ public class Solution {
         The combined time complexity for the outer and inner `for` loop is $O(n \times neg)$.
 
      Therefore, the total time complexity is $O(n \times neg)$.
-* Space Complexity: $ O(neg) $
+* Space Complexity: $O(neg)$
 
     The `dp` array requires $O(neg)$ space.
 # Greedy
@@ -2316,10 +2316,10 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
     Since the `replace` method has a time complexity of $O(n)$ and is executed at most twice, while `charAt` and `Integer.parseInt` take $O(1)$ time, the overall time complexity of the `for` is $O(n)$.
-* Space Complexity: $ O(1) $
+* Space Complexity: $O(1)$
 
 ## Maximum Length of Subarray With Positive Product
 [Back to Top](#table-of-contents)
@@ -2443,11 +2443,11 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
     The `for` loop has time complexity $O(n)$, resulting in an overall time complexity of $O(n)$.
 
-* Space Complexity: $ O(1) $
+* Space Complexity: $O(1)$
 
 
 # Math
@@ -2546,10 +2546,10 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $  
+* Time Complexity: $O(n)$  
 
     The `for` loop takes $O(n)$ time.
-* Space Complexity: $ O(n) $
+* Space Complexity: $O(n)$
 
     The array `ans` takes $O(n)$ space.
 
@@ -2985,7 +2985,7 @@ class Solution {
         
         The outer `for` loop runs `bc` times, and the number of iterations times of the inner `for` loop depends on the outer loop, so the total number of runs is:
         $$ \sum_{i=0}^{bc-1} (bc-1-i) = (bc-1) + (bc-2) + (bc-3) + ... + 1 = \frac{(bc-1)\times bc}{2} $$
-        Therefore, the time complexity is $ O(bc^2) $. 
+        Therefore, the time complexity is $O(bc^2)$. 
 
     * Answer each query
 
@@ -3118,9 +3118,9 @@ class Solution {
 * Time Complexity: $O(n)$  
     * Traverse array nums
     
-        The outer `for` loop iterates over each element of the `nums` array once, making the time complexity $ O(n) $.  
+        The outer `for` loop iterates over each element of the `nums` array once, making the time complexity $O(n)$.  
 
-        While the inner while loop might seem to potentially iterate multiple times, its amortized time complexity is $ O(1) $. This is because each element is only removed from the window once.
+        While the inner while loop might seem to potentially iterate multiple times, its amortized time complexity is $O(1)$. This is because each element is only removed from the window once.
     * Traverse remaining integers
 
         This loop only traverses the remaining integers after the sliding window reaches the end of the nums array, with a time complexity of $O(1)$ corresponding to the size of the sliding window.
@@ -3129,7 +3129,7 @@ class Solution {
 * Space Complexity: $O(n)$
     * valCount Array
     
-        The valCount array has a size of `nums.size() + 1`. In the worst case, where the values in nums are distinct and large, the space required for valCount would be proportional to the size of nums, i.e., $ O(n) $.
+        The valCount array has a size of `nums.size() + 1`. In the worst case, where the values in nums are distinct and large, the space required for valCount would be proportional to the size of nums, i.e., $O(n)$.
 
     * Other Variables
     
@@ -3188,17 +3188,17 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $ O(n) $
+* Time Complexity: $O(n)$
 
-    The time complexity of methods `toUpperCase, replaceAll, toCharArray` are all $ O(n) $.  
+    The time complexity of methods `toUpperCase, replaceAll, toCharArray` are all $O(n)$.  
     Additionally, the time complexity for `substring` is $O(m)$, where $m$ is the length of the substring (endIndex - startIndex).  
-    Since each iteration takes $O(k)$ time where $k$ is the length of the sliced substring and there are `(n-firstLen)/k` iterations, the loop takes $ O(n) $.
-    Therefore, the total time complexity is $ O(n) $.
-* Space Complexity: $ O(n) $
+    Since each iteration takes $O(k)$ time where $k$ is the length of the sliced substring and there are `(n-firstLen)/k` iterations, the loop takes $O(n)$.
+    Therefore, the total time complexity is $O(n)$.
+* Space Complexity: $O(n)$
     
-    `s.toCharArray()` creates a new character array of size $ O(n) $,
-    `StringBuilder sb` stores the result string, which can also be of size $ O(n) $.  
-    Therefore, the total space complexity is $ O(n) $
+    `s.toCharArray()` creates a new character array of size $O(n)$,
+    `StringBuilder sb` stores the result string, which can also be of size $O(n)$.  
+    Therefore, the total space complexity is $O(n)$
 # Traversal
 ## Find the Number of Ways to Place People I
 [Back to Top](#table-of-contents)  
@@ -3282,7 +3282,7 @@ class Solution {
         The loop iterate over all remaining elements in the worst case, with a total execution time of $\sum_{j=1}^n j = \frac{n^2+n}{2}$, resulting a time complexity of $O(n^2)$.
     
     Thus, the overall time time complexity is $O(n^2)$
-* Space Complexity: $ O(logn) $
+* Space Complexity: $O(logn)$
   
   `Arrays.sort` typically requires $O(logn)$ space for sorting a primitive array.
     
@@ -3725,143 +3725,83 @@ Note: The result set should not contain duplicated subsets.
 > ]
 > ```
 ### Backtracking Solution
-Use two backtracking processes to find subsets for result array `ans`.
+Use two backtracking processes within a recursive method to find subsets for result array `ans`.
+* The first backtracking add the current element into the `path` array.
+* The second backtracking remove the current element from the `path` array.
 
-let's use `nums = [1,2,3]` as an example and illustrate the process using the following symbols:
-* `*` indicates creating a new list by copying `path` array into `ans`,
-* `^` represents adding the current element to the shared `path` array.
-* `#` denotes removing the last element from the shared `path` array.
+let's use `nums = [1,2,3,4]` as an example (using '#' to indicate when the index is exceeded):
 ```
-Step 1:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3
-                            * 
-    path: []
-    ans:  [[]]
-Step 2:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
-                       2 <- 3
-                       ^
-    path: [3]
-    ans:  [[]]
-Step 3:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
-                       2 <- 3
-                       2 -> 3 
-                            * 
-    path: [3]
-    ans:  [[],[3]]
-Step 4:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                       2 <- 3 (Recursion at index 2 completed)
-                       #     
-    path: []
-    ans:  [[],[3]]
-    The first time the recursion returns to index `2`, it adds the current element to the `path` array.
-    The second time it returns to index `2`, it removes the last element from the `path` array.
-Step 5:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                  1 <- 2 <- 3 (Recursion at index 2 completed)
-                  ^     
-    path: [2]
-    ans:  [[],[3]]
-Step 6:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                  1 <- 2 <- 3 (Recursion at index 2 completed)
-                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
-                            *     
-    path: [2]
-    ans:  [[],[3],[2]]
-Step 7:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                  1 <- 2 <- 3 (Recursion at index 2 completed)
-                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
-                       2 <- 3
-                       ^
-    path: [2,3]
-    ans:  [[],[3],[2]]
-Step 8:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                  1 <- 2 <- 3 (Recursion at index 2 completed)
-                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
-                       2 <- 3
-                       2 -> 3
-                            *
-    path: [2,3]
-    ans:  [[],[3],[2],[2,3]]
-Step 9:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0,1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                  1 <- 2 <- 3 (Recursion at index 2 completed)
-                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
-                       2 <- 3
-                       2 -> 3
-                       2 <- 3 (Recursion at index 2 completed)
-                       #
-    path: [2]
-    ans:  [[],[3],[2],[2,3]]
-Step 10:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0, 1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                  1 <- 2 <- 3 (Recursion at index 2 completed)
-                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
-                       2 <- 3 
-                       2 -> 3 
-                  1 <- 2 <- 3 (Recursion at index 1 and 2 completed)
-                  #
-    path: []
-    ans:  [[],[3],[2],[2,3]]
-Step 11:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0, 1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                  1 <- 2 <- 3 (Recursion at index 2 completed)
-                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
-                       2 <- 3 
-                       2 -> 3 
-             0 <- 1 <- 2 <- 3 (Recursion at index 1 and 2 completed)
-             ^
-    path: [1]
-    ans:  [[],[3],[2],[2,3]]
-Step 12:
-    nums:    1    2    3  
-    indices: 0 -> 1 -> 2 -> 3 (Recursion at indices 0, 1, and 2 started)
-                       2 <- 3
-                       2 -> 3
-                  1 <- 2 <- 3 (Recursion at index 2 completed)
-                  1 -> 2 -> 3 (Recursion at index 2 restarted) 
-                       2 <- 3 
-                       2 -> 3 
-             0 <- 1 <- 2 <- 3 (Recursion at index 1 and 2 completed) 
-             0 -> 1 -> 2 -> 3
-                            *
-    path: [1]
-    ans:  [[],[3],[2],[2,3],[1]]
-    
-...
+indices: 0    1    2    3    4
+nums:    1    2    3    4  
+Recursion: 
+         1 -> 2 -> 3 -> 4 -> #     (Save `[]`)
+                        4 <- # (Add `4`)
+                        4 -> #     (Save `[4]`)
+                   3 <- 4 <- # (Remove `4`, then Add `3`)
+                   3 -> 4 -> #     (Save `[3]`)
+                        4 <- # (Add `4`)  
+                        4 -> #     (Save `[3,4]`)
+              2 <- 3 <- 4 <- # (Remove `4` and `3`, then add `2`)
+              2 -> 3 -> 4 -> #     (Save `[2]`)
+                        4 <- # (Add `4`)
+                        4 -> #     (Save `[2,4]`)
+                   3 <- 4 <- # (Remove `4`, then Add `3`)
+                   3 -> 4 -> #     (Save `[2,3]`)
+                        4 <- # (Add `4`)  
+                        4 -> #     (Save `[2,3,4]`)
+         1 <- 2 <- 3 <- 4 <- # (Remove `4`,`3` and `2`, then add `1`)
+         1 -> 2 -> 3 -> 4 -> #     (Save `[1]`)
+                        4 <- # (Add `4`)
+                        4 -> #     (Save `[1,4]`)
+                   3 <- 4 <- # (Remove `4`, then Add `3`)
+                   3 -> 4 -> #     (Save `[1,3]`)
+                        4 <- # (Add `4`)  
+                        4 -> #     (Save `[3,4]`)
+              2 <- 3 <- 4 <- # (Remove `4` and `3`, then add `2`)
+              2 -> 3 -> 4 -> #     (Save `[1,2]`)
+                        4 <- # (Add `4`)
+                        4 -> #     (Save `[1,2,4]`)
+                   3 <- 4 <- # (Remove `4`, then Add `3`)
+                   3 -> 4 -> #     (Save `[1,2,3]`)
+                        4 <- # (Add `4`)  
+                        4 -> #     (Save `[1,2,3,4]`)
+         1 <- 2 <- 3 <- 4 <- # (Remove `4`,`3`, `2` and `1`)
 ```
+The final `ans` for the array `nums=[1,2,3,4]` is:
+```
+[
+    [],[4],
+    [3],[3,4],
+    [2],[2,4],[2,3],[2,3,4],
+    [1],[1,4],[1,3],[1,3,4],[1,2],[1,2,4],[1,2,3],[1,2,3,4]
+]
+```
+
+let's focus on these backtracking processes:
+```
+indices: 0    1    2    3    4
+nums:    1    2    3    4  
+Recursion:
+         1 -> 2 -> 3 -> 4 -> #    
+                        4 <- # (Add `4`)
+                   3 <- 4 <- # (Remove `4`, then Add `3`)
+                        4 <- # (Add `4`)  
+              2 <- 3 <- 4 <- # (Remove `4` and `3`, then add `2`)
+                        4 <- # (Add `4`)
+                   3 <- 4 <- # (Remove `4`, then Add `3`)
+                        4 <- # (Add `4`)  
+         1 <- 2 <- 3 <- 4 <- # (Remove `4`,`3` and `2`, then add `1`)
+                        4 <- # (Add `4`)
+                   3 <- 4 <- # (Remove `4`, then Add `3`)
+                        4 <- # (Add `4`)  
+              2 <- 3 <- 4 <- # (Remove `4` and `3`, then add `2`)
+                        4 <- # (Add `4`)
+                   3 <- 4 <- # (Remove `4`, then Add `3`)
+                        4 <- # (Add `4`)  
+         1 <- 2 <- 3 <- 4 <- # (Remove `4`,`3`, `2` and `1`)
+```
+
+
 #### Implementation
 ```java
 class Solution {
