@@ -3725,9 +3725,10 @@ Note: The result set should not contain duplicated subsets.
 > ]
 > ```
 ### Backtracking Solution
-Use two backtracking processes within a recursive method to find subsets for result array `ans`.
-* The first backtracking add the current element into the `path` array.
-* The second backtracking remove the current element from the `path` array.
+Use two recursive calls within a method to find subsets for result array `ans`.
+* Both the first and the second calls exhibit the same behavior, saving the `path` array upon reaching the end of the `nums` array.
+* After the first call completes, the current element is added to the shared `path` array.
+* After the second call completes, the current element is removed frome the shared `path` array.
 
 let's use `nums = [1,2,3,4]` as an example (using '#' to indicate when the index is exceeded):
 ```
@@ -3800,7 +3801,9 @@ Recursion:
                         4 <- # (Add `4`)  
          1 <- 2 <- 3 <- 4 <- # (Remove `4`,`3`, `2` and `1`)
 ```
-
+After the first recursive call completes and adds the current element to the `path` array, 
+the second call follows the same process to generate all subsets.   
+Finally, it removes the current element and backtracks to the previous index.
 
 #### Implementation
 ```java
@@ -3821,23 +3824,38 @@ class Solution {
             ans.add(new ArrayList<>(path)); 
             return;
         }
-        // Start recursive process at index `i`
+        // Start the recursion at index `i`
         dfs(i + 1);
         path.add(nums[i]);
-        // Restart recursive process at index `i`
+        // Restart the recursion at index `i`
         dfs(i + 1);
         path.remove(path.size() - 1); 
     }
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $O(n \times 2^n)$
-    
-* Space Complexity: $O(n)$
+* Time Complexity: $O(2^n)$
+
+    let's use `nums = [1,2,3,4]` as an example:  
+    At index `3`, only two calls are made, which return immediately as they match the end condition, then backtrack to the previous index `2`.  
+    At index `2`, four calles are made since the recursion at index `3` repeated.  
+    ...
+
+    The number of calls doubles with each level of recursion, resulting in a total time complexity of $O(2^n)$. 
+
+* Space Complexity: $O(n\times2^n)$
     * Recursive Stack
     
         The recursion depth is at most `n` where `n` is the length of `nums`, leading to a stack space of $O(n)$.
-    * `ans` array.
+    * `ans` array
+  
+        For a subset of length `m`, the array `nums` has $C(n,m)$ subsets of this size, where `n` is the length of `nums`.  
+        Thus, the size of the `ans` array, which stores all subsets of `nums`, will be:
+        $$1 \times C(n,1) + 2 \times C(n,2) + ... + n \times C(n,n)$$
 
-    * `path` array.
-    * `nums` array.
+        Based on the formula:
+        $$\sum_{k=1}^n k \times C(n,k) = 1 \times C(n,1) + 2 \times C(n,2) + ... + n \times C(n,n)=n \times 2^{n-1}$$
+
+        the final space complexity of `ans` is $O(n\times2^n)$
+
+    * `path` array stores the current subset, which can contain up to `n` elements at any time, using $O(n)$ space.
