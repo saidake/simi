@@ -19,137 +19,138 @@ public class JwtUtil {
         String APP_KEY = "f232ffffffffffffff";
         String COMMODITY_KEY = "ssssdfsfdsfsfsf";
     }
-    private static final String SUBJECT = "蓝牙app";
+    private static final String SUBJECT = "Simi App";
 
     /**
-     * 用户登录成功后生成Jwt
-     * 使用Hs256算法  私匙使用用户密码
+     * Generates a JWT token after user login.
+     * This method uses the HMAC-SHA256 (HS256) algorithm and the user's password as the private key.
      *
-     * @param day  jwt过期时间
-     * @param user 登录成功的user对象
-     * @return
+     * @param day  the expiration time of the JWT in days
+     * @param user the user object that represents the logged-in user
+     * @return the encrypted JWT token
      */
     public static String createJWT(Integer day, Map user) {
-        //指定签名的时候使用的签名算法，也就是header那部分，jjwt已经将这部分内容封装好了。
+        // Specify the algorithm used for signing the JWT
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-        //生成JWT的时间
+        // Get the current time for JWT generation
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
 
-        //创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
+        // Create custom claims (additional user data can be added here)
         Map<String, Object> claims = new HashMap<String, Object>();
         claims.put("id", user.get("id"));
         claims.put("mobile", user.get("mobile"));
-        //生成签名的时候使用的秘钥secret,这个方法本地封装了的，一般可以从本地配置文件中读取，切记这个秘钥不能外露哦。它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。
+
+        // Secret key for signing the JWT, which should be kept private
         String key = JwtKeyConstant.BOOS_KEY;
 
-        //生成签发人
-        //String subject = SUBJECT;
-        //下面就是在为payload添加各种标准声明和私有声明了
-        //这里其实就是new一个JwtBuilder，设置jwt的body
+        // Create the JWT builder with various claims and configurations
         JwtBuilder builder = Jwts.builder()
-                //如果有私有声明，一定要先设置这个自己创建的私有的声明，这个是给builder的claim赋值，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明的
-                .setClaims(claims)
-                //设置jti(JWT ID)：是JWT的唯一标识，根据业务需要，这个可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击。
-                .setId(UUID.randomUUID().toString())
-                //iat: jwt的签发时间
-                .setIssuedAt(now)
-                //代表这个JWT的主体，即它的所有人，这个是一个json格式的字符串，可以存放什么userid，roldid之类的，作为什么用户的唯一标志。
-                .setSubject(SUBJECT)
-                //设置签名使用的签名算法和签名使用的秘钥
-                .signWith(signatureAlgorithm, key);
+                .setClaims(claims) // Set custom claims
+                .setId(UUID.randomUUID().toString()) // Set a unique JWT ID to prevent replay attacks
+                .setIssuedAt(now) // Set the issue date of the JWT
+                .setSubject(SUBJECT) // Set the subject (representing the owner of the JWT)
+                .signWith(signatureAlgorithm, key); // Sign the JWT with the chosen algorithm and secret key
+
+        // If a valid expiration time is provided, set the expiration date
         if (day >= 0) {
             Date exp = DateUtil.addDateMinutes(now, day);
-            //设置过期时间
-            builder.setExpiration(exp);
+            builder.setExpiration(exp); // Set the expiration time for the token
         }
+
         String data = "";
         try {
+            // Encrypt the JWT token using AES encryption with the secret key
             data = AESUtil.encryptAES(builder.compact(), key, key);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("登录加密失败");
+            throw new RuntimeException("Login encryption failed");
         }
 
         return data;
     }
 
-
     /**
-     * Token的解密
+     * Decrypts and parses the JWT token.
      *
-     * @param token 加密后的token
-     * @return
+     * @param token the encrypted JWT token
+     * @return the claims extracted from the JWT token
      */
     public static Claims parseJWT(String token) {
-        //签名秘钥，和生成的签名的秘钥一模一样
-
         try {
+            // Secret key used for signing and verifying the JWT token
             String key = JwtKeyConstant.BOOS_KEY;
+
+            // Decrypt the token using AES decryption
             token = AESUtil.decryptAES(token, key, key);
-            //得到DefaultJwtParser
+
+            // Parse the JWT token to extract the claims
             Claims claims = Jwts.parser()
-                    //设置签名的秘钥
-                    .setSigningKey(key)
-                    //设置需要解析的jwt
-                    .parseClaimsJws(token).getBody();
+                    .setSigningKey(key) // Set the secret key used for verification
+                    .parseClaimsJws(token).getBody(); // Parse the claims from the JWT
+
             return claims;
         } catch (Exception e) {
-            log.info("encode Claims parseJWT error");
+            log.info("Error while parsing JWT claims");
             return null;
         }
     }
 
-
     /**
-     * 校验token
-     * 在这里可以使用官方的校验，我这里校验的是token中携带的密码于数据库一致的话就校验通过
+     * Verifies the JWT token by checking the validity of the claims.
+     * This method can also verify if the password matches the one stored in the database.
      *
-     * @param token
-     * @return
+     * @param token the JWT token to verify
+     * @return true if the token is valid, false otherwise
      */
     public static Boolean isVerify(String token) {
         try {
-            //签名秘钥，和生成的签名的秘钥一模一样
+            // Secret key used for signing and verifying the JWT token
             String key = JwtKeyConstant.BOOS_KEY;
+
+            // Decrypt the token using AES decryption
             token = AESUtil.decryptAES(token, key, key);
-            //得到DefaultJwtParser
+
+            // Parse the JWT token to extract the claims
             Claims claims = Jwts.parser()
-                    //设置签名的秘钥
-                    .setSigningKey(key)
-                    //设置需要解析的jwt
-                    .parseClaimsJws(token).getBody();
+                    .setSigningKey(key) // Set the secret key used for verification
+                    .parseClaimsJws(token).getBody(); // Parse the claims from the JWT
+
+            // Extract the user ID from the claims (can be used for further validation)
             Integer id = (Integer) claims.get("id");
             return true;
         } catch (Exception e) {
-            //e.printStackTrace();
-            // encode 校验失败, 抛出Token验证非法异常
+            // Token verification failed, return false
             return false;
         }
     }
 
-
+    /**
+     * Extracts the mobile number from the JWT token.
+     *
+     * @param token the JWT token
+     * @return the mobile number associated with the token, or null if an error occurs
+     */
     public static String getMobile(String token) {
         try {
-            //签名秘钥，和生成的签名的秘钥一模一样
+            // Secret key used for signing and verifying the JWT token
             String key = JwtKeyConstant.BOOS_KEY;
+
+            // Decrypt the token using AES decryption
             token = AESUtil.decryptAES(token, key, key);
-            //得到DefaultJwtParser
+
+            // Parse the JWT token to extract the claims
             Claims claims = Jwts.parser()
-                    //设置签名的秘钥
-                    .setSigningKey(key)
-                    //设置需要解析的jwt
-                    .parseClaimsJws(token).getBody();
+                    .setSigningKey(key) // Set the secret key used for verification
+                    .parseClaimsJws(token).getBody(); // Parse the claims from the JWT
+
+            // Extract the mobile number from the claims
             String mobile = (String) claims.get("mobile");
             return mobile;
         } catch (Exception e) {
-            //e.printStackTrace();
-            // encode 校验失败, 抛出Token验证非法异常
-            log.info("encode getMobile error");
+            log.info("Error while extracting mobile from JWT");
             return null;
         }
     }
-
-
 }

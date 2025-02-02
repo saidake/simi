@@ -1,0 +1,3 @@
+temporal:
+  serviceUrl: localhost:7233
+  namespace: my-namespace

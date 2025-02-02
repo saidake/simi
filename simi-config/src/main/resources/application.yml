@@ -1,8 +1,8 @@
-#=============================================================================================== Log
-#simi:
+#=============================================================================================== Log Configuration
+# simi:
 #  log-path: ${PROJECT_PATH}/AAAlogs
 logging:
-  config: classpath:logback-simi.xml      #指定logback日志文件（默认logback-spring.xml）
+  config: classpath:logback-simi.xml      # Specifies the logback configuration file (default is logback-spring.xml)
   level:
     root: info
     org.mybatis: debug

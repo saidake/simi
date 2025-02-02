@@ -1,6 +1,5 @@
 package com.simi.common.util.network;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,8 +13,17 @@ import java.util.regex.Pattern;
 @Slf4j
 public class IpUtil {
     private final static String UNKNOWN_STR = "unknown";
+
     /**
-     * 获取访问用户的客户端IP（适用于公网与局域网）
+     * Retrieves the client IP address of the user accessing the application, suitable for both public and local network environments.
+     * This method checks multiple HTTP headers that may contain the client's real IP, including:
+     * - X-Forwarded-For
+     * - Proxy-Client-IP
+     * - WL-Proxy-Client-IP
+     * - HTTP_CLIENT_IP
+     * - HTTP_X_FORWARDED_FOR
+     * If none of these headers are available or valid, it falls back to the remote address from the request.
+     * If the IP address is a loopback address (127.0.0.1 or equivalent), the server's internal IP is returned.
      */
     public static String getRemoteAddr(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
@@ -30,7 +38,7 @@ public class IpUtil {
                         if (isEmptyIP(ip)) {
                             ip = request.getRemoteAddr();
                             if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
-                                // 根据网卡取本机配置的IP
+                                // If the IP is a loopback address, return the server's internal IP
                                 ip = getServerInnerIP();
                             }
                         }
@@ -39,9 +47,8 @@ public class IpUtil {
             }
         } else if (ip.length() > 15) {
             String[] ips = ip.split(",");
-            for (int index = 0; index < ips.length; index++) {
-                String strIp = ips[index];
-                if (!isEmptyIP(ip)) {
+            for (String strIp : ips) {
+                if (!isEmptyIP(strIp)) {
                     ip = strIp;
                     break;
                 }
@@ -51,31 +58,31 @@ public class IpUtil {
     }
 
     /**
-     * ip字符串是否为空
+     * Checks whether an IP address string is considered empty or invalid.
+     * An IP is considered empty if it is null, has zero length, or is the string "unknown" (case insensitive).
      */
     private static boolean isEmptyIP(String ip) {
-        if (ip == null || ip.length() == 0 || UNKNOWN_STR.equalsIgnoreCase(ip)) {
-            return true;
-        }
-        return false;
+        return ip == null || ip.length() == 0 || UNKNOWN_STR.equalsIgnoreCase(ip);
     }
 
     /**
-     * 根据网卡获取服务端内网ip
+     * Retrieves the server's internal IP address (typically used within a local network).
+     * This method uses the InetAddress.getLocalHost() method to get the host address.
+     * In case of failure, an empty string is returned.
      */
     public static String getServerInnerIP() {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
-            log.error("InetAddress.getLocalHost()-error", e);
+            log.error("Failed to retrieve the local host address", e);
         }
         return "";
     }
 
     /**
-     * 获取服务端ipv4-ip
-     *
-     * @return
+     * Retrieves the server's public IPv4 address by fetching data from a third-party service (http://ip.chinaz.com).
+     * The method sends an HTTP request to this URL, retrieves the HTML content, and parses it to extract the public IP address.
+     * The IP is extracted using a regular expression pattern that matches the appropriate HTML element containing the IP.
      */
     public static String getServerOutIP() {
         String ip = "";
@@ -90,22 +97,23 @@ public class IpUtil {
             urlConnection = (HttpURLConnection) url.openConnection();
             in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
             while ((read = in.readLine()) != null) {
-                inputLine.append(read + "\r\n");
+                inputLine.append(read).append("\r\n");
             }
         } catch (MalformedURLException e) {
-            log.error("异常信息为：", e);
+            log.error("Malformed URL encountered while retrieving external IP", e);
         } catch (IOException e) {
-            log.error("异常信息为：", e);
+            log.error("IOException occurred while retrieving external IP", e);
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    log.error("异常信息为：", e);
+                    log.error("Error closing BufferedReader", e);
                 }
             }
         }
-        Pattern p = Pattern.compile("\\<dd class\\=\"fz24\">(.*?)\\<\\/dd>");
+
+        Pattern p = Pattern.compile("<dd class=\"fz24\">(.*?)</dd>");
         Matcher m = p.matcher(inputLine.toString());
         if (m.find()) {
             String ipstr = m.group(1);
@@ -113,7 +121,4 @@ public class IpUtil {
         }
         return ip;
     }
-
-
 }
-

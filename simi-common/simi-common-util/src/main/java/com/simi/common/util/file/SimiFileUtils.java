@@ -13,8 +13,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 /**
  * The class consists exclusively of static method for reading file or
@@ -26,6 +29,20 @@ import java.util.function.UnaryOperator;
 @Slf4j
 @UtilityClass
 public class SimiFileUtils {
+
+    /**
+     * Read a random line matching the predicate function.
+     *
+     * @param path
+     * @param linePredicate
+     * @return
+     * @throws IOException
+     */
+    public static String readRandomLine(Path path, Predicate<String> linePredicate) throws IOException {
+        List<String> collect = Files.lines(path).filter(linePredicate).collect(Collectors.toList());
+        return collect.get(ThreadLocalRandom.current().nextInt(collect.size()));
+    }
+
 
     /**
      * Reads a source file and write the file content as a parameter to the
@@ -118,6 +135,7 @@ public class SimiFileUtils {
     private static final String SDK_MARK_TAG="SDK_MARK_TAG";
     private static final String SDK_RETURN_MARK_TAG="SDK_RETURN_MARK_TAG";
     private static final ThreadLocal<Boolean> alreadyMarked=new ThreadLocal<>();
+
     public static void readWriteBackupFile(String readOrWritePath, @Nullable String writePath, @Nullable String appendContent, Function<String,String> lambda) throws IOException {
         SmpAssert.notNull(readOrWritePath,"readPath must not be null");
         SmpAssert.notNull(lambda,"lambda must not be null");

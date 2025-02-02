@@ -1,7 +1,7 @@
 package com.simi.common.test;
 
-import com.simi.common.test.pojo.ListNode;
-import com.simi.common.test.pojo.TestFruit;
+import com.simi.common.test.domain.ListNode;
+import com.simi.common.test.domain.TestFruit;
 import com.simi.common.util.data.RandomUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +12,11 @@ import java.util.List;
 @UtilityClass
 @Slf4j
 public class DataFactory {
-    private int DEFAULT_LENGTH=10;
-    private int DEFAULT_LINKED_LIST_LENGTH=10;
-    private int DEFAULT_OBJECT_LIST_LENGTH=10;
-    private int DEFAULT_LOWER=0;
-    private int DEFAULT_UPPER=9999;
+    private static final int DEFAULT_LENGTH=10;
+    private static final int DEFAULT_LINKED_LIST_LENGTH=10;
+    private static final int DEFAULT_OBJECT_LIST_LENGTH=10;
+    private static final int DEFAULT_LOWER=0;
+    private static final int DEFAULT_UPPER=9999;
 
     public static <T> void printArr(T ...ele){
         for (int i = 0; i < ele.length; i++) {

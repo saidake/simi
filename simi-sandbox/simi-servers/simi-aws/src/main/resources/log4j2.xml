@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} Craig [%X{traceId:-}, %X{spanId:-}] %-5level %logger{36} - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- Set logger for Spring WebFlux to capture request logs -->
+        <Logger name="org.springframework.web.reactive" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

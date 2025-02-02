@@ -1,21 +1,2 @@
-English  =  Trump 
-English  =  Data
-English  =  Favorite book  
-English  =  Hobby 
-DataBase = Kafka = Core = Kafka's file storage mechanism
-SpringBoot = Third Party Package = Kafka = Configuration = Create a Functional Message Producer
-DataBase = Kafka = Core = Workflow
-DataBase = Mysql = Core = Storage Engines
-DataBase = Mysql = Core = Optimize SQL Queries in MySQL
-DataBase = Mysql = Core SQL = Lock
-DataBase = Kafka = Core = Partition Write Strategies
-
-DataBase = Mysql = my.cnf or my.ini = Redo Logs
-Database = Redis = Configuration = Sentinel  = Purpose
-DataBase = Mysql = my.cnf or my.ini = Redo Logs
-DataBase = Mysql = Core = Query optimizer selects the wrong index
-DataBase = Mysql = Build-in tables = Permissions
-DataBase = Mysql = Core SQL = Lock
-SpringBoot = = org.springframework（spring）= web = bind = annotation
-SpringBoot = Third Party Package = Data Storage = Kafka = Configuration = Configure Kafka Properties
-DataBase = Mysql = Core = Page Data
+Config = Work Environment = awscli = Command = IAM
+Config = Work Environment = awscli = Command = IAM

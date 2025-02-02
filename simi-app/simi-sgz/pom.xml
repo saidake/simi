@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.simi</groupId>
         <artifactId>simi-app</artifactId>
-        <version>1.0</version>
+        <version>1.1.0</version>
     </parent>
 
     <artifactId>simi-sgz</artifactId>
@@ -22,16 +22,36 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>33.2.1-jre</version>
         </dependency>
+        <dependency>
+            <groupId>com.simi</groupId>
+            <artifactId>simi-common-util</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kwhat</groupId>
+            <artifactId>jnativehook</artifactId>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.simi</groupId>-->
 <!--            <artifactId>simi-common-simulator</artifactId>-->
 <!--        </dependency>-->
-
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
     </dependencies>
 </project>

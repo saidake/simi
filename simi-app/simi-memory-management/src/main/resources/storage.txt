@@ -4,6 +4,12 @@ Java = Core = Operator = Synchronization Keyword = synchronized
 Java = java.base = java.lang = (Thread) = Thread
 Java = java.base = java.lang = (Thread) = ThreadLocal
 Java = java.base = java.util = concurrent = locks = AbstractQueuedSynchronizer
+Config = Work Environment = awscli = Command = EC2
+Config = Work Environment = awscli = Command = Lambda
+Config = Work Environment = awscli = Command = IAM
+Config = Work Environment = awscli = Command = Dynamodb
+Config = Work Environment = awscli = Command = SNS
+Config = Work Environment = awscli = Command = SQS
 DataBase = Kafka = Core = Components
 DataBase = Kafka = Core = Partition Data redundancy
 DataBase = Kafka = Core = Partition Write Strategies

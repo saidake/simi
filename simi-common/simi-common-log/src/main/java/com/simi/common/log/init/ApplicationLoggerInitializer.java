@@ -21,12 +21,6 @@ import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 
-/**
- * @author lengleng
- * @date 2019-06-25
- * <p>
- * 通过环境变量的形式注入 logging.file 自动维护 Spring Boot Admin Logger Viewer
- */
 public class ApplicationLoggerInitializer implements EnvironmentPostProcessor, Ordered {
 
 	@Override
@@ -34,7 +28,6 @@ public class ApplicationLoggerInitializer implements EnvironmentPostProcessor, O
 		String appName = environment.getProperty("spring.application.name");
 		String logBase = environment.getProperty("LOGGING_PATH", "logs");
 
-		// spring boot admin 直接加载日志
 		System.setProperty("logging.file.name", String.format("%s/%s/debug.log", logBase, appName));
 	}
 
