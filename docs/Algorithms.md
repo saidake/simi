@@ -105,182 +105,6 @@ class Solution {
 Note that the space complexity of `Arrays.sort` is:
 * $O(logn)$ for sorting primitive arrays.
 * $O(n)$ for sorting object arrays.
-# Fenwick Tree
-## Distribute Elements Into Two Arrays II
-[Back to Top](#table-of-contents) 
-### Overview
-You are given a **1-indexed** array of integers `nums` of length `len`.
-
-We define a function `greaterCount` such that `greaterCount(arr, val)` returns the number of elements in `arr` that are strictly greater than `val`.
-
-You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `len` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
-
-* If `greaterCount(arr1, nums[i]) > greaterCount(arr2, nums[i])`, append `nums[i]` to `arr1`.
-* If `greaterCount(arr1, nums[i]) < greaterCount(arr2, nums[i])`, append `nums[i]` to `arr2`.
-* If `greaterCount(arr1, nums[i]) == greaterCount(arr2, nums[i])`, append `nums[i]` to the array with a lesser number of elements.
-* If there is still a tie, append `nums[i]` to `arr1`.
-
-The array result is formed by concatenating the arrays `arr1` and `arr2`. For example, if `arr1 == [1,2,3]` and `arr2 == [4,5,6]`, then `result = [1,2,3,4,5,6]`.
-
-Return the integer array `result`.
-
-**Example 1:**
-
-> **Input:** nums = [2,1,3,3]  
-> **Output:** [2,3,1,3]  
-> **Explanation:** After the first 2 operations, arr1 = [2] and arr2 = [1].  
-> In the 3rd operation, the number of elements greater than 3 is zero in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
-> In the 4th operation, the number of elements greater than 3 is zero in both arrays. As the length of arr2 is lesser, hence, append nums[4] to arr2.  
-> After 4 operations, arr1 = [2,3] and arr2 = [1,3].  
-> Hence, the array result formed by concatenation is [2,3,1,3].  
-
-**Example 2:**
-
-> **Input:** nums = [5,14,3,1,2]  
-> **Output:** [5,3,1,2,14]  
-> **Explanation:** After the first 2 operations, arr1 = [5] and arr2 = [14].  
-> In the 3rd operation, the number of elements greater than 3 is one in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
-> In the 4th operation, the number of elements greater than 1 is greater in arr1 than arr2 (2 > 1). Hence, append nums[4] to arr1.  
-> In the 5th operation, the number of elements greater than 2 is greater in arr1 than arr2 (2 > 1). Hence, append nums[5] to arr1.  
-> After 5 operations, arr1 = [5,3,1,2] and arr2 = [14].  
-> Hence, the array result formed by concatenation is [5,3,1,2,14].
-
-**Example 3:**
-
-> **Input:** nums = [3,3,3,3]  
-> **Output:** [3,3,3,3]  
-> **Explanation:** At the end of 4 operations, arr1 = [3,3] and arr2 = [3,3].  
-> Hence, the array result formed by concatenation is [3,3,3,3].
-
-**Constraints:**
-* `3 <= n <= 10^5`
-* `1 <= nums[i] <= 10^9`
-
-### Analysis
-Follow the problem description, the key point is to find the number of elements in array `nums` that are strictly greater than val.
-
-
-A Binary Indexed Tree (BIT), also known as a Fenwick Tree, is ideal for scenarios that require frequent updates to an array and efficient calculation of prefix sums or ranges, making it a suitable choice here.
-
-To achieve this, define an array `tree` within a `FenwickTree` class and use bitwise operation to identify the indexes to update and compute the prefix sum.
-* i += i & -i
-    
-    Isolate the least significant set bit (LSB) of `i` and add it to `i`.
-    Example:
-    ```text
-    40 + (40 & -40) 
-        = 0010 1000 + (0010 1000  & 1101 1000)
-        = 0010 1000 + 0000 1000 
-        = 48
-    ```
-* i &= i - 1
-
-    The operation clears the rightmost set bit (1) in the binary representation of `i`, it is equivalent to `i -= i & -i`.
-
-    Example:
-    ```text
-    11 & 10 
-        = 1011 & 1010 
-        = 1010 
-        = 10
-    48 & 47
-        = 0011 0000 & 0010 1111
-        = 0010 0000
-        = 32
-    11 & 10
-        = 1011 & 1010
-        = 1010
-    ```
-    
-This `tree` corresponds to a sorted version of the array `nums`, called `sortedArr`, and stores prefix sums rather than actual values.
-
-When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`.  
-This update allows the tree to maintain a count of elements before index `i` in the array `tree`, which represents the number of elements in `nums` that are less than `sortedArr[i]`.
-
-#### Implementation
-```java
-class FenwickTree {
-    private final int[] tree;
-
-    public FenwickTree(int len) {
-        tree = new int[len];
-    }
-
-    public void add(int i) {
-        while (i < tree.length) {
-            tree[i]++;
-            i += i & -i;
-        }
-    }
-
-    public int prefixSum(int i) {
-        int res = 0;
-        while (i > 0) {
-            res += tree[i];
-            i &= i - 1;
-        }
-        return res;
-    }
-}
-
-class Solution {
-    public int[] resultArray(int[] nums) {
-        int[] sortedArr = nums.clone();
-        Arrays.sort(sortedArr); 
-
-        int len = nums.length;
-        List<Integer> list1 = new ArrayList<>(len);
-        List<Integer> list2 = new ArrayList<>();
-        list1.add(nums[0]);
-        list2.add(nums[1]);
-
-        FenwickTree ft1 = new FenwickTree(len + 1);
-        FenwickTree ft2 = new FenwickTree(len + 1);
-        ft1.add(Arrays.binarySearch(sortedArr, nums[0]) + 1);
-        ft2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
-        // Traverse array 'nums'
-        for (int i = 2; i < nums.length; i++) {
-            int cu = nums[i];
-            // Search the index of value 'cu' in array 'sortedArr'.
-            int sInd = Arrays.binarySearch(sortedArr, cu) + 1;
-            int gc1 = list1.size() - ft1.prefixSum(sInd); 
-            int gc2 = list2.size() - ft2.prefixSum(sInd); 
-            if (gc1 > gc2 || gc1 == gc2 && list1.size() <= list2.size()) {
-                list1.add(cu);
-                ft1.add(sInd);
-            } else {
-                list2.add(cu);
-                ft2.add(sInd);
-            }
-        }
-        // Concatenate the two lists
-        list1.addAll(list2);
-
-        // Convert the list into a primitive array
-        for (int i = 0; i < len; i++) {
-            nums[i] = list1.get(i);
-        }
-        return nums;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $O(nlogn)$\
-    * Traverse array 'nums'
-        The `for` loop iterates over the array `nums`, taking $O(n)$ time.
-        The `binarySearch` and `prefixSum` methods each contribute $O(logn)$ time complexity.
-
-        Therefore, the overall time complexity for this part is $O(nlogn)$.
-    * Convert the list into a primitive array
-
-        Traversing the array `nums` takes $O(n)$ time.
-
-    Thus, the overall time complexity is $O(nlogn)$.
-
-* Space Complexity: $O(n)$
-
-    The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `ft1` and `ft2` each contribute $O(n)$ to the space complexity.  
-    Therefore, the total space complexity is $O(n)$.
 
 # Conditional Logic
 ## Add Edges to Make Degrees of All Nodes Even
@@ -2251,6 +2075,185 @@ public class Solution {
 * Space Complexity: $O(neg)$
 
     The `dp` array requires $O(neg)$ space.
+
+
+# Fenwick Tree
+## Distribute Elements Into Two Arrays II
+[Back to Top](#table-of-contents) 
+### Overview
+You are given a **1-indexed** array of integers `nums` of length `len`.
+
+We define a function `greaterCount` such that `greaterCount(arr, val)` returns the number of elements in `arr` that are strictly greater than `val`.
+
+You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `len` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
+
+* If `greaterCount(arr1, nums[i]) > greaterCount(arr2, nums[i])`, append `nums[i]` to `arr1`.
+* If `greaterCount(arr1, nums[i]) < greaterCount(arr2, nums[i])`, append `nums[i]` to `arr2`.
+* If `greaterCount(arr1, nums[i]) == greaterCount(arr2, nums[i])`, append `nums[i]` to the array with a lesser number of elements.
+* If there is still a tie, append `nums[i]` to `arr1`.
+
+The array result is formed by concatenating the arrays `arr1` and `arr2`. For example, if `arr1 == [1,2,3]` and `arr2 == [4,5,6]`, then `result = [1,2,3,4,5,6]`.
+
+Return the integer array `result`.
+
+**Example 1:**
+
+> **Input:** nums = [2,1,3,3]  
+> **Output:** [2,3,1,3]  
+> **Explanation:** After the first 2 operations, arr1 = [2] and arr2 = [1].  
+> In the 3rd operation, the number of elements greater than 3 is zero in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
+> In the 4th operation, the number of elements greater than 3 is zero in both arrays. As the length of arr2 is lesser, hence, append nums[4] to arr2.  
+> After 4 operations, arr1 = [2,3] and arr2 = [1,3].  
+> Hence, the array result formed by concatenation is [2,3,1,3].  
+
+**Example 2:**
+
+> **Input:** nums = [5,14,3,1,2]  
+> **Output:** [5,3,1,2,14]  
+> **Explanation:** After the first 2 operations, arr1 = [5] and arr2 = [14].  
+> In the 3rd operation, the number of elements greater than 3 is one in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
+> In the 4th operation, the number of elements greater than 1 is greater in arr1 than arr2 (2 > 1). Hence, append nums[4] to arr1.  
+> In the 5th operation, the number of elements greater than 2 is greater in arr1 than arr2 (2 > 1). Hence, append nums[5] to arr1.  
+> After 5 operations, arr1 = [5,3,1,2] and arr2 = [14].  
+> Hence, the array result formed by concatenation is [5,3,1,2,14].
+
+**Example 3:**
+
+> **Input:** nums = [3,3,3,3]  
+> **Output:** [3,3,3,3]  
+> **Explanation:** At the end of 4 operations, arr1 = [3,3] and arr2 = [3,3].  
+> Hence, the array result formed by concatenation is [3,3,3,3].
+
+**Constraints:**
+* `3 <= n <= 10^5`
+* `1 <= nums[i] <= 10^9`
+
+### Analysis
+Follow the problem description, the key point is to find the number of elements in array `nums` that are strictly greater than val.
+
+
+A Binary Indexed Tree (BIT), also known as a Fenwick Tree, is ideal for scenarios that require frequent updates to an array and efficient calculation of prefix sums or ranges, making it a suitable choice here.
+
+To achieve this, define an array `tree` within a `FenwickTree` class and use bitwise operation to identify the indexes to update and compute the prefix sum.
+* i += i & -i
+    
+    Isolate the least significant set bit (LSB) of `i` and add it to `i`.
+    Example:
+    ```text
+    40 + (40 & -40) 
+        = 0010 1000 + (0010 1000  & 1101 1000)
+        = 0010 1000 + 0000 1000 
+        = 48
+    ```
+* i &= i - 1
+
+    The operation clears the rightmost set bit (1) in the binary representation of `i`, it is equivalent to `i -= i & -i`.
+
+    Example:
+    ```text
+    11 & 10 
+        = 1011 & 1010 
+        = 1010 
+        = 10
+    48 & 47
+        = 0011 0000 & 0010 1111
+        = 0010 0000
+        = 32
+    11 & 10
+        = 1011 & 1010
+        = 1010
+    ```
+    
+This `tree` corresponds to a sorted version of the array `nums`, called `sortedArr`, and stores prefix sums rather than actual values.
+
+When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`.  
+This update allows the tree to maintain a count of elements before index `i` in the array `tree`, which represents the number of elements in `nums` that are less than `sortedArr[i]`.
+
+#### Implementation
+```java
+class FenwickTree {
+    private final int[] tree;
+
+    public FenwickTree(int len) {
+        tree = new int[len];
+    }
+
+    public void add(int i) {
+        while (i < tree.length) {
+            tree[i]++;
+            i += i & -i;
+        }
+    }
+
+    public int prefixSum(int i) {
+        int res = 0;
+        while (i > 0) {
+            res += tree[i];
+            i &= i - 1;
+        }
+        return res;
+    }
+}
+
+class Solution {
+    public int[] resultArray(int[] nums) {
+        int[] sortedArr = nums.clone();
+        Arrays.sort(sortedArr); 
+
+        int len = nums.length;
+        List<Integer> list1 = new ArrayList<>(len);
+        List<Integer> list2 = new ArrayList<>();
+        list1.add(nums[0]);
+        list2.add(nums[1]);
+
+        FenwickTree ft1 = new FenwickTree(len + 1);
+        FenwickTree ft2 = new FenwickTree(len + 1);
+        ft1.add(Arrays.binarySearch(sortedArr, nums[0]) + 1);
+        ft2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
+        // Traverse array 'nums'
+        for (int i = 2; i < nums.length; i++) {
+            int cu = nums[i];
+            // Search the index of value 'cu' in array 'sortedArr'.
+            int sInd = Arrays.binarySearch(sortedArr, cu) + 1;
+            int gc1 = list1.size() - ft1.prefixSum(sInd); 
+            int gc2 = list2.size() - ft2.prefixSum(sInd); 
+            if (gc1 > gc2 || gc1 == gc2 && list1.size() <= list2.size()) {
+                list1.add(cu);
+                ft1.add(sInd);
+            } else {
+                list2.add(cu);
+                ft2.add(sInd);
+            }
+        }
+        // Concatenate the two lists
+        list1.addAll(list2);
+
+        // Convert the list into a primitive array
+        for (int i = 0; i < len; i++) {
+            nums[i] = list1.get(i);
+        }
+        return nums;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(nlogn)$\
+    * Traverse array 'nums'
+        The `for` loop iterates over the array `nums`, taking $O(n)$ time.
+        The `binarySearch` and `prefixSum` methods each contribute $O(logn)$ time complexity.
+
+        Therefore, the overall time complexity for this part is $O(nlogn)$.
+    * Convert the list into a primitive array
+
+        Traversing the array `nums` takes $O(n)$ time.
+
+    Thus, the overall time complexity is $O(nlogn)$.
+
+* Space Complexity: $O(n)$
+
+    The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `ft1` and `ft2` each contribute $O(n)$ to the space complexity.  
+    Therefore, the total space complexity is $O(n)$.
+
 # Greedy
 ## Max Difference You Can Get From Changing an Integer
 [Back to Top](#table-of-contents)  
@@ -3834,14 +3837,16 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $O(2^n)$
+* Time Complexity: $O(n\times2^n)$
 
     let's use `nums = [1,2,3,4]` as an example:  
     At index `3`, only two calls are made, which return immediately as they match the end condition, then backtrack to the previous index `2`.  
     At index `2`, four calles are made since the recursion at index `3` repeated.  
     ...
 
-    The number of calls doubles with each level of recursion, resulting in a total time complexity of $O(2^n)$. 
+    The number of calls doubles with each level of recursion, resulting in a time complexity of $O(2^n)$. 
+    
+    Since each recursive call copies the `path` array to `ans` using the constructor `public ArrayList(Collection<? extends E> c)`, which has a time complexity of $O(n)$, the overall time complexity is $O(n\times2^n)$.
 
 * Space Complexity: $O(n\times2^n)$
     * Recursive Stack
@@ -3859,3 +3864,6 @@ class Solution {
         the final space complexity of `ans` is $O(n\times2^n)$
 
     * `path` array stores the current subset, which can contain up to `n` elements at any time, using $O(n)$ space.
+
+   Therefore, the overall space complexity is $O(n\times2^n)$.
+
