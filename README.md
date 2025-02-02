@@ -71,8 +71,5 @@ Custom modules.
 ## simi-gateway
 Gateway modules.
 
-## simi-node
-A dedicated module to test Node-related dependencies and functionalities. This module provides a streamlined testing environment for Node.js projects.
-
 ## simi-parent
 A parent module that manages the dependency versions of other modules.
