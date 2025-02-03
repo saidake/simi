@@ -3867,3 +3867,29 @@ class Solution {
 
    Therefore, the overall space complexity is $O(n\times2^n)$.
 
+### Depth-first Search Solution
+Save the `path` array at the start of each DFS call.
+
+```java
+class Solution {
+    private final List<List<Integer>> ans = new ArrayList<>();
+    private final List<Integer> path = new ArrayList<>();
+    private int[] nums;
+
+    public List<List<Integer>> subsets(int[] nums) {
+        this.nums = nums;
+        dfs(0);
+        return ans;
+    }
+
+    private void dfs(int i) {
+        ans.add(new ArrayList<>(path)); 
+        for (int j = i; j < nums.length; j++) { 
+            path.add(nums[j]);
+            dfs(j + 1);
+            path.remove(path.size() - 1); 
+        }
+    }
+}
+
+```

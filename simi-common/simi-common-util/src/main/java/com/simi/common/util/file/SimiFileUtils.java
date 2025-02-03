@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class SimiFileUtils {
 
     /**
-     * Read a random line matching the predicate function.
+     * Read a random line matching the predicate function from the specified file.
      *
      * @param path
      * @param linePredicate
@@ -39,10 +39,9 @@ public class SimiFileUtils {
      * @throws IOException
      */
     public static String readRandomLine(Path path, Predicate<String> linePredicate) throws IOException {
-        List<String> collect = Files.lines(path).filter(linePredicate).collect(Collectors.toList());
+        List<String> collect = Files.lines(path).filter(linePredicate).toList();
         return collect.get(ThreadLocalRandom.current().nextInt(collect.size()));
     }
-
 
     /**
      * Reads a source file and write the file content as a parameter to the

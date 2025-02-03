@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>simi-initializer-app</module>
-        <module>simi-memory-management</module>
+        <module>simi-review-tool</module>
         <module>simi-sgz</module>
     </modules>
 

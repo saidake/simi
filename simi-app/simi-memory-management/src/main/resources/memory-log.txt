@@ -1,2 +1,0 @@
-Config = Work Environment = awscli = Command = IAM
-Config = Work Environment = awscli = Command = IAM
