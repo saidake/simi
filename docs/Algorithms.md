@@ -3858,18 +3858,41 @@ class Solution {
         Thus, the size of the `ans` array, which stores all subsets of `nums`, will be:
         $$1 \times C(n,1) + 2 \times C(n,2) + ... + n \times C(n,n)$$
 
-        Based on the formula:
-        $$\sum_{k=1}^n k \times C(n,k) = 1 \times C(n,1) + 2 \times C(n,2) + ... + n \times C(n,n)=n \times 2^{n-1}$$
+        Use the Binomial Theorem to derive the result of the equation above: 
+        $$ (a + b)^n = \sum_{k=0}^n C(n, k) \times a^{n-k} \times b^k $$
+        Setting `a=1` gives:
+        $$ (1 + b)^n = \sum_{k=0}^n C(n, k) \times b^k $$
+        Differentiating both sides with respect to `x` and evaluating at `x=1` yields:
+        $$\frac{d}{db}(1+b)^n = \frac{d}{db} \sum_{k=0}^n C(n, k) \times b^k $$
+        Using the derivative rule $\frac{d}{dx}(x^n)=nx^{n-1}$, we get:
+        $$n(1+b)^{n-1} = \sum_{k=0}^n C(n, k) \times kb^{k-1} $$
+        Setting $b=1$ in both sides:
+        $$n \times 2^{n-1} = \sum_{k=1}^n k \times C(n,k) = 1 \times C(n,1) + 2 \times C(n,2) + ... + n \times C(n,n)$$
 
-        the final space complexity of `ans` is $O(n\times2^n)$
+        Thus, the final space complexity of `ans` is $O(n\times2^n)$
 
     * `path` array stores the current subset, which can contain up to `n` elements at any time, using $O(n)$ space.
 
    Therefore, the overall space complexity is $O(n\times2^n)$.
 
 ### Depth-first Search Solution
-Save the `path` array at the start of each DFS call.
+Save the `path` array at the start of each DFS call, 
+recursively explore remaining indices, and remove the current element when backtracking.
+```
+indices: 0    1    2    3    4
+nums:    1    2    3    4  
+Recursion:
+         1 -> 2 -> 3 -> 4    [],[1],[1,2],[1,2,3],[1,2,3,4]
+         1 -> 2      -> 4    [1,2,4]
+         1      -> 3 -> 4    [1,3],[1,3,4]
+         1           -> 4    [1,4]
+              2 -> 3 -> 4    [2,3],[2,3,4]
+              2      -> 4    [2,4]
+                   3 -> 4    [3],[3,4]
+                        4    [4]
 
+```
+#### Implementation
 ```java
 class Solution {
     private final List<List<Integer>> ans = new ArrayList<>();
@@ -3893,3 +3916,51 @@ class Solution {
 }
 
 ```
+* Time Complexity: $O(n\times2^n)$
+
+    The recursive call decreases by `1` each time. 
+
+    Since $\sum_{i=0}^n=\frac{n\times(n+1)}{2}$ and the constructor `public ArrayList(Collection<? extends E> c)` has a time complexity of $O(n)$, the overall time complexity is $O(n\times2^n)$ 
+
+* Space Complexity: $O(n\times2^n)$
+    * Recursive Stack
+    
+        The recursion depth is at most `n` where `n` is the length of `nums`, leading to a stack space of $O(n)$.
+    * `ans` array has a space complexity of $O(n\times2^n)$, as explained in the previous Backtracking Solution.
+
+    * `path` array stores the current subset, which can contain up to `n` elements at any time, using $O(n)$ space.
+
+   Therefore, the overall space complexity is $O(n\times2^n)$.
+
+### Traversal Solution
+Since each element might be included or excluded, the number of subsets of `nums` array is $2^n$.
+
+```
+indices: 0    1    2    3    4
+nums:    1    2    3    4  
+Traversal:
+
+```
+
+
+
+#### Implementation
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        int n = nums.length;
+        List<List<Integer>> ans = new ArrayList<>(1 << n);
+        for (int i = 0; i < (1 << n); i++) { 
+            List<Integer> subset = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                if ((i >> j & 1) == 1) { 
+                    subset.add(nums[j]);
+                }
+            }
+            ans.add(subset);
+        }
+        return ans;
+    }
+}
+```
+
