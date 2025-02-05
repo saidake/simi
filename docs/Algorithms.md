@@ -3878,6 +3878,8 @@ class Solution {
 ### Depth-first Search Solution
 Save the `path` array at the start of each DFS call, 
 recursively explore remaining indices, and remove the current element when backtracking.
+
+Example: 
 ```
 indices: 0    1    2    3    4
 nums:    1    2    3    4  
@@ -3892,6 +3894,7 @@ Recursion:
                         4    [4]
 
 ```
+The right arrays represent the subset added in the current recursive call.
 #### Implementation
 ```java
 class Solution {
@@ -3916,6 +3919,7 @@ class Solution {
 }
 
 ```
+#### Time and Space Complexity
 * Time Complexity: $O(n\times2^n)$
 
     The recursive call decreases by `1` each time. 
@@ -3933,17 +3937,29 @@ class Solution {
    Therefore, the overall space complexity is $O(n\times2^n)$.
 
 ### Traversal Solution
-Since each element might be included or excluded, the number of subsets of `nums` array is $2^n$.
+Let `n` be the length of the `nums` array.
+Since each element might be included or excluded, the total number of subsets of `nums` array is $2^n$.
 
+In the binary representation of subset indices from $0$ to $2^n$, each bit indicates whether an element is selected.
+
+By iterating through all elements of `nums` and adding them to subsets at valid indices, 
+every element is placed into the subsets that include it.
+
+Example: 
 ```
-indices: 0    1    2    3    4
 nums:    1    2    3    4  
-Traversal:
 
+Subset indices: 0, 1, 2, 3, 4, 5, ..., 15.
+Binary Representation: 
+    0000, 
+    0001, (`4` is selected)
+    0010, (`3` is selected) 
+    0011, (`3` and `4` are selected) 
+    0100, (`2` is selected) 
+    0101, (`2` and `4` are selected) 
+    ..., 
+    1111. (`1`,`2`,`3` and `4` are selected) 
 ```
-
-
-
 #### Implementation
 ```java
 class Solution {
@@ -3963,4 +3979,18 @@ class Solution {
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(n\times2^n)$
+
+    The outer loop iterates over all subset indices, runing in $O(2^n)$ time.
+    The inner loop traverses the bit indices of the binary representation of $2^n$, with a time complexity of $O(n)$.
+
+    Threrefore, the overall time complexity is $O(n\times2^n)$.
+* Space Complexity: $O(n\times2^n)$
+
+    `ans` array has a space complexity of $O(n\times2^n)$, as explained in the previous Backtracking Solution.
+
+    Thus, the overall space complexity is $O(n\times2^n)$.
+
+
 
