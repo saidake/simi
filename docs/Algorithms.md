@@ -4024,7 +4024,7 @@ Thus, there are 2 strings that appear exactly once in each of the two arrays.
 * `words1[i]` and `words2[j]` consists only of lowercase English letters.
 
 ### Analysis
-
+Use two Hashmaps to count the word occurrences in both arrays and identify strings that appear exactly once in each.
 #### Implementation
 ```java
 class Solution {
@@ -4048,3 +4048,16 @@ class Solution {
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(m + n)$
+    * Count words for `words1` array
+    
+        This loop runs in $O(m)$ time, where `m` is the length of `words1` array.
+    * Count words for `words2` array
+    
+        This loop runs in $O(n)$ time, where `n` is the length of `words2` array.
+    * Find strings that appear exactly once in both arrays
+    
+        This loop iterate over all unique elements in `words1` array, resulting in a time complexity of $O(m)$ in the worst case.
+
+* Space Complexity: $O(m + n)$
