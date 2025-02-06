@@ -4118,3 +4118,124 @@ class Solution {
     * `Arrays.sort` typically requires $O(\log n)$ space for sorting a primitive array.  
     
     Therefore, the total space complexity is $O(\log n)$.
+
+## My Calendar II
+You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a triple booking.
+
+A triple booking happens when three events have some non-empty intersection (i.e., some moment is common to all the three events.).
+
+The event can be represented as a pair of integers `startTime` and `endTime` that represents a booking on the half-open interval `[startTime, endTime)`, the range of real numbers `x` such that `startTime <= x < endTime`.
+
+Implement the `MyCalendarTwo` class:
+
+* `MyCalendarTwo()` Initializes the calendar object.
+* `boolean book(int startTime, int endTime)` Returns `true` if the event can be added to the calendar successfully without causing a triple booking. Otherwise, return `false` and do not add the event to the calendar.
+
+**Example 1:**
+> **Input:**  
+["MyCalendarTwo", "book", "book", "book", "book", "book", "book"]  
+[[], [10, 20], [50, 60], [10, 40], [5, 15], [5, 10], [25, 55]]  
+> **Output:**  
+[null, true, true, true, false, true, true]
+
+**Explanation:**
+> MyCalendarTwo myCalendarTwo = new MyCalendarTwo();  
+> myCalendarTwo.book(10, 20); // return True, The event can be booked.   
+> myCalendarTwo.book(50, 60); // return True, The event can be booked.  
+> myCalendarTwo.book(10, 40); // return True, The event can be double booked.   
+> myCalendarTwo.book(5, 15);  // return False, The event cannot be booked, because it would result in a triple booking.  
+> myCalendarTwo.book(5, 10); // return True, The event can be booked, as it does not use time 10 which is already double booked.  
+> myCalendarTwo.book(25, 55); // return True, The event can be booked, as the time in [25, 40) will be double booked with the third event, the time [40, 50) will be single booked, and the time [50, 55) will be double booked with the second event.  
+
+**Constraints:**
+* `0 <= start < end <= 109`
+* At most `1000` calls will be made to `book`.
+
+### Analysis
+#### Implementation
+```java
+class MyCalendarTwo {
+    private List<Integer> lList;
+    private List<Integer> rList;
+    private List<Integer> lCheckList;
+    private List<Integer> rCheckList;
+
+    public MyCalendarTwo() {
+        this.lList=new ArrayList();
+        this.rList=new ArrayList();
+        this.lCheckList=new ArrayList();
+        this.rCheckList=new ArrayList();
+    }
+    //   10,    20     
+    //                       50,     60
+    //   10,             40  
+    // 5,    15                             false
+    // 5,10                                 true
+    //             25,          55   
+
+    //               26    35
+    //               26  32
+    //             25    32
+    //         18    26
+    //                         40  45
+    //           19  26                                 true  ?
+    //                                   48 50          true
+    // 1  6                                             true
+    //                               46   50            true
+    //      11 18                                       true  
+    public boolean book(int startTime, int endTime) {
+        boolean ans=true;
+        int lInd=Collections.binarySearch(lList, startTime);
+        int rInd=Collections.binarySearch(rList, endTime);
+        if(lInd<0) {
+            lInd= -lInd-1;
+            lList.add(lInd, startTime);
+            lCheckList.add(lInd,1);
+        }else{
+            lCheckList.set(lInd, lCheckList.get(lInd)+1);
+            if(lCheckList.get(lInd)>=3)ans=false;
+        }
+        // Identify the starTime in `lList` array that is less than or equal to the current `endTime`
+        System.out.println("Start left Traversal");
+        
+        for(int i=lInd+1; i<lList.size(); i++){
+            System.out.println("i: "+ i +" lList.get(i):  " + lList.get(i));
+            if(lList.get(i)<endTime){
+                lCheckList.set(i, lCheckList.get(i)+1);
+                if(lCheckList.get(i)>=3)ans=false;
+            }else{
+                break;
+            }
+        }
+        // Ignore the right boundary for half-open interval.
+        if(rInd<0){
+            rInd= -rInd-1;
+            rList.add(rInd, endTime);
+            rCheckList.add(rInd,1);
+        }
+        // else{
+        //     rCheckList.set(rInd, rCheckList.get(rInd)+1);
+        //     if(rCheckList.get(rInd)>=3)ans= false;
+        // }
+        System.out.println("Start right Traversal");
+        // Identify the endTime in `rList` array that is greater than or equal to the current `startTime`
+        for(int j=rInd-1; j>=0; j--){
+            System.out.println("j: "+ j +" rList.get(j):  " + rList.get(j));
+            if(rList.get(j)>=startTime){
+                rCheckList.set(j, rCheckList.get(j)+1);
+                if(rCheckList.get(j)>=3)ans= false;
+            }else{
+                break;
+            }
+        }
+        return ans;
+    }
+}
+
+/**
+ * Your MyCalendarTwo object will be instantiated and called as such:
+ * MyCalendarTwo obj = new MyCalendarTwo();
+ * boolean param_1 = obj.book(startTime,endTime);
+ */
+```
+
