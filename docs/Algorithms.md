@@ -4152,90 +4152,108 @@ Implement the `MyCalendarTwo` class:
 * At most `1000` calls will be made to `book`.
 
 ### Analysis
+Build a segment tree to save the ranges, the following shows how to insert a new range node:
+
+Use `O` to indicate the presence of a range to the left or right of the current node, `X` to indicate no range left or right, `L` for the left of new range, and `R` for the right of the new range.
+
+1. If the new range is not overlapped with the current node, continue checking the left or right node based on the new range location.
+    ```
+    [L R]  O [cur.start  cur.end] X   (Continue comparing with `cur.left` node if `cur.left` exists)
+    [L R]  X [cur1.start  cur1.end] O   (Insert the new range to the `cur1.left`if `cur1.left` not exists)
+
+    ```
+2. 
+
+
 #### Implementation
 ```java
 class MyCalendarTwo {
-    private List<Integer> lList;
-    private List<Integer> rList;
-    private List<Integer> lCheckList;
-    private List<Integer> rCheckList;
+    class SegmentTree {
+        int start, end;
+        boolean overlap; 
+        SegmentTree left, right; 
+        SegmentTree(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+    }
+
+    SegmentTree root;
 
     public MyCalendarTwo() {
-        this.lList=new ArrayList();
-        this.rList=new ArrayList();
-        this.lCheckList=new ArrayList();
-        this.rCheckList=new ArrayList();
     }
-    //   10,    20     
-    //                       50,     60
-    //   10,             40  
-    // 5,    15                             false
-    // 5,10                                 true
-    //             25,          55   
 
-    //               26    35
-    //               26  32
-    //             25    32
-    //         18    26
-    //                         40  45
-    //           19  26                                 true  ?
-    //                                   48 50          true
-    // 1  6                                             true
-    //                               46   50            true
-    //      11 18                                       true  
-    public boolean book(int startTime, int endTime) {
-        boolean ans=true;
-        int lInd=Collections.binarySearch(lList, startTime);
-        int rInd=Collections.binarySearch(rList, endTime);
-        if(lInd<0) {
-            lInd= -lInd-1;
-            lList.add(lInd, startTime);
-            lCheckList.add(lInd,1);
-        }else{
-            lCheckList.set(lInd, lCheckList.get(lInd)+1);
-            if(lCheckList.get(lInd)>=3)ans=false;
-        }
-        // Identify the starTime in `lList` array that is less than or equal to the current `endTime`
-        System.out.println("Start left Traversal");
+    public boolean book(int start, int end) {
+        if (!insertable(start, end, root)) 
+            return false;
         
-        for(int i=lInd+1; i<lList.size(); i++){
-            System.out.println("i: "+ i +" lList.get(i):  " + lList.get(i));
-            if(lList.get(i)<endTime){
-                lCheckList.set(i, lCheckList.get(i)+1);
-                if(lCheckList.get(i)>=3)ans=false;
-            }else{
-                break;
+        root = insert(start, end, root);
+        return true;
+    }
+
+    /**
+     * Check the location of the current range comparing with the `cur` range.
+     */
+    private boolean insertable(int start, int end, SegmentTree cur) {
+        if (start >= end) return true;
+        if (cur == null) return true;
+        if (start >= cur.end) { 
+            // Check right side
+            return insertable(start, end, cur.right);
+        } else if (end <= cur.start) { 
+            // check left side
+            return insertable(start, end, cur.left);
+        } else { 
+            // Ignore the current range if the `cur` node is already overlapped
+            if (cur.overlap) { 
+                return false;
+            } else { 
+                // The current range from `start` to `end` is inside the `cur` range
+                if (start >= cur.start && end <= cur.end) { 
+                    return true;
+                } else { 
+                    // Check left and right side
+                    return insertable(start, cur.start, cur.left) && insertable(cur.end, end, cur.right);
+                }
             }
         }
-        // Ignore the right boundary for half-open interval.
-        if(rInd<0){
-            rInd= -rInd-1;
-            rList.add(rInd, endTime);
-            rCheckList.add(rInd,1);
+    }
+    
+    /**
+     * Insert the current range.
+     */
+    private SegmentTree insert(int start, int end, SegmentTree cur) {
+        if (start >= end) 
+            return cur;
+        if (cur == null) 
+            return new SegmentTree(start, end);
+        
+        if (start >= cur.end) { 
+            // The curreng range is positioned to right of the `cur` node
+            cur.right = insert(start, end, cur.right);
+        } else if (end <= cur.start) { 
+            // The curreng range is positioned to left of the `cur` node
+            cur.left = insert(start, end, cur.left);
+        } else {
+            cur.overlap = true;
+            //    L1   R1        start, end
+            //      L2    R2     cur.start, cur.end
+            // L1,L2  -  cur.left - cur.right - R1,R2
+            // cur = L2,R1
+            int a = Math.min(cur.start, start);
+            int b = Math.max(cur.start, start);
+            int c = Math.min(cur.end, end);
+            int d = Math.max(cur.end, end);
+            
+            cur.left = insert(a, b, cur.left);
+            cur.right = insert(c, d, cur.right);
+            
+            cur.start = b;
+            cur.end = c;
         }
-        // else{
-        //     rCheckList.set(rInd, rCheckList.get(rInd)+1);
-        //     if(rCheckList.get(rInd)>=3)ans= false;
-        // }
-        System.out.println("Start right Traversal");
-        // Identify the endTime in `rList` array that is greater than or equal to the current `startTime`
-        for(int j=rInd-1; j>=0; j--){
-            System.out.println("j: "+ j +" rList.get(j):  " + rList.get(j));
-            if(rList.get(j)>=startTime){
-                rCheckList.set(j, rCheckList.get(j)+1);
-                if(rCheckList.get(j)>=3)ans= false;
-            }else{
-                break;
-            }
-        }
-        return ans;
+        
+        return cur;
     }
 }
-
-/**
- * Your MyCalendarTwo object will be instantiated and called as such:
- * MyCalendarTwo obj = new MyCalendarTwo();
- * boolean param_1 = obj.book(startTime,endTime);
- */
 ```
 
