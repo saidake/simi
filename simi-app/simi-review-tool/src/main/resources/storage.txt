@@ -27,3 +27,6 @@ Algorithms Problems / Two Pointer / Boats to Save People
 Algorithms Problems / Two Pointer / Find the Lexicographically Largest String From the Box I
 Algorithms Problems / Two Pointer / Merge Sorted Array
 Algorithms Problems / SQL / Odd and Even Transactions
+English / Near-synonym / different, disparate, differential
+Algorithms / Math / Probability / Binomial Theorem
+Algorithms / Math / Formulas / Differentiation

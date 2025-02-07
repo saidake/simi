@@ -77,7 +77,7 @@ public class SimiInitializer {
         return smpYml.loadAs(fileInputStream, SimiYmlProperties.class);
     }
 
-    public static Map<String,Set<String>> init(SimiYmlProperties simiYmlProperties, String projectName, String env, GetPomProjectName getPomProjectName) throws IOException, DocumentException, InitException {
+    public static Map<String,Set<String>> init(SimiYmlProperties simiYmlProperties, String projectName, String env, GetPomProjectName getPomProjectName) throws IOException, InitException {
         Map<String,Set<String>> resultProjectWriteFileMap=new HashMap<>();
         //A.[CORE] write files
         Map<String, Boolean> writeFileMap=new HashMap<>();
