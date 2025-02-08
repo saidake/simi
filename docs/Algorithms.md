@@ -1,56 +1,64 @@
 # Table of Contents
 [Back to Main Project README](../README.md)
-- [Array](#array)
-    - [Array Partition](#array-partition)
-- [Conditional Logic](#conditional-logic)
-    - [Add Edges to Make Degrees of All Nodes Even](#add-edges-to-make-degrees-of-all-nodes-even)
-- [Depth-first Search](#depth-first-search)
-    - [Amount of Time for Binary Tree to Be Infected](#amount-of-time-for-binary-tree-to-be-infected)
-- [Dichotomy](#dichotomy)
-    - [Search in Rotated Sorted Array](#search-in-rotated-sorted-array)
-- [Difference Array](#difference-array)
-    - [Jump Game VII](#jump-game-vii)
-- [Dynamic Programming](#dynamic-programming)
-    - [Climbing Stairs](#climbing-stairs)
-    - [Count All Valid Pickup and Delivery Options](#count-all-valid-pickup-and-delivery-options)
-    - [Decode Ways II](#decode-ways-ii)
-    - [Make the XOR of All Segments Equal to Zero](#make-the-xor-of-all-segments-equal-to-zero)
-    - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
-    - [Minimum Deletions to Make String Balanced](#minimum-deletions-to-make-string-balanced)
-    - [Stone Game](#stone-game)
-    - [Target Sum](#target-sum)
-- [Fenwick Tree](#fenwick-tree)
-    - [Distribute Elements Into Two Arrays II](#distribute-elements-into-two-arrays-ii)
-- [Greedy](#greedy)
-    - [Max Difference You Can Get From Changing an Integer](#max-difference-you-can-get-from-changing-an-integer)
-    - [Maximum Length of Subarray With Positive Product](#maximum-length-of-subarray-with-positive-product)
-- [Math](#math)
-    - [Construct the Minimum Bitwise Array II](#construct-the-minimum-bitwise-array-ii)
-    - [Egg Drop With 2 Eggs and N Floors](#egg-drop-with-2-eggs-and-n-floors)
-    - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
-    - [Minimum Moves to Capture The Queen](#minimum-moves-to-capture-the-queen)
-- [Precomputation](#precomputation)
-    - [Range Product Queries of Powers](#range-product-queries-of-powers)
-- [Sliding Window](#sliding-window)
-    - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
-- [String](#string)
-    - [License Key Formatting](#license-key-formatting)
-- [Traversal](#traversal)
-    - [Find the Number of Ways to Place People I](#find-the-number-of-ways-to-place-people-i)
-    - [Maximum Number of Operations With the Same Score I](#maximum-number-of-operations-with-the-same-score-i)
-- [Two Pointer](#two-pointer)
-    - [Boats to Save People](#boats-to-save-people)
-    - [Find the Lexicographically Largest String From the Box I](#find-the-lexicographically-largest-string-from-the-box-i)
-    - [Merge Sorted Array](#merge-sorted-array)
-- [SQL](#sql)
-    - [Odd and Even Transactions](#odd-and-even-transactions)
-- [Uncategorized Problems](#uncategorized-problems)
-    - [Power Set LCCI](#power-set-lcci)
-# Array
-## Array Partition
+- [Algorithm Problems](#algorithm-problems)
+    - Array
+        - [1. Array Partition](#1-array-partition)
+        - [31. Minimum Number Game](#31-minimum-number-game)
+    - Backtracking
+        - [29. Power Set LCCI](#29-power-set-lcci)
+    - Conditional Logic
+        - [2. Add Edges to Make Degrees of All Nodes Even](#2-add-edges-to-make-degrees-of-all-nodes-even)
+    - Depth-first Search
+        - [3. Amount of Time for Binary Tree to Be Infected](#3-amount-of-time-for-binary-tree-to-be-infected)
+        - [29. Power Set LCCI](#29-power-set-lcci)
+    - Dichotomy
+        - [4. Search in Rotated Sorted Array](#4-search-in-rotated-sorted-array)
+    - Difference Array
+        - [5. Jump Game VII](#5-jump-game-vii)
+    - Dynamic Programming
+        - [6. Climbing Stairs](#6-climbing-stairs)
+        - [7. Count All Valid Pickup and Delivery Options](#7-count-all-valid-pickup-and-delivery-options)
+        - [8. Decode Ways II](#8-decode-ways-ii)
+        - [9. Make the XOR of All Segments Equal to Zero](#9-make-the-xor-of-all-segments-equal-to-zero)
+        - [10. Maximize Value of Function in a Ball Passing Game](#10-maximize-value-of-function-in-a-ball-passing-game)
+        - [11. Minimum Deletions to Make String Balanced](#11-minimum-deletions-to-make-string-balanced)
+        - [12. Stone Game](#12-stone-game)
+        - [13. Target Sum](#13-target-sum)
+    - HashMap
+        - [30. Count Common Words With One Occurrence](#30-count-common-words-with-one-occurrence)
+    - Fenwick Tree
+        - [14. Distribute Elements Into Two Arrays II](#14-distribute-elements-into-two-arrays-ii)
+    - Greedy
+        - [15. Max Difference You Can Get From Changing an Integer](#15-max-difference-you-can-get-from-changing-an-integer)
+        - [16. Maximum Length of Subarray With Positive Product](#16-maximum-length-of-subarray-with-positive-product)
+    - Math
+        - [17. Construct the Minimum Bitwise Array II](#17-construct-the-minimum-bitwise-array-ii)
+        - [18. Egg Drop With 2 Eggs and N Floors](#18-egg-drop-with-2-eggs-and-n-floors)
+        - [19. Find Number of Ways to Reach the K-th Stair](#19-find-number-of-ways-to-reach-the-k-th-stair)
+        - [20. Minimum Moves to Capture The Queen](#20-minimum-moves-to-capture-the-queen)
+    - Precomputation
+        - [21. Range Product Queries of Powers](#21-range-product-queries-of-powers)
+    - Sliding Window
+        - [22. Find the Longest Equal Subarray](#22-find-the-longest-equal-subarray)
+    - String
+        - [23. License Key Formatting](#23-license-key-formatting)
+    - Traversal
+        - [24. Find the Number of Ways to Place People I](#24-find-the-number-of-ways-to-place-people-i)
+        - [25. Maximum Number of Operations With the Same Score I](#25-maximum-number-of-operations-with-the-same-score-i)
+        - [29. Power Set LCCI](#29-power-set-lcci)
+    - Two Pointer
+        - [26. Boats to Save People](#26-boats-to-save-people)
+        - [27. Find the Lexicographically Largest String From the Box I](#27-find-the-lexicographically-largest-string-from-the-box-i)
+        - [28. Merge Sorted Array](#28-merge-sorted-array)
+    - [Uncategorized Problems](#uncategorized-problems)
+        - [32. My Calendar II](#32-my-calendar-ii)
+- [SQL Problems](#sql-problems)
+    - [1. Odd and Even Transactions](#29-odd-and-even-transactions)
+# Algorithm Problems
+## 1. Array Partition
 [Back to Top](#table-of-contents)  
 ### Overview
-Given an integer array `nums` of 2n integers, 
+Given an integer array `nums` of `2n` integers, 
 group these integers into `n` pairs `(a1, b1), (a2, b2), ..., (an, bn)` such that the sum of `min(ai, bi)` for all `i` is maximized. 
 Return the maximized sum.
 
@@ -74,7 +82,7 @@ Return the maximized sum.
 * `1 <= n <= 10^4`
 * `nums.length == 2 * n`
 * `-10^4 <= nums[i] <= 10^4`
-### Analysis
+### Array Solution
 In each group, the larger integer will be omitted, and we need to maximize the `sum`.
 Therefore, The omitted value must be smaller.
 To ensure this, wen can sort the array, so that the smaller integer is omitted when calculating the minimal value from the group.
@@ -107,8 +115,7 @@ Note that the space complexity of `Arrays.sort` is:
 * $O(logn)$ for sorting primitive arrays.
 * $O(n)$ for sorting object arrays.
 
-# Conditional Logic
-## Add Edges to Make Degrees of All Nodes Even
+## 2. Add Edges to Make Degrees of All Nodes Even
 [Back to Top](#table-of-contents)
 ### Overview
 There is an **undirected** graph consisting of `n` nodes numbered from `1` to `n`. 
@@ -147,7 +154,7 @@ Every node in the resulting graph is connected to an even number of edges.
 * `a_i != b_i`
 * There are no repeated edges.
 
-### Analysis
+### Conditional Logic Solution
 To make all node degrees in the graph even by adding only two edges, the following conditions must be met:
 * The number of nodes with odd degrees must be even and cannot exceed 4.
     * If there are 4 such nodes, two distinct pairs must exist that can be connected.
@@ -223,8 +230,7 @@ class Solution {
 
     Thus, the total space complexity is $O(m+n)$.
 
-# Depth-first Search
-## Amount of Time for Binary Tree to Be Infected
+## 3. Amount of Time for Binary Tree to Be Infected
 [Back to Top](#table-of-contents)
 ### Overview
 You are given the `root` of a binary tree with unique values, and an integer `start`. 
@@ -434,8 +440,7 @@ class Solution {
 
     Therefore, the overall space complexity of the solution is $O(n)$.
 
-# Dichotomy
-## Search in Rotated Sorted Array
+## 4. Search in Rotated Sorted Array
 ### Overview
 There is an integer array `nums` sorted in ascending order (with distinct values).
 
@@ -516,8 +521,7 @@ class Solution {
 
     Each recursive call adds a frame to the recursion stack, with a maximum depth of $O(logn)$, leading to a space complexity of O(logn).
 
-# Difference Array
-## Jump Game VII
+## 5. Jump Game VII
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a 0-indexed binary string `s` and two integers `minJump` and `maxJump`. 
@@ -722,8 +726,7 @@ class Solution {
 
     The `dp` array has a size of len, contributing $O(n)$ to the space complexity.
 
-# Dynamic Programming
-## Climbing Stairs
+## 6. Climbing Stairs
 [Back to Top](#table-of-contents)  
 ### Overview
 You are climbing a staircase. It takes `n` steps to reach the top.
@@ -791,7 +794,7 @@ class Solution {
 
     The `for` loop iterate over the stairs starting from `3`, yielding a time complexity of $O(n)$.
 * Space Complexity: $O(1)$
-## Count All Valid Pickup and Delivery Options
+## 7. Count All Valid Pickup and Delivery Options
 [Back to Top](#table-of-contents)  
 ### Overview
 Given `n` orders, each order consists of a pickup and a delivery service.
@@ -881,7 +884,7 @@ class Solution {
 * Space Complexity: $O(1)$
 
 
-## Decode Ways II
+## 8. Decode Ways II
 [Back to Top](#table-of-contents)  
 ### Overview
 A message containing letters from `A-Z` can be encoded into numbers using the following mapping:
@@ -1051,7 +1054,7 @@ class Solution {
 * The values in the `dp` array are taken modulo 10<sup>9</sup> + 7, which is still a very large value. long type is required to prevent integer overflow.
 * Using `Character.getNumericValue()` to obtain the nummeric value of `'*'` in string `s` will return `'-1'` and using the `-1` for checking purposes can lead to misleading readability.
 
-## Make the XOR of All Segments Equal to Zero
+## 9. Make the XOR of All Segments Equal to Zero
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given an array `nums` and an integer `k`. The `XOR` of a segment `[left, right]` where `left <= right` is the `XOR` of all the elements with indices between `left` and `right`, inclusive: `nums[left] XOR nums[left+1] XOR ... XOR nums[right]`.
@@ -1268,7 +1271,7 @@ class Solution {
     * Other variables:
         Includes variables like sum, min, and loop variables. These require $O(1)$ space.
 
-## Maximize Value of Function in a Ball Passing Game
+## 10. Maximize Value of Function in a Ball Passing Game
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given an integer array `receiver` of length `n` and an integer `k`. 
@@ -1483,7 +1486,7 @@ class Solution {
     * Other variables
         
         The other variables, such as `len`, `passCount`, `i`, `x`, `k`, `ctz`, `s`, and `ans`, require constant extra space.
-## Minimum Deletions to Make String Balanced
+## 11. Minimum Deletions to Make String Balanced
 [Back to Top](#table-of-contents)  
 You are given a string `s` consisting only of characters `'a'` and `'b'`.
 
@@ -1544,7 +1547,7 @@ class Solution {
     The `for` loop takes $O(n)$ time.
 * Space Complexity: $O(1)$
 
-## Stone Game
+## 12. Stone Game
 [Back to Top](#table-of-contents)
 ### Overview
 Alice and Bob play a game with piles of stones.
@@ -1740,7 +1743,7 @@ class Solution {
     The size of one-dimensional array `dp` is `n`, corresponding to the length of the input array.
     The space requried for this array is $O(n)$.
 
-## Target Sum
+## 13. Target Sum
 [Back to Top](#table-of-contents) 
 ### Overview
 You are given an integer array `nums` and an integer `target`.  
@@ -2078,8 +2081,7 @@ public class Solution {
     The `dp` array requires $O(neg)$ space.
 
 
-# Fenwick Tree
-## Distribute Elements Into Two Arrays II
+## 14. Distribute Elements Into Two Arrays II
 [Back to Top](#table-of-contents) 
 ### Overview
 You are given a **1-indexed** array of integers `nums` of length `len`.
@@ -2255,8 +2257,7 @@ class Solution {
     The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `ft1` and `ft2` each contribute $O(n)$ to the space complexity.  
     Therefore, the total space complexity is $O(n)$.
 
-# Greedy
-## Max Difference You Can Get From Changing an Integer
+## 15. Max Difference You Can Get From Changing an Integer
 [Back to Top](#table-of-contents)  
 ### Overview
 
@@ -2325,7 +2326,7 @@ class Solution {
     Since the `replace` method has a time complexity of $O(n)$ and is executed at most twice, while `charAt` and `Integer.parseInt` take $O(1)$ time, the overall time complexity of the `for` is $O(n)$.
 * Space Complexity: $O(1)$
 
-## Maximum Length of Subarray With Positive Product
+## 16. Maximum Length of Subarray With Positive Product
 [Back to Top](#table-of-contents)
 ### Overview
 Given an array of integers `nums`, find the maximum length of a subarray where the product of all its elements is positive.
@@ -2454,8 +2455,7 @@ class Solution {
 * Space Complexity: $O(1)$
 
 
-# Math
-## Construct the Minimum Bitwise Array II
+## 17. Construct the Minimum Bitwise Array II
 ### Overview
 You are given an array `nums` consisting of `n` prime integers.
 
@@ -2557,7 +2557,7 @@ class Solution {
 
     The array `ans` takes $O(n)$ space.
 
-## Egg Drop With 2 Eggs and N Floors
+## 18. Egg Drop With 2 Eggs and N Floors
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given two identical eggs and you have access to a building with `n` floors labeled from `1` to `n`.
@@ -2657,7 +2657,7 @@ class Solution {
 * Time Complexity: $O(1)$
 * Space Complexity: $O(1)$
 
-## Find Number of Ways to Reach the K-th Stair
+## 19. Find Number of Ways to Reach the K-th Stair
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a **non-negative** integer `k`. There exists a staircase with an infinite number of stairs, with the **lowest** stair numbered 0.
@@ -2784,7 +2784,7 @@ class Solution {
  
     The time and space used duiring the precomputation process are not factored into the solution.
 * Space Complexity: $O(1)$
-## Minimum Moves to Capture The Queen
+## 20. Minimum Moves to Capture The Queen
 [Back to Top](#table-of-contents)  
 ### Overview
 There is a **1-indexed** `8 x 8` chessboard containing 3 pieces.
@@ -2896,8 +2896,7 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $O(1)$
 * Space Complexity: $O(1)$
-# Precomputation
-## Range Product Queries of Powers
+## 21. Range Product Queries of Powers
 [Back to Top](#table-of-contents)  
 ### Overview
 Given a positive integer `n`, there exists a **0-indexed** array called `powers`, composed of the **minimum** number of powers of `2` that sum to `n`. The array is sorted in **non-decreasing** order, and there is only one way to form the array.
@@ -3004,8 +3003,7 @@ class Solution {
 
     Because $O(q)$ grows slower than $O(bc^2)$ and can be omitted, the total space complexity is $O(bc^2)$.
 
-# Sliding Window
-## Find the Longest Equal Subarray
+## 22. Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a **0-indexed** integer array nums and an integer `k`.  
@@ -3141,7 +3139,7 @@ class Solution {
    
    Since the primary space usage comes from the `valCount` array, the space complexity is $O(n)$
 
-## License Key Formatting
+## 23. License Key Formatting
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a license key represented as a string `s` that consists of only alphanumeric characters and dashes.  
@@ -3203,8 +3201,7 @@ class Solution {
     `s.toCharArray()` creates a new character array of size $O(n)$,
     `StringBuilder sb` stores the result string, which can also be of size $O(n)$.  
     Therefore, the total space complexity is $O(n)$
-# Traversal
-## Find the Number of Ways to Place People I
+## 24. Find the Number of Ways to Place People I
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a 2D array `points` of size `n x 2` representing integer coordinates of some points on a 2D plane, where `points[i] = [xi, yi]`.
@@ -3297,7 +3294,7 @@ Note that the space complexity of `Arrays.sort` is:
 * $O(n)$ for sorting object arrays.
 
 
-## Maximum Number of Operations With the Same Score I
+## 25. Maximum Number of Operations With the Same Score I
 You are given an array of integers `nums`. Consider the following operation:
 
 * Delete the first two elements `nums` and define the score of the operation as the sum of these two elements.
@@ -3356,8 +3353,7 @@ class Solution {
 * Space Complexity: $O(1)$
 
     Only a constant amount of additional space is used.
-# Two-Pointer
-## Boats to Save People
+## 26. Boats to Save People
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given an array `people` where `people[i]` is the weight of the **i-th** person, 
@@ -3425,7 +3421,7 @@ class Solution {
 Note that the space complexity of `Arrays.sort` is:
 * $O(logn)$ for sorting primitive arrays.
 * $O(n)$ for sorting object arrays.
-## Find the Lexicographically Largest String From the Box I
+## 27. Find the Lexicographically Largest String From the Box I
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a string `word`, and an integer `numFriends`.
@@ -3546,7 +3542,7 @@ class Solution {
 
 * Space Complexity: $O(1)$
 
-## Merge Sorted Array
+## 28. Merge Sorted Array
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n`, representing the number of elements in `nums1` and `nums2` respectively.
@@ -3617,96 +3613,9 @@ class Solution {
 
     The array `nums1Cp` occupies $O(m)$ space where `m` is the first `m` integers in array `nums1`.
 
-# SQL
-## Odd and Even Transactions
-[Back to Top](#table-of-contents)  
-### Overview
-Table: `transactions`
-```
-+------------------+------+  
-| Column Name      | Type |   
-+------------------+------+  
-| transaction_id   | int  |  
-| amount           | int  |  
-| transaction_date | date |  
-+------------------+------+  
-```
-The `transactions_id` column uniquely identifies each row in this table.  
-Each row of this table contains the transaction id, amount and transaction date.
 
-Write a solution to find the `sum of amounts` for `odd` and `even` transactions for each day. If there are no odd or even transactions for a specific date, display as `0`.
-
-Return the result table ordered by `transaction_date` in **ascending** order.
-The result format is in the following example.
-
-**Example:**
-> **Input:**  
-> `transactions` table:  
-> ```text
-> +----------------+--------+------------------+
-> | transaction_id | amount | transaction_date |
-> +----------------+--------+------------------+
-> | 1              | 150    | 2024-07-01       |
-> | 2              | 200    | 2024-07-01       |
-> | 3              | 75     | 2024-07-01       |
-> | 4              | 300    | 2024-07-02       |
-> | 5              | 50     | 2024-07-02       |
-> | 6              | 120    | 2024-07-03       |
-> +----------------+--------+------------------+
-> ```
-> **Output:**  
-> ```text
-> +------------------+---------+----------+
-> | transaction_date | odd_sum | even_sum |
-> +------------------+---------+----------+
-> | 2024-07-01       | 75      | 350      |
-> | 2024-07-02       | 0       | 350      |
-> | 2024-07-03       | 0       | 120      |
-> +------------------+---------+----------+
-> ```
-> **Explanation:**
-> * For transaction dates:
->   * 2024-07-01:
->       * Sum of amounts for odd transactions: 75
->       * Sum of amounts for even transactions: 150 + 200 = 350
->   * 2024-07-02:
->       * Sum of amounts for odd transactions: 0
->       * Sum of amounts for even transactions: 300 + 50 = 350
->   * 2024-07-03:
->       * Sum of amounts for odd transactions: 0
->       * Sum of amounts for even transactions: 120  
->
-> **Note:** The output table is ordered by `transaction_date` in ascending order.
-### Analysis
-Group the data by the `transaction_date` field (using `GROUP BY` or `PARTITION BY`), and calculate the total amounts for odd and even transactions on each transaction_date.
-
-Oracle Functions:
-* NVL(expression, replacement_value)
-
-    The NVL function is used to replace NULL values with a specified replacement value.   
-    If the first argument is NULL, it returns the second argument. Otherwise, it returns the first argument.
-* BITAND(x, y)				
-
-    The BITAND function performs a bitwise AND operation between two integer values. 
-
-### MySQL Implementation
-```sql
-SELECT DISTINCT transaction_date, 
-SUM(CASE WHEN amount % 2=0 THEN 0 ELSE amount END) OVER( PARTITION BY transaction_date  ) AS odd_sum,
-SUM(CASE WHEN amount % 2=0 THEN amount ELSE 0 END) OVER( PARTITION BY transaction_date  ) AS even_sum
-FROM transactions;
-```
-### Oracle Implementation
-```sql
-SELECT TO_CHAR(transaction_date,'yyyy-MM-dd') AS transaction_date,
-       NVL(SUM(CASE WHEN BITAND(amount,1)=1 THEN amount END),0) AS odd_sum,
-       NVL(SUM(CASE WHEN BITAND(amount,1)=0 THEN amount END),0) AS even_sum
-FROM transactions
-GROUP BY transaction_date
-ORDER BY transaction_date ASC;
-```
 # Uncategorized Problems
-## Power Set LCCI
+## 29. Power Set LCCI
 [Back to Top](#table-of-contents)  
 ### Overview
 Write a method to return all subsets of a set. The elements in a set are pairwise distinct.
@@ -3993,7 +3902,7 @@ class Solution {
 
     Thus, the overall space complexity is $O(n\times2^n)$.
 
-## Count Common Words With One Occurrence 
+## 30. Count Common Words With One Occurrence
 [Back to Top](#table-of-contents)  
 ### Overview
 Given two string arrays `words1` and `words2`, return the number of strings that appear `exactly once` in each of the two arrays.
@@ -4023,7 +3932,7 @@ Thus, there are 2 strings that appear exactly once in each of the two arrays.
 * `1 <= words1[i].length, words2[j].length <= 30`
 * `words1[i]` and `words2[j]` consists only of lowercase English letters.
 
-### Analysis
+### HashMap Solution
 Use two Hashmaps to count the word occurrences in both arrays and identify strings that appear exactly once in each.
 #### Implementation
 ```java
@@ -4064,7 +3973,7 @@ class Solution {
 
     The maps `wordCount1` and `wordCount1` store keys from `words1` and `words2` respectively, with fixed-size values, resulting in a total space complexity of $O(m+n)$.
 
-## Minimum Number Game
+## 31. Minimum Number Game
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a **0-indexed** integer array `nums` of even length and there is also an empty array `arr`.  
@@ -4092,7 +4001,7 @@ At the begining of round two, nums = [5,4]. Now, first Alice removes 4 and then 
 * `1 <= nums[i] <= 100`
 * `nums.length % 2 == 0`
 
-### Analysis
+### Array Solution
 Sort the `nums` array, and swap every two elements.
 #### Implementation
 ```java
@@ -4119,7 +4028,7 @@ class Solution {
     
     Therefore, the total space complexity is $O(\log n)$.
 
-## My Calendar II
+## 32. My Calendar II
 You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a triple booking.
 
 A triple booking happens when three events have some non-empty intersection (i.e., some moment is common to all the three events.).
@@ -4152,18 +4061,33 @@ Implement the `MyCalendarTwo` class:
 * At most `1000` calls will be made to `book`.
 
 ### Analysis
-Build a segment tree to save the ranges, the following shows how to insert a new range node:
+A segment tree is used to store ranges efficiently. Below is the process to insert a new range node into the tree.
 
-Use `O` to indicate the presence of a range to the left or right of the current node, `X` to indicate no range left or right, `L` for the left of new range, and `R` for the right of the new range.
+Use `O` to indicate the presence of a range to the left or right of the current node, 
+`X` to indicate no range to the left or right, 
+`start` for the start of new range, and `end` for the end of the new range.
 
-1. If the new range is not overlapped with the current node, continue checking the left or right node based on the new range location.
+* If the new range does not overlap with the current node `cur`, continue comparing it with `cur.left` or `cur.right` until a `null` location is found for insertion or further overlap occurs, requiring another split.  
+    Example:   
+    * If the new range is to the left of `cur`, and `cur.left` exits, continue comparing 
+        ```
+                        O [cur.start, cur.end] X   
+        [start, end]  
+        ```
+    * If the new range is to the left of `cur`, and `cur.left` is `null`, insert `[start, end]` there.
+        ```
+                        X [cur.start, cur.end] O   
+        [start, end]  
+        ```
+* If the new range overlaps with `cur`, split the two ranges into three parts, set the middle range as the new `cur` and compare the left range with `cur.left` and the right range with `cur.right` until a `null` location is found for insertion or further overlap occurs, requiring another split.    
+
+    Example: 
     ```
-    [L R]  O [cur.start  cur.end] X   (Continue comparing with `cur.left` node if `cur.left` exists)
-    [L R]  X [cur1.start  cur1.end] O   (Insert the new range to the `cur1.left`if `cur1.left` not exists)
-
+    [start, end]
+       X [cur.start, cur.end] O
     ```
-2. 
-
+    Seperate the above two ranges into three ranges: `[start, cur.start]`, `[cur.start, end]`, and `[end, cur.end]`.  
+    If the `cur.left` or `cur.right` exits, compare `[start, cur.start]` with `cur.left` or `[end, cur.end]` with `cur.right` until a `null` location is found for insertion or another split is needed.
 
 #### Implementation
 ```java
@@ -4192,7 +4116,7 @@ class MyCalendarTwo {
     }
 
     /**
-     * Check the location of the current range comparing with the `cur` range.
+     * Check the location of the current range relative to the `cur`.
      */
     private boolean insertable(int start, int end, SegmentTree cur) {
         if (start >= end) return true;
@@ -4208,7 +4132,7 @@ class MyCalendarTwo {
             if (cur.overlap) { 
                 return false;
             } else { 
-                // The current range from `start` to `end` is inside the `cur` range
+                // The current range from `start` to `end` is within the `cur` range
                 if (start >= cur.start && end <= cur.end) { 
                     return true;
                 } else { 
@@ -4220,7 +4144,7 @@ class MyCalendarTwo {
     }
     
     /**
-     * Insert the current range.
+     * Insert the current range to a `null` location or split it if overlapping.
      */
     private SegmentTree insert(int start, int end, SegmentTree cur) {
         if (start >= end) 
@@ -4242,6 +4166,7 @@ class MyCalendarTwo {
             // cur = L2,R1
             int a = Math.min(cur.start, start);
             int b = Math.max(cur.start, start);
+
             int c = Math.min(cur.end, end);
             int d = Math.max(cur.end, end);
             
@@ -4256,4 +4181,104 @@ class MyCalendarTwo {
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(m \times n)$
+    * `insertable` method
+        This method traverse the tree until a `null` location is found or range overlaps.
+        * If the tree is balanced, each search halves the search time, resulting in a time complexity of $O(\log n)$.
+        * In the worst case, the tree is like a linked list, resulting in a time complexity of $O(n)$.
+    * `insert` method
+        Similar to `insertable`, this method need to traverse the tree until a `null` location is found or range overlaps, and perform constant-time split and reset operation, resulting in a time complexity of $O(n)$.
 
+* Space Complexity: 
+
+
+
+# SQL Problems
+## 1. Odd and Even Transactions
+[Back to Top](#table-of-contents)  
+### Overview
+Table: `transactions`
+```
++------------------+------+  
+| Column Name      | Type |   
++------------------+------+  
+| transaction_id   | int  |  
+| amount           | int  |  
+| transaction_date | date |  
++------------------+------+  
+```
+The `transactions_id` column uniquely identifies each row in this table.  
+Each row of this table contains the transaction id, amount and transaction date.
+
+Write a solution to find the `sum of amounts` for `odd` and `even` transactions for each day. If there are no odd or even transactions for a specific date, display as `0`.
+
+Return the result table ordered by `transaction_date` in **ascending** order.
+The result format is in the following example.
+
+**Example:**
+> **Input:**  
+> `transactions` table:  
+> ```text
+> +----------------+--------+------------------+
+> | transaction_id | amount | transaction_date |
+> +----------------+--------+------------------+
+> | 1              | 150    | 2024-07-01       |
+> | 2              | 200    | 2024-07-01       |
+> | 3              | 75     | 2024-07-01       |
+> | 4              | 300    | 2024-07-02       |
+> | 5              | 50     | 2024-07-02       |
+> | 6              | 120    | 2024-07-03       |
+> +----------------+--------+------------------+
+> ```
+> **Output:**  
+> ```text
+> +------------------+---------+----------+
+> | transaction_date | odd_sum | even_sum |
+> +------------------+---------+----------+
+> | 2024-07-01       | 75      | 350      |
+> | 2024-07-02       | 0       | 350      |
+> | 2024-07-03       | 0       | 120      |
+> +------------------+---------+----------+
+> ```
+> **Explanation:**
+> * For transaction dates:
+>   * 2024-07-01:
+>       * Sum of amounts for odd transactions: 75
+>       * Sum of amounts for even transactions: 150 + 200 = 350
+>   * 2024-07-02:
+>       * Sum of amounts for odd transactions: 0
+>       * Sum of amounts for even transactions: 300 + 50 = 350
+>   * 2024-07-03:
+>       * Sum of amounts for odd transactions: 0
+>       * Sum of amounts for even transactions: 120  
+>
+> **Note:** The output table is ordered by `transaction_date` in ascending order.
+### Analysis
+Group the data by the `transaction_date` field (using `GROUP BY` or `PARTITION BY`), and calculate the total amounts for odd and even transactions on each transaction_date.
+
+Oracle Functions:
+* NVL(expression, replacement_value)
+
+    The NVL function is used to replace NULL values with a specified replacement value.   
+    If the first argument is NULL, it returns the second argument. Otherwise, it returns the first argument.
+* BITAND(x, y)				
+
+    The BITAND function performs a bitwise AND operation between two integer values. 
+
+### MySQL Implementation
+```sql
+SELECT DISTINCT transaction_date, 
+SUM(CASE WHEN amount % 2=0 THEN 0 ELSE amount END) OVER( PARTITION BY transaction_date  ) AS odd_sum,
+SUM(CASE WHEN amount % 2=0 THEN amount ELSE 0 END) OVER( PARTITION BY transaction_date  ) AS even_sum
+FROM transactions;
+```
+### Oracle Implementation
+```sql
+SELECT TO_CHAR(transaction_date,'yyyy-MM-dd') AS transaction_date,
+       NVL(SUM(CASE WHEN BITAND(amount,1)=1 THEN amount END),0) AS odd_sum,
+       NVL(SUM(CASE WHEN BITAND(amount,1)=0 THEN amount END),0) AS even_sum
+FROM transactions
+GROUP BY transaction_date
+ORDER BY transaction_date ASC;
+```
