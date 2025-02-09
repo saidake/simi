@@ -38,6 +38,8 @@
         - [20. Minimum Moves to Capture The Queen](#20-minimum-moves-to-capture-the-queen)
     - Precomputation
         - [21. Range Product Queries of Powers](#21-range-product-queries-of-powers)
+    - Segment Tree
+        - [32. My Calendar II](#32-my-calendar-ii)
     - Sliding Window
         - [22. Find the Longest Equal Subarray](#22-find-the-longest-equal-subarray)
     - String
@@ -50,8 +52,6 @@
         - [26. Boats to Save People](#26-boats-to-save-people)
         - [27. Find the Lexicographically Largest String From the Box I](#27-find-the-lexicographically-largest-string-from-the-box-i)
         - [28. Merge Sorted Array](#28-merge-sorted-array)
-    - [Uncategorized Problems](#uncategorized-problems)
-        - [32. My Calendar II](#32-my-calendar-ii)
 - [SQL Problems](#sql-problems)
     - [1. Odd and Even Transactions](#29-odd-and-even-transactions)
 # Algorithm Problems
@@ -3613,8 +3613,6 @@ class Solution {
 
     The array `nums1Cp` occupies $O(m)$ space where `m` is the first `m` integers in array `nums1`.
 
-
-# Uncategorized Problems
 ## 29. Power Set LCCI
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -4029,6 +4027,8 @@ class Solution {
     Therefore, the total space complexity is $O(\log n)$.
 
 ## 32. My Calendar II
+[Back to Top](#table-of-contents)  
+### Overview
 You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a triple booking.
 
 A triple booking happens when three events have some non-empty intersection (i.e., some moment is common to all the three events.).
@@ -4060,7 +4060,7 @@ Implement the `MyCalendarTwo` class:
 * `0 <= start < end <= 109`
 * At most `1000` calls will be made to `book`.
 
-### Analysis
+### Segment Tree Solution
 A segment tree is used to store ranges efficiently. Below is the process to insert a new range node into the tree.
 
 Use `O` to indicate the presence of a range to the left or right of the current node, 
@@ -4188,9 +4188,127 @@ class MyCalendarTwo {
         * If the tree is balanced, each search halves the search time, resulting in a time complexity of $O(\log n)$.
         * In the worst case, the tree is like a linked list, resulting in a time complexity of $O(n)$.
     * `insert` method
-        Similar to `insertable`, this method need to traverse the tree until a `null` location is found or range overlaps, and perform constant-time split and reset operation, resulting in a time complexity of $O(n)$.
+        Similar to `insertable`, this method need to traverse the tree until a `null` location is found or range overlaps, then perform constant-time split and reset operation, resulting in a time complexity of $O(n)$.
 
-* Space Complexity: 
+    For `m` bookings, the total time complexity is $O(m \times n)$.
+* Space Complexity: $O(n)$
+
+    The stack depth depends on the segment tree's depth, requiring $(n)$ space in the worst case when the tree degenerates into a linked list.
+    Thus, the overall space compleixty is $O(n)$.
+
+## 33. Graph Connectivity With Threshold
+[Back to Top](#table-of-contents)  
+### Overview
+We have `n` cities labeled from `1` to `n`. 
+Two different cities with labels `x` and `y` are directly connected by a bidirectional road if and only if `x` and `y` share a common divisor strictly greater than some `threshold`.   
+More formally, cities with labels `x` and `y` have a road between them if there exists an integer `z` such that all of the following are true:
+* `x % z == 0`
+* `y % z == 0`
+* `z > threshold`
+
+Given the two integers, `n` and `threshold`, and an array of `queries`, you must determine for each `queries[i] = [a_i, b_i]` if cities `a_i` and `b_i` are connected directly or indirectly. (i.e. there is some path between them).
+
+Return an array `answer`, where `answer.length == queries.length` and `answer[i]` is `true` if for the **i-th** query, there is a path between `a_i` and `b_i`, or `answer[i]` is false if there is no path.
+
+**Example 1:**  
+![gcwt1](assets/Algorithms/gcwt1.png)  
+> **Input:** n = 6, threshold = 2, queries = [[1,4],[2,5],[3,6]]  
+> **Output:** [false,false,true]  
+> **Explanation:** The divisors for each number:  
+1:   1  
+2:   1, 2  
+3:   1, 3  
+4:   1, 2, 4  
+5:   1, 5  
+6:   1, 2, 3, 6  
+Using the underlined divisors above the threshold, only cities 3 and 6 share a common divisor, so they are the
+only ones directly connected.   
+The result of each query:  
+[1,4]   1 is not connected to 4  
+[2,5]   2 is not connected to 5  
+[3,6]   3 is connected to 6 through path 3--6 
+
+**Example 2:**  
+![gcwt2](assets/Algorithms/gcwt2.png)   
+> **Input:** n = 6, threshold = 0, queries = [[4,5],[3,4],[3,2],[2,6],[1,3]]  
+> **Output:** [true,true,true,true,true]  
+> **Explanation:** The divisors for each number are the same as the previous example.   
+However, since the threshold is 0,
+all divisors can be used. Since all numbers share 1 as a divisor, all cities are connected.
+
+**Example 3:**  
+![gcwt3](assets/Algorithms/gcwt3.png)   
+> **Input:** n = 5, threshold = 1, queries = [[4,5],[4,5],[3,2],[2,3],[3,4]]  
+> **Output:** [false,false,false,false,false]  
+> **Explanation:** Only cities 2 and 4 share a common divisor 2 which is strictly greater than the threshold 1, so they are the only ones directly connected.  
+Please notice that there can be multiple queries for the same pair of nodes [x, y], and that the query [x, y] is equivalent to the query [y, x].
+
+**Constraints:**
+* `2 <= n <= 10^4`
+* `0 <= threshold <= n`
+* `1 <= queries.length <= 10^5`
+* `queries[i].length == 2`
+* `1 <= a_i, b_i <= cities`
+* `a_i != b_i`
+```java
+class Solution {
+    public List<Boolean> areConnected(int n, int threshold, int[][] queries) {
+        boolean[][] dp=new boolean[n+1][n+1];
+
+        // for(int i=1; i<=n; i++){
+        //     dp[1][i]=true;
+        //     dp[i][1]=true;
+        // }
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=n; j++){
+                if(getGcd(i,j)>threshold){
+                    dp[i][j]=true;
+                    dp[j][i]=true;
+                    for(int k=2; i*k<=n; k++){
+                        dp[i*k][j]=true;
+                        dp[j][i*k]=true;
+                    }
+                }
+            }
+        }
+        /*
+            dp[1][c] = true
+                -> dp[c][1] = true
+
+            dp[2][c] = gcd(c,2)>t && gcd(c,2)==2
+                -> dp[c][2]
+            dp[3][c] = gcd(c,3)>t && gcd(c,3)==3
+                -> dp[c][3]
+            dp[4][c] = gcd(c,4)>t && gcd(c,4)==4 || gcd(c,2)>t && gcd(c,2)==2
+
+
+         */
+
+
+        List<Boolean> answer=new ArrayList<>(queries.length);
+        for(int i=0; i<queries.length; i++){
+            int[] cities=queries[i];
+            int x=cities[0];
+            int y=cities[1];
+            if(dp[x][y]){
+                answer.add(dp[x][y]);
+            }else{
+
+            }
+        }
+        return answer;
+    }
+
+    private int getGcd(int x, int y){
+        while(y!=0){
+            int temp=y;
+            y=x%y;
+            x=temp;
+        }
+        return x;
+    }
+}
+```
 
 
 
