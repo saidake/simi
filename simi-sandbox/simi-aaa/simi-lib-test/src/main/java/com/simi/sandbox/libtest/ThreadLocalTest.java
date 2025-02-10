@@ -4,6 +4,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import com.alibaba.ttl.TtlRunnable;
 import com.simi.common.util.thread.SimiInheritableThreadLocal;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -55,7 +56,6 @@ public class ThreadLocalTest {
             System.out.println("threadLocal: " + threadLocal.get());
             System.out.println("inheritableThreadLocal: " + inheritableThreadLocal.get());
         },executorService);
-
         executorService.submit(TtlRunnable.get(()->{
             System.out.println("transmittableThreadLocal: " + transmittableThreadLocal.get());
         }));
@@ -63,5 +63,52 @@ public class ThreadLocalTest {
             System.out.println("simiInheritableThreadLocal: " + simiInheritableThreadLocal.get());
         });
         executorService.shutdown();
+
+        //----------------------------------------------------------------------------- SupplyAsync1
+        System.out.println("transmittableThreadLocal: " + transmittableThreadLocal.get());
+        ExecutorService executorService2 = Executors.newFixedThreadPool(2);
+        CompletableFuture.supplyAsync(()->{
+            System.out.println("===================================================== SupplyAsync1");
+            System.out.println("transmittableThreadLocal: " + transmittableThreadLocal.get());
+            System.out.println(Thread.currentThread());
+            return "test-aa";
+        }, executorService2).thenAcceptAsync(item->{
+            System.out.println("transmittableThreadLocal: " + transmittableThreadLocal.get());
+            System.out.println(Thread.currentThread());
+        }, executorService2);
+
+        //----------------------------------------------------------------------------- SupplyAsync2
+        transmittableThreadLocal.set("Modified Transmittable Parent3");
+        CompletableFuture.supplyAsync(()->{
+            System.out.println("===================================================== SupplyAsync2");
+            System.out.println("transmittableThreadLocal: " + transmittableThreadLocal.get());
+            System.out.println(Thread.currentThread());
+            return "test-aa";
+        }, executorService2).thenAcceptAsync(item->{
+            System.out.println("transmittableThreadLocal: " + transmittableThreadLocal.get());
+            System.out.println(Thread.currentThread());
+        }, executorService2);
+
+        transmittableThreadLocal.set("Modified Transmittable Parent4");
+        inheritableThreadLocal.set("Modified Inheritable Parent4");
+        String transmittableCapturedValue = transmittableThreadLocal.get();
+        String inheritableCapturedValue = inheritableThreadLocal.get();
+        CompletableFuture.supplyAsync(()->{
+            System.out.println("===================================================== SupplyAsync3");
+            transmittableThreadLocal.set(transmittableCapturedValue);
+            inheritableThreadLocal.set(inheritableCapturedValue);
+            System.out.println("transmittableThreadLocal: " + transmittableThreadLocal.get());
+            System.out.println("inheritableCapturedValue: " + inheritableThreadLocal.get());
+            System.out.println(Thread.currentThread());
+            return "test-aa";
+        }, executorService2).thenAcceptAsync(item->{
+            System.out.println("transmittableThreadLocal: " + transmittableThreadLocal.get());
+            System.out.println("inheritableCapturedValue: " + inheritableThreadLocal.get());
+            System.out.println(Thread.currentThread());
+        }, executorService2);
+        executorService2.shutdown();
+
+        //----------------------------------------------------------------------------- ThreadLocal SupplyAsync
+
     }
 }

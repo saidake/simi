@@ -12,6 +12,5 @@
         <module>simi-aaa</module>
         <module>simi-extensions</module>
         <module>simi-servers</module>
-        <module>simi-data-utils</module>
     </modules>
 </project>
