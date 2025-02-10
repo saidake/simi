@@ -4250,64 +4250,68 @@ Please notice that there can be multiple queries for the same pair of nodes [x, 
 * `queries[i].length == 2`
 * `1 <= a_i, b_i <= cities`
 * `a_i != b_i`
-```java
-class Solution {
-    public List<Boolean> areConnected(int n, int threshold, int[][] queries) {
-        boolean[][] dp=new boolean[n+1][n+1];
 
-        // for(int i=1; i<=n; i++){
-        //     dp[1][i]=true;
-        //     dp[i][1]=true;
-        // }
-        for(int i=1; i<=n; i++){
-            for(int j=1; j<=n; j++){
-                if(getGcd(i,j)>threshold){
-                    dp[i][j]=true;
-                    dp[j][i]=true;
-                    for(int k=2; i*k<=n; k++){
-                        dp[i*k][j]=true;
-                        dp[j][i*k]=true;
-                    }
+### 
+
+#### Implementation
+```java
+import java.util.*;
+
+class Solution {
+    private int[] parent; // City index - Parent city index
+    private boolean[] isComposite; 
+
+    public void merge(int x, int y) {
+        parent[find(y)] = find(x);
+    }
+
+    /**
+     * Find the root parent city where `parent[index]=index` in the `parent` array.
+     */
+    public int find(int index) {
+        if (parent[index] != index) {
+            parent[index] = find(parent[index]);
+        }
+        return parent[index];
+    }
+
+    public List<Boolean> areConnected(int n, int threshold, int[][] queries) {
+        // Return if `threshold = 0`
+        if (threshold == 0) {
+            List<Boolean> res = new LinkedList<>();
+            for (int[] qu : queries) {
+                res.add(true);
+            }
+            return res;
+        }
+
+        // Populate the `parent` array with city labels
+        parent = new int[n + 1];
+        for (int i = 1; i <= n; ++i) {
+            parent[i] = i;
+        }
+
+
+        isComposite = new boolean[n + 1];
+        for (int i = threshold + 1; i <= n; ++i) {
+            if (!isComposite[i]) {
+                // threshold*1, threshold*2, threshold*3, ...
+                for (int j = i; j <= n; j += i) {
+                    isComposite[j] = true;
+                    merge(i, j);
                 }
             }
         }
-        /*
-            dp[1][c] = true
-                -> dp[c][1] = true
-
-            dp[2][c] = gcd(c,2)>t && gcd(c,2)==2
-                -> dp[c][2]
-            dp[3][c] = gcd(c,3)>t && gcd(c,3)==3
-                -> dp[c][3]
-            dp[4][c] = gcd(c,4)>t && gcd(c,4)==4 || gcd(c,2)>t && gcd(c,2)==2
 
 
-         */
-
-
-        List<Boolean> answer=new ArrayList<>(queries.length);
-        for(int i=0; i<queries.length; i++){
-            int[] cities=queries[i];
-            int x=cities[0];
-            int y=cities[1];
-            if(dp[x][y]){
-                answer.add(dp[x][y]);
-            }else{
-
-            }
+        List<Boolean> res = new LinkedList<>();
+        for (int[] qu : queries) {
+            res.add(find(qu[0]) == find(qu[1]));
         }
-        return answer;
-    }
-
-    private int getGcd(int x, int y){
-        while(y!=0){
-            int temp=y;
-            y=x%y;
-            x=temp;
-        }
-        return x;
+        return res;
     }
 }
+
 ```
 
 
