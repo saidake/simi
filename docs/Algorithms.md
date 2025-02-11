@@ -52,6 +52,8 @@
         - [26. Boats to Save People](#26-boats-to-save-people)
         - [27. Find the Lexicographically Largest String From the Box I](#27-find-the-lexicographically-largest-string-from-the-box-i)
         - [28. Merge Sorted Array](#28-merge-sorted-array)
+    - Union-Find
+        - [33. Graph Connectivity With Threshold](#33-graph-connectivity-with-threshold)
 - [SQL Problems](#sql-problems)
     - [1. Odd and Even Transactions](#29-odd-and-even-transactions)
 # Algorithm Problems
@@ -4251,8 +4253,12 @@ Please notice that there can be multiple queries for the same pair of nodes [x, 
 * `1 <= a_i, b_i <= cities`
 * `a_i != b_i`
 
-### 
+### Union-Find Solution
+Utilize Union-Find to build a index array `parent` where the initial value is `parent[i]=i` and its value can be referenced to another index to indicate the two indices are connected.
 
+Traverse numbers from `threshold` to `n`, 
+
+Besides, construct another array `isComposite`
 #### Implementation
 ```java
 import java.util.*;
@@ -4261,6 +4267,9 @@ class Solution {
     private int[] parent; // City index - Parent city index
     private boolean[] isComposite; 
 
+    /**
+     * Relocate the root parent city of `y` to the root parent city of `x`.
+     */
     public void merge(int x, int y) {
         parent[find(y)] = find(x);
     }
@@ -4291,18 +4300,17 @@ class Solution {
             parent[i] = i;
         }
 
-
         isComposite = new boolean[n + 1];
         for (int i = threshold + 1; i <= n; ++i) {
             if (!isComposite[i]) {
-                // threshold*1, threshold*2, threshold*3, ...
+                // i*1, i*2, i*3, ...
+                // Relocate the multiples of `i` to `i`.
                 for (int j = i; j <= n; j += i) {
                     isComposite[j] = true;
                     merge(i, j);
                 }
             }
         }
-
 
         List<Boolean> res = new LinkedList<>();
         for (int[] qu : queries) {
@@ -4311,10 +4319,13 @@ class Solution {
         return res;
     }
 }
-
 ```
+#### Time and Space Complexity
+* Time Complexity: 
 
-
+* Space Complexity: $O(n)$
+    Both `parent` and `isComposite` have the same size of `n+1`, taking $O(n)$ space.  
+    Thus the overall space complexity is $O(n)$.
 
 # SQL Problems
 ## 1. Odd and Even Transactions
