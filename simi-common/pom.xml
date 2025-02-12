@@ -8,14 +8,13 @@
         <version>1.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>simi-common</artifactId>
     <packaging>pom</packaging>
+    <artifactId>simi-common</artifactId>
     <modules>
         <module>simi-common-utils</module>
         <module>simi-common-log</module>
         <module>simi-common-thread</module>
         <module>simi-common-test</module>
+        <module>simi-util-core</module>
     </modules>
-
 </project>

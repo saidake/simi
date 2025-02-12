@@ -8,13 +8,14 @@
         <version>1.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>simi-common-utils</artifactId>
-    <properties>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
-    </properties>
     <dependencies>
+        <!--======================================================================================================= Custom modules -->
+        <dependency>
+            <groupId>com.simi</groupId>
+            <artifactId>simi-util-core</artifactId>
+        </dependency>
+
         <!--======================================================================================================= Core -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -31,7 +32,7 @@
             <artifactId>jedis</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--======================================================================================================= Extension -->
+        <!--======================================================================================================= Extensions -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
@@ -48,6 +49,10 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
         <!--======================================================================================================= Security -->
         <dependency>
@@ -81,11 +86,6 @@
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>1.33</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.7</version>
         </dependency>
     </dependencies>
 </project>
