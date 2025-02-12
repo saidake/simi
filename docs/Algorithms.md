@@ -4254,11 +4254,62 @@ Please notice that there can be multiple queries for the same pair of nodes [x, 
 * `a_i != b_i`
 
 ### Union-Find Solution
-Utilize Union-Find to build a index array `parent` where the initial value is `parent[i]=i` and its value can be referenced to another index to indicate the two indices are connected.
+Utilize Union-Find to build a index array `parent` where each element satisfis `parent[i]=i` and its value can be referenced to another index to indicate the two indices are connected.  
 
-Traverse numbers from `threshold` to `n`, 
+Define an array `isComposite` that represents the current element with another smaller integer have a valid commmon divisor.
 
-Besides, construct another array `isComposite`
+Traverse numbers from `threshold+1` to `n` as `i`, and traverse all its multiples as `j`.
+In `parent` array, referencing `j` to the smaller number `i` indicates `i` and `j` have a valid common divisor.
+
+Example:
+```
+threshold = 2
+parent:         1 2 3 4 5 6 7 8 9
+indices:        1 2 3 4 5 6 7 8 9 
+
+i=3:
+    Step 1:
+    parent:         1 2 3 4 5 6 7 8 9
+    indices:        1 2 3 4 5 6 7 8 9 (i=3, j=3)
+    isComposite:        ✔
+
+    Step 1: 
+    parent:         1 2 3 4 5 3 7 8 9
+    indices:        1 2 3 4 5 6 7 8 9 (i=3, j=6)
+    isComposite:        ✔     ✔
+
+    Step 2:
+    parent:         1 2 3 4 5 3 7 8 9
+    indices:        1 2 3 4 5 6 7 8 9 (i=3, j=9)
+    isComposite:        ✔     ✔    ✔
+
+    ...
+i=4:
+    Step 1: 
+    parent:         1 2 3 4 5 3 7 8 9
+    indices:        1 2 3 4 5 6 7 8 9 (i=4, j=4)
+    isComposite:          ✔    
+
+    Step 2:
+    parent:         1 2 3 4 5 3 7 8 9
+    indices:        1 2 3 4 5 6 7 8 9 (i=4, j=8)
+    isComposite:          ✔      ✔
+```
+
+At the above example, the city `6` is referenced to the city `3` as city `6` and `3` have a common divisor `3`, which is greater than `threshold`.
+
+If `x` and `y` are connected, they must have the same smallest root `i` as we traversed before.
+Example:
+```
+x=9
+y=6
+divisor = 3
+
+x=8
+y=4
+divisor = 4
+```
+
 #### Implementation
 ```java
 import java.util.*;
@@ -4324,6 +4375,7 @@ class Solution {
 * Time Complexity: 
 
 * Space Complexity: $O(n)$
+
     Both `parent` and `isComposite` have the same size of `n+1`, taking $O(n)$ space.  
     Thus the overall space complexity is $O(n)$.
 
