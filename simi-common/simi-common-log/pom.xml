@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>com.simi</groupId>
-            <artifactId>simi-common-util</artifactId>
+            <artifactId>simi-common-utils</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

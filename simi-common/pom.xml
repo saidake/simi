@@ -12,7 +12,7 @@
     <artifactId>simi-common</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>simi-common-util</module>
+        <module>simi-common-utils</module>
         <module>simi-common-log</module>
         <module>simi-common-thread</module>
         <module>simi-common-test</module>

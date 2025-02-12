@@ -130,7 +130,7 @@
             </dependency>
             <dependency>
                 <groupId>com.simi</groupId>
-                <artifactId>simi-common-util</artifactId>
+                <artifactId>simi-common-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
