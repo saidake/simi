@@ -2,11 +2,14 @@ package com.simi.review;
 
 import com.simi.common.util.file.SimiFileUtils;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A utility class that reads a random line from {@code storage.txt}, and logs
@@ -15,18 +18,45 @@ import java.util.*;
  * @author Craig Brown
  * @since 1.1.0
  */
+@Slf4j
 public class Questions {
-    private static final String STORAGE_FILE_PATH="C:\\Users\\simi\\Desktop\\DevProjects\\simi\\simi-app\\simi-review-tool\\src\\main\\resources\\storage.txt";
-    private static final String REVIEW_LOG_FILE_PATH = "C:\\Users\\simi\\Desktop\\DevProjects\\simi\\simi-app\\simi-review-tool\\src\\main\\resources\\review-log.txt";
+    private static final String STORAGE_FILE_PATH="C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\review-plan.txt";
+    private static final String REVIEW_LOG_FILE_PATH = "C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\review-logs.txt";
     private static final List<String> PREFIX_LIST=new ArrayList<>();
     static {
-//        PREFIX_LIST.add("Config = Work Environment = awscli = Command");
+        //PREFIX_LIST.add("Config = Work Environment = awscli = Command");
     }
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        //A. filter out valid line and obtain a random line.
-        String output = SimiFileUtils.readRandomLine(Path.of(STORAGE_FILE_PATH), line -> PREFIX_LIST.isEmpty() || PREFIX_LIST.stream().anyMatch(line::startsWith));
-        //A. filter out invalid line
-        System.out.println(output);
+    private static final Pattern PRIORITY_PATTERN = Pattern.compile("\\[(\\d+)]$");
+
+    private static final Map<Integer, Double> REVIEW_PRIORITY_MAP=Map.of(
+            1,1.0,
+            2,1.0,
+            3,1.0,
+            4,1.0,
+            5,1.0,
+            6,2.0,
+            7,1.0,
+            8,1.0,
+            9,1.0,
+            10,1.0
+    );
+
+    public static void main(String[] args) throws IOException {
+        // Filter out valid line and obtain a random line.
+        String output=SimiFileUtils.readRandomWeightedLine(
+                Path.of(STORAGE_FILE_PATH),
+                REVIEW_PRIORITY_MAP,
+                line -> !line.isEmpty()&&( PREFIX_LIST.isEmpty() || PREFIX_LIST.stream().anyMatch(line::startsWith)),
+                line-> {
+                    Matcher matcher=PRIORITY_PATTERN.matcher(line);
+                    if(matcher.find()){
+                        return Integer.parseInt(matcher.group(1));
+                    }
+                    return 5;
+                }
+        );
+        // Filter out invalid line
+        log.info("output: {}",output);
         @Cleanup FileWriter fw = new FileWriter(REVIEW_LOG_FILE_PATH,true);
         fw.write(output+System.lineSeparator());
     }

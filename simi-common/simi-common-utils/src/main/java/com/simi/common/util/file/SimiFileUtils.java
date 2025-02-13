@@ -33,14 +33,52 @@ public class SimiFileUtils {
     /**
      * Read a random line matching the predicate function from the specified file.
      *
-     * @param path
-     * @param linePredicate
-     * @return
-     * @throws IOException
+     * @param path  Source file path
+     * @param linePredicate Line filter
+     * @return  A random line
+     * @throws IOException IO Exception during the file reading process
      */
     public static String readRandomLine(Path path, Predicate<String> linePredicate) throws IOException {
         List<String> collect = Files.lines(path).filter(linePredicate).toList();
         return collect.get(ThreadLocalRandom.current().nextInt(collect.size()));
+    }
+
+    /**
+     * Read a random line matching the predicate function from the specified file based on the line priority.
+     *
+     * @param path Source file path
+     * @param linePredicate Line filter
+     * @param priorityMap Priority mapping info
+     * @return A random line
+     * @throws IOException IO Exception during the file reading process
+     */
+    public static String readRandomWeightedLine(Path path, Map<Integer, Double> priorityMap, Predicate<String> linePredicate, Function<String, Integer> priorityMatcher) throws IOException {
+        List<String> lines = Files.lines(path).filter(linePredicate).toList();
+        List<Double> weights = lines.stream()
+                .map(line -> {
+                    // Extract the priority number
+                    int priority = priorityMatcher.apply(line);
+                    // Default to 1.0 if priority not found
+                    return priorityMap.getOrDefault(priority, 1.0);
+                }).toList();
+
+        // Calculate the total weight
+        double totalWeight = weights.stream().mapToDouble(Double::doubleValue).sum();
+
+        // Generate a random number based on the total weight
+        double randomValue = Math.random() * totalWeight;
+
+        // Select the line based on the weighted random value
+        double cumulativeWeight = 0.0;
+        for (int i = 0; i < lines.size(); i++) {
+            cumulativeWeight += weights.get(i);
+            if (randomValue <= cumulativeWeight) {
+                return lines.get(i);
+            }
+        }
+
+        // Return the last line in case of rounding issues
+        return lines.get(lines.size() - 1);
     }
 
     /**
