@@ -4254,12 +4254,15 @@ Please notice that there can be multiple queries for the same pair of nodes [x, 
 * `a_i != b_i`
 
 ### Union-Find Solution
-Utilize Union-Find to build a index array `parent` where each element satisfis `parent[i]=i` and its value can be referenced to another index to indicate the two indices are connected.  
+Use Union-Find to construct an index array `parent`, where each element initially satisfis `parent[i]=i`.  
+Each value can be updated to reference another index, indicating a connection between the two indices.  
 
-Define an array `isComposite` that represents the current element with another smaller integer have a valid commmon divisor.
+Define an array `isComposite` to indicate whether an element has a valid divisor greater than `threshold`.
 
-Traverse numbers from `threshold+1` to `n` as `i`, and traverse all its multiples as `j`.
-In `parent` array, referencing `j` to the smaller number `i` indicates `i` and `j` have a valid common divisor.
+Iterate through numbers from `threshold+1` to `n` as `i`, and for each `i`, traverse its multiples `j`.
+Set `isComposite[j]=true`, as the `j` has a valid divisor `i`.
+
+In the `parent` array, assigning `parent[j]` to `i` signifies that `i` and `j` are connected.
 
 Example:
 ```
@@ -4269,47 +4272,43 @@ indices:        1 2 3 4 5 6 7 8 9
 
 i=3:
     Step 1:
-    parent:         1 2 3 4 5 6 7 8 9
-    indices:        1 2 3 4 5 6 7 8 9 (i=3, j=3)
-    isComposite:        ✔
+    parent:         1 2 3 4 5 6 7 8 9 (i=3, j=3, parent[3]=3)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:        ✔             (isComposite[3]=true) 
 
     Step 1: 
-    parent:         1 2 3 4 5 3 7 8 9
-    indices:        1 2 3 4 5 6 7 8 9 (i=3, j=6)
-    isComposite:        ✔     ✔
+    parent:         1 2 3 4 5 3 7 8 9 (i=3, j=6, parent[6]=3)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:        ✔     ✔      (isComposite[6]=true) 
 
     Step 2:
-    parent:         1 2 3 4 5 3 7 8 9
-    indices:        1 2 3 4 5 6 7 8 9 (i=3, j=9)
-    isComposite:        ✔     ✔    ✔
+    parent:         1 2 3 4 5 3 7 8 3 (i=3, j=9, parent[9]=3)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:        ✔     ✔    ✔ (isComposite[9]=true) 
 
     ...
 i=4:
     Step 1: 
-    parent:         1 2 3 4 5 3 7 8 9
-    indices:        1 2 3 4 5 6 7 8 9 (i=4, j=4)
-    isComposite:          ✔    
+    parent:         1 2 3 4 5 3 7 8 9 (i=4, j=4, parent[4]=4)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:          ✔           (isComposite[4]=true) 
 
     Step 2:
-    parent:         1 2 3 4 5 3 7 8 9
-    indices:        1 2 3 4 5 6 7 8 9 (i=4, j=8)
-    isComposite:          ✔      ✔
+    parent:         1 2 3 4 5 3 7 4 9 (i=4, j=8, parent[8]=4)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:          ✔      ✔   (isComposite[8]=true) 
+
+    ...
 ```
-
-At the above example, the city `6` is referenced to the city `3` as city `6` and `3` have a common divisor `3`, which is greater than `threshold`.
-
-If `x` and `y` are connected, they must have the same smallest root `i` as we traversed before.
-Example:
+If `x` and `y` are connected, they must share a previously traversed valid divisor `i`.  
+Example: 
 ```
-x=9
-y=6
-divisor = 3
-
-x=8
-y=4
-divisor = 4
+x = 9, y = 6 
+    Common divisor = 3  
+x = 8, y = 4 
+    Common divisor = 4  
 ```
-
+For each query, determine if `x` and `y` share the same smallest valid divisor.
 #### Implementation
 ```java
 import java.util.*;
@@ -4336,7 +4335,7 @@ class Solution {
     }
 
     public List<Boolean> areConnected(int n, int threshold, int[][] queries) {
-        // Return if `threshold = 0`
+        // If `threshold = 0`, set all results to `true` and return.
         if (threshold == 0) {
             List<Boolean> res = new LinkedList<>();
             for (int[] qu : queries) {
@@ -4351,6 +4350,7 @@ class Solution {
             parent[i] = i;
         }
 
+        // Traverse valid divisors and their multiples.
         isComposite = new boolean[n + 1];
         for (int i = threshold + 1; i <= n; ++i) {
             if (!isComposite[i]) {
@@ -4363,6 +4363,7 @@ class Solution {
             }
         }
 
+        // Populate `res` array as the result.
         List<Boolean> res = new LinkedList<>();
         for (int[] qu : queries) {
             res.add(find(qu[0]) == find(qu[1]));
@@ -4372,12 +4373,33 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: 
+* Time Complexity: $O(n \log n+m)$
+    * If `threshold = 0`, set all results to `true` and return.  
 
-* Space Complexity: $O(n)$
+        This loop runs in $O(m)$ time where `m` is the size of `queries` array.
+    * Populate the `parent` array with city labels  
 
-    Both `parent` and `isComposite` have the same size of `n+1`, taking $O(n)$ space.  
-    Thus the overall space complexity is $O(n)$.
+        This loop traverses `parent` array, resulting in a time complexity of $O(n)$ where `n` is the number of cities.
+    * Traverse valid divisors and their multiples.
+
+        The total number of iterations of the inner loop is approximately:
+        $$\sum_{i=threshold+1}^n \frac{n}{i}$$
+
+        Based on the harmonic series:
+        $$H_n=\sum_{i=1}^n \frac{1}{i} \approx ln(n) + \gamma$$
+        We have:
+        $$\sum_{i=threshold+1}^n \frac{n}{i} \approx n \times (ln(n)+ \gamma)$$
+
+        Thus, the total time complexity of the nested loop is $O(n \log n)$.
+        
+    In summary, The overall time complexity is $O(n \log n+m)$
+
+* Space Complexity: $O(n+m)$
+
+    * Both `parent` and `isComposite` have the same size of `n+1`, taking $O(n)$ space.  
+    * `res` array requires $O(m)$ space, where `m` is the size of the `queries` array.
+
+    Thus the overall space complexity is $O(n+m)$.
 
 # SQL Problems
 ## 1. Odd and Even Transactions
