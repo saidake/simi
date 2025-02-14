@@ -4401,6 +4401,47 @@ class Solution {
 
     Thus the overall space complexity is $O(n+m)$.
 
+## 34. Sort Array by Increasing Frequency
+Given an array of integers `nums`, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order.
+
+**Example 1:**
+> **Input:** nums = [1,1,2,2,2,3]  
+> **Output:** [3,1,1,2,2,2]  
+> **Explanation:** '3' has a frequency of 1, '1' has a frequency of 2, and '2' has a frequency of 3.
+
+**Example 2:**
+> **Input:** nums = [2,3,1,3,2]  
+> **Output:** [1,3,3,2,2]  
+> **Explanation:** '2' and '3' both have a frequency of 2, so they are sorted in decreasing order.
+
+**Example 3:**
+> **Input:** nums = [-1,1,-6,4,5,-6,1,4,1]  
+> **Output:** [5,-1,4,4,-6,-6,1,1,1]
+
+### HashMap Solution
+```java
+class Solution {
+    public int[] frequencySort(int[] nums) {
+        // integer - frenquency
+        Map<Integer, Integer> frequencyMap = new HashMap();
+        // Traverse `nums` array
+        for(int i=0; i<nums.length; i++){
+            frequencyMap.compute(nums[i], (key,val)->val==null?1:++val);
+        }
+        // Sort by values
+        List<Integer> numList=Arrays.stream(nums).boxed().collect(Collectors.toList());
+        Collections.sort(numList, (v1, v2)->{
+            int f1=frequencyMap.get(v1);
+            int f2=frequencyMap.get(v2);
+            return f1==f2?v2-v1:f1-f2;
+        });
+        return numList.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+```
+
+
+
 # SQL Problems
 ## 1. Odd and Even Transactions
 [Back to Top](#table-of-contents)  
