@@ -4418,29 +4418,62 @@ Given an array of integers `nums`, sort the array in increasing order based on t
 > **Input:** nums = [-1,1,-6,4,5,-6,1,4,1]  
 > **Output:** [5,-1,4,4,-6,-6,1,1,1]
 
-### HashMap Solution
+### Array Solution
+Map the elements in the `nums` array to the indices of `freq`, where the indices represent the elements of `nums` and the values represent their frequency.
+
+Then sort elements to a new array by their frequency, 
+
+#### Implementation
 ```java
 class Solution {
     public int[] frequencySort(int[] nums) {
-        // integer - frenquency
-        Map<Integer, Integer> frequencyMap = new HashMap();
-        // Traverse `nums` array
-        for(int i=0; i<nums.length; i++){
-            frequencyMap.compute(nums[i], (key,val)->val==null?1:++val);
+        // Map the elements in the `nums` array to the indices of the frequency array `freq`.
+        // Since `-100 <= nums[i] <= 100`, add 100 `num[i]` as a meaningful index.
+        int[] freq = new int[201];
+        for (int num : nums) {
+            freq[num + 100]++;
         }
-        // Sort by values
-        List<Integer> numList=Arrays.stream(nums).boxed().collect(Collectors.toList());
-        Collections.sort(numList, (v1, v2)->{
-            int f1=frequencyMap.get(v1);
-            int f2=frequencyMap.get(v2);
-            return f1==f2?v2-v1:f1-f2;
-        });
-        return numList.stream().mapToInt(Integer::intValue).toArray();
+
+        // Filter out elements with a frenquency greater than 0 in descending order.
+        int[] arr = new int[nums.length];
+        int len = 0;
+        for (int i = freq.length - 1; i >= 0; i--) {
+            if (freq[i] > 0) {
+                arr[len++] = i;
+            }
+        }
+
+        // Sort the `arr` array with insertion sort.
+        for (int low = 1; low < len; low++) {
+            int inserted = arr[low];
+            int i = low - 1;
+            while (i >= 0 && freq[arr[i]] > freq[inserted]) {
+                arr[i + 1] = arr[i];
+                i--;
+            }
+            if (i != low - 1) {
+                arr[i + 1] = inserted;
+            }
+        }
+
+        // Repeat elements in the `arr` according to their frequency.
+        int k = 0;
+        for (int i = 0; i < len; i++) {
+            int curFreq = freq[arr[i]];
+            int num = arr[i] - 100;
+            for (int j = 0; j < curFreq; j++) {
+                nums[k++] = num;
+            }
+        }
+        return nums;
     }
 }
 ```
 
+#### Consideration
+* Each of `Arrays.stream(nums)`, `.boxed()` and `.collect(Collectors.toList())` has a time complexity of $O(n)$. 
 
+    Manually copying values into a new list offers better performance compared to using Java Streams.
 
 # SQL Problems
 ## 1. Odd and Even Transactions
