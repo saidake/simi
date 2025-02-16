@@ -1,59 +1,62 @@
 # Table of Contents
 [Back to Main Project README](../README.md)
 - [Algorithm Problems](#algorithm-problems)
-    - Array
-        - [1. Array Partition](#1-array-partition)
-        - [31. Minimum Number Game](#31-minimum-number-game)
-    - Backtracking
-        - [29. Power Set LCCI](#29-power-set-lcci)
-    - Conditional Logic
-        - [2. Add Edges to Make Degrees of All Nodes Even](#2-add-edges-to-make-degrees-of-all-nodes-even)
-    - Depth-first Search
-        - [3. Amount of Time for Binary Tree to Be Infected](#3-amount-of-time-for-binary-tree-to-be-infected)
-        - [29. Power Set LCCI](#29-power-set-lcci)
-    - Dichotomy
-        - [4. Search in Rotated Sorted Array](#4-search-in-rotated-sorted-array)
-    - Difference Array
-        - [5. Jump Game VII](#5-jump-game-vii)
-    - Dynamic Programming
-        - [6. Climbing Stairs](#6-climbing-stairs)
-        - [7. Count All Valid Pickup and Delivery Options](#7-count-all-valid-pickup-and-delivery-options)
-        - [8. Decode Ways II](#8-decode-ways-ii)
-        - [9. Make the XOR of All Segments Equal to Zero](#9-make-the-xor-of-all-segments-equal-to-zero)
-        - [10. Maximize Value of Function in a Ball Passing Game](#10-maximize-value-of-function-in-a-ball-passing-game)
-        - [11. Minimum Deletions to Make String Balanced](#11-minimum-deletions-to-make-string-balanced)
-        - [12. Stone Game](#12-stone-game)
-        - [13. Target Sum](#13-target-sum)
-    - HashMap
-        - [30. Count Common Words With One Occurrence](#30-count-common-words-with-one-occurrence)
-    - Fenwick Tree
-        - [14. Distribute Elements Into Two Arrays II](#14-distribute-elements-into-two-arrays-ii)
-    - Greedy
-        - [15. Max Difference You Can Get From Changing an Integer](#15-max-difference-you-can-get-from-changing-an-integer)
-        - [16. Maximum Length of Subarray With Positive Product](#16-maximum-length-of-subarray-with-positive-product)
-    - Math
-        - [17. Construct the Minimum Bitwise Array II](#17-construct-the-minimum-bitwise-array-ii)
-        - [18. Egg Drop With 2 Eggs and N Floors](#18-egg-drop-with-2-eggs-and-n-floors)
-        - [19. Find Number of Ways to Reach the K-th Stair](#19-find-number-of-ways-to-reach-the-k-th-stair)
-        - [20. Minimum Moves to Capture The Queen](#20-minimum-moves-to-capture-the-queen)
-    - Precomputation
-        - [21. Range Product Queries of Powers](#21-range-product-queries-of-powers)
-    - Segment Tree
-        - [32. My Calendar II](#32-my-calendar-ii)
-    - Sliding Window
-        - [22. Find the Longest Equal Subarray](#22-find-the-longest-equal-subarray)
-    - String
-        - [23. License Key Formatting](#23-license-key-formatting)
-    - Traversal
-        - [24. Find the Number of Ways to Place People I](#24-find-the-number-of-ways-to-place-people-i)
-        - [25. Maximum Number of Operations With the Same Score I](#25-maximum-number-of-operations-with-the-same-score-i)
-        - [29. Power Set LCCI](#29-power-set-lcci)
-    - Two Pointer
-        - [26. Boats to Save People](#26-boats-to-save-people)
-        - [27. Find the Lexicographically Largest String From the Box I](#27-find-the-lexicographically-largest-string-from-the-box-i)
-        - [28. Merge Sorted Array](#28-merge-sorted-array)
-    - Union-Find
-        - [33. Graph Connectivity With Threshold](#33-graph-connectivity-with-threshold)
+  - Array
+    - Standard
+      - [1. Array Partition](#1-array-partition)
+      - [31. Minimum Number Game](#31-minimum-number-game)
+    - Meaningful Index for Automatic Sorting
+      - [34. Sort Array by Increasing Frequency](#34-sort-array-by-increasing-frequency)
+  - Backtracking
+    - [29. Power Set LCCI](#29-power-set-lcci)
+  - Conditional Logic
+    - [2. Add Edges to Make Degrees of All Nodes Even](#2-add-edges-to-make-degrees-of-all-nodes-even)
+  - Depth-first Search
+    - [3. Amount of Time for Binary Tree to Be Infected](#3-amount-of-time-for-binary-tree-to-be-infected)
+    - [29. Power Set LCCI](#29-power-set-lcci)
+  - Dichotomy
+    - [4. Search in Rotated Sorted Array](#4-search-in-rotated-sorted-array)
+  - Difference Array
+    - [5. Jump Game VII](#5-jump-game-vii)
+  - Dynamic Programming
+    - [6. Climbing Stairs](#6-climbing-stairs)
+    - [7. Count All Valid Pickup and Delivery Options](#7-count-all-valid-pickup-and-delivery-options)
+    - [8. Decode Ways II](#8-decode-ways-ii)
+    - [9. Make the XOR of All Segments Equal to Zero](#9-make-the-xor-of-all-segments-equal-to-zero)
+    - [10. Maximize Value of Function in a Ball Passing Game](#10-maximize-value-of-function-in-a-ball-passing-game)
+    - [11. Minimum Deletions to Make String Balanced](#11-minimum-deletions-to-make-string-balanced)
+    - [12. Stone Game](#12-stone-game)
+    - [13. Target Sum](#13-target-sum)
+  - HashMap
+    - [30. Count Common Words With One Occurrence](#30-count-common-words-with-one-occurrence)
+  - Fenwick Tree
+    - [14. Distribute Elements Into Two Arrays II](#14-distribute-elements-into-two-arrays-ii)
+  - Greedy
+    - [15. Max Difference You Can Get From Changing an Integer](#15-max-difference-you-can-get-from-changing-an-integer)
+    - [16. Maximum Length of Subarray With Positive Product](#16-maximum-length-of-subarray-with-positive-product)
+  - Math
+    - [17. Construct the Minimum Bitwise Array II](#17-construct-the-minimum-bitwise-array-ii)
+    - [18. Egg Drop With 2 Eggs and N Floors](#18-egg-drop-with-2-eggs-and-n-floors)
+    - [19. Find Number of Ways to Reach the K-th Stair](#19-find-number-of-ways-to-reach-the-k-th-stair)
+    - [20. Minimum Moves to Capture The Queen](#20-minimum-moves-to-capture-the-queen)
+  - Precomputation
+    - [21. Range Product Queries of Powers](#21-range-product-queries-of-powers)
+  - Segment Tree
+    - [32. My Calendar II](#32-my-calendar-ii)
+  - Sliding Window
+    - [22. Find the Longest Equal Subarray](#22-find-the-longest-equal-subarray)
+  - String
+    - [23. License Key Formatting](#23-license-key-formatting)
+  - Traversal
+    - [24. Find the Number of Ways to Place People I](#24-find-the-number-of-ways-to-place-people-i)
+    - [25. Maximum Number of Operations With the Same Score I](#25-maximum-number-of-operations-with-the-same-score-i)
+    - [29. Power Set LCCI](#29-power-set-lcci)
+  - Two Pointer
+    - [26. Boats to Save People](#26-boats-to-save-people)
+    - [27. Find the Lexicographically Largest String From the Box I](#27-find-the-lexicographically-largest-string-from-the-box-i)
+    - [28. Merge Sorted Array](#28-merge-sorted-array)
+  - Union-Find
+    - [33. Graph Connectivity With Threshold](#33-graph-connectivity-with-threshold)
 - [SQL Problems](#sql-problems)
     - [1. Odd and Even Transactions](#29-odd-and-even-transactions)
 # Algorithm Problems
@@ -4419,16 +4422,26 @@ Given an array of integers `nums`, sort the array in increasing order based on t
 > **Output:** [5,-1,4,4,-6,-6,1,1,1]
 
 ### Array Solution
-Map the elements in the `nums` array to the indices of `freq`, where the indices represent the elements of `nums` and the values represent their frequency.
+Map elements in `nums` to indices of `freq`, where indices represent elements of `nums` and the values represent their frequency.
+Since `-100 <= nums[i] <= 100`, shift indices by adding 100 to `num[i]`.
 
-Then sort elements to a new array by their frequency, 
+Example:
+```text
+nums:    [1,1,2,2,2,3]
+indices:  0 1 2 3 4 5
 
+freq:     0   2   3   1   0   0   ...  
+indices:  100 101 102 103 104 105 ...
+```
+
+Filter out elements with `frequency>0` into `arr` and sort them by frequency.
+Repeat each element in `arr` based on its frequency to form the final result.
 #### Implementation
 ```java
 class Solution {
     public int[] frequencySort(int[] nums) {
         // Map the elements in the `nums` array to the indices of the frequency array `freq`.
-        // Since `-100 <= nums[i] <= 100`, add 100 `num[i]` as a meaningful index.
+        // Since `-100 <= nums[i] <= 100`, add 100 to `num[i]` as a meaningful index.
         int[] freq = new int[201];
         for (int num : nums) {
             freq[num + 100]++;
@@ -4444,6 +4457,10 @@ class Solution {
         }
 
         // Sort the `arr` array with insertion sort.
+        //             low
+        //           i cmp
+        //        i cmp 
+        //     ...
         for (int low = 1; low < len; low++) {
             int inserted = arr[low];
             int i = low - 1;
@@ -4469,7 +4486,29 @@ class Solution {
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(n^2)$
+    * Map the elements in the `nums` array to the indices of the frequency array `freq`.
+        
+        Traversing the `nums` array takes $O(n)$ time.
+    * Filter out elements with a frenquency greater than 0 in descending order.
+    
+        Since `freq` has a fixed size of `201` regardless of the input parameter, this step runs in $O(1)$ time.
+    * Sort the `arr` array with insertion sort.
+        The outer loop iterates over `arr`, runing `len-1` time.  
+        The inner loop traverses elements from `i` down to `0`.  
+        The total time complexity is:
+        $$\sum_{i=0}^{n} i=\frac{n\times(n+1)}{2}$$ 
+        Thus, the time complexity of this step is $O(n^2)$.
+    * Repeat elements in the `arr` according to their frequency.
+        
+        The number of elements to traverse in this step is equal to the size of `nums`, giving a time complexity of $O(n)$.
 
+    Therefore, the overall time complexity is $O(n^2)$.
+* Space Complexity: $O(n)$
+    * The `freq` array has a fiexed size, resulting in constant space complexity $O(1)$.
+    * The `arr` array has the same size as `num`, leading to space complexity $O(n)$.
+    Thus, the total space complexity is $O(n)$.
 #### Consideration
 * Each of `Arrays.stream(nums)`, `.boxed()` and `.collect(Collectors.toList())` has a time complexity of $O(n)$. 
 
