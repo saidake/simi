@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 public class Questions {
-    private static final String STORAGE_FILE_PATH="C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\review-plan.txt";
+    private static final String STORAGE_FILE_PATH="C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\review-plans.txt";
     private static final String REVIEW_LOG_FILE_PATH = "C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\review-logs.txt";
     private static final List<String> PREFIX_LIST=new ArrayList<>();
     static {
@@ -34,10 +34,10 @@ public class Questions {
             4,1.0,
             5,1.0,
             6,2.0,
-            7,1.0,
-            8,1.0,
-            9,1.0,
-            10,1.0
+            7,4.0,
+            8,6.0,
+            9,8.0,
+            10,10.0
     );
 
     public static void main(String[] args) throws IOException {

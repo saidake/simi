@@ -1,2 +1,3 @@
 Algorithms Problems / Array / Array Partition
 English / Near-synonym / SSS / same, similar, resemble
+Algorithm Problems / Math / 18. Egg Drop With 2 Eggs and N Floors
