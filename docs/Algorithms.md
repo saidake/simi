@@ -4405,6 +4405,8 @@ class Solution {
     Thus the overall space complexity is $O(n+m)$.
 
 ## 34. Sort Array by Increasing Frequency
+[Back to Top](#table-of-contents)  
+### Overview
 Given an array of integers `nums`, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order.
 
 **Example 1:**
@@ -4513,6 +4515,127 @@ class Solution {
 * Each of `Arrays.stream(nums)`, `.boxed()` and `.collect(Collectors.toList())` has a time complexity of $O(n)$. 
 
     Manually copying values into a new list offers better performance compared to using Java Streams.
+
+## 35. Maximum Multiplication Score
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an integer array `a` of size 4 and another integer array `b` of size **at least** 4.
+
+You need to choose 4 indices `i0`, `i1`, `i2`, and `i3` from the array b such that `i0 < i1 < i2 < i3`. Your score will be equal to the value `a[0] * b[i0] + a[1] * b[i1] + a[2] * b[i2] + a[3] * b[i3]`.
+
+Return the maximum score you can achieve.
+
+**Example 1:**
+> **Input:** a = [3,2,5,6], b = [2,-6,4,-5,-3,2,-7]  
+> **Output:** 26  
+> **Explanation:**  
+We can choose the indices 0, 1, 2, and 5.  
+The score will be 3 * 2 + 2 * (-6) + 5 * 4 + 6 * 2 = 26.
+
+
+**Example 2:**
+> **Input:** a = [-1,4,5,-2], b = [-5,-1,-3,-2,-4]  
+> **Output:** -1  
+> **Explanation:**  
+We can choose the indices 0, 1, 3, and 4.  
+The score will be (-1) * (-5) + 4 * (-1) + 5 * (-2) + (-2) * (-4) = -1.
+
+**Constraints:**
+* `a.length == 4`
+* `4 <= b.length <= 10^5`
+* `-10^5 <= a[i], b[i] <= 10^5`
+### Dynamic Programming Solution
+Define a variable `dp1` to store the maximum value of `b[i]*a[0]`, where `b[i]` is the maxinum element in the range from `0` to `i` in array `b`.
+
+Define another variable `dp2` to store the maximum value of `max(b[i]*a[1], b[i-1]*a[0])`, where `b
+
+```
+Step 1:
+    b: 2 -6 4 -5 -3 2 -7
+    a: 3  2 5  6
+
+    x = b[0] 
+      = 2
+    dp4 = max(dp4, b[0]*a[3] + dp3)  
+        = max(MIN, 2*6 + MIN)
+        = 2*6 + MIN
+
+    dp3 = max(dp3, b[0]*a[2] + dp2)  
+        = max(MIN, 2*5 + MIN) 
+        = 2*5 + MIN
+
+    dp2 = max(dp2, b[0]*a[1] + dp1)  
+        = max(MIN, 2*2 + MIN) 
+        = 2*2 + MIN
+
+    dp1 = max(dp1, b[0]*a[0])  
+        = max(MIN, 2*3) 
+        = 2*3
+
+Step 2:
+    b: 2 -6 4 -5 -3 2 -7
+    a: 3  2 5  6
+
+    x = b[1] 
+      = -6
+    dp4 = max(dp4, b[1]*a[3] + dp3)  
+        = max(2*6 + MIN, -6*6 + 2*5 + MIN)
+        = 2*6 + MIN
+
+    dp3 = max(dp3, b[1]*a[2] + dp2)  
+        = max(2*5 + MIN, -6*5 + 2*2 + MIN)  
+        = 2*5 + MIN
+
+    dp2 = max(dp2, b[1]*a[1] + dp1)  
+        = max(2*2 + MIN, -6*2 + 2*3)  
+        = -6*2 + 2*3
+
+    dp1 = max(dp1, b[1]*a[0])  
+        = max(2*3, -6*3) 
+        = 2*3
+
+Step 3:
+    b: 2 -6 4 -5 -3 2 -7
+    a: 3  2 5  6
+
+    x = b[1] 
+      = 4
+    dp4 = max(dp4, b[2]*a[3] + dp3)  
+        = max(2*6 + MIN, 4*6 + 2*5 + MIN)
+        = 2*6 + MIN
+
+    dp3 = max(dp3, b[2]*a[2] + dp2)  
+        = max(2*5 + MIN, 4*2 + -6*2 + 2*3)  
+        = 4*2 + -6*2 + 2*3
+
+    dp2 = max(dp2, b[2]*a[1] + dp1)  
+        = max(-6*2 + 2*3, 4*2 + 2*3)  
+        = 4*2 + 2*3
+
+    dp1 = max(dp1, b[2]*a[0])  
+        = max(2*3, 4*3) 
+        = 4*3
+```
+#### Implementation
+```java
+class Solution {
+    public long maxScore(int[] a, int[] b) {
+        long dp1 = Long.MIN_VALUE/2, dp2 = dp1, dp3 = dp1, dp4 = dp1;
+        for(long x: b){
+            dp4 = Math.max(dp4, dp3 +  x * a[3]);
+            dp3 = Math.max(dp3, dp2 + x * a[2]);
+            dp2 = Math.max(dp2, dp1 + x * a[1]);
+            dp1 = Math.max(dp1,  x * a[0]);
+        }
+        return dp4;        
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: 
+* Space Complexity: 
+
+
 
 # SQL Problems
 ## 1. Odd and Even Transactions
