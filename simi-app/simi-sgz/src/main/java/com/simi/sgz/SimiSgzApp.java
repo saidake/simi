@@ -3,6 +3,7 @@ package com.simi.sgz;
 import cn.hutool.setting.yaml.YamlUtil;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.simi.sgz.AAAconfig.SgzConstants;
+import com.simi.sgz.AAAconfig.ThreadPoolContext;
 import com.simi.sgz.action.TaskFactory;
 import com.simi.sgz.tasks.ExecutableTask;
 import com.simi.sgz.action.RobotAction;
@@ -16,6 +17,13 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * A simple app designed for automating game operations like leveling up and attacking cities in the game
+ * <a href="https://sangokushi.qookkagames.jp">Three Kingdoms Tactics<a/>.
+ *
+ * @author Craig Brown
+ * @since 1.0
+ */
 @Slf4j
 public class SimiSgzApp {
     public static void main(String[] args) throws AWTException, IllegalAccessException, InstantiationException {
@@ -38,6 +46,7 @@ public class SimiSgzApp {
                 "Press 'P' to interrupt the application."
         );
         executableTasks.forEach(ExecutableTask::execute);
+        ThreadPoolContext.shutdown();
     }
 
 }

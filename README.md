@@ -57,7 +57,7 @@ Simi Initializer is an IntelliJ IDEA plugin designed to streamline the initial c
 It automates startup configurations like adjusting certificate file locations, adding local-specific dependencies, and modifying server IP addresses.
 
 ### simi-sgz  
-Simi Sgz is an automation script module designed for the game "Three Kingdoms Tactics".
+Simi Sgz is an automation script module designed for the game <a href="https://sangokushi.qookkagames.jp">Three Kingdoms Tactics<a/>.
 
 ## simi-common
 Common modules shared by other modules.
