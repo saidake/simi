@@ -20,8 +20,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 /**
- * The class consists exclusively of static method for reading file or
- * write file.
+ * The class consists exclusively of static method for reading file or write file.
  *
  * @author Craig Brown
  * @since 1.0
@@ -48,31 +47,27 @@ public class SimiFileUtils {
      *
      * @param path Source file path
      * @param linePredicate Line filter
-     * @param priorityMap Priority mapping info
      * @return A random line
      * @throws IOException IO Exception during the file reading process
      */
-    public static String readRandomWeightedLine(Path path, Map<Integer, Double> priorityMap, Predicate<String> linePredicate, Function<String, Integer> priorityMatcher) throws IOException {
+    public static String readRandomWeightedLine(Path path,  Predicate<String> linePredicate, Function<String, Float> priorityMatcher) throws IOException {
         List<String> lines = Files.lines(path).filter(linePredicate).toList();
-        List<Double> weights = lines.stream()
-                .map(line -> {
-                    // Extract the priority number
-                    int priority = priorityMatcher.apply(line);
-                    // Default to 1.0 if priority not found
-                    return priorityMap.getOrDefault(priority, 1.0);
-                }).toList();
+        List<Float> weights = lines.stream().map(priorityMatcher).toList();
 
         // Calculate the total weight
-        double totalWeight = weights.stream().mapToDouble(Double::doubleValue).sum();
+        double totalWeight = 0.0d;
+        for(float weight: weights){
+            totalWeight+=weight;
+        }
 
         // Generate a random number based on the total weight
         double randomValue = Math.random() * totalWeight;
 
         // Select the line based on the weighted random value
-        double cumulativeWeight = 0.0;
+        double cumulativeWeight = 0.0d;
         for (int i = 0; i < lines.size(); i++) {
             cumulativeWeight += weights.get(i);
-            if (randomValue <= cumulativeWeight) {
+            if (cumulativeWeight >= randomValue ) {
                 return lines.get(i);
             }
         }

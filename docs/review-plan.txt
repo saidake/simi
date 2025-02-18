@@ -1,6 +1,6 @@
-Algorithm Problems / Array / 1. Array Partition
+Algorithm Problems / Array / 1. Array Partition [0.4]
 Algorithm Problems / Array / 31. Minimum Number Game
-Algorithm Problems / Array / Meaningful Index for Automatic Sorting / 34. Sort Array by Increasing Frequency [7]
+Algorithm Problems / Array / Meaningful Index for Automatic Sorting / 34. Sort Array by Increasing Frequency [2]
 Algorithm Problems / Backtracking / 29. Power Set LCCI
 Algorithm Problems / Conditional Logic / 2. Add Edges to Make Degrees of All Nodes Even
 Algorithm Problems / Depth-first Search / 3. Amount of Time for Binary Tree to Be Infected
@@ -33,7 +33,7 @@ Algorithm Problems / Traversal / 29. Power Set LCCI
 Algorithm Problems / Two Pointer / 26. Boats to Save People
 Algorithm Problems / Two Pointer / 27. Find the Lexicographically Largest String From the Box I
 Algorithm Problems / Two Pointer / 28. Merge Sorted Array
-Algorithm Problems / Union-Find / 33. Graph Connectivity With Threshold [6]
+Algorithm Problems / Union-Find / 33. Graph Connectivity With Threshold [2]
 
 English / Near-synonym / DDD / different, disparate, differential
 English / Near-synonym / SSS / same, similar, resemble
