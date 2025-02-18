@@ -4545,9 +4545,12 @@ The score will be (-1) * (-5) + 4 * (-1) + 5 * (-2) + (-2) * (-4) = -1.
 * `4 <= b.length <= 10^5`
 * `-10^5 <= a[i], b[i] <= 10^5`
 ### Dynamic Programming Solution
-Define a variable `dp1` to store the maximum value of `b[i]*a[0]`, where `b[i]` is the maxinum element in the range from `0` to `i` in array `b`.
-
-Define another variable `dp2` to store the maximum value of `max(b[i]*a[1], b[i-1]*a[0])`, where `b
+The score expression is:
+```
+a[0] * b[i0] + a[1] * b[i1] + a[2] * b[i2] + a[3] * b[i3]
+```
+Define $f(1,i)$ as the maxinum value of the first product `a[0] * b[i0]`, 
+where `b[i0]` is an element in the array `b` from index `0` to `i`.
 
 ```
 Step 1:
