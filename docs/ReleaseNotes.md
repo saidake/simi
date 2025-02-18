@@ -1,9 +1,17 @@
-# Simi 1.2.0 Documentation Release
-## SpringBoot_v1.1.0.pdf
+# Table of Contents
+[Back to Main Project README](../README.md)
+- [Simi](#simi)
+  - [Simi 1.2.0 Release - OneDrive Document Migration](#simi-120-release---onedrive-document-migration)
+  - [Simi 1.1.0 Release - Sandbox Module](#simi-110-release---sandbox-module)
+# Simi
+## Simi 1.2.0 Release - OneDrive Document Migration
+### SpringBoot_v1.1.0.pdf
 * **SpringBoot / Third Party Package / spring-boot-starter-security**
   * Configure SecurityFilterChain for the new version of spring security. 
 
-## Java_v1.1.0.pdf
+### Java_v1.1.0.pdf
+* **Java / Concept / Java Environment / Version Features / Java 16 (March 221)**
+  * Using the `record` operator in Java 16 and later.
 * **Java / java.base / java.time / LocalDate**
   * Introduce the default date string format.
 * **Java / java.base / java.text / SimpleDateFormat**
@@ -14,7 +22,7 @@
 * **Java / java.base / java.util / (Data Operation) / Arrays**
   * `Arrays.stream` has a time complexity of O(n). 
 
-## Node_v1.1.0.pdf
+### Node_v1.1.0.pdf
 * **Node / React / Core / Import Components**
   * How to import various components in React.
 * **Node / Configuration / tsconfig.json**
@@ -27,9 +35,17 @@
   * Use styles in a React component.
 * **Node / Npm Packages / Loader / sass-loader**
   * Use styles in a React component.
-  
-## Config_v1.1.0.pdf
+
+### Config_v1.1.0.pdf
 * **Config / Work Environment / git / Configuration / .gitignore**
   * Explain the priority and rules for ignoring files in  `.gitignore`. 
 * **Config / Work Environment / Nodejs / Commands / yarn**
   * Commonly used yarn commands.
+
+## Simi 1.1.0 Release - Sandbox Module
+- Added a detailed algorithm explanation file `docs/Algorithms.md`.
+- Optimized the deployment script, moved it to the `scripts` directory, and added additional helper bash scripts.
+- Introduced the `simi-sandbox` module for system architecture exploration.
+- Added an AWS test module, `simi-sandbox/simi-servers/simi-aws`, for testing AWS services.
+- Added test modules for Temporal and CAP frameworks.
+- Removed outdated modules: `simi-mysql`, `simi-nodb`, and `simi-oracle`.  
