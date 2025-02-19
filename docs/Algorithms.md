@@ -19,14 +19,17 @@
   - Difference Array
     - [5. Jump Game VII](#5-jump-game-vii)
   - Dynamic Programming
-    - [6. Climbing Stairs](#6-climbing-stairs)
-    - [7. Count All Valid Pickup and Delivery Options](#7-count-all-valid-pickup-and-delivery-options)
-    - [8. Decode Ways II](#8-decode-ways-ii)
-    - [9. Make the XOR of All Segments Equal to Zero](#9-make-the-xor-of-all-segments-equal-to-zero)
-    - [10. Maximize Value of Function in a Ball Passing Game](#10-maximize-value-of-function-in-a-ball-passing-game)
-    - [11. Minimum Deletions to Make String Balanced](#11-minimum-deletions-to-make-string-balanced)
-    - [12. Stone Game](#12-stone-game)
-    - [13. Target Sum](#13-target-sum)
+    - Standard
+      - [6. Climbing Stairs](#6-climbing-stairs)
+      - [7. Count All Valid Pickup and Delivery Options](#7-count-all-valid-pickup-and-delivery-options)
+      - [8. Decode Ways II](#8-decode-ways-ii)
+      - [9. Make the XOR of All Segments Equal to Zero](#9-make-the-xor-of-all-segments-equal-to-zero)
+      - [10. Maximize Value of Function in a Ball Passing Game](#10-maximize-value-of-function-in-a-ball-passing-game)  
+      - [11. Minimum Deletions to Make String Balanced](#11-minimum-deletions-to-make-string-balanced)
+      - [12. Stone Game](#12-stone-game)
+      - [13. Target Sum](#13-target-sum)
+    - Problem Breakdown
+      - [35. Maximum Multiplication Score](#35-maximum-multiplication-score)
   - HashMap
     - [30. Count Common Words With One Occurrence](#30-count-common-words-with-one-occurrence)
   - Fenwick Tree
@@ -4549,8 +4552,23 @@ The score expression is:
 ```
 a[0] * b[i0] + a[1] * b[i1] + a[2] * b[i2] + a[3] * b[i3]
 ```
-Define $f(1,i)$ as the maxinum value of the first product `a[0] * b[i0]`, 
+Define $f(1,i)$ as the maxinum sum of a single product `a[0] * b[i0]`, 
 where `b[i0]` is an element in the array `b` from index `0` to `i`.
+
+Similarly, $f(2,i)$ repesents the maxinum sum of the two products `a[0] * b[i0]` and `a[1] * b[i1]`, and this pattern continues for higher values.
+
+At index `i` in the array `b`, the dynamic programming expression is:
+$$
+\begin{cases}
+    f(1,i) = max( a[0] \times b[i] ) \\ 
+    f(2,i) = max( f(2,i-1), f(1,i-1) + a[1] \times b[i] ) \\
+    f(3,i) = max( f(3,i-1), f(2,i-1) + a[2] \times b[i] ) \\
+    f(4,i) = max( f(4,i-1), f(3,i-1) + a[3] \times b[i] )
+\end{cases}
+$$
+
+Since each DP state depends on the previous one, traverse the array `b` starting from the beginning.
+The final result is $f(4,n)$ where `n` is the size of `b`.
 
 ```
 Step 1:
@@ -4618,6 +4636,8 @@ Step 3:
     dp1 = max(dp1, b[2]*a[0])  
         = max(2*3, 4*3) 
         = 4*3
+
+...
 ```
 #### Implementation
 ```java
@@ -4635,8 +4655,12 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: 
-* Space Complexity: 
+* Time Complexity: $O(n)$ 
+
+  The main loop iterates through the array `b`, resulting in a time complexity of $O(n)$.
+* Space Complexity: $O(1)$
+
+  The variables `dp1`, `dp2`, `dp3`, `dp4` each take constant time $O(1)$.
 
 
 
