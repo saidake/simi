@@ -54,6 +54,7 @@
     - [24. Find the Number of Ways to Place People I](#24-find-the-number-of-ways-to-place-people-i)
     - [25. Maximum Number of Operations With the Same Score I](#25-maximum-number-of-operations-with-the-same-score-i)
     - [29. Power Set LCCI](#29-power-set-lcci)
+    - [36. Find Triangular Sum of an Array](#36-find-triangular-sum-of-an-array)
   - Two Pointer
     - [26. Boats to Save People](#26-boats-to-save-people)
     - [27. Find the Lexicographically Largest String From the Box I](#27-find-the-lexicographically-largest-string-from-the-box-i)
@@ -4697,21 +4698,35 @@ Constraints:
 * `1 <= nums.length <= 1000`
 * `0 <= nums[i] <= 9`
 
-### Analysis
+### Traversal Solution
+Following the problem's steps to create child loops that compute values for `newNums`.
+Since `nums` is no longer needed in next steps, reuse it as `newNums`.  
+
+Return the result when only one element remains.
+
 #### Implementation
 ```java
 class Solution {
     public int triangularSum(int[] nums) {
-        if(nums.length==1)return nums[0];
-        int[] newNums=new int[nums.length-1];
-        for(int i=0; i<nums.length-1; i++){
-            newNums[i]=(nums[i]+nums[i+1])%10;
+        for (int n = nums.length - 1; n > 0; n--) {
+            for (int i = 0; i < n; i++) {
+                nums[i] = (nums[i] + nums[i + 1]) % 10;
+            }
         }
-        return triangularSum(newNums);
+        return nums[0];
     }
 }
 ```
+* Time Complexity: $O(n^2)$ 
 
+  The total number of iterations is $\sum_{i=0}^{n}i=\frac{n\times (n+1)}{2}$, resulting in a time complexity of $O(n^2)$
+
+* Space Complexity: $O(1)$
+
+  The loop index variables `n` and `i`  takes $O(1)$ constant space.
+
+#### Consideration
+ * Reusing `nums` is more efficient since its original elements are no longer required in the following steps.
 
 # SQL Problems
 ## 1. Odd and Even Transactions
