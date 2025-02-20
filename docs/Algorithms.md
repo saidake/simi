@@ -4171,11 +4171,12 @@ class MyCalendarTwo {
             cur.overlap = true;
             //    L1   R1        start, end
             //      L2    R2     cur.start, cur.end
-            // L1,L2  -  cur.left - cur.right - R1,R2
-            // cur = L2,R1
+            // [L1, L2] - [L2, R1] - [R1,R2]
+            // Range1: [a,b] 
             int a = Math.min(cur.start, start);
             int b = Math.max(cur.start, start);
-
+            // Range2: [b,c] 
+            // Range3: [c,d] 
             int c = Math.min(cur.end, end);
             int d = Math.max(cur.end, end);
             
@@ -4727,6 +4728,126 @@ class Solution {
 
 #### Consideration
  * Reusing `nums` is more efficient since its original elements are no longer required in the following steps.
+
+## 37. Zero Array Transformation II
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an integer array `nums` of length `n` and a 2D array `queries` where `queries[i] = [li, ri, vali]`.
+
+Each `queries[i]` represents the following action on nums:
+* Decrement the value at each index in the range `[li, ri]` in `nums` by at most `vali`.
+* The amount by which each value is decremented can be chosen independently for each index.
+
+A Zero Array is an array with all its elements equal to 0.
+
+Return the minimum possible non-negative value of `k`, such that after processing the first `k` queries in sequence, `nums` becomes a Zero Array. 
+If no such `k` exists, return -1.
+
+**Example 1:**
+> **Input:** nums = [2,0,2], queries = [[0,2,1],[0,2,1],[1,1,3]]  
+> **Output:** 2  
+> **Explanation:**
+> * **For i = 0 (l = 0, r = 2, val = 1):**
+>   * Decrement values at indices `[0, 1, 2]` by `[1, 0, 1]` respectively.
+>   * The array will become [1, 0, 1].
+> * **For i = 1 (l = 0, r = 2, val = 1):**
+>   * Decrement values at indices `[0, 1, 2]` by `[1, 0, 1]` respectively.
+>   * The array will become `[0, 0, 0]`, which is a Zero Array. Therefore, the minimum value of `k` is 2.
+
+**Example 2:**
+> **Input:** nums = [4,3,2,1], queries = [[1,3,2],[0,2,1]]  
+> **Output:** -1  
+> **Explanation:**
+> * **For i = 0 (l = 1, r = 3, val = 2):**
+>   * Decrement values at indices `[1, 2, 3]` by `[2, 2, 1]` respectively.
+>   * The array will become [4, 1, 0, 0].
+> * **For i = 1 (l = 0, r = 2, val = 1):**
+>   * Decrement values at indices `[0, 1, 2]` by `[1, 1, 0]` respectively.
+>   * The array will become `[3, 0, 0, 0]`, which is not a Zero Array.
+
+**Constraints:**
+* `1 <= nums.length <= 10^5`
+* `0 <= nums[i] <= 5 * 10^5`
+* `1 <= queries.length <= 10^5`
+* `queries[i].length == 3`
+* `0 <= li <= ri < nums.length`
+* `1 <= vali <= 5`
+
+### Analysis
+#### Implementation
+```java
+class Solution {
+    SegmentTree root;
+
+    public SegmentTree insert(int start, int end, int minus, SegmentTree st){
+        if(st==null){
+            return new SegmentTree(start, end, minus);
+        }
+        // If the new segement in the left side
+        if(start>=st.end){
+            st.right=insert(start, end, minus, st.right);
+        }else if(end<=st.start){
+            st.left=insert(start, end, minus, st.left);
+        }else{
+            // Range 1: [a,b]
+            int a=Math.min(start, st.start);
+            int b=Math.max(start, st.start);
+            // Range 2: [b, c]
+            // Range 3: [c, d]
+            int c=Math.min(end, st.end);
+            int d=Math.max(end, st.end);
+
+            st.left=insert(a, b, st.left);
+            st.right=insert(c, d, st.right);
+            st.start=b;
+            st.end=c;
+        }
+    }
+
+    class SegmentTree{
+        int start, end;   
+        int minus;
+        SegmentTree left, right;
+        SegmentTree(int start, int end, int minus){
+            this.start=start;
+            this.end=end;
+            this.minus=minus;
+        }
+    }
+
+    public int minZeroArray(int[] nums, int[][] queries) {
+        // 0 <= nums[i] <= 5 * 10^5
+        // Count zeros in `nums` array.
+        int zeroCount=0;
+        for(int i=0; i< nums.length; i++){
+            if(nums[i]==0){
+                ++zeroCount;
+                nums[i]=-1;
+            }
+        }
+        if(zeroCount==nums.length)return 0;
+        // Perform queries.
+        int k=0;
+        for(int i=0; i<queries.length; i++){
+            int left=queries[i][0];
+            int right=queries[i][1];
+            int minus=queries[i][2];
+            for(int j=left; j<=right; j++){
+                if(nums[j]==-1)continue;
+                nums[j]-=minus;
+                if(nums[j]<=0){
+                    ++zeroCount;
+                    nums[j]=-1;
+                }
+            }
+            ++k;
+            if(zeroCount==nums.length)return k;
+        }
+        return -1;
+    }
+}
+```
+
 
 # SQL Problems
 ## 1. Odd and Even Transactions
