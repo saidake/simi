@@ -5,6 +5,12 @@
   - [Simi 1.1.0 Release - Sandbox Module](#simi-110-release---sandbox-module)
 # Simi
 ## Simi 1.2.0 Release - OneDrive Document Migration
+* Migrated documents from OneDrive to Git.
+* Updated SpringBoot_v1.1.0.pdf, Java_v1.1.0.pdf, Node_v1.1.0.pdf, Config_v1.1.0.pdf.
+* Renamed module `simi-common-util` to `simi-common-utils`.
+* Renamed app `simi-memory-management` to `simi-review-tool`.
+* Added several library tests to `simi-lib-test`.
+
 ### SpringBoot_v1.1.0.pdf
 * **SpringBoot / Third Party Package / spring-boot-starter-security**
   * Configure SecurityFilterChain for the new version of spring security. 
@@ -12,6 +18,9 @@
   * Jackson is used for request bodies (`@RequestBody`) and response serialization (`@ResponseBody`).
 * **SpringBoot / org.springframework (spring) / web / annotation / InitBinder**
   * Added usage examples for InitBinder annotation. 
+* **SpringBoot_v1.1.0.pdf / Third Party Package / Servers / Temporal**
+  * Introduce the core classes in the `temporal-serviceclient` and `temporal-sdk` dependencies.
+
 ### Java_v1.1.0.pdf
 * **Java / Concept / Java Environment / Version Features / Java 16 (March 221)**
   * Using the `record` operator in Java 16 and later.
