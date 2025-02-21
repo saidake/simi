@@ -4172,6 +4172,7 @@ class MyCalendarTwo {
             //    L1   R1        start, end
             //      L2    R2     cur.start, cur.end
             // [L1, L2] - [L2, R1] - [R1,R2]
+
             // Range1: [a,b] 
             int a = Math.min(cur.start, start);
             int b = Math.max(cur.start, start);
@@ -4180,6 +4181,8 @@ class MyCalendarTwo {
             int c = Math.min(cur.end, end);
             int d = Math.max(cur.end, end);
             
+            // One of the ranges [a,b] or [c,d] must overlap with `cur`.
+            // and it will continue to be compared with a neighboring node of `cur`.
             cur.left = insert(a, b, cur.left);
             cur.right = insert(c, d, cur.right);
             
@@ -4718,6 +4721,7 @@ class Solution {
     }
 }
 ```
+#### Time and Space Complexity
 * Time Complexity: $O(n^2)$ 
 
   The total number of iterations is $\sum_{i=0}^{n}i=\frac{n\times (n+1)}{2}$, resulting in a time complexity of $O(n^2)$
@@ -4773,81 +4777,53 @@ If no such `k` exists, return -1.
 * `0 <= li <= ri < nums.length`
 * `1 <= vali <= 5`
 
-### Analysis
+### Difference Array Solution
+Break down the problem to a sub-problem:
+
+At index `i` in array `nums`, reduce `nums[i]` to `0` using the minimum number of queries in the first `k` queries.
+
+* If the all queries are not insufficient to reduce `nums[i]` to `0`, return `-1`.
+* If the minimum number of required queries is found, use `diff` array to record the decrement values for each range.
+
 #### Implementation
 ```java
 class Solution {
-    SegmentTree root;
-
-    public SegmentTree insert(int start, int end, int minus, SegmentTree st){
-        if(st==null){
-            return new SegmentTree(start, end, minus);
-        }
-        // If the new segement in the left side
-        if(start>=st.end){
-            st.right=insert(start, end, minus, st.right);
-        }else if(end<=st.start){
-            st.left=insert(start, end, minus, st.left);
-        }else{
-            // Range 1: [a,b]
-            int a=Math.min(start, st.start);
-            int b=Math.max(start, st.start);
-            // Range 2: [b, c]
-            // Range 3: [c, d]
-            int c=Math.min(end, st.end);
-            int d=Math.max(end, st.end);
-
-            st.left=insert(a, b, st.left);
-            st.right=insert(c, d, st.right);
-            st.start=b;
-            st.end=c;
-        }
-    }
-
-    class SegmentTree{
-        int start, end;   
-        int minus;
-        SegmentTree left, right;
-        SegmentTree(int start, int end, int minus){
-            this.start=start;
-            this.end=end;
-            this.minus=minus;
-        }
-    }
-
     public int minZeroArray(int[] nums, int[][] queries) {
-        // 0 <= nums[i] <= 5 * 10^5
-        // Count zeros in `nums` array.
-        int zeroCount=0;
-        for(int i=0; i< nums.length; i++){
-            if(nums[i]==0){
-                ++zeroCount;
-                nums[i]=-1;
-            }
-        }
-        if(zeroCount==nums.length)return 0;
-        // Perform queries.
-        int k=0;
-        for(int i=0; i<queries.length; i++){
-            int left=queries[i][0];
-            int right=queries[i][1];
-            int minus=queries[i][2];
-            for(int j=left; j<=right; j++){
-                if(nums[j]==-1)continue;
-                nums[j]-=minus;
-                if(nums[j]<=0){
-                    ++zeroCount;
-                    nums[j]=-1;
+        int n = nums.length;
+        int[] diff = new int[n + 1];
+        int sumD = 0;
+        // The minimum number of required queries.
+        int k = 0;
+        // Traverse array `nums`
+        for (int i = 0; i < n; i++) {
+            int num = nums[i];
+            sumD += diff[i];
+            // Count minimum queries required to reduce `nums[i]` to `0`.
+            while (k < queries.length && sumD < num) { 
+                int[] quer = queries[k];
+                int start = quer[0], end = quer[1], subt = quer[2];
+                diff[start] += subt;
+                diff[end + 1] -= subt;
+                // When `i` is in the current range `quer`. 
+                if (start <= i && i <= end) { 
+                    sumD += subt;
                 }
+                k++;
             }
-            ++k;
-            if(zeroCount==nums.length)return k;
+            // Unable to reduce `nums[i]` to `0`
+            if (sumD < num) { 
+                return -1;
+            }
         }
-        return -1;
+        return k;
     }
 }
-```
 
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n)$ 
+
+* Space Complexity: $O(n)$
 
 # SQL Problems
 ## 1. Odd and Even Transactions
