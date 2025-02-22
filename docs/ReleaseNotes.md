@@ -2,11 +2,17 @@
 [Back to Main Project README](../README.md)
 - [Simi](#simi)
   - [Simi 1.2.0 Release - OneDrive Document Migration](#simi-120-release---onedrive-document-migration)
+    - [Core Updates](#core-updates)
+    - [SpringBoot\_v1.1.0.pdf](#springboot_v110pdf)
+    - [Java\_v1.1.0.pdf](#java_v110pdf)
+    - [Node\_v1.1.0.pdf](#node_v110pdf)
+    - [Config\_v1.1.0.pdf](#config_v110pdf)
   - [Simi 1.1.0 Release - Sandbox Module](#simi-110-release---sandbox-module)
 # Simi
 ## Simi 1.2.0 Release - OneDrive Document Migration
+### Core Updates
 * Migrated documents from OneDrive to Git.
-* Updated SpringBoot_v1.1.0.pdf, Java_v1.1.0.pdf, Node_v1.1.0.pdf, Config_v1.1.0.pdf.
+* Updated SpringBoot_v1.1.0.pdf, Java_v1.1.0.pdf, Node_v1.1.0.pdf, Config_v1.1.0.pdf from version 1.0.0.
 * Renamed module `simi-common-util` to `simi-common-utils`.
 * Renamed app `simi-memory-management` to `simi-review-tool`.
 * Added several library tests to `simi-lib-test`.
@@ -20,6 +26,8 @@
   * Added usage examples for InitBinder annotation. 
 * **SpringBoot_v1.1.0.pdf / Third Party Package / Servers / Temporal**
   * Introduce the core classes in the `temporal-serviceclient` and `temporal-sdk` dependencies.
+* **SpringBoot_v1.1.0.pdf / Third Party Package / Extentions / junit / \[junit-jupiter-api\]**
+  * Using `@ExtendWith` in Junit 5 and `@Rule` in Junit 4.
 
 ### Java_v1.1.0.pdf
 * **Java / Concept / Java Environment / Version Features / Java 16 (March 221)**
