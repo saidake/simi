@@ -18,6 +18,7 @@
     - [4. Search in Rotated Sorted Array](#4-search-in-rotated-sorted-array)
   - Difference Array
     - [5. Jump Game VII](#5-jump-game-vii)
+    - [37. Zero Array Transformation II](#37-zero-array-transformation-ii)
   - Dynamic Programming
     - Standard
       - [6. Climbing Stairs](#6-climbing-stairs)
@@ -4778,13 +4779,13 @@ If no such `k` exists, return -1.
 * `1 <= vali <= 5`
 
 ### Difference Array Solution
-Break down the problem to a sub-problem:
+Break the problem into a sub-problem:
+* At index `i` in array `nums`, reduce `nums[i]` to `0` using the minimum number of queries within the first `k` queries.
 
-At index `i` in array `nums`, reduce `nums[i]` to `0` using the minimum number of queries in the first `k` queries.
+Since only used queires are counted and must be rechecked for the next index, the following approach is used:
 
-* If the all queries are not insufficient to reduce `nums[i]` to `0`, return `-1`.
-* If the minimum number of required queries is found, use `diff` array to record the decrement values for each range.
-
+1. Traverse `nums`, and at each index `i`, iterate through all queries to reduct `nums[i]` to `0` within the first `k` queries, determining minimum required queries.
+2. Using the `diff` array to track the previously traversed query ranges, allowing the decrement amount to be efficiently retrieved at index `i`.
 #### Implementation
 ```java
 class Solution {
@@ -4818,12 +4819,12 @@ class Solution {
         return k;
     }
 }
-
 ```
 #### Time and Space Complexity
-* Time Complexity: $O(n)$ 
-
+* Time Complexity: $O(n+q)$ 
+  * Since every element in `nums` must be traversed, and processed queries do not need to be revisited, the total time complexity is $O(n+q)$, where `n` and `q` are the length of `nums` and `queries` respectively.
 * Space Complexity: $O(n)$
+  * The `diff` array requires $O(n)$ space, where `n` is the length of `nums`.
 
 # SQL Problems
 ## 1. Odd and Even Transactions
