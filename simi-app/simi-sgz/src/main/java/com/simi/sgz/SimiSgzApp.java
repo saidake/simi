@@ -46,7 +46,7 @@ public class SimiSgzApp {
                 "Press 'P' to interrupt the application."
         );
         executableTasks.forEach(ExecutableTask::execute);
-        ThreadPoolContext.shutdown();
+        //ThreadPoolContext.shutdown();
     }
 
 }
