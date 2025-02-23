@@ -4863,7 +4863,84 @@ The second move swaps the second and third row.
 * `board[i][j]` is either `0` or `1`.
 ### Analysis 
 #### Implementation
-
+```java
+class Solution {
+    public int movesToChessboard(int[][] board) {
+        // 1. Find adjecent rows
+        // 2. Swap one of them with one of another adjecent rows. 
+        int len=board.length;
+        int moves=0;
+        int[][] chessboard=new int[len][len];
+        // 1. Traverse rows
+        boolean[] adjRows=new boolean[len];
+        int adjRowCount=0;
+        for(int i=1; i<len; i++){
+            // Traverse column values
+            for(int j=0; j<len; j++){
+                if(board[i][j]==board[i-1][j]){
+                    adjRows[i]=true;
+                    adjRowCount++;
+                    break;
+                }
+            }
+        }
+        if(adjRowCount%2==1)return -1;
+        // 2. Swap rows
+        boolean isAdjRow=true;
+        for(int i=1; i<len; i++,isAdjRow=!isAdjRow){
+            if(adjRows[i]==isAdjRow)continue;
+            // Find a valid column to swap 
+            // current row = false   ->   true
+            // current row = true   ->   false
+            for(int j=i+1; j<len; j++){
+                if(adjRows[j]!=adjRows[i]){
+                    int[] temp=board[i];
+                    board[i]=board[j];
+                    board[j]=temp;
+                    moves++;
+                    break;
+                }
+            }
+        }
+        // 3. Traverse columns
+        int cLen=board[0].length;
+        boolean [] adjColumns=new boolean[cLen];
+        int adjColumnCount=0;
+        for(int i=1; i<len; i++){
+            // Traverse column values
+            for(int j=0; j<len; j++){
+                if(board[j][i]==board[j][i-1]){
+                    adjColumns[i]=true;
+                    adjColumnCount++;
+                    break;
+                }
+            }
+        }
+        if(adjColumnCount%2==1)return -1;
+        // 2. Swap columns
+        boolean isAdjColumn=true;
+        for(int i=1; i<len; i++, isAdjColumn=!isAdjColumn){
+            if(adjColumns[i]==isAdjColumn)continue;
+            // Find a valid column to swap 
+            // current row = false   ->   true
+            // current row = true   ->   false
+            for(int j=i+1; j<len; j++){
+                if(adjColumns[j]!=adjColumns[i]){
+                    for(int k=0; k<cLen; k++){
+                        int temp=board[k][j];
+                        board[k][j]=board[k][i];
+                        board[k][i]=temp;
+                    }
+                    moves++;
+                    break;
+                }
+            }
+        }
+        return moves;
+         
+    }
+}
+```
 #### Time and Space Complexity
 * Time Complexity: 
 * Space Complexity: 
