@@ -12,6 +12,9 @@ import java.io.Serializable;
 public class Coordinate implements Serializable {
     private String name;
     private int[] redPoint;
+    private int[] closeWindow;
+    private int[] staminaOcrUpperTop;
+    private int[] staminaOcrBottomRight;
     private int[] stopBtn1;
     private int[] detailBtn;
     private int[] trailBtn;
@@ -45,6 +48,10 @@ public class Coordinate implements Serializable {
     private int[] troop3From5;
     private int[] troop4From5;
     private int[] troop5From5;
+    private int[] troop1From4;
+    private int[] troop2From4;
+    private int[] troop3From4;
+    private int[] troop4From4;
     private int[] mark1;
     private int[] mark2;
     private int[] mark3;

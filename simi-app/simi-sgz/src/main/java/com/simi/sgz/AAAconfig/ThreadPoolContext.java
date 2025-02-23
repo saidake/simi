@@ -6,7 +6,13 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadPoolContext {
     private volatile static ThreadPoolExecutor threadPoolExecutor;
+
     public static void executeTask(Runnable task) {
+        getThreadPool();
+        threadPoolExecutor.execute(task);
+    }
+
+    public static ThreadPoolExecutor getThreadPool() {
         if (threadPoolExecutor == null) {
             synchronized (ThreadPoolContext.class) {
                 if (threadPoolExecutor == null) {
@@ -18,7 +24,7 @@ public class ThreadPoolContext {
                 }
             }
         }
-        threadPoolExecutor.execute(task);
+        return threadPoolExecutor;
     }
 
     public static void shutdown(){
