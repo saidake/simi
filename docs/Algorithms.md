@@ -4861,83 +4861,54 @@ The second move swaps the second and third row.
 * `n == board[i].length`
 * `2 <= n <= 30`
 * `board[i][j]` is either `0` or `1`.
-### Analysis 
+### Math Solution 
+
+
 #### Implementation
 ```java
 class Solution {
     public int movesToChessboard(int[][] board) {
-        // 1. Find adjecent rows
-        // 2. Swap one of them with one of another adjecent rows. 
-        int len=board.length;
-        int moves=0;
-        int[][] chessboard=new int[len][len];
-        // 1. Traverse rows
-        boolean[] adjRows=new boolean[len];
-        int adjRowCount=0;
-        for(int i=1; i<len; i++){
-            // Traverse column values
-            for(int j=0; j<len; j++){
-                if(board[i][j]==board[i-1][j]){
-                    adjRows[i]=true;
-                    adjRowCount++;
-                    break;
+        int n = board.length;
+        int[] firstRow = board[0];
+        int[] firstCol = new int[n];
+        int[] rowCnt = new int[2];
+        int[] colCnt = new int[2];
+        // Count the occurrences of `0` and `1` in the board
+        for (int i = 0; i < n; i++) {
+            rowCnt[firstRow[i]]++; 
+            firstCol[i] = board[i][0];
+            colCnt[firstCol[i]]++;
+        }
+
+        // Determine whether the rows or columns can be swapped.
+        if (Math.abs(rowCnt[0] - rowCnt[1]) > 1 || Math.abs(colCnt[0] - colCnt[1]) > 1) {
+            return -1;
+        }
+
+        // Each row must be either identical to or entirely different from the first row.
+        for (int[] row : board) {
+            boolean same = row[0] == firstRow[0];
+            for (int i = 0; i < n; i++) {
+                if ((row[i] == firstRow[i]) != same) {
+                    return -1;
                 }
             }
         }
-        if(adjRowCount%2==1)return -1;
-        // 2. Swap rows
-        boolean isAdjRow=true;
-        for(int i=1; i<len; i++,isAdjRow=!isAdjRow){
-            if(adjRows[i]==isAdjRow)continue;
-            // Find a valid column to swap 
-            // current row = false   ->   true
-            // current row = true   ->   false
-            for(int j=i+1; j<len; j++){
-                if(adjRows[j]!=adjRows[i]){
-                    int[] temp=board[i];
-                    board[i]=board[j];
-                    board[j]=temp;
-                    moves++;
-                    break;
-                }
-            }
+
+        return minSwap(firstRow, rowCnt) + minSwap(firstCol, colCnt);
+    }
+
+    /**
+     * Calculate the minimum number of swaps required.
+     */
+    private int minSwap(int[] s, int[] cnt) {
+        int n = s.length;
+        int x0 = cnt[1] > cnt[0] ? 1 : 0; 
+        int diff = 0;
+        for (int i = 0; i < n; i++) {
+            diff += s[i] ^ i % 2 ^ x0;
         }
-        // 3. Traverse columns
-        int cLen=board[0].length;
-        boolean [] adjColumns=new boolean[cLen];
-        int adjColumnCount=0;
-        for(int i=1; i<len; i++){
-            // Traverse column values
-            for(int j=0; j<len; j++){
-                if(board[j][i]==board[j][i-1]){
-                    adjColumns[i]=true;
-                    adjColumnCount++;
-                    break;
-                }
-            }
-        }
-        if(adjColumnCount%2==1)return -1;
-        // 2. Swap columns
-        boolean isAdjColumn=true;
-        for(int i=1; i<len; i++, isAdjColumn=!isAdjColumn){
-            if(adjColumns[i]==isAdjColumn)continue;
-            // Find a valid column to swap 
-            // current row = false   ->   true
-            // current row = true   ->   false
-            for(int j=i+1; j<len; j++){
-                if(adjColumns[j]!=adjColumns[i]){
-                    for(int k=0; k<cLen; k++){
-                        int temp=board[k][j];
-                        board[k][j]=board[k][i];
-                        board[k][i]=temp;
-                    }
-                    moves++;
-                    break;
-                }
-            }
-        }
-        return moves;
-         
+        return n % 2 > 0 ? diff / 2 : Math.min(diff, n - diff) / 2;
     }
 }
 ```
