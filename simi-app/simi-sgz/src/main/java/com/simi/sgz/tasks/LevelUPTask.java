@@ -25,7 +25,7 @@ public final class LevelUPTask extends ThreadPoolTask {
     public LevelUPTask(SimiSgz simiSgz, RobotAction robot, CoordinatesReader coordinatesReader, int index) {
         super(simiSgz, robot, coordinatesReader, index);
         this.loadProperties();
-//        this.staminaList=levelUpProperties.getStaminaList()[index];
+        log.info("Create task for account: {}",index);
         this.staminaList=this.convertStaminaList(levelUpProperties.getStaminaList()[index]);
         log.info("Converted staminaList {} for account {}",this.staminaList,index);
         this.selectTroopFrom=levelUpProperties.getSelectTroopFrom()[index];
@@ -82,7 +82,6 @@ public final class LevelUPTask extends ThreadPoolTask {
     public void executableTask() {
         //A. Check if there is a need to supply the army.
         //A.start the level-up action
-        boolean hasAnyStaminaLeft= Arrays.stream(staminaList).anyMatch(item -> item >= 15);
         int positiveNum = (int) Arrays.stream(staminaList).filter(item -> item >= 15).count();
         while (positiveNum>0){
             boolean needSupplyForAny=false;
@@ -124,7 +123,7 @@ public final class LevelUPTask extends ThreadPoolTask {
         boolean enteredCity=false;
         boolean enteredSecondCity=false;
         for (int i = 0; i < staminaList.length; i++) {
-            if(supplyList[i]&&staminaList[i]>=0){
+            if(supplyList[i]&&staminaList[i]>0){
                 if(!enteredCity){
                     this.operation.enterCity(i);
                     enteredCity=true;
@@ -140,7 +139,7 @@ public final class LevelUPTask extends ThreadPoolTask {
             }
         }
         //B. go to the mark button.
-        this.operation.exitCity();
+        if(enteredCity)this.operation.exitCity();
         this.operation.scrollToBottom();
     }
 

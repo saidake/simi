@@ -38,9 +38,9 @@ public class TaskService {
         List<CompletableFuture<ExecutableTask>> futures = new LinkedList<>();
         for (int i = 0; i < coordinatesReader.getCoordinates().size(); i++) {
             int finalI = i;
-            CompletableFuture<ExecutableTask> future = CompletableFuture.supplyAsync(() -> {
-                return TaskService.createTask( taskType, simiSgz,robot,coordinatesReader, finalI);
-            }, ThreadPoolContext.getThreadPool());
+            CompletableFuture<ExecutableTask> future = CompletableFuture.supplyAsync(() ->
+                    TaskService.createTask( taskType, simiSgz,robot,coordinatesReader, finalI), ThreadPoolContext.getThreadPool()
+            );
             futures.add(future);
         }
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenApply(v -> {

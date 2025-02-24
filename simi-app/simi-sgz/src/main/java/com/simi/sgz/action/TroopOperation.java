@@ -82,10 +82,11 @@ public class TroopOperation {
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath(SgzConstants.TESSERACT_ENGIN_PATH); // Path to Tesseract's tessdata directory
         // Perform OCR
-        String result = tesseract.doOCR(screenCapture);
+        String result=tesseract.doOCR(screenCapture);
         log.info("Detected number: {}", result.trim());
-        int stamina=Integer.parseInt(result.trim().replaceAll("\\D+",""));
-        log.info("Processed number: {}", result.trim());
+        String processedStr=result.trim().replaceAll("B","8").replaceAll("\\D+","");
+        int stamina=processedStr.isBlank()?0:Integer.parseInt(processedStr);
+        log.info("Processed number: {}", stamina);
         if(staminaList[troopIndex]==1){
             staminaList[troopIndex]=stamina>=15?stamina:0;
         } else if(staminaList[troopIndex]>1){
