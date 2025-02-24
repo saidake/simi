@@ -4825,7 +4825,7 @@ class Solution {
   * Since every element in `nums` must be traversed, and processed queries do not need to be revisited, the total time complexity is $O(n+q)$, where `n` and `q` are the length of `nums` and `queries` respectively.
 * Space Complexity: $O(n)$
   * The `diff` array requires $O(n)$ space, where `n` is the length of `nums`.
-
+<!-- 
 ## 38. Transform to Chessboard
 [Back to Top](#table-of-contents)  
 ### Overview
@@ -4862,7 +4862,6 @@ The second move swaps the second and third row.
 * `2 <= n <= 30`
 * `board[i][j]` is either `0` or `1`.
 ### Math Solution 
-
 
 #### Implementation
 ```java
@@ -4914,7 +4913,8 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: 
-* Space Complexity: 
+* Space Complexity:  -->
+
 # SQL Problems
 ## 1. Odd and Even Transactions
 [Back to Top](#table-of-contents)  
