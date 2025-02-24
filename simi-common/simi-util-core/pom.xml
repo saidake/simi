@@ -6,11 +6,10 @@
     <parent>
         <artifactId>simi-common</artifactId>
         <groupId>com.simi</groupId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>simi-util-core</artifactId>
-    <packaging>pom</packaging>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

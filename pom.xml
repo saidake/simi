@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.simi</groupId>
         <artifactId>simi-parent</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <artifactId>simi</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <modules>
         <module>simi-app</module>
