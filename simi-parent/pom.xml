@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
     <groupId>com.simi</groupId>
     <artifactId>simi-parent</artifactId>
-    <version>1.0</version>
+    <version>1.2.0</version>
     <name>simi-parent</name>
     <description>simi-parent</description>
 
@@ -33,7 +33,7 @@
         <ehcache.version>3.10.0</ehcache.version>
         <jnativehook.version>2.2.2</jnativehook.version>
         <!--======================================================================================================= Data Utils -->
-        <lombok.version>1.18.26</lombok.version>
+        <lombok.version>1.18.36</lombok.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <jasypt.version>1.9.3</jasypt.version>
         <joda-time.version>2.10.6</joda-time.version>
@@ -60,36 +60,6 @@
         <dom4j.version>2.1.4</dom4j.version>
         <snakeyaml.version>2.2</snakeyaml.version>
     </properties>
-
-    <dependencies>
-        <!--======================================================================================================= Core -->
-        <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-        </dependency>
-        <!--======================================================================================================= Data Utils -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool-all.version}</version>
-        </dependency>
-
-    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -125,12 +95,12 @@
             <!--==================================================================================================== Custom dep -->
             <dependency>
                 <groupId>com.simi</groupId>
-                <artifactId>simi-common-simulator</artifactId>
+                <artifactId>simi-util-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.simi</groupId>
-                <artifactId>simi-common-util</artifactId>
+                <artifactId>simi-common-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -191,6 +161,16 @@
             </dependency>
             <!--======================================================================================================= data utils -->
             <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>${transmittable-thread-local.version}</version>
@@ -220,6 +200,11 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
             <!--======================================================================================================= security -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -238,6 +223,11 @@
                 <scope>compile</scope>
             </dependency>
             <!--======================================================================================================= log -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.bgee.log4jdbc-log4j2</groupId>
                 <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>

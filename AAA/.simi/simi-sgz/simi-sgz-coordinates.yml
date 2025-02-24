@@ -1,6 +1,9 @@
 coordinates:
   - name: Pineapple
     redPoint: [435, 312]
+    closeWindow: [785, 90]
+    staminaOcrUpperTop: [649, 163]
+    staminaOcrBottomRight: [655, 167]
     stopBtn1: [0, 0]
     detailBtn: [559,532]
     trailBtn: [491,461]
@@ -31,9 +34,15 @@ coordinates:
     troop1From1: [442, 477]
     troop1From5: [79, 477]
     troop2From5: [263, 477]
-    troop3From5: [434, 479]
-    troop4From5: [605, 475]
-    troop5From5: [782, 484]
+    troop3From5: [434, 477]
+    troop4From5: [605, 477]
+    troop5From5: [782, 477]
+
+    troop1From4: [ 171, 477 ]
+    troop2From4: [ 349, 477 ]
+    troop3From4: [ 520, 477 ]
+    troop4From4: [ 654, 477 ]
+
     mark1: [773, 267]
     mark2: [785, 229]
     mark3: [776, 192]

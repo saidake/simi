@@ -5,14 +5,14 @@
     <parent>
         <artifactId>simi-common</artifactId>
         <groupId>com.simi</groupId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>simi-common-log</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.simi</groupId>
-            <artifactId>simi-common-util</artifactId>
+            <artifactId>simi-common-utils</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

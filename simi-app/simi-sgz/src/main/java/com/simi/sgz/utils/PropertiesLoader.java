@@ -25,6 +25,7 @@ public class PropertiesLoader {
         log.debug("coordinatesReader: {}",coordinatesReader);
         return coordinatesReader;
     }
+
     public static Coordinate copyAndIncrement(Coordinate original, int offsetX, int offsetY) throws IllegalAccessException, InstantiationException {
         // Create a new instance of the original object's class
         // Get all fields of the original class

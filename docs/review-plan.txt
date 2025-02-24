@@ -1,0 +1,44 @@
+Algorithm Problems / Array / 1. Array Partition [0.4]
+Algorithm Problems / Array / 31. Minimum Number Game
+Algorithm Problems / Array / Meaningful Index for Automatic Sorting / 34. Sort Array by Increasing Frequency [2]
+Algorithm Problems / Backtracking / 29. Power Set LCCI
+Algorithm Problems / Conditional Logic / 2. Add Edges to Make Degrees of All Nodes Even
+Algorithm Problems / Depth-first Search / 3. Amount of Time for Binary Tree to Be Infected
+Algorithm Problems / Depth-first Search / 29. Power Set LCCI
+Algorithm Problems / Dichotomy / 4. Search in Rotated Sorted Array
+Algorithm Problems / Difference Array / 5. Jump Game VII
+Algorithm Problems / Dynamic Programming / 6. Climbing Stairs
+Algorithm Problems / Dynamic Programming / 7. Count All Valid Pickup and Delivery Options
+Algorithm Problems / Dynamic Programming / 8. Decode Ways II
+Algorithm Problems / Dynamic Programming / 9. Make the XOR of All Segments Equal to Zero
+Algorithm Problems / Dynamic Programming / 10. Maximize Value of Function in a Ball Passing Game
+Algorithm Problems / Dynamic Programming / 11. Minimum Deletions to Make String Balanced
+Algorithm Problems / Dynamic Programming / 12. Stone Game
+Algorithm Problems / Dynamic Programming / 13. Target Sum
+Algorithm Problems / HashMap / 30. Count Common Words With One Occurrence
+Algorithm Problems / Fenwick Tree / 14. Distribute Elements Into Two Arrays II
+Algorithm Problems / Greedy / 15. Max Difference You Can Get From Changing an Integer
+Algorithm Problems / Greedy / 16. Maximum Length of Subarray With Positive Product
+Algorithm Problems / Math / 17. Construct the Minimum Bitwise Array II
+Algorithm Problems / Math / 18. Egg Drop With 2 Eggs and N Floors
+Algorithm Problems / Math / 19. Find Number of Ways to Reach the K-th Stair
+Algorithm Problems / Math / 20. Minimum Moves to Capture The Queen
+Algorithm Problems / Precomputation / 21. Range Product Queries of Powers
+Algorithm Problems / Segment Tree / 32. My Calendar II
+Algorithm Problems / Sliding Window / 22. Find the Longest Equal Subarray
+Algorithm Problems / String / 23. License Key Formatting
+Algorithm Problems / Traversal / 24. Find the Number of Ways to Place People I
+Algorithm Problems / Traversal / 25. Maximum Number of Operations With the Same Score I
+Algorithm Problems / Traversal / 29. Power Set LCCI
+Algorithm Problems / Two Pointer / 26. Boats to Save People
+Algorithm Problems / Two Pointer / 27. Find the Lexicographically Largest String From the Box I
+Algorithm Problems / Two Pointer / 28. Merge Sorted Array
+Algorithm Problems / Union-Find / 33. Graph Connectivity With Threshold [2]
+
+English / Near-synonym / DDD / different, disparate, differential
+English / Near-synonym / SSS / same, similar, resemble
+English / Near-synonym / CCC / circumstance, situation, occasion
+
+Algorithms / Math / Probability / Binomial Theorem
+Algorithms / Math / Formulas / Differentiation
+Algorithms / Math / Calculate Sums / Harmonic Series

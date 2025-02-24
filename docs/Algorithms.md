@@ -1,55 +1,74 @@
 # Table of Contents
 [Back to Main Project README](../README.md)
-- [Array](#array)
-    - [Array Partition](#array-partition)
-- [Conditional Logic](#conditional-logic)
-    - [Add Edges to Make Degrees of All Nodes Even](#add-edges-to-make-degrees-of-all-nodes-even)
-- [Depth-first Search](#depth-first-search)
-    - [Amount of Time for Binary Tree to Be Infected](#amount-of-time-for-binary-tree-to-be-infected)
-- [Dichotomy](#dichotomy)
-    - [Search in Rotated Sorted Array](#search-in-rotated-sorted-array)
-- [Difference Array](#difference-array)
-    - [Jump Game VII](#jump-game-vii)
-- [Dynamic Programming](#dynamic-programming)
-    - [Climbing Stairs](#climbing-stairs)
-    - [Count All Valid Pickup and Delivery Options](#count-all-valid-pickup-and-delivery-options)
-    - [Decode Ways II](#decode-ways-ii)
-    - [Make the XOR of All Segments Equal to Zero](#make-the-xor-of-all-segments-equal-to-zero)
-    - [Maximize Value of Function in a Ball Passing Game](#maximize-value-of-function-in-a-ball-passing-game)
-    - [Minimum Deletions to Make String Balanced](#minimum-deletions-to-make-string-balanced)
-    - [Stone Game](#stone-game)
-    - [Target Sum](#target-sum)
-- [Fenwick Tree](#fenwick-tree)
-    - [Distribute Elements Into Two Arrays II](#distribute-elements-into-two-arrays-ii)
-- [Greedy](#greedy)
-    - [Max Difference You Can Get From Changing an Integer](#max-difference-you-can-get-from-changing-an-integer)
-    - [Maximum Length of Subarray With Positive Product](#maximum-length-of-subarray-with-positive-product)
-- [Math](#math)
-    - [Construct the Minimum Bitwise Array II](#construct-the-minimum-bitwise-array-ii)
-    - [Egg Drop With 2 Eggs and N Floors](#egg-drop-with-2-eggs-and-n-floors)
-    - [Find Number of Ways to Reach the K-th Stair](#find-number-of-ways-to-reach-the-k-th-stair)
-    - [Minimum Moves to Capture The Queen](#minimum-moves-to-capture-the-queen)
-- [Precomputation](#precomputation)
-    - [Range Product Queries of Powers](#range-product-queries-of-powers)
-- [Sliding Window](#sliding-window)
-    - [Find the Longest Equal Subarray](#find-the-longest-equal-subarray)
-- [String](#string)
-    - [License Key Formatting](#license-key-formatting)
-- [Traversal](#traversal)
-    - [Find the Number of Ways to Place People I](#find-the-number-of-ways-to-place-people-i)
-    - [Maximum Number of Operations With the Same Score I](#maximum-number-of-operations-with-the-same-score-i)
-- [Two Pointer](#two-pointer)
-    - [Boats to Save People](#boats-to-save-people)
-    - [Find the Lexicographically Largest String From the Box I](#find-the-lexicographically-largest-string-from-the-box-i)
-    - [Merge Sorted Array](#merge-sorted-array)
-- [SQL](#sql)
-    - [Odd and Even Transactions](#odd-and-even-transactions)
-- [Uncategorized Problems](#uncategorized-problems)
-# Array
-## Array Partition
+- [Algorithm Problems](#algorithm-problems)
+  - Array
+    - Standard
+      - [1. Array Partition](#1-array-partition)
+      - [31. Minimum Number Game](#31-minimum-number-game)
+    - Meaningful Index for Automatic Sorting
+      - [34. Sort Array by Increasing Frequency](#34-sort-array-by-increasing-frequency)
+  - Backtracking
+    - [29. Power Set LCCI](#29-power-set-lcci)
+  - Conditional Logic
+    - [2. Add Edges to Make Degrees of All Nodes Even](#2-add-edges-to-make-degrees-of-all-nodes-even)
+  - Depth-first Search
+    - [3. Amount of Time for Binary Tree to Be Infected](#3-amount-of-time-for-binary-tree-to-be-infected)
+    - [29. Power Set LCCI](#29-power-set-lcci)
+  - Dichotomy
+    - [4. Search in Rotated Sorted Array](#4-search-in-rotated-sorted-array)
+  - Difference Array
+    - [5. Jump Game VII](#5-jump-game-vii)
+    - [37. Zero Array Transformation II](#37-zero-array-transformation-ii)
+  - Dynamic Programming
+    - Standard
+      - [6. Climbing Stairs](#6-climbing-stairs)
+      - [7. Count All Valid Pickup and Delivery Options](#7-count-all-valid-pickup-and-delivery-options)
+      - [8. Decode Ways II](#8-decode-ways-ii)
+      - [9. Make the XOR of All Segments Equal to Zero](#9-make-the-xor-of-all-segments-equal-to-zero)
+      - [10. Maximize Value of Function in a Ball Passing Game](#10-maximize-value-of-function-in-a-ball-passing-game)  
+      - [11. Minimum Deletions to Make String Balanced](#11-minimum-deletions-to-make-string-balanced)
+      - [12. Stone Game](#12-stone-game)
+      - [13. Target Sum](#13-target-sum)
+    - Problem Breakdown
+      - [35. Maximum Multiplication Score](#35-maximum-multiplication-score)
+  - HashMap
+    - [30. Count Common Words With One Occurrence](#30-count-common-words-with-one-occurrence)
+  - Fenwick Tree
+    - [14. Distribute Elements Into Two Arrays II](#14-distribute-elements-into-two-arrays-ii)
+  - Greedy
+    - [15. Max Difference You Can Get From Changing an Integer](#15-max-difference-you-can-get-from-changing-an-integer)
+    - [16. Maximum Length of Subarray With Positive Product](#16-maximum-length-of-subarray-with-positive-product)
+  - Math
+    - [17. Construct the Minimum Bitwise Array II](#17-construct-the-minimum-bitwise-array-ii)
+    - [18. Egg Drop With 2 Eggs and N Floors](#18-egg-drop-with-2-eggs-and-n-floors)
+    - [19. Find Number of Ways to Reach the K-th Stair](#19-find-number-of-ways-to-reach-the-k-th-stair)
+    - [20. Minimum Moves to Capture The Queen](#20-minimum-moves-to-capture-the-queen)
+  - Precomputation
+    - [21. Range Product Queries of Powers](#21-range-product-queries-of-powers)
+  - Segment Tree
+    - [32. My Calendar II](#32-my-calendar-ii)
+  - Sliding Window
+    - [22. Find the Longest Equal Subarray](#22-find-the-longest-equal-subarray)
+  - String
+    - [23. License Key Formatting](#23-license-key-formatting)
+  - Traversal
+    - [24. Find the Number of Ways to Place People I](#24-find-the-number-of-ways-to-place-people-i)
+    - [25. Maximum Number of Operations With the Same Score I](#25-maximum-number-of-operations-with-the-same-score-i)
+    - [29. Power Set LCCI](#29-power-set-lcci)
+    - [36. Find Triangular Sum of an Array](#36-find-triangular-sum-of-an-array)
+  - Two Pointer
+    - [26. Boats to Save People](#26-boats-to-save-people)
+    - [27. Find the Lexicographically Largest String From the Box I](#27-find-the-lexicographically-largest-string-from-the-box-i)
+    - [28. Merge Sorted Array](#28-merge-sorted-array)
+  - Union-Find
+    - [33. Graph Connectivity With Threshold](#33-graph-connectivity-with-threshold)
+- [SQL Problems](#sql-problems)
+    - [1. Odd and Even Transactions](#29-odd-and-even-transactions)
+# Algorithm Problems
+## 1. Array Partition
 [Back to Top](#table-of-contents)  
 ### Overview
-Given an integer array `nums` of 2n integers, 
+Given an integer array `nums` of `2n` integers, 
 group these integers into `n` pairs `(a1, b1), (a2, b2), ..., (an, bn)` such that the sum of `min(ai, bi)` for all `i` is maximized. 
 Return the maximized sum.
 
@@ -73,7 +92,7 @@ Return the maximized sum.
 * `1 <= n <= 10^4`
 * `nums.length == 2 * n`
 * `-10^4 <= nums[i] <= 10^4`
-### Analysis
+### Array Solution
 In each group, the larger integer will be omitted, and we need to maximize the `sum`.
 Therefore, The omitted value must be smaller.
 To ensure this, wen can sort the array, so that the smaller integer is omitted when calculating the minimal value from the group.
@@ -93,7 +112,7 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $O(n \log n)$
-    * `Arrays.sort` has a time complexity of O(nlogn);
+    * `Arrays.sort` has a time complexity of $O(nlogn)$;
     * The loop iterates through the array with a step of 2, so it runs $n/2$ times, resulting a time complexity of $O(n)$.  
     
     Hence, The total time complexity is $O(n \log n)$.
@@ -105,185 +124,8 @@ class Solution {
 Note that the space complexity of `Arrays.sort` is:
 * $O(logn)$ for sorting primitive arrays.
 * $O(n)$ for sorting object arrays.
-# Fenwick Tree
-## Distribute Elements Into Two Arrays II
-[Back to Top](#table-of-contents) 
-### Overview
-You are given a **1-indexed** array of integers `nums` of length `len`.
 
-We define a function `greaterCount` such that `greaterCount(arr, val)` returns the number of elements in `arr` that are strictly greater than `val`.
-
-You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `len` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
-
-* If `greaterCount(arr1, nums[i]) > greaterCount(arr2, nums[i])`, append `nums[i]` to `arr1`.
-* If `greaterCount(arr1, nums[i]) < greaterCount(arr2, nums[i])`, append `nums[i]` to `arr2`.
-* If `greaterCount(arr1, nums[i]) == greaterCount(arr2, nums[i])`, append `nums[i]` to the array with a lesser number of elements.
-* If there is still a tie, append `nums[i]` to `arr1`.
-
-The array result is formed by concatenating the arrays `arr1` and `arr2`. For example, if `arr1 == [1,2,3]` and `arr2 == [4,5,6]`, then `result = [1,2,3,4,5,6]`.
-
-Return the integer array `result`.
-
-**Example 1:**
-
-> **Input:** nums = [2,1,3,3]  
-> **Output:** [2,3,1,3]  
-> **Explanation:** After the first 2 operations, arr1 = [2] and arr2 = [1].  
-> In the 3rd operation, the number of elements greater than 3 is zero in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
-> In the 4th operation, the number of elements greater than 3 is zero in both arrays. As the length of arr2 is lesser, hence, append nums[4] to arr2.  
-> After 4 operations, arr1 = [2,3] and arr2 = [1,3].  
-> Hence, the array result formed by concatenation is [2,3,1,3].  
-
-**Example 2:**
-
-> **Input:** nums = [5,14,3,1,2]  
-> **Output:** [5,3,1,2,14]  
-> **Explanation:** After the first 2 operations, arr1 = [5] and arr2 = [14].  
-> In the 3rd operation, the number of elements greater than 3 is one in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
-> In the 4th operation, the number of elements greater than 1 is greater in arr1 than arr2 (2 > 1). Hence, append nums[4] to arr1.  
-> In the 5th operation, the number of elements greater than 2 is greater in arr1 than arr2 (2 > 1). Hence, append nums[5] to arr1.  
-> After 5 operations, arr1 = [5,3,1,2] and arr2 = [14].  
-> Hence, the array result formed by concatenation is [5,3,1,2,14].
-
-**Example 3:**
-
-> **Input:** nums = [3,3,3,3]  
-> **Output:** [3,3,3,3]  
-> **Explanation:** At the end of 4 operations, arr1 = [3,3] and arr2 = [3,3].  
-> Hence, the array result formed by concatenation is [3,3,3,3].
-
-**Constraints:**
-* `3 <= n <= 10^5`
-* `1 <= nums[i] <= 10^9`
-
-### Analysis
-Follow the problem description, the key point is to find the number of elements in array `nums` that are strictly greater than val.
-
-
-A Binary Indexed Tree (BIT), also known as a Fenwick Tree, is ideal for scenarios that require frequent updates to an array and efficient calculation of prefix sums or ranges, making it a suitable choice here.
-
-To achieve this, define an array `tree` within a `FenwickTree` class and use bitwise operation to identify the indexes to update and compute the prefix sum.
-* i += i & -i
-    
-    Isolate the least significant set bit (LSB) of `i` and add it to `i`.
-    Example:
-    ```text
-    40 + (40 & -40) 
-        = 0010 1000 + (0010 1000  & 1101 1000)
-        = 0010 1000 + 0000 1000 
-        = 48
-    ```
-* i &= i - 1
-
-    The operation clears the rightmost set bit (1) in the binary representation of `i`, it is equivalent to `i -= i & -i`.
-
-    Example:
-    ```text
-    11 & 10 
-        = 1011 & 1010 
-        = 1010 
-        = 10
-    48 & 47
-        = 0011 0000 & 0010 1111
-        = 0010 0000
-        = 32
-    11 & 10
-        = 1011 & 1010
-        = 1010
-    ```
-    
-This `tree` corresponds to a sorted version of the array `nums`, called `sortedArr`, and stores prefix sums rather than actual values.
-
-When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`.  
-This update allows the tree to maintain a count of elements before index `i` in the array `tree`, which represents the number of elements in `nums` that are less than `sortedArr[i]`.
-
-#### Implementation
-```java
-class FenwickTree {
-    private final int[] tree;
-
-    public FenwickTree(int len) {
-        tree = new int[len];
-    }
-
-    public void add(int i) {
-        while (i < tree.length) {
-            tree[i]++;
-            i += i & -i;
-        }
-    }
-
-    public int prefixSum(int i) {
-        int res = 0;
-        while (i > 0) {
-            res += tree[i];
-            i &= i - 1;
-        }
-        return res;
-    }
-}
-
-class Solution {
-    public int[] resultArray(int[] nums) {
-        int[] sortedArr = nums.clone();
-        Arrays.sort(sortedArr); 
-
-        int len = nums.length;
-        List<Integer> list1 = new ArrayList<>(len);
-        List<Integer> list2 = new ArrayList<>();
-        list1.add(nums[0]);
-        list2.add(nums[1]);
-
-        FenwickTree ft1 = new FenwickTree(len + 1);
-        FenwickTree ft2 = new FenwickTree(len + 1);
-        ft1.add(Arrays.binarySearch(sortedArr, nums[0]) + 1);
-        ft2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
-        // Traverse array 'nums'
-        for (int i = 2; i < nums.length; i++) {
-            int cu = nums[i];
-            // Search the index of value 'cu' in array 'sortedArr'.
-            int sInd = Arrays.binarySearch(sortedArr, cu) + 1;
-            int gc1 = list1.size() - ft1.prefixSum(sInd); 
-            int gc2 = list2.size() - ft2.prefixSum(sInd); 
-            if (gc1 > gc2 || gc1 == gc2 && list1.size() <= list2.size()) {
-                list1.add(cu);
-                ft1.add(sInd);
-            } else {
-                list2.add(cu);
-                ft2.add(sInd);
-            }
-        }
-        // Concatenate the two lists
-        list1.addAll(list2);
-
-        // Convert the list into a primitive array
-        for (int i = 0; i < len; i++) {
-            nums[i] = list1.get(i);
-        }
-        return nums;
-    }
-}
-```
-#### Time and Space Complexity
-* Time Complexity: $O(nlogn)$\
-    * Traverse array 'nums'
-        The `for` loop iterates over the array `nums`, taking $O(n)$ time.
-        The `binarySearch` and `prefixSum` methods each contribute $O(logn)$ time complexity.
-
-        Therefore, the overall time complexity for this part is $O(nlogn)$.
-    * Convert the list into a primitive array
-
-        Traversing the array `nums` takes $O(n)$ time.
-
-    Thus, the overall time complexity is $O(nlogn)$.
-
-* Space Complexity: $O(n)$
-
-    The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `ft1` and `ft2` each contribute $O(n)$ to the space complexity.  
-    Therefore, the total space complexity is $O(n)$.
-
-# Conditional Logic
-## Add Edges to Make Degrees of All Nodes Even
+## 2. Add Edges to Make Degrees of All Nodes Even
 [Back to Top](#table-of-contents)
 ### Overview
 There is an **undirected** graph consisting of `n` nodes numbered from `1` to `n`. 
@@ -322,7 +164,7 @@ Every node in the resulting graph is connected to an even number of edges.
 * `a_i != b_i`
 * There are no repeated edges.
 
-### Analysis
+### Conditional Logic Solution
 To make all node degrees in the graph even by adding only two edges, the following conditions must be met:
 * The number of nodes with odd degrees must be even and cannot exceed 4.
     * If there are 4 such nodes, two distinct pairs must exist that can be connected.
@@ -398,8 +240,7 @@ class Solution {
 
     Thus, the total space complexity is $O(m+n)$.
 
-# Depth-first Search
-## Amount of Time for Binary Tree to Be Infected
+## 3. Amount of Time for Binary Tree to Be Infected
 [Back to Top](#table-of-contents)
 ### Overview
 You are given the `root` of a binary tree with unique values, and an integer `start`. 
@@ -609,8 +450,7 @@ class Solution {
 
     Therefore, the overall space complexity of the solution is $O(n)$.
 
-# Dichotomy
-## Search in Rotated Sorted Array
+## 4. Search in Rotated Sorted Array
 ### Overview
 There is an integer array `nums` sorted in ascending order (with distinct values).
 
@@ -691,8 +531,7 @@ class Solution {
 
     Each recursive call adds a frame to the recursion stack, with a maximum depth of $O(logn)$, leading to a space complexity of O(logn).
 
-# Difference Array
-## Jump Game VII
+## 5. Jump Game VII
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a 0-indexed binary string `s` and two integers `minJump` and `maxJump`. 
@@ -897,8 +736,7 @@ class Solution {
 
     The `dp` array has a size of len, contributing $O(n)$ to the space complexity.
 
-# Dynamic Programming
-## Climbing Stairs
+## 6. Climbing Stairs
 [Back to Top](#table-of-contents)  
 ### Overview
 You are climbing a staircase. It takes `n` steps to reach the top.
@@ -966,7 +804,7 @@ class Solution {
 
     The `for` loop iterate over the stairs starting from `3`, yielding a time complexity of $O(n)$.
 * Space Complexity: $O(1)$
-## Count All Valid Pickup and Delivery Options
+## 7. Count All Valid Pickup and Delivery Options
 [Back to Top](#table-of-contents)  
 ### Overview
 Given `n` orders, each order consists of a pickup and a delivery service.
@@ -1056,7 +894,7 @@ class Solution {
 * Space Complexity: $O(1)$
 
 
-## Decode Ways II
+## 8. Decode Ways II
 [Back to Top](#table-of-contents)  
 ### Overview
 A message containing letters from `A-Z` can be encoded into numbers using the following mapping:
@@ -1226,7 +1064,7 @@ class Solution {
 * The values in the `dp` array are taken modulo 10<sup>9</sup> + 7, which is still a very large value. long type is required to prevent integer overflow.
 * Using `Character.getNumericValue()` to obtain the nummeric value of `'*'` in string `s` will return `'-1'` and using the `-1` for checking purposes can lead to misleading readability.
 
-## Make the XOR of All Segments Equal to Zero
+## 9. Make the XOR of All Segments Equal to Zero
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given an array `nums` and an integer `k`. The `XOR` of a segment `[left, right]` where `left <= right` is the `XOR` of all the elements with indices between `left` and `right`, inclusive: `nums[left] XOR nums[left+1] XOR ... XOR nums[right]`.
@@ -1443,7 +1281,7 @@ class Solution {
     * Other variables:
         Includes variables like sum, min, and loop variables. These require $O(1)$ space.
 
-## Maximize Value of Function in a Ball Passing Game
+## 10. Maximize Value of Function in a Ball Passing Game
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given an integer array `receiver` of length `n` and an integer `k`. 
@@ -1658,7 +1496,7 @@ class Solution {
     * Other variables
         
         The other variables, such as `len`, `passCount`, `i`, `x`, `k`, `ctz`, `s`, and `ans`, require constant extra space.
-## Minimum Deletions to Make String Balanced
+## 11. Minimum Deletions to Make String Balanced
 [Back to Top](#table-of-contents)  
 You are given a string `s` consisting only of characters `'a'` and `'b'`.
 
@@ -1719,7 +1557,7 @@ class Solution {
     The `for` loop takes $O(n)$ time.
 * Space Complexity: $O(1)$
 
-## Stone Game
+## 12. Stone Game
 [Back to Top](#table-of-contents)
 ### Overview
 Alice and Bob play a game with piles of stones.
@@ -1915,7 +1753,7 @@ class Solution {
     The size of one-dimensional array `dp` is `n`, corresponding to the length of the input array.
     The space requried for this array is $O(n)$.
 
-## Target Sum
+## 13. Target Sum
 [Back to Top](#table-of-contents) 
 ### Overview
 You are given an integer array `nums` and an integer `target`.  
@@ -2251,8 +2089,185 @@ public class Solution {
 * Space Complexity: $O(neg)$
 
     The `dp` array requires $O(neg)$ space.
-# Greedy
-## Max Difference You Can Get From Changing an Integer
+
+
+## 14. Distribute Elements Into Two Arrays II
+[Back to Top](#table-of-contents) 
+### Overview
+You are given a **1-indexed** array of integers `nums` of length `len`.
+
+We define a function `greaterCount` such that `greaterCount(arr, val)` returns the number of elements in `arr` that are strictly greater than `val`.
+
+You need to distribute all the elements of `nums` between two arrays `arr1` and `arr2` using `len` operations. In the first operation, append `nums[1]` to `arr1`. In the second operation, append `nums[2]` to `arr2`. Afterwards, in the i<sup>th</sup> operation:
+
+* If `greaterCount(arr1, nums[i]) > greaterCount(arr2, nums[i])`, append `nums[i]` to `arr1`.
+* If `greaterCount(arr1, nums[i]) < greaterCount(arr2, nums[i])`, append `nums[i]` to `arr2`.
+* If `greaterCount(arr1, nums[i]) == greaterCount(arr2, nums[i])`, append `nums[i]` to the array with a lesser number of elements.
+* If there is still a tie, append `nums[i]` to `arr1`.
+
+The array result is formed by concatenating the arrays `arr1` and `arr2`. For example, if `arr1 == [1,2,3]` and `arr2 == [4,5,6]`, then `result = [1,2,3,4,5,6]`.
+
+Return the integer array `result`.
+
+**Example 1:**
+
+> **Input:** nums = [2,1,3,3]  
+> **Output:** [2,3,1,3]  
+> **Explanation:** After the first 2 operations, arr1 = [2] and arr2 = [1].  
+> In the 3rd operation, the number of elements greater than 3 is zero in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
+> In the 4th operation, the number of elements greater than 3 is zero in both arrays. As the length of arr2 is lesser, hence, append nums[4] to arr2.  
+> After 4 operations, arr1 = [2,3] and arr2 = [1,3].  
+> Hence, the array result formed by concatenation is [2,3,1,3].  
+
+**Example 2:**
+
+> **Input:** nums = [5,14,3,1,2]  
+> **Output:** [5,3,1,2,14]  
+> **Explanation:** After the first 2 operations, arr1 = [5] and arr2 = [14].  
+> In the 3rd operation, the number of elements greater than 3 is one in both arrays. Also, the lengths are equal, hence, append nums[3] to arr1.  
+> In the 4th operation, the number of elements greater than 1 is greater in arr1 than arr2 (2 > 1). Hence, append nums[4] to arr1.  
+> In the 5th operation, the number of elements greater than 2 is greater in arr1 than arr2 (2 > 1). Hence, append nums[5] to arr1.  
+> After 5 operations, arr1 = [5,3,1,2] and arr2 = [14].  
+> Hence, the array result formed by concatenation is [5,3,1,2,14].
+
+**Example 3:**
+
+> **Input:** nums = [3,3,3,3]  
+> **Output:** [3,3,3,3]  
+> **Explanation:** At the end of 4 operations, arr1 = [3,3] and arr2 = [3,3].  
+> Hence, the array result formed by concatenation is [3,3,3,3].
+
+**Constraints:**
+* `3 <= n <= 10^5`
+* `1 <= nums[i] <= 10^9`
+
+### Analysis
+Follow the problem description, the key point is to find the number of elements in array `nums` that are strictly greater than val.
+
+
+A Binary Indexed Tree (BIT), also known as a Fenwick Tree, is ideal for scenarios that require frequent updates to an array and efficient calculation of prefix sums or ranges, making it a suitable choice here.
+
+To achieve this, define an array `tree` within a `FenwickTree` class and use bitwise operation to identify the indexes to update and compute the prefix sum.
+* i += i & -i
+    
+    Isolate the least significant set bit (LSB) of `i` and add it to `i`.
+    Example:
+    ```text
+    40 + (40 & -40) 
+        = 0010 1000 + (0010 1000  & 1101 1000)
+        = 0010 1000 + 0000 1000 
+        = 48
+    ```
+* i &= i - 1
+
+    The operation clears the rightmost set bit (1) in the binary representation of `i`, it is equivalent to `i -= i & -i`.
+
+    Example:
+    ```text
+    11 & 10 
+        = 1011 & 1010 
+        = 1010 
+        = 10
+    48 & 47
+        = 0011 0000 & 0010 1111
+        = 0010 0000
+        = 32
+    11 & 10
+        = 1011 & 1010
+        = 1010
+    ```
+    
+This `tree` corresponds to a sorted version of the array `nums`, called `sortedArr`, and stores prefix sums rather than actual values.
+
+When inserting a new element at index `i` into the Binary Indexed Tree, increment the value at index `i` of array `tree` by `1`.  
+This update allows the tree to maintain a count of elements before index `i` in the array `tree`, which represents the number of elements in `nums` that are less than `sortedArr[i]`.
+
+#### Implementation
+```java
+class FenwickTree {
+    private final int[] tree;
+
+    public FenwickTree(int len) {
+        tree = new int[len];
+    }
+
+    public void add(int i) {
+        while (i < tree.length) {
+            tree[i]++;
+            i += i & -i;
+        }
+    }
+
+    public int prefixSum(int i) {
+        int res = 0;
+        while (i > 0) {
+            res += tree[i];
+            i &= i - 1;
+        }
+        return res;
+    }
+}
+
+class Solution {
+    public int[] resultArray(int[] nums) {
+        int[] sortedArr = nums.clone();
+        Arrays.sort(sortedArr); 
+
+        int len = nums.length;
+        List<Integer> list1 = new ArrayList<>(len);
+        List<Integer> list2 = new ArrayList<>();
+        list1.add(nums[0]);
+        list2.add(nums[1]);
+
+        FenwickTree ft1 = new FenwickTree(len + 1);
+        FenwickTree ft2 = new FenwickTree(len + 1);
+        ft1.add(Arrays.binarySearch(sortedArr, nums[0]) + 1);
+        ft2.add(Arrays.binarySearch(sortedArr, nums[1]) + 1);
+        // Traverse array 'nums'
+        for (int i = 2; i < nums.length; i++) {
+            int cu = nums[i];
+            // Search the index of value 'cu' in array 'sortedArr'.
+            int sInd = Arrays.binarySearch(sortedArr, cu) + 1;
+            int gc1 = list1.size() - ft1.prefixSum(sInd); 
+            int gc2 = list2.size() - ft2.prefixSum(sInd); 
+            if (gc1 > gc2 || gc1 == gc2 && list1.size() <= list2.size()) {
+                list1.add(cu);
+                ft1.add(sInd);
+            } else {
+                list2.add(cu);
+                ft2.add(sInd);
+            }
+        }
+        // Concatenate the two lists
+        list1.addAll(list2);
+
+        // Convert the list into a primitive array
+        for (int i = 0; i < len; i++) {
+            nums[i] = list1.get(i);
+        }
+        return nums;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(nlogn)$\
+    * Traverse array 'nums'
+        The `for` loop iterates over the array `nums`, taking $O(n)$ time.
+        The `binarySearch` and `prefixSum` methods each contribute $O(logn)$ time complexity.
+
+        Therefore, the overall time complexity for this part is $O(nlogn)$.
+    * Convert the list into a primitive array
+
+        Traversing the array `nums` takes $O(n)$ time.
+
+    Thus, the overall time complexity is $O(nlogn)$.
+
+* Space Complexity: $O(n)$
+
+    The array `sortedArr`, lists `list1` and `list2`, and binary indexed tree `ft1` and `ft2` each contribute $O(n)$ to the space complexity.  
+    Therefore, the total space complexity is $O(n)$.
+
+## 15. Max Difference You Can Get From Changing an Integer
 [Back to Top](#table-of-contents)  
 ### Overview
 
@@ -2321,7 +2336,7 @@ class Solution {
     Since the `replace` method has a time complexity of $O(n)$ and is executed at most twice, while `charAt` and `Integer.parseInt` take $O(1)$ time, the overall time complexity of the `for` is $O(n)$.
 * Space Complexity: $O(1)$
 
-## Maximum Length of Subarray With Positive Product
+## 16. Maximum Length of Subarray With Positive Product
 [Back to Top](#table-of-contents)
 ### Overview
 Given an array of integers `nums`, find the maximum length of a subarray where the product of all its elements is positive.
@@ -2450,8 +2465,7 @@ class Solution {
 * Space Complexity: $O(1)$
 
 
-# Math
-## Construct the Minimum Bitwise Array II
+## 17. Construct the Minimum Bitwise Array II
 ### Overview
 You are given an array `nums` consisting of `n` prime integers.
 
@@ -2553,7 +2567,7 @@ class Solution {
 
     The array `ans` takes $O(n)$ space.
 
-## Egg Drop With 2 Eggs and N Floors
+## 18. Egg Drop With 2 Eggs and N Floors
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given two identical eggs and you have access to a building with `n` floors labeled from `1` to `n`.
@@ -2653,7 +2667,7 @@ class Solution {
 * Time Complexity: $O(1)$
 * Space Complexity: $O(1)$
 
-## Find Number of Ways to Reach the K-th Stair
+## 19. Find Number of Ways to Reach the K-th Stair
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a **non-negative** integer `k`. There exists a staircase with an infinite number of stairs, with the **lowest** stair numbered 0.
@@ -2780,7 +2794,7 @@ class Solution {
  
     The time and space used duiring the precomputation process are not factored into the solution.
 * Space Complexity: $O(1)$
-## Minimum Moves to Capture The Queen
+## 20. Minimum Moves to Capture The Queen
 [Back to Top](#table-of-contents)  
 ### Overview
 There is a **1-indexed** `8 x 8` chessboard containing 3 pieces.
@@ -2892,8 +2906,7 @@ class Solution {
 #### Time and Space Complexity
 * Time Complexity: $O(1)$
 * Space Complexity: $O(1)$
-# Precomputation
-## Range Product Queries of Powers
+## 21. Range Product Queries of Powers
 [Back to Top](#table-of-contents)  
 ### Overview
 Given a positive integer `n`, there exists a **0-indexed** array called `powers`, composed of the **minimum** number of powers of `2` that sum to `n`. The array is sorted in **non-decreasing** order, and there is only one way to form the array.
@@ -3000,8 +3013,7 @@ class Solution {
 
     Because $O(q)$ grows slower than $O(bc^2)$ and can be omitted, the total space complexity is $O(bc^2)$.
 
-# Sliding Window
-## Find the Longest Equal Subarray
+## 22. Find the Longest Equal Subarray
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a **0-indexed** integer array nums and an integer `k`.  
@@ -3137,7 +3149,7 @@ class Solution {
    
    Since the primary space usage comes from the `valCount` array, the space complexity is $O(n)$
 
-## License Key Formatting
+## 23. License Key Formatting
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a license key represented as a string `s` that consists of only alphanumeric characters and dashes.  
@@ -3199,8 +3211,7 @@ class Solution {
     `s.toCharArray()` creates a new character array of size $O(n)$,
     `StringBuilder sb` stores the result string, which can also be of size $O(n)$.  
     Therefore, the total space complexity is $O(n)$
-# Traversal
-## Find the Number of Ways to Place People I
+## 24. Find the Number of Ways to Place People I
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a 2D array `points` of size `n x 2` representing integer coordinates of some points on a 2D plane, where `points[i] = [xi, yi]`.
@@ -3293,7 +3304,7 @@ Note that the space complexity of `Arrays.sort` is:
 * $O(n)$ for sorting object arrays.
 
 
-## Maximum Number of Operations With the Same Score I
+## 25. Maximum Number of Operations With the Same Score I
 You are given an array of integers `nums`. Consider the following operation:
 
 * Delete the first two elements `nums` and define the score of the operation as the sum of these two elements.
@@ -3352,8 +3363,7 @@ class Solution {
 * Space Complexity: $O(1)$
 
     Only a constant amount of additional space is used.
-# Two-Pointer
-## Boats to Save People
+## 26. Boats to Save People
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given an array `people` where `people[i]` is the weight of the **i-th** person, 
@@ -3421,7 +3431,7 @@ class Solution {
 Note that the space complexity of `Arrays.sort` is:
 * $O(logn)$ for sorting primitive arrays.
 * $O(n)$ for sorting object arrays.
-## Find the Lexicographically Largest String From the Box I
+## 27. Find the Lexicographically Largest String From the Box I
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given a string `word`, and an integer `numFriends`.
@@ -3542,7 +3552,7 @@ class Solution {
 
 * Space Complexity: $O(1)$
 
-## Merge Sorted Array
+## 28. Merge Sorted Array
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n`, representing the number of elements in `nums1` and `nums2` respectively.
@@ -3613,96 +3623,7 @@ class Solution {
 
     The array `nums1Cp` occupies $O(m)$ space where `m` is the first `m` integers in array `nums1`.
 
-# SQL
-## Odd and Even Transactions
-[Back to Top](#table-of-contents)  
-### Overview
-Table: `transactions`
-```
-+------------------+------+  
-| Column Name      | Type |   
-+------------------+------+  
-| transaction_id   | int  |  
-| amount           | int  |  
-| transaction_date | date |  
-+------------------+------+  
-```
-The `transactions_id` column uniquely identifies each row in this table.  
-Each row of this table contains the transaction id, amount and transaction date.
-
-Write a solution to find the `sum of amounts` for `odd` and `even` transactions for each day. If there are no odd or even transactions for a specific date, display as `0`.
-
-Return the result table ordered by `transaction_date` in **ascending** order.
-The result format is in the following example.
-
-**Example:**
-> **Input:**  
-> `transactions` table:  
-> ```text
-> +----------------+--------+------------------+
-> | transaction_id | amount | transaction_date |
-> +----------------+--------+------------------+
-> | 1              | 150    | 2024-07-01       |
-> | 2              | 200    | 2024-07-01       |
-> | 3              | 75     | 2024-07-01       |
-> | 4              | 300    | 2024-07-02       |
-> | 5              | 50     | 2024-07-02       |
-> | 6              | 120    | 2024-07-03       |
-> +----------------+--------+------------------+
-> ```
-> **Output:**  
-> ```text
-> +------------------+---------+----------+
-> | transaction_date | odd_sum | even_sum |
-> +------------------+---------+----------+
-> | 2024-07-01       | 75      | 350      |
-> | 2024-07-02       | 0       | 350      |
-> | 2024-07-03       | 0       | 120      |
-> +------------------+---------+----------+
-> ```
-> **Explanation:**
-> * For transaction dates:
->   * 2024-07-01:
->       * Sum of amounts for odd transactions: 75
->       * Sum of amounts for even transactions: 150 + 200 = 350
->   * 2024-07-02:
->       * Sum of amounts for odd transactions: 0
->       * Sum of amounts for even transactions: 300 + 50 = 350
->   * 2024-07-03:
->       * Sum of amounts for odd transactions: 0
->       * Sum of amounts for even transactions: 120  
->
-> **Note:** The output table is ordered by `transaction_date` in ascending order.
-### Analysis
-Group the data by the `transaction_date` field (using `GROUP BY` or `PARTITION BY`), and calculate the total amounts for odd and even transactions on each transaction_date.
-
-Oracle Functions:
-* NVL(expression, replacement_value)
-
-    The NVL function is used to replace NULL values with a specified replacement value.   
-    If the first argument is NULL, it returns the second argument. Otherwise, it returns the first argument.
-* BITAND(x, y)				
-
-    The BITAND function performs a bitwise AND operation between two integer values. 
-
-### MySQL Implementation
-```sql
-SELECT DISTINCT transaction_date, 
-SUM(CASE WHEN amount % 2=0 THEN 0 ELSE amount END) OVER( PARTITION BY transaction_date  ) AS odd_sum,
-SUM(CASE WHEN amount % 2=0 THEN amount ELSE 0 END) OVER( PARTITION BY transaction_date  ) AS even_sum
-FROM transactions;
-```
-### Oracle Implementation
-```sql
-SELECT TO_CHAR(transaction_date,'yyyy-MM-dd') AS transaction_date,
-       NVL(SUM(CASE WHEN BITAND(amount,1)=1 THEN amount END),0) AS odd_sum,
-       NVL(SUM(CASE WHEN BITAND(amount,1)=0 THEN amount END),0) AS even_sum
-FROM transactions
-GROUP BY transaction_date
-ORDER BY transaction_date ASC;
-```
-# Uncategorized Problems
-## Power Set LCCI
+## 29. Power Set LCCI
 [Back to Top](#table-of-contents)  
 ### Overview
 Write a method to return all subsets of a set. The elements in a set are pairwise distinct.
@@ -3834,14 +3755,16 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $O(2^n)$
+* Time Complexity: $O(n\times2^n)$
 
     let's use `nums = [1,2,3,4]` as an example:  
     At index `3`, only two calls are made, which return immediately as they match the end condition, then backtrack to the previous index `2`.  
     At index `2`, four calles are made since the recursion at index `3` repeated.  
     ...
 
-    The number of calls doubles with each level of recursion, resulting in a total time complexity of $O(2^n)$. 
+    The number of calls doubles with each level of recursion, resulting in a time complexity of $O(2^n)$. 
+    
+    Since each recursive call copies the `path` array to `ans` using the constructor `public ArrayList(Collection<? extends E> c)`, which has a time complexity of $O(n)$, the overall time complexity is $O(n\times2^n)$.
 
 * Space Complexity: $O(n\times2^n)$
     * Recursive Stack
@@ -3853,9 +3776,1230 @@ class Solution {
         Thus, the size of the `ans` array, which stores all subsets of `nums`, will be:
         $$1 \times C(n,1) + 2 \times C(n,2) + ... + n \times C(n,n)$$
 
-        Based on the formula:
-        $$\sum_{k=1}^n k \times C(n,k) = 1 \times C(n,1) + 2 \times C(n,2) + ... + n \times C(n,n)=n \times 2^{n-1}$$
+        Use the Binomial Theorem to derive the result of the equation above: 
+        $$ (a + b)^n = \sum_{k=0}^n C(n, k) \times a^{n-k} \times b^k $$
+        Setting `a=1` gives:
+        $$ (1 + b)^n = \sum_{k=0}^n C(n, k) \times b^k $$
+        Differentiating both sides with respect to `x` and evaluating at `x=1` yields:
+        $$\frac{d}{db}(1+b)^n = \frac{d}{db} \sum_{k=0}^n C(n, k) \times b^k $$
+        Using the derivative rule $\frac{d}{dx}(x^n)=nx^{n-1}$, we get:
+        $$n(1+b)^{n-1} = \sum_{k=0}^n C(n, k) \times kb^{k-1} $$
+        Setting $b=1$ in both sides:
+        $$n \times 2^{n-1} = \sum_{k=1}^n k \times C(n,k) = 1 \times C(n,1) + 2 \times C(n,2) + ... + n \times C(n,n)$$
 
-        the final space complexity of `ans` is $O(n\times2^n)$
+        Thus, the final space complexity of `ans` is $O(n\times2^n)$
 
     * `path` array stores the current subset, which can contain up to `n` elements at any time, using $O(n)$ space.
+
+   Therefore, the overall space complexity is $O(n\times2^n)$.
+
+### Depth-first Search Solution
+Save the `path` array at the start of each DFS call, 
+recursively explore remaining indices, and remove the current element when backtracking.
+
+Example: 
+```
+indices: 0    1    2    3    4
+nums:    1    2    3    4  
+Recursion:
+         1 -> 2 -> 3 -> 4    [],[1],[1,2],[1,2,3],[1,2,3,4]
+         1 -> 2      -> 4    [1,2,4]
+         1      -> 3 -> 4    [1,3],[1,3,4]
+         1           -> 4    [1,4]
+              2 -> 3 -> 4    [2,3],[2,3,4]
+              2      -> 4    [2,4]
+                   3 -> 4    [3],[3,4]
+                        4    [4]
+
+```
+The right arrays represent the subset added in the current recursive call.
+#### Implementation
+```java
+class Solution {
+    private final List<List<Integer>> ans = new ArrayList<>();
+    private final List<Integer> path = new ArrayList<>();
+    private int[] nums;
+
+    public List<List<Integer>> subsets(int[] nums) {
+        this.nums = nums;
+        dfs(0);
+        return ans;
+    }
+
+    private void dfs(int i) {
+        ans.add(new ArrayList<>(path)); 
+        for (int j = i; j < nums.length; j++) { 
+            path.add(nums[j]);
+            dfs(j + 1);
+            path.remove(path.size() - 1); 
+        }
+    }
+}
+
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n\times2^n)$
+
+    The recursive call decreases by `1` each time. 
+
+    Since $\sum_{i=0}^n=\frac{n\times(n+1)}{2}$ and the constructor `public ArrayList(Collection<? extends E> c)` has a time complexity of $O(n)$, the overall time complexity is $O(n\times2^n)$ 
+
+* Space Complexity: $O(n\times2^n)$
+    * Recursive Stack
+    
+        The recursion depth is at most `n` where `n` is the length of `nums`, leading to a stack space of $O(n)$.
+    * `ans` array has a space complexity of $O(n\times2^n)$, as explained in the previous Backtracking Solution.
+
+    * `path` array stores the current subset, which can contain up to `n` elements at any time, using $O(n)$ space.
+
+   Therefore, the overall space complexity is $O(n\times2^n)$.
+
+### Traversal Solution
+Let `n` be the length of the `nums` array.
+Since each element might be included or excluded, the total number of subsets of `nums` array is $2^n$.
+
+In the binary representation of subset indices from $0$ to $2^n$, each bit indicates whether an element is selected.
+
+By iterating through all elements of `nums` and adding them to subsets at valid indices, 
+every element is placed into the subsets that include it.
+
+Example: 
+```
+nums:    1    2    3    4  
+
+Subset indices: 0, 1, 2, 3, 4, 5, ..., 15.
+Binary Representation: 
+    0000, 
+    0001, (`4` is selected)
+    0010, (`3` is selected) 
+    0011, (`3` and `4` are selected) 
+    0100, (`2` is selected) 
+    0101, (`2` and `4` are selected) 
+    ..., 
+    1111. (`1`,`2`,`3` and `4` are selected) 
+```
+#### Implementation
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        int n = nums.length;
+        List<List<Integer>> ans = new ArrayList<>(1 << n);
+        for (int i = 0; i < (1 << n); i++) { 
+            List<Integer> subset = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                if ((i >> j & 1) == 1) { 
+                    subset.add(nums[j]);
+                }
+            }
+            ans.add(subset);
+        }
+        return ans;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n\times2^n)$
+
+    The outer loop iterates over all subset indices, runing in $O(2^n)$ time.
+    The inner loop traverses the bit indices of the binary representation of $2^n$, with a time complexity of $O(n)$.
+
+    Threrefore, the overall time complexity is $O(n\times2^n)$.
+* Space Complexity: $O(n\times2^n)$
+
+    `ans` array has a space complexity of $O(n\times2^n)$, as explained in the previous Backtracking Solution.
+
+    Thus, the overall space complexity is $O(n\times2^n)$.
+
+## 30. Count Common Words With One Occurrence
+[Back to Top](#table-of-contents)  
+### Overview
+Given two string arrays `words1` and `words2`, return the number of strings that appear `exactly once` in each of the two arrays.
+
+**Example 1:** 
+> **Input:** words1 = ["leetcode","is","amazing","as","is"], words2 = ["amazing","leetcode","is"]  
+> **Output:** 2  
+> **Explanation:**
+> - "leetcode" appears exactly once in each of the two arrays. We count this string.
+> - "amazing" appears exactly once in each of the two arrays. We count this string.
+> - "is" appears in each of the two arrays, but there are 2 occurrences of it in words1. We do not count this string.
+> - "as" appears once in words1, but does not appear in words2. We do not count this string.
+Thus, there are 2 strings that appear exactly once in each of the two arrays.
+
+**Example 2:**  
+> **Input:** words1 = ["b","bb","bbb"], words2 = ["a","aa","aaa"]  
+> **Output:** 0  
+> **Explanation:** There are no strings that appear in each of the two arrays.
+
+**Example 3:**
+> **Input:** words1 = ["a","ab"], words2 = ["a","a","a","ab"]  
+> **Output:** 1  
+> **Explanation:** The only string that appears exactly once in each of the two arrays is "ab".
+
+**Constraints:**
+* `1 <= words1.length, words2.length <= 1000`
+* `1 <= words1[i].length, words2[j].length <= 30`
+* `words1[i]` and `words2[j]` consists only of lowercase English letters.
+
+### HashMap Solution
+Use two Hashmaps to count the word occurrences in both arrays and identify strings that appear exactly once in each.
+#### Implementation
+```java
+class Solution {
+    public int countWords(String[] words1, String[] words2) {
+        // Count words for `words1` array
+        Map<String, Integer> wordCount1 = new HashMap();
+        for(String word : words1){
+            wordCount1.compute(word, (key,val)-> val==null?1:++val);
+        }
+        // Count words for `words2` array
+        Map<String, Integer> wordCount2 = new HashMap();
+        for(String word : words2){
+            wordCount2.compute(word, (key,val)-> val==null?1:++val);
+        }
+        // Find strings that appear exactly once in both arrays
+        int ans=0;
+        for(String word : wordCount1.keySet()){
+            if(wordCount1.get(word)==1&&wordCount2.getOrDefault(word,0)==1)ans++;
+        }
+        return ans;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(m + n)$
+    * Count words for `words1` array
+    
+        This loop runs in $O(m)$ time, where `m` is the length of `words1` array.
+    * Count words for `words2` array
+    
+        This loop runs in $O(n)$ time, where `n` is the length of `words2` array.
+    * Find strings that appear exactly once in both arrays
+    
+        This loop iterate over all unique elements in `words1` array, resulting in a time complexity of $O(m)$ in the worst case.
+    Therefore, the overall time complexity is $O(m+n)$.
+* Space Complexity: $O(m + n)$
+
+    The maps `wordCount1` and `wordCount1` store keys from `words1` and `words2` respectively, with fixed-size values, resulting in a total space complexity of $O(m+n)$.
+
+## 31. Minimum Number Game
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a **0-indexed** integer array `nums` of even length and there is also an empty array `arr`.  
+Alice and Bob decided to play a game where in every round Alice and Bob will do one move. The rules of the game are as follows:
+
+* Every round, first Alice will remove the minimum element from `nums`, and then Bob does the same.
+* Now, first Bob will append the removed element in the array `arr`, and then Alice does the same.
+* The game continues until `nums` becomes empty.
+
+Return the resulting array `arr`.
+
+**Example 1:**
+> **Input:** nums = [5,4,2,3]  
+> **Output:** [3,2,5,4]  
+> **Explanation:** In round one, first Alice removes 2 and then Bob removes 3. Then in arr firstly Bob appends 3 and then Alice appends 2. So arr = [3,2].  
+At the begining of round two, nums = [5,4]. Now, first Alice removes 4 and then Bob removes 5. Then both append in arr which becomes [3,2,5,4].
+
+**Example 2:**
+> **Input:** nums = [2,5]  
+> **Output:** [5,2]  
+> **Explanation:** In round one, first Alice removes 2 and then Bob removes 5. Then in arr firstly Bob appends and then Alice appends. So arr = [5,2].
+
+**Constraints:**
+* `2 <= nums.length <= 100`
+* `1 <= nums[i] <= 100`
+* `nums.length % 2 == 0`
+
+### Array Solution
+Sort the `nums` array, and swap every two elements.
+#### Implementation
+```java
+class Solution {
+    public int[] numberGame(int[] nums) {
+        Arrays.sort(nums);
+        for(int i=0; i+1<nums.length; i+=2){
+            int temp=nums[i];
+            nums[i]=nums[i+1];
+            nums[i+1]=temp;
+        }
+        return nums;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n \log n)$
+    * `Arrays.sort` has a time complexity of $O(n \log n)$;
+    * The loop traverse the `nums` array with a step size of 2.
+    
+    Hence, The total time complexity is $O(n \log n)$.
+* Space Complexity: $O(\log n)$
+    * `Arrays.sort` typically requires $O(\log n)$ space for sorting a primitive array.  
+    
+    Therefore, the total space complexity is $O(\log n)$.
+
+## 32. My Calendar II
+[Back to Top](#table-of-contents)  
+### Overview
+You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a triple booking.
+
+A triple booking happens when three events have some non-empty intersection (i.e., some moment is common to all the three events.).
+
+The event can be represented as a pair of integers `startTime` and `endTime` that represents a booking on the half-open interval `[startTime, endTime)`, the range of real numbers `x` such that `startTime <= x < endTime`.
+
+Implement the `MyCalendarTwo` class:
+
+* `MyCalendarTwo()` Initializes the calendar object.
+* `boolean book(int startTime, int endTime)` Returns `true` if the event can be added to the calendar successfully without causing a triple booking. Otherwise, return `false` and do not add the event to the calendar.
+
+**Example 1:**
+> **Input:**  
+["MyCalendarTwo", "book", "book", "book", "book", "book", "book"]  
+[[], [10, 20], [50, 60], [10, 40], [5, 15], [5, 10], [25, 55]]  
+> **Output:**  
+[null, true, true, true, false, true, true]
+
+**Explanation:**
+> MyCalendarTwo myCalendarTwo = new MyCalendarTwo();  
+> myCalendarTwo.book(10, 20); // return True, The event can be booked.   
+> myCalendarTwo.book(50, 60); // return True, The event can be booked.  
+> myCalendarTwo.book(10, 40); // return True, The event can be double booked.   
+> myCalendarTwo.book(5, 15);  // return False, The event cannot be booked, because it would result in a triple booking.  
+> myCalendarTwo.book(5, 10); // return True, The event can be booked, as it does not use time 10 which is already double booked.  
+> myCalendarTwo.book(25, 55); // return True, The event can be booked, as the time in [25, 40) will be double booked with the third event, the time [40, 50) will be single booked, and the time [50, 55) will be double booked with the second event.  
+
+**Constraints:**
+* `0 <= start < end <= 109`
+* At most `1000` calls will be made to `book`.
+
+### Segment Tree Solution
+A segment tree is used to store ranges efficiently. Below is the process to insert a new range node into the tree.
+
+Use `O` to indicate the presence of a range to the left or right of the current node, 
+`X` to indicate no range to the left or right, 
+`start` for the start of new range, and `end` for the end of the new range.
+
+* If the new range does not overlap with the current node `cur`, continue comparing it with `cur.left` or `cur.right` until a `null` location is found for insertion or further overlap occurs, requiring another split.  
+    Example:   
+    * If the new range is to the left of `cur`, and `cur.left` exits, continue comparing 
+        ```
+                        O [cur.start, cur.end] X   
+        [start, end]  
+        ```
+    * If the new range is to the left of `cur`, and `cur.left` is `null`, insert `[start, end]` there.
+        ```
+                        X [cur.start, cur.end] O   
+        [start, end]  
+        ```
+* If the new range overlaps with `cur`, split the two ranges into three parts, set the middle range as the new `cur` and compare the left range with `cur.left` and the right range with `cur.right` until a `null` location is found for insertion or further overlap occurs, requiring another split.    
+
+    Example: 
+    ```
+    [start, end]
+       X [cur.start, cur.end] O
+    ```
+    Seperate the above two ranges into three ranges: `[start, cur.start]`, `[cur.start, end]`, and `[end, cur.end]`.  
+    If the `cur.left` or `cur.right` exits, compare `[start, cur.start]` with `cur.left` or `[end, cur.end]` with `cur.right` until a `null` location is found for insertion or another split is needed.
+
+#### Implementation
+```java
+class MyCalendarTwo {
+    class SegmentTree {
+        int start, end;
+        boolean overlap; 
+        SegmentTree left, right; 
+        SegmentTree(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+    }
+
+    SegmentTree root;
+
+    public MyCalendarTwo() {
+    }
+
+    public boolean book(int start, int end) {
+        if (!insertable(start, end, root)) 
+            return false;
+        
+        root = insert(start, end, root);
+        return true;
+    }
+
+    /**
+     * Check the location of the current range relative to the `cur`.
+     */
+    private boolean insertable(int start, int end, SegmentTree cur) {
+        if (start >= end) return true;
+        if (cur == null) return true;
+        if (start >= cur.end) { 
+            // Check right side
+            return insertable(start, end, cur.right);
+        } else if (end <= cur.start) { 
+            // check left side
+            return insertable(start, end, cur.left);
+        } else { 
+            // Ignore the current range if the `cur` node is already overlapped
+            if (cur.overlap) { 
+                return false;
+            } else { 
+                // The current range from `start` to `end` is within the `cur` range
+                if (start >= cur.start && end <= cur.end) { 
+                    return true;
+                } else { 
+                    // Check left and right side
+                    return insertable(start, cur.start, cur.left) && insertable(cur.end, end, cur.right);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Insert the current range to a `null` location or split it if overlapping.
+     */
+    private SegmentTree insert(int start, int end, SegmentTree cur) {
+        if (start >= end) 
+            return cur;
+        if (cur == null) 
+            return new SegmentTree(start, end);
+        
+        if (start >= cur.end) { 
+            // The curreng range is positioned to right of the `cur` node
+            cur.right = insert(start, end, cur.right);
+        } else if (end <= cur.start) { 
+            // The curreng range is positioned to left of the `cur` node
+            cur.left = insert(start, end, cur.left);
+        } else {
+            cur.overlap = true;
+            //    L1   R1        start, end
+            //      L2    R2     cur.start, cur.end
+            // [L1, L2] - [L2, R1] - [R1,R2]
+
+            // Range1: [a,b] 
+            int a = Math.min(cur.start, start);
+            int b = Math.max(cur.start, start);
+            // Range2: [b,c] 
+            // Range3: [c,d] 
+            int c = Math.min(cur.end, end);
+            int d = Math.max(cur.end, end);
+            
+            // One of the ranges [a,b] or [c,d] must overlap with `cur`.
+            // and it will continue to be compared with a neighboring node of `cur`.
+            cur.left = insert(a, b, cur.left);
+            cur.right = insert(c, d, cur.right);
+            
+            cur.start = b;
+            cur.end = c;
+        }
+        
+        return cur;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(m \times n)$
+    * `insertable` method
+        This method traverse the tree until a `null` location is found or range overlaps.
+        * If the tree is balanced, each search halves the search time, resulting in a time complexity of $O(\log n)$.
+        * In the worst case, the tree is like a linked list, resulting in a time complexity of $O(n)$.
+    * `insert` method
+        Similar to `insertable`, this method need to traverse the tree until a `null` location is found or range overlaps, then perform constant-time split and reset operation, resulting in a time complexity of $O(n)$.
+
+    For `m` bookings, the total time complexity is $O(m \times n)$.
+* Space Complexity: $O(n)$
+
+    The stack depth depends on the segment tree's depth, requiring $(n)$ space in the worst case when the tree degenerates into a linked list.
+    Thus, the overall space compleixty is $O(n)$.
+
+## 33. Graph Connectivity With Threshold
+[Back to Top](#table-of-contents)  
+### Overview
+We have `n` cities labeled from `1` to `n`. 
+Two different cities with labels `x` and `y` are directly connected by a bidirectional road if and only if `x` and `y` share a common divisor strictly greater than some `threshold`.   
+More formally, cities with labels `x` and `y` have a road between them if there exists an integer `z` such that all of the following are true:
+* `x % z == 0`
+* `y % z == 0`
+* `z > threshold`
+
+Given the two integers, `n` and `threshold`, and an array of `queries`, you must determine for each `queries[i] = [a_i, b_i]` if cities `a_i` and `b_i` are connected directly or indirectly. (i.e. there is some path between them).
+
+Return an array `answer`, where `answer.length == queries.length` and `answer[i]` is `true` if for the **i-th** query, there is a path between `a_i` and `b_i`, or `answer[i]` is false if there is no path.
+
+**Example 1:**  
+![gcwt1](assets/Algorithms/gcwt1.png)  
+> **Input:** n = 6, threshold = 2, queries = [[1,4],[2,5],[3,6]]  
+> **Output:** [false,false,true]  
+> **Explanation:** The divisors for each number:  
+1:   1  
+2:   1, 2  
+3:   1, 3  
+4:   1, 2, 4  
+5:   1, 5  
+6:   1, 2, 3, 6  
+Using the underlined divisors above the threshold, only cities 3 and 6 share a common divisor, so they are the
+only ones directly connected.   
+The result of each query:  
+[1,4]   1 is not connected to 4  
+[2,5]   2 is not connected to 5  
+[3,6]   3 is connected to 6 through path 3--6 
+
+**Example 2:**  
+![gcwt2](assets/Algorithms/gcwt2.png)   
+> **Input:** n = 6, threshold = 0, queries = [[4,5],[3,4],[3,2],[2,6],[1,3]]  
+> **Output:** [true,true,true,true,true]  
+> **Explanation:** The divisors for each number are the same as the previous example.   
+However, since the threshold is 0,
+all divisors can be used. Since all numbers share 1 as a divisor, all cities are connected.
+
+**Example 3:**  
+![gcwt3](assets/Algorithms/gcwt3.png)   
+> **Input:** n = 5, threshold = 1, queries = [[4,5],[4,5],[3,2],[2,3],[3,4]]  
+> **Output:** [false,false,false,false,false]  
+> **Explanation:** Only cities 2 and 4 share a common divisor 2 which is strictly greater than the threshold 1, so they are the only ones directly connected.  
+Please notice that there can be multiple queries for the same pair of nodes [x, y], and that the query [x, y] is equivalent to the query [y, x].
+
+**Constraints:**
+* `2 <= n <= 10^4`
+* `0 <= threshold <= n`
+* `1 <= queries.length <= 10^5`
+* `queries[i].length == 2`
+* `1 <= a_i, b_i <= cities`
+* `a_i != b_i`
+
+### Union-Find Solution
+Use Union-Find to construct an index array `parent`, where each element initially satisfis `parent[i]=i`.  
+Each value can be updated to reference another index, indicating a connection between the two indices.  
+
+Define an array `isComposite` to indicate whether an element has a valid divisor greater than `threshold`.
+
+Iterate through numbers from `threshold+1` to `n` as `i`, and for each `i`, traverse its multiples `j`.
+Set `isComposite[j]=true`, as the `j` has a valid divisor `i`.
+
+In the `parent` array, assigning `parent[j]` to `i` signifies that `i` and `j` are connected.
+
+Example:
+```
+threshold = 2
+parent:         1 2 3 4 5 6 7 8 9
+indices:        1 2 3 4 5 6 7 8 9 
+
+i=3:
+    Step 1:
+    parent:         1 2 3 4 5 6 7 8 9 (i=3, j=3, parent[3]=3)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:        ✔             (isComposite[3]=true) 
+
+    Step 1: 
+    parent:         1 2 3 4 5 3 7 8 9 (i=3, j=6, parent[6]=3)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:        ✔     ✔      (isComposite[6]=true) 
+
+    Step 2:
+    parent:         1 2 3 4 5 3 7 8 3 (i=3, j=9, parent[9]=3)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:        ✔     ✔    ✔ (isComposite[9]=true) 
+
+    ...
+i=4:
+    Step 1: 
+    parent:         1 2 3 4 5 3 7 8 9 (i=4, j=4, parent[4]=4)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:          ✔           (isComposite[4]=true) 
+
+    Step 2:
+    parent:         1 2 3 4 5 3 7 4 9 (i=4, j=8, parent[8]=4)
+    indices:        1 2 3 4 5 6 7 8 9 
+    isComposite:          ✔      ✔   (isComposite[8]=true) 
+
+    ...
+```
+If `x` and `y` are connected, they must share a previously traversed valid divisor `i`.  
+Example: 
+```
+x = 9, y = 6 
+    Common divisor = 3  
+x = 8, y = 4 
+    Common divisor = 4  
+```
+For each query, determine if `x` and `y` share the same smallest valid divisor.
+#### Implementation
+```java
+import java.util.*;
+
+class Solution {
+    private int[] parent; // City index - Parent city index
+    private boolean[] isComposite; 
+
+    /**
+     * Relocate the root parent city of `y` to the root parent city of `x`.
+     */
+    public void merge(int x, int y) {
+        parent[find(y)] = find(x);
+    }
+
+    /**
+     * Find the root parent city where `parent[index]=index` in the `parent` array.
+     */
+    public int find(int index) {
+        if (parent[index] != index) {
+            parent[index] = find(parent[index]);
+        }
+        return parent[index];
+    }
+
+    public List<Boolean> areConnected(int n, int threshold, int[][] queries) {
+        // If `threshold = 0`, set all results to `true` and return.
+        if (threshold == 0) {
+            List<Boolean> res = new LinkedList<>();
+            for (int[] qu : queries) {
+                res.add(true);
+            }
+            return res;
+        }
+
+        // Populate the `parent` array with city labels
+        parent = new int[n + 1];
+        for (int i = 1; i <= n; ++i) {
+            parent[i] = i;
+        }
+
+        // Traverse valid divisors and their multiples.
+        isComposite = new boolean[n + 1];
+        for (int i = threshold + 1; i <= n; ++i) {
+            if (!isComposite[i]) {
+                // i*1, i*2, i*3, ...
+                // Relocate the multiples of `i` to `i`.
+                for (int j = i; j <= n; j += i) {
+                    isComposite[j] = true;
+                    merge(i, j);
+                }
+            }
+        }
+
+        // Populate `res` array as the result.
+        List<Boolean> res = new LinkedList<>();
+        for (int[] qu : queries) {
+            res.add(find(qu[0]) == find(qu[1]));
+        }
+        return res;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n \log n+m)$
+    * If `threshold = 0`, set all results to `true` and return.  
+
+        This loop runs in $O(m)$ time where `m` is the size of `queries` array.
+    * Populate the `parent` array with city labels  
+
+        This loop traverses `parent` array, resulting in a time complexity of $O(n)$ where `n` is the number of cities.
+    * Traverse valid divisors and their multiples.
+
+        The total number of iterations of the inner loop is approximately:
+        $$\sum_{i=threshold+1}^n \frac{n}{i}$$
+
+        Based on the harmonic series:
+        $$H_n=\sum_{i=1}^n \frac{1}{i} \approx ln(n) + \gamma$$
+        We have:
+        $$\sum_{i=threshold+1}^n \frac{n}{i} \approx n \times (ln(n)+ \gamma)$$
+
+        Thus, the total time complexity of the nested loop is $O(n \log n)$.
+        
+    In summary, The overall time complexity is $O(n \log n+m)$
+
+* Space Complexity: $O(n+m)$
+
+    * Both `parent` and `isComposite` have the same size of `n+1`, taking $O(n)$ space.  
+    * `res` array requires $O(m)$ space, where `m` is the size of the `queries` array.
+
+    Thus the overall space complexity is $O(n+m)$.
+
+## 34. Sort Array by Increasing Frequency
+[Back to Top](#table-of-contents)  
+### Overview
+Given an array of integers `nums`, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order.
+
+**Example 1:**
+> **Input:** nums = [1,1,2,2,2,3]  
+> **Output:** [3,1,1,2,2,2]  
+> **Explanation:** '3' has a frequency of 1, '1' has a frequency of 2, and '2' has a frequency of 3.
+
+**Example 2:**
+> **Input:** nums = [2,3,1,3,2]  
+> **Output:** [1,3,3,2,2]  
+> **Explanation:** '2' and '3' both have a frequency of 2, so they are sorted in decreasing order.
+
+**Example 3:**
+> **Input:** nums = [-1,1,-6,4,5,-6,1,4,1]  
+> **Output:** [5,-1,4,4,-6,-6,1,1,1]
+
+### Array Solution
+Map elements in `nums` to indices of `freq`, where indices represent elements of `nums` and the values represent their frequency.
+Since `-100 <= nums[i] <= 100`, shift indices by adding 100 to `num[i]`.
+
+Example:
+```text
+nums:    [1,1,2,2,2,3]
+indices:  0 1 2 3 4 5
+
+freq:     0   2   3   1   0   0   ...  
+indices:  100 101 102 103 104 105 ...
+```
+
+Filter out elements with `frequency>0` into `arr` and sort them by frequency.
+Repeat each element in `arr` based on its frequency to form the final result.
+#### Implementation
+```java
+class Solution {
+    public int[] frequencySort(int[] nums) {
+        // Map the elements in the `nums` array to the indices of the frequency array `freq`.
+        // Since `-100 <= nums[i] <= 100`, add 100 to `num[i]` as a meaningful index.
+        int[] freq = new int[201];
+        for (int num : nums) {
+            freq[num + 100]++;
+        }
+
+        // Filter out elements with a frenquency greater than 0 in descending order.
+        int[] arr = new int[nums.length];
+        int len = 0;
+        for (int i = freq.length - 1; i >= 0; i--) {
+            if (freq[i] > 0) {
+                arr[len++] = i;
+            }
+        }
+
+        // Sort the `arr` array with insertion sort.
+        //             low
+        //           i cmp
+        //        i cmp 
+        //     ...
+        for (int low = 1; low < len; low++) {
+            int inserted = arr[low];
+            int i = low - 1;
+            while (i >= 0 && freq[arr[i]] > freq[inserted]) {
+                arr[i + 1] = arr[i];
+                i--;
+            }
+            if (i != low - 1) {
+                arr[i + 1] = inserted;
+            }
+        }
+
+        // Repeat elements in the `arr` according to their frequency.
+        int k = 0;
+        for (int i = 0; i < len; i++) {
+            int curFreq = freq[arr[i]];
+            int num = arr[i] - 100;
+            for (int j = 0; j < curFreq; j++) {
+                nums[k++] = num;
+            }
+        }
+        return nums;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n^2)$
+    * Map the elements in the `nums` array to the indices of the frequency array `freq`.
+        
+        Traversing the `nums` array takes $O(n)$ time.
+    * Filter out elements with a frenquency greater than 0 in descending order.
+    
+        Since `freq` has a fixed size of `201` regardless of the input parameter, this step runs in $O(1)$ time.
+    * Sort the `arr` array with insertion sort.
+        The outer loop iterates over `arr`, runing `len-1` time.  
+        The inner loop traverses elements from `i` down to `0`.  
+        The total time complexity is:
+        $$\sum_{i=0}^{n} i=\frac{n\times(n+1)}{2}$$ 
+        Thus, the time complexity of this step is $O(n^2)$.
+    * Repeat elements in the `arr` according to their frequency.
+        
+        The number of elements to traverse in this step is equal to the size of `nums`, giving a time complexity of $O(n)$.
+
+    Therefore, the overall time complexity is $O(n^2)$.
+* Space Complexity: $O(n)$
+    * The `freq` array has a fiexed size, resulting in constant space complexity $O(1)$.
+    * The `arr` array has the same size as `num`, leading to space complexity $O(n)$.
+    Thus, the total space complexity is $O(n)$.
+#### Consideration
+* Each of `Arrays.stream(nums)`, `.boxed()` and `.collect(Collectors.toList())` has a time complexity of $O(n)$. 
+
+    Manually copying values into a new list offers better performance compared to using Java Streams.
+
+## 35. Maximum Multiplication Score
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an integer array `a` of size 4 and another integer array `b` of size **at least** 4.
+
+You need to choose 4 indices `i0`, `i1`, `i2`, and `i3` from the array b such that `i0 < i1 < i2 < i3`. Your score will be equal to the value `a[0] * b[i0] + a[1] * b[i1] + a[2] * b[i2] + a[3] * b[i3]`.
+
+Return the maximum score you can achieve.
+
+**Example 1:**
+> **Input:** a = [3,2,5,6], b = [2,-6,4,-5,-3,2,-7]  
+> **Output:** 26  
+> **Explanation:**  
+We can choose the indices 0, 1, 2, and 5.  
+The score will be 3 * 2 + 2 * (-6) + 5 * 4 + 6 * 2 = 26.
+
+
+**Example 2:**
+> **Input:** a = [-1,4,5,-2], b = [-5,-1,-3,-2,-4]  
+> **Output:** -1  
+> **Explanation:**  
+We can choose the indices 0, 1, 3, and 4.  
+The score will be (-1) * (-5) + 4 * (-1) + 5 * (-2) + (-2) * (-4) = -1.
+
+**Constraints:**
+* `a.length == 4`
+* `4 <= b.length <= 10^5`
+* `-10^5 <= a[i], b[i] <= 10^5`
+### Dynamic Programming Solution
+The score expression is:
+```
+a[0] * b[i0] + a[1] * b[i1] + a[2] * b[i2] + a[3] * b[i3]
+```
+Define $f(1,i)$ as the maxinum sum of a single product `a[0] * b[i0]`, 
+where `b[i0]` is an element in the array `b` from index `0` to `i`.
+
+Similarly, $f(2,i)$ repesents the maxinum sum of the two products `a[0] * b[i0]` and `a[1] * b[i1]`, and this pattern continues for higher values.
+
+At index `i` in the array `b`, the dynamic programming expression is:
+$$
+\begin{cases}
+    f(1,i) = max( a[0] \times b[i] ) \\ 
+    f(2,i) = max( f(2,i-1), f(1,i-1) + a[1] \times b[i] ) \\
+    f(3,i) = max( f(3,i-1), f(2,i-1) + a[2] \times b[i] ) \\
+    f(4,i) = max( f(4,i-1), f(3,i-1) + a[3] \times b[i] )
+\end{cases}
+$$
+
+Since each DP state depends on the previous one, traverse the array `b` starting from the beginning.
+The final result is $f(4,n)$ where `n` is the size of `b`.
+
+```
+Step 1:
+    b: 2 -6 4 -5 -3 2 -7
+    a: 3  2 5  6
+
+    x = b[0] 
+      = 2
+    dp4 = max(dp4, b[0]*a[3] + dp3)  
+        = max(MIN, 2*6 + MIN)
+        = 2*6 + MIN
+
+    dp3 = max(dp3, b[0]*a[2] + dp2)  
+        = max(MIN, 2*5 + MIN) 
+        = 2*5 + MIN
+
+    dp2 = max(dp2, b[0]*a[1] + dp1)  
+        = max(MIN, 2*2 + MIN) 
+        = 2*2 + MIN
+
+    dp1 = max(dp1, b[0]*a[0])  
+        = max(MIN, 2*3) 
+        = 2*3
+
+Step 2:
+    b: 2 -6 4 -5 -3 2 -7
+    a: 3  2 5  6
+
+    x = b[1] 
+      = -6
+    dp4 = max(dp4, b[1]*a[3] + dp3)  
+        = max(2*6 + MIN, -6*6 + 2*5 + MIN)
+        = 2*6 + MIN
+
+    dp3 = max(dp3, b[1]*a[2] + dp2)  
+        = max(2*5 + MIN, -6*5 + 2*2 + MIN)  
+        = 2*5 + MIN
+
+    dp2 = max(dp2, b[1]*a[1] + dp1)  
+        = max(2*2 + MIN, -6*2 + 2*3)  
+        = -6*2 + 2*3
+
+    dp1 = max(dp1, b[1]*a[0])  
+        = max(2*3, -6*3) 
+        = 2*3
+
+Step 3:
+    b: 2 -6 4 -5 -3 2 -7
+    a: 3  2 5  6
+
+    x = b[1] 
+      = 4
+    dp4 = max(dp4, b[2]*a[3] + dp3)  
+        = max(2*6 + MIN, 4*6 + 2*5 + MIN)
+        = 2*6 + MIN
+
+    dp3 = max(dp3, b[2]*a[2] + dp2)  
+        = max(2*5 + MIN, 4*2 + -6*2 + 2*3)  
+        = 4*2 + -6*2 + 2*3
+
+    dp2 = max(dp2, b[2]*a[1] + dp1)  
+        = max(-6*2 + 2*3, 4*2 + 2*3)  
+        = 4*2 + 2*3
+
+    dp1 = max(dp1, b[2]*a[0])  
+        = max(2*3, 4*3) 
+        = 4*3
+
+...
+```
+#### Implementation
+```java
+class Solution {
+    public long maxScore(int[] a, int[] b) {
+        long dp1 = Long.MIN_VALUE/2, dp2 = dp1, dp3 = dp1, dp4 = dp1;
+        for(long x: b){
+            dp4 = Math.max(dp4, dp3 +  x * a[3]);
+            dp3 = Math.max(dp3, dp2 + x * a[2]);
+            dp2 = Math.max(dp2, dp1 + x * a[1]);
+            dp1 = Math.max(dp1,  x * a[0]);
+        }
+        return dp4;        
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n)$ 
+
+  The main loop iterates through the array `b`, resulting in a time complexity of $O(n)$.
+* Space Complexity: $O(1)$
+
+  The variables `dp1`, `dp2`, `dp3`, `dp4` each take constant time $O(1)$.
+
+## 36. Find Triangular Sum of an Array
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a 0-indexed integer array `nums`, where `nums[i]` is a digit between `0` and `9` (inclusive).
+
+The triangular sum of `nums` is the value of the only element present in `nums` after the following process terminates:
+
+1. Let `nums` comprise of n elements. If `n == 1`, end the process. Otherwise, create a new 0-indexed integer array `newNums` of length `n - 1`.
+
+2. For each index `i`, where `0 <= i < n - 1`, assign the value of `newNums[i]` as `(nums[i] + nums[i+1]) % 10`, where `%` denotes modulo operator.
+
+3. Replace the array `nums` with `newNums`.
+4. Repeat the entire process starting from step 1.
+
+Return the triangular sum of `nums`.
+
+**Example 1:**
+
+![ftsoaa1](assets/Algorithms/ftsoaa1.png)
+> **Input:** nums = [1,2,3,4,5]  
+> **Output:** 8  
+> **Explanation:**  
+> The above diagram depicts the process from which we obtain the triangular sum of the array.
+Example 2:
+
+**Example 2:**
+> **Input:** nums = [5]  
+> **Output:** 5  
+> **Explanation:**  
+Since there is only one element in nums, the triangular sum is the value of that element itself.
+
+Constraints:
+* `1 <= nums.length <= 1000`
+* `0 <= nums[i] <= 9`
+
+### Traversal Solution
+Following the problem's steps to create child loops that compute values for `newNums`.
+Since `nums` is no longer needed in next steps, reuse it as `newNums`.  
+
+Return the result when only one element remains.
+
+#### Implementation
+```java
+class Solution {
+    public int triangularSum(int[] nums) {
+        for (int n = nums.length - 1; n > 0; n--) {
+            for (int i = 0; i < n; i++) {
+                nums[i] = (nums[i] + nums[i + 1]) % 10;
+            }
+        }
+        return nums[0];
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n^2)$ 
+
+  The total number of iterations is $\sum_{i=0}^{n}i=\frac{n\times (n+1)}{2}$, resulting in a time complexity of $O(n^2)$
+
+* Space Complexity: $O(1)$
+
+  The loop index variables `n` and `i`  takes $O(1)$ constant space.
+
+#### Consideration
+ * Reusing `nums` is more efficient since its original elements are no longer required in the following steps.
+
+## 37. Zero Array Transformation II
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an integer array `nums` of length `n` and a 2D array `queries` where `queries[i] = [li, ri, vali]`.
+
+Each `queries[i]` represents the following action on nums:
+* Decrement the value at each index in the range `[li, ri]` in `nums` by at most `vali`.
+* The amount by which each value is decremented can be chosen independently for each index.
+
+A Zero Array is an array with all its elements equal to 0.
+
+Return the minimum possible non-negative value of `k`, such that after processing the first `k` queries in sequence, `nums` becomes a Zero Array. 
+If no such `k` exists, return -1.
+
+**Example 1:**
+> **Input:** nums = [2,0,2], queries = [[0,2,1],[0,2,1],[1,1,3]]  
+> **Output:** 2  
+> **Explanation:**
+> * **For i = 0 (l = 0, r = 2, val = 1):**
+>   * Decrement values at indices `[0, 1, 2]` by `[1, 0, 1]` respectively.
+>   * The array will become [1, 0, 1].
+> * **For i = 1 (l = 0, r = 2, val = 1):**
+>   * Decrement values at indices `[0, 1, 2]` by `[1, 0, 1]` respectively.
+>   * The array will become `[0, 0, 0]`, which is a Zero Array. Therefore, the minimum value of `k` is 2.
+
+**Example 2:**
+> **Input:** nums = [4,3,2,1], queries = [[1,3,2],[0,2,1]]  
+> **Output:** -1  
+> **Explanation:**
+> * **For i = 0 (l = 1, r = 3, val = 2):**
+>   * Decrement values at indices `[1, 2, 3]` by `[2, 2, 1]` respectively.
+>   * The array will become [4, 1, 0, 0].
+> * **For i = 1 (l = 0, r = 2, val = 1):**
+>   * Decrement values at indices `[0, 1, 2]` by `[1, 1, 0]` respectively.
+>   * The array will become `[3, 0, 0, 0]`, which is not a Zero Array.
+
+**Constraints:**
+* `1 <= nums.length <= 10^5`
+* `0 <= nums[i] <= 5 * 10^5`
+* `1 <= queries.length <= 10^5`
+* `queries[i].length == 3`
+* `0 <= li <= ri < nums.length`
+* `1 <= vali <= 5`
+
+### Difference Array Solution
+Break the problem into a sub-problem:
+* At index `i` in array `nums`, reduce `nums[i]` to `0` using the minimum number of queries within the first `k` queries.
+
+Since only used queires are counted and must be rechecked for the next index, the following approach is used:
+
+1. Traverse `nums`, and at each index `i`, iterate through all queries to reduct `nums[i]` to `0` within the first `k` queries, determining minimum required queries.
+2. Using the `diff` array to track the previously traversed query ranges, allowing the decrement amount to be efficiently retrieved at index `i`.
+#### Implementation
+```java
+class Solution {
+    public int minZeroArray(int[] nums, int[][] queries) {
+        int n = nums.length;
+        int[] diff = new int[n + 1];
+        int sumD = 0;
+        // The minimum number of required queries.
+        int k = 0;
+        // Traverse array `nums`
+        for (int i = 0; i < n; i++) {
+            int num = nums[i];
+            sumD += diff[i];
+            // Count minimum queries required to reduce `nums[i]` to `0`.
+            while (k < queries.length && sumD < num) { 
+                int[] quer = queries[k];
+                int start = quer[0], end = quer[1], subt = quer[2];
+                diff[start] += subt;
+                diff[end + 1] -= subt;
+                // When `i` is in the current range `quer`. 
+                if (start <= i && i <= end) { 
+                    sumD += subt;
+                }
+                k++;
+            }
+            // Unable to reduce `nums[i]` to `0`
+            if (sumD < num) { 
+                return -1;
+            }
+        }
+        return k;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: $O(n+q)$ 
+  * Since every element in `nums` must be traversed, and processed queries do not need to be revisited, the total time complexity is $O(n+q)$, where `n` and `q` are the length of `nums` and `queries` respectively.
+* Space Complexity: $O(n)$
+  * The `diff` array requires $O(n)$ space, where `n` is the length of `nums`.
+<!-- 
+## 38. Transform to Chessboard
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an `n x n` binary grid `board`. In each move, you can swap any two rows with each other, or any two columns with each other.
+
+Return the minimum number of moves to transform the board into a chessboard board. If the task is impossible, return `-1`.
+
+**Example 1:**
+
+![](./assets/Algorithms/ttc1.png)  
+> **Input:** board = [[0,1,1,0],[0,1,1,0],[1,0,0,1],[1,0,0,1]]  
+> **Output:** 2  
+> **Explanation:** One potential sequence of moves is shown.
+The first move swaps the first and second column.
+The second move swaps the second and third row.
+
+**Example 2:**
+
+![](./assets/Algorithms/ttc2.png)  
+> **Input:** board = [[0,1],[1,0]]   
+> **Output:** 0  
+> **Explanation:** Also note that the board with 0 in the top left corner, is also a valid chessboard.
+
+**Example 3:**
+
+![](./assets/Algorithms/ttc3.png)
+> **Input:** board = [[1,0],[1,0]]  
+> **Output:** -1  
+> **Explanation:** No matter what sequence of moves you make, you cannot end with a valid chessboard.
+
+**Constraints:**
+* `n == board.length`
+* `n == board[i].length`
+* `2 <= n <= 30`
+* `board[i][j]` is either `0` or `1`.
+### Math Solution 
+
+#### Implementation
+```java
+class Solution {
+    public int movesToChessboard(int[][] board) {
+        int n = board.length;
+        int[] firstRow = board[0];
+        int[] firstCol = new int[n];
+        int[] rowCnt = new int[2];
+        int[] colCnt = new int[2];
+        // Count the occurrences of `0` and `1` in the board
+        for (int i = 0; i < n; i++) {
+            rowCnt[firstRow[i]]++; 
+            firstCol[i] = board[i][0];
+            colCnt[firstCol[i]]++;
+        }
+
+        // Determine whether the rows or columns can be swapped.
+        if (Math.abs(rowCnt[0] - rowCnt[1]) > 1 || Math.abs(colCnt[0] - colCnt[1]) > 1) {
+            return -1;
+        }
+
+        // Each row must be either identical to or entirely different from the first row.
+        for (int[] row : board) {
+            boolean same = row[0] == firstRow[0];
+            for (int i = 0; i < n; i++) {
+                if ((row[i] == firstRow[i]) != same) {
+                    return -1;
+                }
+            }
+        }
+
+        return minSwap(firstRow, rowCnt) + minSwap(firstCol, colCnt);
+    }
+
+    /**
+     * Calculate the minimum number of swaps required.
+     */
+    private int minSwap(int[] s, int[] cnt) {
+        int n = s.length;
+        int x0 = cnt[1] > cnt[0] ? 1 : 0; 
+        int diff = 0;
+        for (int i = 0; i < n; i++) {
+            diff += s[i] ^ i % 2 ^ x0;
+        }
+        return n % 2 > 0 ? diff / 2 : Math.min(diff, n - diff) / 2;
+    }
+}
+```
+#### Time and Space Complexity
+* Time Complexity: 
+* Space Complexity:  -->
+
+# SQL Problems
+## 1. Odd and Even Transactions
+[Back to Top](#table-of-contents)  
+### Overview
+Table: `transactions`
+```
++------------------+------+  
+| Column Name      | Type |   
++------------------+------+  
+| transaction_id   | int  |  
+| amount           | int  |  
+| transaction_date | date |  
++------------------+------+  
+```
+The `transactions_id` column uniquely identifies each row in this table.  
+Each row of this table contains the transaction id, amount and transaction date.
+
+Write a solution to find the `sum of amounts` for `odd` and `even` transactions for each day. If there are no odd or even transactions for a specific date, display as `0`.
+
+Return the result table ordered by `transaction_date` in **ascending** order.
+The result format is in the following example.
+
+**Example:**
+> **Input:**  
+> `transactions` table:  
+> ```text
+> +----------------+--------+------------------+
+> | transaction_id | amount | transaction_date |
+> +----------------+--------+------------------+
+> | 1              | 150    | 2024-07-01       |
+> | 2              | 200    | 2024-07-01       |
+> | 3              | 75     | 2024-07-01       |
+> | 4              | 300    | 2024-07-02       |
+> | 5              | 50     | 2024-07-02       |
+> | 6              | 120    | 2024-07-03       |
+> +----------------+--------+------------------+
+> ```
+> **Output:**  
+> ```text
+> +------------------+---------+----------+
+> | transaction_date | odd_sum | even_sum |
+> +------------------+---------+----------+
+> | 2024-07-01       | 75      | 350      |
+> | 2024-07-02       | 0       | 350      |
+> | 2024-07-03       | 0       | 120      |
+> +------------------+---------+----------+
+> ```
+> **Explanation:**
+> * For transaction dates:
+>   * 2024-07-01:
+>       * Sum of amounts for odd transactions: 75
+>       * Sum of amounts for even transactions: 150 + 200 = 350
+>   * 2024-07-02:
+>       * Sum of amounts for odd transactions: 0
+>       * Sum of amounts for even transactions: 300 + 50 = 350
+>   * 2024-07-03:
+>       * Sum of amounts for odd transactions: 0
+>       * Sum of amounts for even transactions: 120  
+>
+> **Note:** The output table is ordered by `transaction_date` in ascending order.
+### Analysis
+Group the data by the `transaction_date` field (using `GROUP BY` or `PARTITION BY`), and calculate the total amounts for odd and even transactions on each transaction_date.
+
+Oracle Functions:
+* NVL(expression, replacement_value)
+
+    The NVL function is used to replace NULL values with a specified replacement value.   
+    If the first argument is NULL, it returns the second argument. Otherwise, it returns the first argument.
+* BITAND(x, y)				
+
+    The BITAND function performs a bitwise AND operation between two integer values. 
+
+### MySQL Implementation
+```sql
+SELECT DISTINCT transaction_date, 
+SUM(CASE WHEN amount % 2=0 THEN 0 ELSE amount END) OVER( PARTITION BY transaction_date  ) AS odd_sum,
+SUM(CASE WHEN amount % 2=0 THEN amount ELSE 0 END) OVER( PARTITION BY transaction_date  ) AS even_sum
+FROM transactions;
+```
+### Oracle Implementation
+```sql
+SELECT TO_CHAR(transaction_date,'yyyy-MM-dd') AS transaction_date,
+       NVL(SUM(CASE WHEN BITAND(amount,1)=1 THEN amount END),0) AS odd_sum,
+       NVL(SUM(CASE WHEN BITAND(amount,1)=0 THEN amount END),0) AS even_sum
+FROM transactions
+GROUP BY transaction_date
+ORDER BY transaction_date ASC;
+```

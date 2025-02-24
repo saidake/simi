@@ -12,5 +12,7 @@
     <artifactId>simi-servers</artifactId>
     <modules>
         <module>simi-temporal</module>
+        <module>simi-aws</module>
+        <module>simi-aws-consumer</module>
     </modules>
 </project>

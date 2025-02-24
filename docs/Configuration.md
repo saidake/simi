@@ -5,6 +5,8 @@
 - [Server](#server)
   - [Temporal](#temporal)
   - [Spark](#spark)
+- [AI](#ai)
+  - [Stable Diffusion](#stable-diffusion)
 # Database
 ## Oracle 23ai
 Reference:  
@@ -99,3 +101,11 @@ Reference:
        driver: bridge
    ```
    Replace `<ui-port>` with your ui port to avoid port conflicts.
+# AI
+## Stable Diffusion
+1. Visit the project repository
+   https://github.com/AUTOMATIC1111/stable-diffusion-webui
+2. Choose your GPU
+   ![img_3.png](assets/Configuration/stablediffusion1.png)
+3. Download the zip file and refer to the included instructions for installation.
+   ![img_2.png](assets/Configuration/stablediffusion2.png)

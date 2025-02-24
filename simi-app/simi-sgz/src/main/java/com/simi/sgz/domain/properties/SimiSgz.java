@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SimiSgz {
     private String taskType;
-    private int mainCityArmyNumber;
-    private int secondCityArmyNumber;
     private boolean avoidMarchCollision;
 }

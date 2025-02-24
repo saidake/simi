@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.simi</groupId>
         <artifactId>simi-app</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>simi-sgz</artifactId>
@@ -18,6 +18,12 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
+        <dependency>
+            <groupId>net.sourceforge.tess4j</groupId>
+            <artifactId>tess4j</artifactId>
+            <version>5.15.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -25,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>com.simi</groupId>
-            <artifactId>simi-common-util</artifactId>
+            <artifactId>simi-common-utils</artifactId>
         </dependency>
 
         <dependency>
@@ -36,18 +42,9 @@
             <groupId>com.github.kwhat</groupId>
             <artifactId>jnativehook</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.simi</groupId>-->
-<!--            <artifactId>simi-common-simulator</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
