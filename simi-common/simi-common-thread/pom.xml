@@ -17,8 +17,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>com.simi</groupId>
+            <artifactId>simi-util-core</artifactId>
         </dependency>
     </dependencies>
 </project>
