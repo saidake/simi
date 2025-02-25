@@ -4825,13 +4825,15 @@ class Solution {
   * Since every element in `nums` must be traversed, and processed queries do not need to be revisited, the total time complexity is $O(n+q)$, where `n` and `q` are the length of `nums` and `queries` respectively.
 * Space Complexity: $O(n)$
   * The `diff` array requires $O(n)$ space, where `n` is the length of `nums`.
-<!-- 
+
 ## 38. Transform to Chessboard
 [Back to Top](#table-of-contents)  
 ### Overview
 You are given an `n x n` binary grid `board`. In each move, you can swap any two rows with each other, or any two columns with each other.
 
 Return the minimum number of moves to transform the board into a chessboard board. If the task is impossible, return `-1`.
+
+A chessboard board is a board where no `0`'s and no `1`'s are 4-directionally adjacent.
 
 **Example 1:**
 
@@ -4862,7 +4864,27 @@ The second move swaps the second and third row.
 * `2 <= n <= 30`
 * `board[i][j]` is either `0` or `1`.
 ### Math Solution 
+To avoid adjacent `0` and `1`, each row and column must alternate between `0` and `1`, 
+and the difference between the number of `1` and `0` must be less than or equal to `1`.
 
+Use the above condition to determine whether to return `-1`.
+
+Below is a row arrangment example (`diff` is the number of different digits in the arrangment):
+```
+000111   
+    -> 010101:  diff = 2, 1 swap
+    -> 101010:  diff = 4, 2 swaps
+0001101
+       0001101    
+    -> 0101010: diff = 4, 2 swaps
+```
+So if there are $diff$ different digits, $\frac{diff}{2}$ swaps are required.
+if the number of digit `0` and `1` is equal, there is a extra same case need to be checked.
+
+Since there are only two types of conbinations in row and column, 
+only the first row and first column need to be checked.
+
+Based on the above pattern, we can calculate the minimum swaps for both row and column.
 #### Implementation
 ```java
 class Solution {
@@ -4912,9 +4934,15 @@ class Solution {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: 
-* Space Complexity:  -->
+* Time Complexity: $O(n^2)$
 
+* Space Complexity: $O(n)$
+    * `firstRow` and `firstCol` require $O(n)$ space where `n` is the length of `board`.
+    * `rowCnt` and `colCnt` use $O(1)$ space.
+
+    Thus, the overall space complexity is $O(n)$.
+
+    
 # SQL Problems
 ## 1. Odd and Even Transactions
 [Back to Top](#table-of-contents)  
