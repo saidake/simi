@@ -84,7 +84,11 @@ public class TroopOperation {
         // Perform OCR
         String result=tesseract.doOCR(screenCapture);
         log.info("Detected number: {}", result.trim());
-        String processedStr=result.trim().replaceAll("B","8").replaceAll("\\D+","");
+        String processedStr=result.trim()
+                .replaceAll("B","8")
+                .replaceAll("¢","0")
+                .replaceAll("E","6")
+                .replaceAll("\\D+","");
         int stamina=processedStr.isBlank()?0:Integer.parseInt(processedStr);
         log.info("Processed number: {}", stamina);
         if(staminaList[troopIndex]==1){
