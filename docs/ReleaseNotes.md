@@ -9,6 +9,15 @@
     - [Config\_v1.1.0.pdf](#config_v110pdf)
   - [Simi 1.1.0 Release - Sandbox Module](#simi-110-release---sandbox-module)
 # Simi
+## Simi 1.3.0 Release - Simi Toolkit
+* Updated Japanese_v1.1.0.pdf from version 1.0.0.
+
+### Japanese_v1.1.0
+* **Japanese / Verb / Plain Form**
+  * Provide a comprehensive explanation of the plain form.
+* **Japanese / Verb / Polite Form**
+  * Provide a comprehensive explanation of the polite form.
+
 ## Simi 1.2.0 Release - OneDrive Document Migration
 ### Core Updates
 * Migrated documents from OneDrive to Git.

@@ -1,0 +1,9 @@
+English / Near-synonym / DDD / different, disparate, differential
+English / Near-synonym / SSS / same, similar, resemble
+English / Near-synonym / CCC / circumstance, situation, occasion
+
+Algorithms / Math / Probability / Binomial Theorem
+Algorithms / Math / Formulas / Differentiation
+Algorithms / Math / Calculate Sums / Harmonic Series
+
+Java / java.base / java.util / concurrent / locks / AbstractQueuedSynchronizer
