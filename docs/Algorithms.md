@@ -4959,6 +4959,100 @@ class Solution {
 
     Thus, the overall space complexity is $O(n)$.
 
+## 39. Trapping Rain Water II
+[Back to Top](#table-of-contents)  
+### Overview
+Given an `m x n` integer matrix `heightMap` representing the height of each unit cell in a 2D elevation map, return the volume of water it can trap after raining.
+
+**Example 1:**
+
+![](assets/Algorithms/trwII1.png)
+> **Input:** heightMap = [[1,4,3,1,3,2],[3,2,1,3,2,4],[2,3,3,2,3,1]]  
+> **Output:** 4  
+> **Explanation:** After the rain, water is trapped between the blocks.
+We have two small ponds 1 and 3 units trapped.
+The total volume of water trapped is 4.
+
+**Example 2:** 
+
+![alt text](assets/Algorithms/trwII2.png)
+> **Input:** heightMap = [[3,3,3,3,3],[3,2,2,2,3],[3,2,1,2,3],[3,2,2,2,3],[3,3,3,3,3]]  
+> **Output:** 10
+
+**Constraints:**
+* `m == heightMap.length`
+* `n == heightMap[i].length`
+* `1 <= m, n <= 200`
+* `0 <= heightMap[i][j] <= 2 * 10^4`
+
+### Depth-first Search Solution 
+According to the above 2D elevation map, only the units around higher units can trap rain.
+
+To calcualte the total volume of water trapped, 
+the units around higher units need to be located and the lowest unit within units around should be recorded.
+
+Example:
+```
+1  4  3  1  3  2
+3 [2][1] 3 [2] 4
+2  3  3  2  3  1
+
+Area 1:
+    Central units:  [2][1]
+    Surrounded lowest unit: 3
+    Volume of water trapped: (3-2)+(3-1) = 3
+Area 2:    
+    Central units:  [2]
+    Surrounded lowest unit: 3
+    Volume of water trapped: (3-2) = 1
+
+Total volume of water trapped: 4
+```
+Mark the valid unit to trap rain as `U`, the search process should be:  
+* if there is any unit that its height is lower or equal to the current unit, search it together.
+* 
+
+#### Implementation
+```java
+class Solution {
+    private Map<String, Integer> lowestAroundHeight=new HashMap();
+    private int totalVolumn=0;
+
+    public int trapRainWater(int[][] heightMap) {
+        
+    }
+
+    private void dfs(int[][] heightMap, int i, int j){
+        if(i-1>=0 && i+1<heightMap.length && j-1<=0 && j+1<heightMap[0].length ){
+            int cur=heightMap[i][j];
+            if( heightMap[i][j-1]>cur
+                && heightMap[i-1][j]>cur
+                && heightMap[i][j+1]>cur
+                && heightMap[i+1][j]>cur){
+
+                // Mark the current unit as a valid unit
+                heightMap[i][j]=0;
+                // Record the lowest height in the surrounding units.
+                int currentVolumn=Math.min(
+                    heightMap[i][j-1], 
+                    heightMap[i-1][j],
+                    heightMap[i][j+1],
+                    heightMap[i+1][j]
+                    );
+                this.lowestAroundHeight.put(""+i+j, currentVolumn);
+                this.totalVolumn+=currentVolumn;
+
+            }
+
+        }
+        dfs(heightMap, i, j-1);
+        dfs(heightMap, i-1, j);
+        dfs(heightMap, i, j+1);
+        dfs(heightMap, i+1, j);
+    }
+}
+```
+
 
 # SQL Problems
 ## 1. Odd and Even Transactions
