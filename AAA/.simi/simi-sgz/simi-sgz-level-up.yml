@@ -1,12 +1,12 @@
 minus: 0
 # 0 15  30  45  60  75  90  105  120
 staminaList:
-  - [1, 1, 1, 1, 0, 0, 0, 0, 0]
-  - [1, 1, 1, 1, 0, 0, 0, 0, 0]
-  - [1, 1, 1, 1, 0, 0, 0, 0, 0]
-  - [1, 1, 1, 0, 0, 0, 0, 0, 0]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0]
 clearMarkList:
-  - [1, 2, 2, 3, 3, 3, 3, 3, 4]
+  - [1, 2, 3, 3, 3, 3, 3, 3, 4]
   - [1, 2, 3, 3, 3, 2, 3, 3, 4]
   - [1, 2, 2, 2, 3, 3, 3, 3, 4]
   - [1, 2, 2, 2, 3, 3, 3, 3, 4]
@@ -21,7 +21,7 @@ clearTabList:
   - [1, 1, 1, 1, 1, 1, 1, 1, 1]
   - [1, 1, 1, 1, 1, 1, 1, 1, 1]
 supplyList:
-  - [true, true, true, true, false, false, false, false, false]
+  - [true, true, false, false, false, false, false, false, false]
   - [true, true, true, true, false, true, false, false, false]
   - [true, true, true, true, false, false, false, false, false]
   - [true, true, true, true, false, false, false, false, false]

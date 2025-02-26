@@ -20,13 +20,20 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
-
         <!--======================================================================================================= Core -->
         <spring-boot-dependencies.version>3.0.5</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2022.0.2</spring-cloud-dependencies.version>
         <software.amazon.awssdk.version>2.17.173</software.amazon.awssdk.version>
         <aws-java-sdk-bom.version>1.12.201</aws-java-sdk-bom.version>
         <jakarta.mail.version>1.6.7</jakarta.mail.version>
+        <!--======================================================================================================= Custom Dep -->
+        <simi-common-utils.version>1.2.0</simi-common-utils.version>
+        <simi-util-core.version>1.2.0</simi-util-core.version>
+        <simi-common-test.version>1.2.0</simi-common-test.version>
+        <simi-common-log.version>1.2.0</simi-common-log.version>
+        <simi-common-thread.version>1.2.0</simi-common-thread.version>
+        <simi-config.version>1.2.0</simi-config.version>
+        <simi-swagger-ui.version>1.2.0</simi-swagger-ui.version>
         <!--======================================================================================================= Extension -->
         <libphonenumber.version>8.0.0</libphonenumber.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.0.4</springdoc-openapi-starter-webmvc-ui.version>
@@ -96,37 +103,37 @@
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-util-core</artifactId>
-                <version>${project.version}</version>
+                <version>${simi-util-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-common-utils</artifactId>
-                <version>${project.version}</version>
+                <version>${simi-common-utils.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-common-test</artifactId>
-                <version>${project.version}</version>
+                <version>${simi-common-test.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-common-log</artifactId>
-                <version>${project.version}</version>
+                <version>${simi-common-log.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-common-thread</artifactId>
-                <version>${project.version}</version>
+                <version>${simi-common-thread.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-config</artifactId>
-                <version>${project.version}</version>
+                <version>${simi-config.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-swagger-ui</artifactId>
-                <version>${project.version}</version>
+                <version>${simi-swagger-ui.version}</version>
             </dependency>
             <!--======================================================================================================= Extension -->
             <dependency>
@@ -277,5 +284,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>
