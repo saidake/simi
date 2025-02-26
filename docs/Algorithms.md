@@ -43,6 +43,8 @@
     - [18. Egg Drop With 2 Eggs and N Floors](#18-egg-drop-with-2-eggs-and-n-floors)
     - [19. Find Number of Ways to Reach the K-th Stair](#19-find-number-of-ways-to-reach-the-k-th-stair)
     - [20. Minimum Moves to Capture The Queen](#20-minimum-moves-to-capture-the-queen)
+  - Pattern Rule
+    - [38. Transform to Chessboard](#38-transform-to-chessboard)
   - Precomputation
     - [21. Range Product Queries of Powers](#21-range-product-queries-of-powers)
   - Segment Tree
@@ -4863,13 +4865,15 @@ The second move swaps the second and third row.
 * `n == board[i].length`
 * `2 <= n <= 30`
 * `board[i][j]` is either `0` or `1`.
-### Math Solution 
+### Pattern Rule Solution 
 To avoid adjacent `0` and `1`, each row and column must alternate between `0` and `1`, 
 and the difference between the number of `1` and `0` must be less than or equal to `1`.
 
+Given this constraint, each row and column have only two possible combinations, only the first row and first column need to be checked.
+
 Use the above condition to determine whether to return `-1`.
 
-Below is a row arrangment example (`diff` is the number of different digits in the arrangment):
+Here's an example of a row arrangement, with `diff` representing the number of differing digits in the arrangment:
 ```
 000111   
     -> 010101:  diff = 2, 1 swap
@@ -4879,12 +4883,9 @@ Below is a row arrangment example (`diff` is the number of different digits in t
     -> 0101010: diff = 4, 2 swaps
 ```
 So if there are $diff$ different digits, $\frac{diff}{2}$ swaps are required.
-if the number of digit `0` and `1` is equal, there is a extra same case need to be checked.
+If the number of digit `0` and `1` are equal, and additional same case must be considered.
 
-Since there are only two types of conbinations in row and column, 
-only the first row and first column need to be checked.
-
-Based on the above pattern, we can calculate the minimum swaps for both row and column.
+Following this pattern, the minimum swaps for both rows and columns can be calculated.
 #### Implementation
 ```java
 class Solution {
@@ -4906,7 +4907,7 @@ class Solution {
             return -1;
         }
 
-        // Each row must be either identical to or entirely different from the first row.
+        // Ensure each row is either identical to or completely different from the first row.
         for (int[] row : board) {
             boolean same = row[0] == firstRow[0];
             for (int i = 0; i < n; i++) {
@@ -4916,11 +4917,15 @@ class Solution {
             }
         }
 
+        // Determine the minimum swaps needed for both rows and columns.
         return minSwap(firstRow, rowCnt) + minSwap(firstCol, colCnt);
     }
 
     /**
-     * Calculate the minimum number of swaps required.
+     * 
+     * @param s     A row or column array.
+     * @param cnt   count array for `0`'s and `1`'s
+     * @return  The final result
      */
     private int minSwap(int[] s, int[] cnt) {
         int n = s.length;
@@ -4935,6 +4940,18 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $O(n^2)$
+    * Count the occurrences of `0` and `1` in the board  
+
+        The `n` iterations execute in $O(n)$ time.
+    * Ensure each row is either identical to or completely different from the first row.
+        
+        Sine the lengths of rows and columns are the same, the two loops result in a time complexity of $O(n^2)$.
+
+    * Determine the minimum swaps needed for both rows and columns.
+    
+        Both the row and colum checks have a time complexity of $O(n)$.
+
+    Therefore, the total time complexity is $O(n^2)$.
 
 * Space Complexity: $O(n)$
     * `firstRow` and `firstCol` require $O(n)$ space where `n` is the length of `board`.
@@ -4942,7 +4959,7 @@ class Solution {
 
     Thus, the overall space complexity is $O(n)$.
 
-    
+
 # SQL Problems
 ## 1. Odd and Even Transactions
 [Back to Top](#table-of-contents)  
