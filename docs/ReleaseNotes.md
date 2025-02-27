@@ -11,7 +11,9 @@
 # Simi
 ## Simi 1.3.0 Release - Simi Toolkit
 * Updated Japanese_v1.1.0.pdf from version 1.0.0.
-
+### SpringBoot_v1.3.0
+* **SpringBoot / Third Party Package / Extensions / junit / \[mockito-core\] / Mockito**
+  * Use `doReturn` to return different values on consecutive calls.  
 ### Japanese_v1.1.0
 * **Japanese / Verb / Plain Form**
   * Provide a comprehensive explanation of the plain form.
