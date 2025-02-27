@@ -5015,44 +5015,79 @@ Mark the valid unit to trap rain as `U`, the search process should be:
 #### Implementation
 ```java
 class Solution {
-    private Map<String, Integer> lowestAroundHeight=new HashMap();
-    private int totalVolumn=0;
-
-    public int trapRainWater(int[][] heightMap) {
-        
+    
+    public class Cell{
+    int row;
+    int col;
+    int height;
+        public Cell(int row, int col, int height){
+            this.row = row;
+            this.col = col;
+            this.height = height;
+        }
     }
 
-    private void dfs(int[][] heightMap, int i, int j){
-        if(i-1>=0 && i+1<heightMap.length && j-1<=0 && j+1<heightMap[0].length ){
-            int cur=heightMap[i][j];
-            if( heightMap[i][j-1]>cur
-                && heightMap[i-1][j]>cur
-                && heightMap[i][j+1]>cur
-                && heightMap[i+1][j]>cur){
-
-                // Mark the current unit as a valid unit
-                heightMap[i][j]=0;
-                // Record the lowest height in the surrounding units.
-                int currentVolumn=Math.min(
-                    heightMap[i][j-1], 
-                    heightMap[i-1][j],
-                    heightMap[i][j+1],
-                    heightMap[i+1][j]
-                    );
-                this.lowestAroundHeight.put(""+i+j, currentVolumn);
-                this.totalVolumn+=currentVolumn;
-
-            }
-
+    Comparator<Cell> comp = new Comparator<>(){
+        public int compare(Cell left, Cell right){
+            return left.height - right.height;
         }
-        dfs(heightMap, i, j-1);
-        dfs(heightMap, i-1, j);
-        dfs(heightMap, i, j+1);
-        dfs(heightMap, i+1, j);
+    };
+    
+    public int trapRainWater(int[][] heightMap) {
+        
+        if (heightMap == null || heightMap.length == 0 || heightMap[0].length == 0) return 0;
+        
+        int m = heightMap.length;
+        int n = heightMap[0].length;
+        
+        PriorityQueue<Cell> pq = new PriorityQueue<Cell>(m*n, comp);
+        boolean[][] visited = new boolean[m][n];
+        // Initialize the `pq` and `visited` array with the first and last columns.
+        for(int i = 0; i < heightMap.length; i++){
+            pq.offer(new Cell(i, 0, heightMap[i][0]));
+            visited[i][0] = true;
+            pq.offer(new Cell(i, n-1, heightMap[i][n-1]));
+            visited[i][n-1] = true;
+        } 
+        // Initialize the `pq` and `visited` array with the first and last rows.
+        for(int i = 0; i < heightMap[0].length; i++){
+            pq.offer(new Cell(0, i, heightMap[0][i]));
+            visited[0][i] = true;
+            pq.offer(new Cell(m-1, i, heightMap[m-1][i]));
+            visited[m-1][i] = true;
+        }
+        
+        int res = 0;
+        int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        // Iterate through `pq`
+        while(!pq.isEmpty()){
+            // Find the highest height in the `pq` queue.
+            Cell cell = pq.poll(); 
+            int row = cell.row;
+            int col = cell.col;
+            // Check the surrounding units
+            for(int i = 0; i < 4; i++){
+                int rowPos = dirs[i][0] + row;
+                int colPos = dirs[i][1] + col;
+                // Check if the position is valid and unvisited
+                if(rowPos >= 0 && rowPos < m 
+                   && colPos >= 0 && colPos < n 
+                   && !visited[rowPos][colPos] ) {
+                    // TODO res
+                    res += Math.max(0, cell.height - heightMap[rowPos][colPos]);
+                    visited[rowPos][colPos] = true;
+                    // The height added to the queue is the one trapped the water.
+                    pq.offer(new Cell(rowPos, colPos, Math.max(heightMap[rowPos][colPos], cell.height)));
+                }
+            }
+        }
+        return res;
     }
 }
 ```
-
+#### Time and Space Complexity
+* Time Complexity: 
+* Space Complexity: 
 
 # SQL Problems
 ## 1. Odd and Even Transactions
