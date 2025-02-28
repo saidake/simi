@@ -4986,31 +4986,78 @@ The total volume of water trapped is 4.
 * `0 <= heightMap[i][j] <= 2 * 10^4`
 
 ### Depth-first Search Solution 
-According to the above 2D elevation map, only the units around higher units can trap rain.
+According to the above 2D elevation map, only units surrounded by higher units can trap rain.
 
-To calcualte the total volume of water trapped, 
-the units around higher units need to be located and the lowest unit within units around should be recorded.
+To calcualte the total volume trapped water volume:
+* Traverse units from the boundary. The trapped water area is determined by finding the minimum height in the boundary and gradually reducing its range.
+
+Define a boundary queue `boundary` to store the boundary units and an array `visited` to mark visited units.
+Use `totalVolume` for the total trapped water volume and `lhu` for the current lowest-height unit.
 
 Example:
 ```
 1  4  3  1  3  2
-3 [2][1] 3 [2] 4
+3  2  1  3  2  4
 2  3  3  2  3  1
+3  2  1  3  2  3
 
-Area 1:
-    Central units:  [2][1]
-    Surrounded lowest unit: 3
-    Volume of water trapped: (3-2)+(3-1) = 3
-Area 2:    
-    Central units:  [2]
-    Surrounded lowest unit: 3
-    Volume of water trapped: (3-2) = 1
+Step 1 (Initialize the boundary queue and mark all boundary units):
+    [1][4][3][1][3][2]
+    [3] 2  1  3  2 [4]
+    [2] 3  3  2  3 [1]
+    [3][2][1][3][2][3]
 
-Total volume of water trapped: 4
+    lhu=1
+    totalVolume=0
+Step 2 (Reduce the boundary):
+    [1][4][3][1][3][2]
+    [3] 2  1 [3] 2 [4]
+    [2] 3  3  2  3 [1]
+    [3][2][1][3][2][3]
+
+    lhu=1
+    totalVolume=0 
+Step 3:
+    [1][4][3][1][3][2]
+    [3] 2  1 [3] 2 [4]
+    [2] 3 [3] 2  3 [1]
+    [3][2][1][3][2][3]
+
+    lhu=1
+    totalVolume=0 
+Step 4:
+    [1][4][3][1][3][2]
+    [3] 2  1 [3] 2 [4]
+    [2] 3 [3] 2 [3][1]
+    [3][2][1][3][2][3]
+
+    lhu=2
+    totalVolume=0 
+Step 5:
+    [1][4][3][1][3][2]
+    [3] 2  1 [3] 2 [4]
+    [2][3][3] 2 [3][1]
+    [3][2][1][3][2][3]
+
+    lhu=
+    totalVolume=0 
+Step 6(The previous lowest boundary unit is `3`):
+    [1][4][3][1][3][2]
+    [3] 2 [1][3] 2 [4]
+    [2][3][3] 2 [3][1]
+    [3][2][1][3][2][3]
+
+    totalVolume=2
+Step 7:
+    [1][4][3][1][3][2]
+    [3] 2 [1][3] 2 [4]
+    [2][3][3] 2 [3][1]
+    [3][2][1][3][2][3]
+
+    totalVolume=2
+
+Total volume of water trapped: 5
 ```
-Mark the valid unit to trap rain as `U`, the search process should be:  
-* if there is any unit that its height is lower or equal to the current unit, search it together.
-* 
 
 #### Implementation
 ```java
@@ -5040,31 +5087,31 @@ class Solution {
         int m = heightMap.length;
         int n = heightMap[0].length;
         
-        PriorityQueue<Cell> pq = new PriorityQueue<Cell>(m*n, comp);
+        PriorityQueue<Cell> boundary = new PriorityQueue<Cell>(m*n, comp);
         boolean[][] visited = new boolean[m][n];
-        // Initialize the `pq` and `visited` array with the first and last columns.
+        // Initialize the `boundary` and `visited` array with the first and last columns.
         for(int i = 0; i < heightMap.length; i++){
-            pq.offer(new Cell(i, 0, heightMap[i][0]));
+            boundary.offer(new Cell(i, 0, heightMap[i][0]));
             visited[i][0] = true;
-            pq.offer(new Cell(i, n-1, heightMap[i][n-1]));
+            boundary.offer(new Cell(i, n-1, heightMap[i][n-1]));
             visited[i][n-1] = true;
         } 
-        // Initialize the `pq` and `visited` array with the first and last rows.
+        // Initialize the `boundary` and `visited` array with the first and last rows.
         for(int i = 0; i < heightMap[0].length; i++){
-            pq.offer(new Cell(0, i, heightMap[0][i]));
+            boundary.offer(new Cell(0, i, heightMap[0][i]));
             visited[0][i] = true;
-            pq.offer(new Cell(m-1, i, heightMap[m-1][i]));
+            boundary.offer(new Cell(m-1, i, heightMap[m-1][i]));
             visited[m-1][i] = true;
         }
         
-        int res = 0;
+        int totalVolume = 0;
         int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        // Iterate through `pq`
-        while(!pq.isEmpty()){
-            // Find the highest height in the `pq` queue.
-            Cell cell = pq.poll(); 
-            int row = cell.row;
-            int col = cell.col;
+        // Iterate through `boundary`
+        while(!boundary.isEmpty()){
+            // Find the lowest-height unit in the `boundary` queue.
+            Cell lhu = boundary.poll(); 
+            int row = lhu.row;
+            int col = lhu.col;
             // Check the surrounding units
             for(int i = 0; i < 4; i++){
                 int rowPos = dirs[i][0] + row;
@@ -5073,15 +5120,15 @@ class Solution {
                 if(rowPos >= 0 && rowPos < m 
                    && colPos >= 0 && colPos < n 
                    && !visited[rowPos][colPos] ) {
-                    // TODO res
-                    res += Math.max(0, cell.height - heightMap[rowPos][colPos]);
+                    // Decrease 
+                    totalVolume += Math.max(0, lhu.height - heightMap[rowPos][colPos]);
                     visited[rowPos][colPos] = true;
                     // The height added to the queue is the one trapped the water.
-                    pq.offer(new Cell(rowPos, colPos, Math.max(heightMap[rowPos][colPos], cell.height)));
+                    boundary.offer(new Cell(rowPos, colPos, Math.max(heightMap[rowPos][colPos], cell.height)));
                 }
             }
         }
-        return res;
+        return totalVolume;
     }
 }
 ```
