@@ -18,8 +18,12 @@
 [![](https://mermaid.ink/img/pako:eNqNlEFvm0AQhf_KaE-JZCwZuz1wiEqgkSo1ahVcVWrwYQ0Te2Vg6e4SC9n-713YxYBrJfHB8g6Pb4Z5zxxIwlMkHtkIWm5hGcYF6I-s1qYQKSxhZor-7Pk3F7uXjO8jFK8swUhVa7kCx7k7BgKpQnkE37159qERwoNWgpVCo13dGhIW6bU-rine932CjGGhLjrcX3SworfZc1MMDBvFA00UF_UKxuzgzEYBnWZItpj5lwPILS3RA6WbOGoCGV1j5kFMDAxokcKa6S8KBe5hb5iKQ6wZFBSVO_hbYYUxgVMHHg-9MMVw1g91ZZjxPZ_sPe4bE5pZpgI3TCoU3ba_5WWGud4lVYwXy7pEaWZrgfOPA_1EsVemGMoxcoA723TtGT7blot3W1qLplJRoW5uL_jm5_Lr488fT_73HpbU2YC0xLzkgmZtVFEM7fBdcKbwS6K2soapc6fDaUP635XAXgncJlI6Il1U2mM4Gx27mTqD2xQ-2fVZq3UcQ_e6oF-w1syHfY9Rswk5QCzIhOQocspS_T8_NOKYqK12JSbN46dU7GISFyeto5XiUV0kxFOiwgkRvNpsifdCM6lPVZnqYIeMaqvyc7WkxR_O-zOmTFvyaF4r7dvl9A_Bq2fA?type=png)](https://mermaid.live/edit#pako:eNqNlEFvm0AQhf_KaE-JZCwZuz1wiEqgkSo1ahVcVWrwYQ0Te2Vg6e4SC9n-713YxYBrJfHB8g6Pb4Z5zxxIwlMkHtkIWm5hGcYF6I-s1qYQKSxhZor-7Pk3F7uXjO8jFK8swUhVa7kCx7k7BgKpQnkE37159qERwoNWgpVCo13dGhIW6bU-rine932CjGGhLjrcX3SworfZc1MMDBvFA00UF_UKxuzgzEYBnWZItpj5lwPILS3RA6WbOGoCGV1j5kFMDAxokcKa6S8KBe5hb5iKQ6wZFBSVO_hbYYUxgVMHHg-9MMVw1g91ZZjxPZ_sPe4bE5pZpgI3TCoU3ba_5WWGud4lVYwXy7pEaWZrgfOPA_1EsVemGMoxcoA723TtGT7blot3W1qLplJRoW5uL_jm5_Lr488fT_73HpbU2YC0xLzkgmZtVFEM7fBdcKbwS6K2soapc6fDaUP635XAXgncJlI6Il1U2mM4Gx27mTqD2xQ-2fVZq3UcQ_e6oF-w1syHfY9Rswk5QCzIhOQocspS_T8_NOKYqK12JSbN46dU7GISFyeto5XiUV0kxFOiwgkRvNpsifdCM6lPVZnqYIeMaqvyc7WkxR_O-zOmTFvyaF4r7dvl9A_Bq2fA)
 
 #### Potential Issues
-* A Worker cannot execute a workflow triggered in **a different task queue** than its bound task queue.
-
+* The workflow execution method is blocked.  
+  
+  No available worker can be found in the binding task queue of the current workflow.
+  The workflow may be bound to the wrong task queue that lacks any workers, causing it to be blocked.
+* The workflow has been triggered and displayed in the temporal UI, but the worker is not responding.
+* The delay method doesn't work and executes immediately.
 #### Mermaid Source Code
 ```text
 graph TD
