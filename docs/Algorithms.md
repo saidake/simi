@@ -4988,12 +4988,13 @@ The total volume of water trapped is 4.
 ### Depth-first Search Solution 
 According to the above 2D elevation map, only units surrounded by higher units can trap rain.
 
-To calcualte the total volume trapped water volume:
+To calculate the total volume of trapped water:
 * Traverse units from the boundary. The trapped water area is determined by finding the minimum height in the boundary and gradually reducing its range.
 
 Define a boundary queue `boundary` to store the boundary units and an array `visited` to mark visited units.
 Use `totalVolume` for the total trapped water volume and `lhu` for the current lowest-height unit.
 
+Use `[]` to indicate visited units.
 Example:
 ```
 1  4  3  1  3  2
@@ -5015,7 +5016,7 @@ Step 2 (Reduce the boundary):
     [2] 3  3  2  3 [1]
     [3][2][1][3][2][3]
 
-    lhu=1
+    lhu=1 (Poped unit `1` from the boundary queue, added `3` to `boundary`, and marked 1 and 3 as visited.)
     totalVolume=0 
 Step 3:
     [1][4][3][1][3][2]
@@ -5039,24 +5040,45 @@ Step 5:
     [2][3][3] 2 [3][1]
     [3][2][1][3][2][3]
 
-    lhu=
+    lhu=3
     totalVolume=0 
-Step 6(The previous lowest boundary unit is `3`):
+Step 6:
     [1][4][3][1][3][2]
     [3] 2 [1][3] 2 [4]
     [2][3][3] 2 [3][1]
     [3][2][1][3][2][3]
 
+    lhu=3
     totalVolume=2
 Step 7:
     [1][4][3][1][3][2]
     [3] 2 [1][3] 2 [4]
-    [2][3][3] 2 [3][1]
+    [2][3][3][2][3][1]
     [3][2][1][3][2][3]
 
-    totalVolume=2
+    lhu=3
+    totalVolume=2+1=3
 
-Total volume of water trapped: 5
+Step 8:
+    [1][4][3][1][3][2]
+    [3][2][1][3] 2 [4]
+    [2][3][3][2][3][1]
+    [3][2][1][3][2][3]
+
+    lhu=3
+    totalVolume=3+1=4
+
+
+Step 9:
+    [1][4][3][1][3][2]
+    [3][2][1][3][2][4]
+    [2][3][3][2][3][1]
+    [3][2][1][3][2][3]
+
+    lhu=3
+    totalVolume=4+1=5
+
+Total volume of trapped water: 5
 ```
 
 #### Implementation
@@ -5106,7 +5128,7 @@ class Solution {
         
         int totalVolume = 0;
         int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        // Iterate through `boundary`
+        // Iterate over `boundary`
         while(!boundary.isEmpty()){
             // Find the lowest-height unit in the `boundary` queue.
             Cell lhu = boundary.poll(); 
@@ -5134,7 +5156,28 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: 
+  * Initialize the `boundary` and `visited` array with the first and last columns.
+    
+    Traversing the row indices of `heightMap` takes $O(m)$ time and the `offer` method of `PriorityQueue` takes $O(\log m\times n)$, 
+     resulting in a total time complexity of $O(m\log m\times n)$, where `m` is the row length and `n` is the column length.
+
+  * Initialize the `boundary` and `visited` array with the first and last rows.
+
+    Similar to the previous step, this loop has a time complexity of $O(n \log m\times n)$.
+
+  * Iterate over `boundary`
+    
+    Since visisted units are not traversed while reducing the boundary, the outer loop iterates over all units, taking $O(m\times n)$ time.  
+    The inner loop has has a fixed `4` iterations, and the `offer` method of `PriorityQueue` takes $O(\log m \times n)$ time, 
+     resulting in a total time complexity of $O(m\times n \log m \times n)$.
+
+  Therefore, the total time complexity is $O(m\times n \log m \times n)$.
+
 * Space Complexity: 
+  * The priority queue `boundary` and array `visited` each take $O(m\times n)$ space.
+  * `dirs` has a fiexed size `4`, taking $O(1)$ space.
+  
+  Thus, the total space complexity is $O(m\times n)$.
 
 # SQL Problems
 ## 1. Odd and Even Transactions
