@@ -11,13 +11,17 @@
 # Simi
 ## Simi 1.3.0 Release - Simi Toolkit
 * Updated Japanese_v1.1.0.pdf from version 1.0.0.
-### SpringBoot_v1.3.0
+### SpringBoot_v1.2.0
 * **SpringBoot / Third Party Package / Extensions / junit / \[mockito-core\] / Mockito**
   * Use `doReturn` to return different values on consecutive calls.  
+### Java_v1.2.0
+* **Java.pdf / Java / java.base / java.util / concurrent / locks / AbstractQueuedSynchronizer**
+  * Add a usage example for the `newCondition()` method.
+  
 ### Japanese_v1.1.0
-* **Japanese / Verb / Plain Form**
+* **Japanese / Verb / 簡体**
   * Provide a comprehensive explanation of the plain form.
-* **Japanese / Verb / Polite Form**
+* **Japanese / Verb / 敬体**
   * Provide a comprehensive explanation of the polite form.
 
 ## Simi 1.2.0 Release - OneDrive Document Migration
