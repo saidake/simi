@@ -33,6 +33,8 @@
       - [35. Maximum Multiplication Score](#35-maximum-multiplication-score)
   - HashMap
     - [30. Count Common Words With One Occurrence](#30-count-common-words-with-one-occurrence)
+  - Heap
+    - [39. Trapping Rain Water II](#39-trapping-rain-water-ii)
   - Fenwick Tree
     - [14. Distribute Elements Into Two Arrays II](#14-distribute-elements-into-two-arrays-ii)
   - Greedy
@@ -4994,7 +4996,7 @@ To calculate the total volume of trapped water:
 Define a boundary queue `boundary` to store the boundary units and an array `visited` to mark visited units.
 Use `totalVolume` for the total trapped water volume and `lhu` for the current lowest-height unit.
 
-Use `[]` to indicate visited units.
+Use `[]` to indicate visited units.  
 Example:
 ```
 1  4  3  1  3  2
@@ -5178,6 +5180,80 @@ class Solution {
   * `dirs` has a fiexed size `4`, taking $O(1)$ space.
   
   Thus, the total space complexity is $O(m\times n)$.
+
+## 40. Count Subarrays Where Max Element Appears at Least K Times
+You are given an integer array `nums` and a positive integer `k`.
+
+Return the number of subarrays where the maximum element of `nums` appears at least `k` times in that subarray.
+
+A subarray is a contiguous sequence of elements within an array.
+
+**Example 1:**
+> **Input:** nums = [1,3,2,3,3], k = 2  
+> **Output:** 6  
+> **Explanation:** The subarrays that contain the element 3 at least 2 times are: [1,3,2,3], [1,3,2,3,3], [3,2,3], [3,2,3,3], [2,3,3] and [3,3].
+
+**Example 2:**
+> **Input:** nums = [1,4,2,1], k = 3  
+> **Output:** 0  
+> **Explanation:** No subarray contains the element 4 at least 3 times.
+
+**Constraints:**
+* `1 <= nums.length <= 10^5`
+* `1 <= nums[i] <= 10^6`
+* `1 <= k <= 10^5`
+
+### Analysis
+Symbols:
+* `m` and `n`:  the number of left and right elements
+* `k`: the number of maximum elements
+
+Process: 
+1. Count the occurrences of the maximum element and store its indecies.
+2. Count the combinations
+   * Find the left-most and the right-most indecies of the selected maximum element.
+   $$\{ \sum_{i=1}^{m}C(i,m) \} \times \{ \sum_{i=1}^{n}C(i,n) \} = 2^m \times 2^n = 2^{m+n}$$ 
+#### Implementation
+```java
+class Solution {
+    public long countSubarrays(int[] nums, int k) {
+        List<Integer> indexList=new ArrayList();
+        // Find the maximum element
+        int max=0;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]>max)max=nums[i];
+        }
+        // Store the indecies of these maximum elements
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]==max){
+                indexList.add(i);
+            }
+        }
+        // Count combinations
+
+    }
+
+    public long countSubsets(List<Integer> indexList) {
+        int len = indexList.size();
+        List<Deque<Integer>> ans = new LinkedList<>(1 << len);
+        for (int i = 0; i < (1 << len); i++) { 
+            Deque<Integer> subset = new LinkedList<>();
+            for (int j = 0; j < len; j++) {
+                if ((i >> j & 1) == 1) { 
+                    subset.add(nums[j]);
+                }
+            }
+            // current subset
+            int left=subset.peekFirst();
+            int right=subset.peekLast();
+            //
+        }
+        return ans;
+    }
+
+}
+```
+
 
 # SQL Problems
 ## 1. Odd and Even Transactions
