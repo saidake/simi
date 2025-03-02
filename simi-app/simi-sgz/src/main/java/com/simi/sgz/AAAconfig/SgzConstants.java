@@ -8,4 +8,5 @@ public interface SgzConstants {
     int VISIT_TIMES=20;
     int TRIAL_TIMES=14*2;
     int CITY_TROOP_NUMBER=5;
+    int WRITING_TIME_OFFSET=3000;
 }

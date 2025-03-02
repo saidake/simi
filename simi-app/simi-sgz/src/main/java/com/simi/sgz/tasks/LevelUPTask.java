@@ -66,16 +66,7 @@ public final class LevelUPTask extends ThreadPoolTask {
 
     @Override
     public void loadProperties() {
-        LevelUpProperties levelUpProperties = YamlUtil.loadByPath(SgzConstants.SGZ_LEVEL_UP_PATH, LevelUpProperties.class);
-        int[][] staminaList = levelUpProperties.getStaminaList();
-        if(levelUpProperties.getMinus()!=0){
-            for (int i = 0; i < staminaList.length; i++) {
-                for (int j = 0; j < staminaList[0].length; j++) {
-                    staminaList[i][j]-=levelUpProperties.getMinus();
-                }
-            }
-        }
-        this.levelUpProperties=levelUpProperties;
+        this.levelUpProperties= YamlUtil.loadByPath(SgzConstants.SGZ_LEVEL_UP_PATH, LevelUpProperties.class);
     }
 
     @Override
@@ -100,6 +91,7 @@ public final class LevelUPTask extends ThreadPoolTask {
             if(needSupplyForAny){
                 replenishTroops();
             }
+            this.operation.scrollToBottom();
 
             // Execute tasks
             for (int i = 0; i < staminaList.length; i++) {
@@ -108,7 +100,7 @@ public final class LevelUPTask extends ThreadPoolTask {
                 this.operation.clear(simiSgz.isAvoidMarchCollision(), selectTroopFrom[i], clearMarkList[i], clearTabList[i]);
             }
             try {
-                int adjustedWaitingTime=waitingTime*1000+3000;
+                int adjustedWaitingTime=waitingTime*1000 + SgzConstants.WRITING_TIME_OFFSET;
                 Thread.sleep(adjustedWaitingTime+adjustedWaitingTime/2);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -140,7 +132,6 @@ public final class LevelUPTask extends ThreadPoolTask {
         }
         //B. go to the mark button.
         if(enteredCity)this.operation.exitCity();
-        this.operation.scrollToBottom();
     }
 
 }

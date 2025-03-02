@@ -98,6 +98,13 @@ public class TroopOperation {
         }
         robot.leftMouseClickEx(coordinate.getCloseWindow());
         robot.leftMouseClickEx(coordinate.getCityBack());
+//        if(levelUpProperties.getMinus()!=0){
+//            for (int i = 0; i < staminaList.length; i++) {
+//                for (int j = 0; j < staminaList[0].length; j++) {
+//                    staminaList[i][j]-=levelUpProperties.getMinus();
+//                }
+//            }
+//        }
     }
 
     public void scrollToBottom(){
@@ -127,8 +134,8 @@ public class TroopOperation {
         robot.scroll(scrollFrom,scrollTo);
     }
     public void clear(boolean avoidMarchCollision, int curIndex, int markIndex, int clearTabIndex) {
-        //robot.leftMouseClick(getMrkByIndex(markIndex), WaitingTime.SELECT_MARK);
         robot.leftMouseClickMark(getMrkByIndex(markIndex),coordinate.getBtn4(),avoidMarchCollision);
+        // Select a tab
         robot.leftMouseClickEx(getTabByIndex(clearTabIndex), WaitingTime.SELECT_TAB);
         robot.leftMouseClickEx(getArmySelectionLocationInCity(curIndex), WaitingTime.SELECT_TROOP_IN_CITY);
         robot.leftMouseClickEx(coordinate.getMarchConfirm(), WaitingTime.CONFIRM);
