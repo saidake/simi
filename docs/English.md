@@ -30,3 +30,22 @@
 * hand baggage
 * cardboard factory
 * arrange
+## March 3, 2025
+* scanner
+* The man has his arms above his head.
+* row
+* They're rowing the boat together.
+* lift
+* rubber
+* They're lifting the rubber boat.
+* overhead
+* There are planes flying overhead.
+* shelve - shelves - shelving - shelved - shelved
+* shelves
+* The shelves are filled with books.
+* neatly
+* There are books neatly arranged on top of the desk.
+* notice
+* He's reading a notice on the wall of the train station.
+* stroll
+* He's strolling along the track.
