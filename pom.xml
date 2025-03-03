@@ -20,6 +20,6 @@
         <module>simi-custom</module>
         <module>simi-gateway</module>
         <module>simi-sandbox</module>
-        <module>simi-business</module>
+        <module>simi-core</module>
     </modules>
 </project>
