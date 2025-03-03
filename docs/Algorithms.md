@@ -3862,7 +3862,7 @@ class Solution {
 Let `n` be the length of the `nums` array.
 Since each element might be included or excluded, the total number of subsets of `nums` array is $2^n$.
 
-In the binary representation of subset indices from $0$ to $2^n$, each bit indicates whether an element is selected.
+In the **binary representation** of subset indices from $0$ to $2^n$, each bit indicates whether an element is selected.
 
 By iterating through all elements of `nums` and adding them to subsets at valid indices, 
 every element is placed into the subsets that include it.
@@ -3887,10 +3887,15 @@ Binary Representation:
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         int n = nums.length;
+        // A list containing all subsets.
         List<List<Integer>> ans = new ArrayList<>(1 << n);
+        // Traverse all subset indecies, where `i` represents all combinations in binary.
         for (int i = 0; i < (1 << n); i++) { 
+            // Add the current subset to the list.
             List<Integer> subset = new ArrayList<>();
+            // Traverse 
             for (int j = 0; j < n; j++) {
+                // Extracts the bit at index `j` from `i`'s binary representation to check if it is `1`.
                 if ((i >> j & 1) == 1) { 
                     subset.add(nums[j]);
                 }
@@ -5230,27 +5235,34 @@ class Solution {
             }
         }
         // Count combinations
-
+        return countSubsets(indexList, k, nums.length);
     }
 
-    public long countSubsets(List<Integer> indexList) {
+    public long countSubsets(List<Integer> indexList, int k, int numLen) {
+        long res=0;
         int len = indexList.size();
-        List<Deque<Integer>> ans = new LinkedList<>(1 << len);
         for (int i = 0; i < (1 << len); i++) { 
-            Deque<Integer> subset = new LinkedList<>();
-            for (int j = 0; j < len; j++) {
-                if ((i >> j & 1) == 1) { 
-                    subset.add(nums[j]);
-                }
+            int count=0;
+            for(int j=0; j<len; j++){
+                if( (i>>j & 1) ==1)count++;
             }
-            // current subset
-            int left=subset.peekFirst();
-            int right=subset.peekLast();
-            //
-        }
-        return ans;
-    }
+            if(count>=k){
+                // current subset 
+                int leftInd=Integer.numberOfTrailingZeros(i);
+                int rightInd=31-Integer.numberOfLeadingZeros(i);
 
+                int left=indexList.get(leftInd);
+                int right=indexList.get(rightInd);
+
+                //res
+                int leftCount=left;
+                int rightCount=numLen-1-right;
+                int cur=leftCount==0 || rightCount==0?Math.max(leftCount, rightCount):leftCount*rightCount;
+                res+=cur;
+            }
+        }
+        return res;
+    }
 }
 ```
 
