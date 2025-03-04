@@ -28,7 +28,9 @@ import java.util.regex.Pattern;
 public class ReviewToolApp {
     private static final Path DOC_KEY_POINTS_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\doc-key-points.txt");
     private static final Path ALGORITHMS_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\Algorithms.md");
-    private static final Path REVIEW_LOG_FILE_PATH = Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\review-logs.txt");
+    private static final Path ENGLISH_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\English.md");
+    private static final Path JAPANESE_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\Japanese.md");
+    private static final Path REVIEW_LOG_FILE_PATH = Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\ReviewLogs.md");
     private static final DateTimeFormatter dateFormater= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final Pattern PRIORITY_PATTERN = Pattern.compile("\\[(\\d+)]$");
 
@@ -37,11 +39,16 @@ public class ReviewToolApp {
         // Algorithms
         String algorithmHeading=SimiFileUtils.readRandomLine(ALGORITHMS_PATH, line->line.matches("^## [1-9]+.*?")).replaceAll("^## ","");
         log.info("algorithmHeading: {}", algorithmHeading);
+        writeReviewLog(fw, algorithmHeading);
         // Questions
         // English
+        String engWord=SimiFileUtils.readRandomLine(ENGLISH_PATH, line->line.matches("^\\* [A-z]+.*?")).replaceAll("^\\* ","");
+        log.info("English word: {}", engWord);
+        writeReviewLog(fw, engWord);
         // Japanese
-        writeReviewLog(fw, algorithmHeading);
-        fw.write(System.lineSeparator());
+        String japWord=SimiFileUtils.readRandomLine(JAPANESE_PATH, line->line.matches("^\\* [A-z]+.*?")).replaceAll("^\\* ","");
+        log.info("Japanese word: {}", japWord);
+        writeReviewLog(fw, japWord);
         fw.write(System.lineSeparator());
     }
 
@@ -53,7 +60,9 @@ public class ReviewToolApp {
      * @throws IOException IO Exception
      */
     private static void writeReviewLog(FileWriter fw, String output) throws IOException {
-        fw.write(LocalDateTime.now().format(dateFormater) + " - "+ output);
+        // fw.write(LocalDateTime.now().format(dateFormater) + " - "+ output);
+        fw.write(output);
+        fw.write(System.lineSeparator());
     }
 
     /**

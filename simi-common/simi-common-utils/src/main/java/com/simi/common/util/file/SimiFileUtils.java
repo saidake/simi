@@ -1,5 +1,6 @@
 package com.simi.common.util.file;
 
+import cn.hutool.core.lang.Assert;
 import com.simi.common.util.SmpAssert;
 import jakarta.annotation.Nullable;
 import lombok.Cleanup;
@@ -39,6 +40,7 @@ public class SimiFileUtils {
      */
     public static String readRandomLine(Path path, Predicate<String> linePredicate) throws IOException {
         List<String> collect = Files.lines(path).filter(linePredicate).toList();
+        Assert.notEmpty(collect);
         return collect.get(ThreadLocalRandom.current().nextInt(collect.size()));
     }
 
