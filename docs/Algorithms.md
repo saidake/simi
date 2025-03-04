@@ -3893,7 +3893,7 @@ class Solution {
         for (int i = 0; i < (1 << n); i++) { 
             // Add the current subset to the list.
             List<Integer> subset = new ArrayList<>();
-            // Traverse 
+            // Traverse the indices of `nums`
             for (int j = 0; j < n; j++) {
                 // Extracts the bit at index `j` from `i`'s binary representation to check if it is `1`.
                 if ((i >> j & 1) == 1) { 
@@ -5209,59 +5209,91 @@ A subarray is a contiguous sequence of elements within an array.
 * `1 <= k <= 10^5`
 
 ### Analysis
-Symbols:
-* `m` and `n`:  the number of left and right elements
-* `k`: the number of maximum elements
+With the sliding window approach, handle each of the k valid maximum elements step by step.
 
-Process: 
-1. Count the occurrences of the maximum element and store its indecies.
-2. Count the combinations
-   * Find the left-most and the right-most indecies of the selected maximum element.
-   $$\{ \sum_{i=1}^{m}C(i,m) \} \times \{ \sum_{i=1}^{n}C(i,n) \} = 2^m \times 2^n = 2^{m+n}$$ 
+Example Symbols:
+* `C`:          The current element being traversed.
+* `L`:          A index mark.
+* `cntMax`:     The number of maximum elements.
+* `ans`         The the number of valid subarrays.
+
+Example: 
+```
+nums = 1 3 2 3 3 1 2
+k = 2 
+
+Step 1:
+    nums:    1 3 2 3 3 1 2
+    indices: 0 1 2 3 4 5 6
+             C
+             L 
+    cntMax: 0
+    ans: 0
+Step 2:
+    nums:    1 3 2 3 3 1 2
+    indices: 0 1 2 3 4 5 6
+                 ->C         (Keep traversing until `cntMax = k`)
+             L 
+    cntMax: 2
+    ans: 0   (Increase `ans` by `L` after both `C` and `L` move, or after a single `C` move)
+Step 3:
+    nums:    1 3 2 3 3 1 2
+    indices: 0 1 2 3 4 5 6
+                   C
+               ->L           (Shift `L` right until `cntMax < k`)
+    cntMax: 1  (Exclude a maxinum element)
+    ans: 2     (Increase `ans` by `L`)
+Step 4:
+    nums:    1 3 2 3 3 1 2
+    indices: 0 1 2 3 4 5 6
+                   ->C       (Keep traversing until `cntMax = k`)
+                 L       
+    cntMax: 2
+    ans: 2
+Step 5:
+    nums:    1 3 2 3 3 1 2
+    indices: 0 1 2 3 4 5 6
+                     C  
+                   ->L       (Shift `L` right until `cntMax < k`)     
+    cntMax: 1  (Exclude a maxinum element)
+    ans: 6     (Increase `ans` by `L`)
+Step 6:
+    nums:    1 3 2 3 3 1 2
+    indices: 0 1 2 3 4 5 6
+                       ->C   (Keep traversing)
+                     L     
+    cntMax: 1
+    ans: 6+4+4 = 14 (Increase `ans` by `L` for the two `C` moves)
+```
+In the last step, each increased `L` indicates that [3,3], [2,3,3], [3,2,3,3],[1,3,2,3,3] 
+
 #### Implementation
 ```java
 class Solution {
     public long countSubarrays(int[] nums, int k) {
-        List<Integer> indexList=new ArrayList();
-        // Find the maximum element
-        int max=0;
-        for(int i=0; i<nums.length; i++){
-            if(nums[i]>max)max=nums[i];
+        int max = 0;
+        // Find the maximum element in `nums`.
+        for (int num : nums) {
+            max = Math.max(max, num);
         }
-        // Store the indecies of these maximum elements
-        for(int i=0; i<nums.length; i++){
-            if(nums[i]==max){
-                indexList.add(i);
+
+        long ans = 0;
+        int cntMax = 0, left = 0;
+        // Traverse `nums`
+        for (int x : nums) {
+            // If the current element is `max`, increase the `cntMax` by `1`.
+            if (x == max) {
+                cntMax++;
             }
+            // Shift `left` right until `cntMax < k`
+            while (cntMax == k) {
+                if (nums[left++] == max) {
+                    cntMax--;
+                }
+            }
+            ans += left;
         }
-        // Count combinations
-        return countSubsets(indexList, k, nums.length);
-    }
-
-    public long countSubsets(List<Integer> indexList, int k, int numLen) {
-        long res=0;
-        int len = indexList.size();
-        for (int i = 0; i < (1 << len); i++) { 
-            int count=0;
-            for(int j=0; j<len; j++){
-                if( (i>>j & 1) ==1)count++;
-            }
-            if(count>=k){
-                // current subset 
-                int leftInd=Integer.numberOfTrailingZeros(i);
-                int rightInd=31-Integer.numberOfLeadingZeros(i);
-
-                int left=indexList.get(leftInd);
-                int right=indexList.get(rightInd);
-
-                //res
-                int leftCount=left;
-                int rightCount=numLen-1-right;
-                int cur=leftCount==0 || rightCount==0?Math.max(leftCount, rightCount):leftCount*rightCount;
-                res+=cur;
-            }
-        }
-        return res;
+        return ans;
     }
 }
 ```
