@@ -29,6 +29,7 @@ public class ReviewToolApp {
     private static final Path DOC_KEY_POINTS_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\doc-key-points.txt");
     private static final Path ALGORITHMS_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\Algorithms.md");
     private static final Path ENGLISH_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\English.md");
+    private static final Path QUESTIONS_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\Questions.md");
     private static final Path JAPANESE_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\Japanese.md");
     private static final Path REVIEW_LOG_FILE_PATH = Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi\\docs\\ReviewLogs.md");
     private static final DateTimeFormatter dateFormater= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -36,18 +37,22 @@ public class ReviewToolApp {
 
     public static void main(String[] args) throws IOException {
         @Cleanup FileWriter fw = new FileWriter(REVIEW_LOG_FILE_PATH.toString(),true);
-        // Algorithms
+        // Select a random line
         String algorithmHeading=SimiFileUtils.readRandomLine(ALGORITHMS_PATH, line->line.matches("^## [1-9]+.*?")).replaceAll("^## ","");
         log.info("algorithmHeading: {}", algorithmHeading);
-        writeReviewLog(fw, algorithmHeading);
         // Questions
+        String question=SimiFileUtils.readRandomLine(QUESTIONS_PATH, line->line.matches("^## [1-9]+.*?")).replaceAll("^## ","");
+        log.info("Question: {}", question);
         // English
         String engWord=SimiFileUtils.readRandomLine(ENGLISH_PATH, line->line.matches("^\\* [A-z]+.*?")).replaceAll("^\\* ","");
         log.info("English word: {}", engWord);
-        writeReviewLog(fw, engWord);
         // Japanese
         String japWord=SimiFileUtils.readRandomLine(JAPANESE_PATH, line->line.matches("^\\* [A-z]+.*?")).replaceAll("^\\* ","");
         log.info("Japanese word: {}", japWord);
+
+        writeReviewLog(fw, algorithmHeading);
+        writeReviewLog(fw, question);
+        writeReviewLog(fw, engWord);
         writeReviewLog(fw, japWord);
         fw.write(System.lineSeparator());
     }

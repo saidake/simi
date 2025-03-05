@@ -28,6 +28,7 @@
         <jakarta.mail.version>1.6.7</jakarta.mail.version>
         <!--======================================================================================================= Custom Dep -->
         <simi-common-utils.version>1.2.0</simi-common-utils.version>
+        <simi-toolkit-core.version>1.2.0</simi-toolkit-core.version>
         <simi-util-core.version>1.2.0</simi-util-core.version>
         <simi-common-test.version>1.2.0</simi-common-test.version>
         <simi-common-log.version>1.2.0</simi-common-log.version>
@@ -100,6 +101,12 @@
                 <scope>import</scope>
             </dependency>
             <!--==================================================================================================== Custom dep -->
+            <dependency>
+                <groupId>com.simi</groupId>
+                <artifactId>simi-toolkit-core</artifactId>
+                <version>${simi-toolkit-core.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.simi</groupId>
                 <artifactId>simi-util-core</artifactId>

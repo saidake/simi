@@ -11,6 +11,11 @@
     <artifactId>simi-common-log</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.simi</groupId>
             <artifactId>simi-common-utils</artifactId>
         </dependency>

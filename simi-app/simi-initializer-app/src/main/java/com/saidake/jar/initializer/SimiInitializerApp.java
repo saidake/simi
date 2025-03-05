@@ -1,8 +1,8 @@
 package com.saidake.jar.initializer;
 
 import cn.hutool.core.lang.Assert;
-import com.simi.common.util.file.SimiInitializer;
-import com.simi.common.util.file.support.InitException;
+import com.simi.toolkit.core.SimiInitializer;
+import com.simi.toolkit.core.exception.InitException;
 import org.dom4j.DocumentException;
 
 import java.io.IOException;
