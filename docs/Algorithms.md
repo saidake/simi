@@ -52,7 +52,10 @@
   - Segment Tree
     - [32. My Calendar II](#32-my-calendar-ii)
   - Sliding Window
-    - [22. Find the Longest Equal Subarray](#22-find-the-longest-equal-subarray)
+    - Standard
+      - [22. Find the Longest Equal Subarray](#22-find-the-longest-equal-subarray)
+    - Handle the right side separately
+      - [40. Count Subarrays Where Max Element Appears at Least K Times](#40-count-subarrays-where-max-element-appears-at-least-k-times)
   - String
     - [23. License Key Formatting](#23-license-key-formatting)
   - Traversal
@@ -5265,7 +5268,7 @@ Step 6:
     cntMax: 1
     ans: 6+4+4 = 14 (Increase `ans` by `L` for the two `C` moves)
 ```
-In the last step, each increased `L` indicates that [3,3], [2,3,3], [3,2,3,3],[1,3,2,3,3] 
+In the last step, each added `L` indicates that the four previous added subsets `[3,3]`, `[2,3,3]`, `[3,2,3,3]` and `[1,3,2,3,3]` concatenate the current `C` to form four new valid subsets.
 
 #### Implementation
 ```java
@@ -5279,7 +5282,7 @@ class Solution {
 
         long ans = 0;
         int cntMax = 0, left = 0;
-        // Traverse `nums`
+        // Traverse `nums` and shift `left` right.
         for (int x : nums) {
             // If the current element is `max`, increase the `cntMax` by `1`.
             if (x == max) {
@@ -5297,6 +5300,19 @@ class Solution {
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(n)$
+  * Find the maximum element in `nums`.
+    
+    Traversing `nums` runs in $O(n)$ time.
+  * Traverse `nums` and shift `left` right.
+
+    Since `left` can be moved at most `n` times, both outer and inner loop run in $O(n)$ time, resulting in a total time complexity of $O(n)$ for this step.
+
+  Thus, the overall time complexity is $O(n)$.
+* Space Complexity: $O(1)$
+
+    `max`, `ans`, `cntMax` and `left` each take constant time $O(1)$.
 
 
 # SQL Problems
