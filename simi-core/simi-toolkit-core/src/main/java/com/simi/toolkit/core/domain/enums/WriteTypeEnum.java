@@ -1,4 +1,4 @@
-package com.simi.common.util.file.support.yaml;
+package com.simi.toolkit.core.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

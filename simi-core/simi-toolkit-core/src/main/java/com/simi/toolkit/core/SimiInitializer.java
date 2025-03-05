@@ -1,18 +1,19 @@
-package com.simi.common.util.file;
+package com.simi.toolkit.core;
 
 import com.simi.common.util.SmpAssert;
-import com.simi.common.util.file.support.InitException;
-import com.simi.common.util.file.support.yaml.SimiYmlProperties;
-import com.simi.common.util.file.support.yaml.BackupEnum;
-import com.simi.common.util.file.support.yaml.ProjectInfo;
-import com.simi.common.util.file.support.yaml.WriteInfo;
-import com.simi.common.util.file.support.yaml.WriteTypeEnum;
+import com.simi.common.util.file.SimiFileUtils;
+import com.simi.common.util.file.SimiXmlUtils;
+import com.simi.toolkit.core.exception.InitException;
+import com.simi.toolkit.core.domain.yaml.SimiYmlProperties;
+import com.simi.toolkit.core.domain.enums.BackupEnum;
+import com.simi.toolkit.core.domain.yaml.ProjectInfo;
+import com.simi.toolkit.core.domain.yaml.WriteInfo;
+import com.simi.toolkit.core.domain.enums.WriteTypeEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.dom4j.DocumentException;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 
@@ -70,14 +71,14 @@ public class SimiInitializer {
     }
 
     public static SimiYmlProperties readYmlProperties() throws FileNotFoundException {
-        Yaml smpYml=new Yaml(new CustomClassLoaderConstructor(SimiYmlProperties.class, SimiInitializer.class.getClassLoader()));
+        Yaml smpYml=new Yaml();
         String smpYamlPath = Paths.get(configPath, SMP_CONFIG_FILE).toString();
         log.info("configuration file path: {}",smpYamlPath);
         FileInputStream fileInputStream = new FileInputStream(smpYamlPath);
         return smpYml.loadAs(fileInputStream, SimiYmlProperties.class);
     }
 
-    public static Map<String,Set<String>> init(SimiYmlProperties simiYmlProperties, String projectName, String env, GetPomProjectName getPomProjectName) throws IOException, InitException {
+    public static Map<String, Set<String>> init(SimiYmlProperties simiYmlProperties, String projectName, String env, GetPomProjectName getPomProjectName) throws IOException, InitException {
         Map<String,Set<String>> resultProjectWriteFileMap=new HashMap<>();
         //A.[CORE] write files
         Map<String, Boolean> writeFileMap=new HashMap<>();
