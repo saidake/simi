@@ -4300,12 +4300,12 @@ i=3:
     indices:        1 2 3 4 5 6 7 8 9 
     isComposite:        ✔             (isComposite[3]=true) 
 
-    Step 1: 
+    Step 2: 
     parent:         1 2 3 4 5 3 7 8 9 (i=3, j=6, parent[6]=3)
     indices:        1 2 3 4 5 6 7 8 9 
     isComposite:        ✔     ✔      (isComposite[6]=true) 
 
-    Step 2:
+    Step 3:
     parent:         1 2 3 4 5 3 7 8 3 (i=3, j=9, parent[9]=3)
     indices:        1 2 3 4 5 6 7 8 9 
     isComposite:        ✔     ✔    ✔ (isComposite[9]=true) 
@@ -4355,7 +4355,7 @@ class Solution {
         if (parent[index] != index) {
             parent[index] = find(parent[index]);
         }
-        return parent[index];
+        return index;
     }
 
     public List<Boolean> areConnected(int n, int threshold, int[][] queries) {
@@ -4368,7 +4368,7 @@ class Solution {
             return res;
         }
 
-        // Populate the `parent` array with city labels
+        // Initialize the `parent` array with city labels
         parent = new int[n + 1];
         for (int i = 1; i <= n; ++i) {
             parent[i] = i;
@@ -4401,7 +4401,7 @@ class Solution {
     * If `threshold = 0`, set all results to `true` and return.  
 
         This loop runs in $O(m)$ time where `m` is the size of `queries` array.
-    * Populate the `parent` array with city labels  
+    * Initialize the `parent` array with city labels  
 
         This loop traverses `parent` array, resulting in a time complexity of $O(n)$ where `n` is the number of cities.
     * Traverse valid divisors and their multiples.
@@ -4995,7 +4995,7 @@ The total volume of water trapped is 4.
 * `1 <= m, n <= 200`
 * `0 <= heightMap[i][j] <= 2 * 10^4`
 
-### Depth-first Search Solution 
+### Heap Solution 
 According to the above 2D elevation map, only units surrounded by higher units can trap rain.
 
 To calculate the total volume of trapped water:
@@ -5211,7 +5211,7 @@ A subarray is a contiguous sequence of elements within an array.
 * `1 <= nums[i] <= 10^6`
 * `1 <= k <= 10^5`
 
-### Analysis
+### Sliding Window Solution
 With the sliding window approach, handle each of the k valid maximum elements step by step.
 
 Example Symbols:
@@ -5313,6 +5313,78 @@ class Solution {
 * Space Complexity: $O(1)$
 
     `max`, `ans`, `cntMax` and `left` each take constant time $O(1)$.
+
+## 41. Path with Maximum Probability
+[Back to Top](#table-of-contents)  
+### Overview
+You are given an undirected weighted graph of `n` nodes (0-indexed), represented by an edge list where `edges[i] = [a, b]` is an undirected edge connecting the nodes a and b with a probability of success of traversing that edge `succProb[i]`.
+
+Given two nodes `start` and `end`, find the path with the maximum probability of success to go from `start` to `end` and return its success probability.
+
+If there is no path from `start` to `end`, return `0`. Your answer will be accepted if it differs from the correct answer by at most `1e-5`.
+
+**Example 1:**
+
+![](assets/Algorithms/pwmp1.png)
+> **Input:** n = 3, edges = [[0,1],[1,2],[0,2]], succProb = [0.5,0.5,0.2], start = 0, end = 2  
+> **Output:** 0.25000  
+> **Explanation:** There are two paths from start to end, one having a probability of success = 0.2 and the other has 0.5 * 0.5 = 0.25.
+
+**Example 2:**
+
+![](assets/Algorithms/pwmp2.png)
+
+> **Input:** n = 3, edges = [[0,1],[1,2],[0,2]], succProb = [0.5,0.5,0.3], start = 0, end = 2  
+> **Output:** 0.30000
+
+**Example 3:**
+
+![](assets/Algorithms/pwmp3.png)
+
+> **Input:** n = 3, edges = [[0,1]], succProb = [0.5], start = 0, end = 2  
+> **Output:** 0.00000  
+> **Explanation:** There is no path between 0 and 2.  
+
+**Constraints:**
+* `2 <= n <= 10^4`
+* `0 <= start, end < n`
+* `start != end`
+* `0 <= a, b < n`
+* `a != b`
+* `0 <= succProb.length == edges.length <= 2*10^4`
+* `0 <= succProb[i] <= 1`
+* There is at most one edge between every two nodes.
+
+### Union-Find solution
+
+```java
+class Solution {
+    int[] parent;
+    boolean[] isComposite;
+
+    private int find(int index){
+        if(parent[index]!=index){
+            return find(parent[index])
+        }
+        return index;
+    }
+
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
+        // Initialize `parent` array.
+        parent=new int[n+1];
+        for(int i=0; i<n){
+            parent[i]=i;
+        }
+        // Traverse `edges`
+        for(int i=0; i<edges.length; i++){
+            int min=Math.min(edges[1][0],edges[i][1])
+        }
+        
+    }
+}
+```
+
+
 
 
 # SQL Problems
