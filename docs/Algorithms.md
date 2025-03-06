@@ -5355,36 +5355,105 @@ If there is no path from `start` to `end`, return `0`. Your answer will be accep
 * `0 <= succProb[i] <= 1`
 * There is at most one edge between every two nodes.
 
-### Union-Find solution
-
+### Dijkstra Solution
 ```java
 class Solution {
-    int[] parent;
-    boolean[] isComposite;
-
-    private int find(int index){
-        if(parent[index]!=index){
-            return find(parent[index])
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
+        List<List<Pair>> graph = new ArrayList<List<Pair>>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<Pair>());
         }
-        return index;
+        for (int i = 0; i < edges.length; i++) {
+            int[] e = edges[i];
+            graph.get(e[0]).add(new Pair(succProb[i], e[1]));
+            graph.get(e[1]).add(new Pair(succProb[i], e[0]));
+        }
+
+        PriorityQueue<Pair> que = new PriorityQueue<Pair>();
+        double[] prob = new double[n];
+
+        que.offer(new Pair(1, start));
+        prob[start] = 1;
+        while (!que.isEmpty()) {
+            Pair pair = que.poll();
+            double pr = pair.probability;
+            int node = pair.node;
+            if (pr < prob[node]) {
+                continue;
+            }
+            for (Pair pairNext : graph.get(node)) {
+                double prNext = pairNext.probability;
+                int nodeNext = pairNext.node;
+                if (prob[nodeNext] < prob[node] * prNext) {
+                    prob[nodeNext] = prob[node] * prNext;
+                    que.offer(new Pair(prob[nodeNext], nodeNext));
+                }
+            }
+        }
+        return prob[end];
+    }
+}
+
+class Pair implements Comparable<Pair> {
+    double probability;
+    int node;
+
+    public Pair(double probability, int node) {
+        this.probability = probability;
+        this.node = node;
     }
 
-    public double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
-        // Initialize `parent` array.
-        parent=new int[n+1];
-        for(int i=0; i<n){
-            parent[i]=i;
+    public int compareTo(Pair pair2) {
+        if (this.probability == pair2.probability) {
+            return this.node - pair2.node;
+        } else {
+            return this.probability - pair2.probability > 0 ? -1 : 1;
         }
-        // Traverse `edges`
-        for(int i=0; i<edges.length; i++){
-            int min=Math.min(edges[1][0],edges[i][1])
-        }
-        
     }
 }
 ```
+### Bellman-Ford Solution (Optimal performance)
+The Bellman-Ford algorithm is a single-source shortest path algorithm used in graph theory to find the shortest paths from a single source vertex to all other vertices in a weighted graph.
+
+Unlike Dijkstra’s algorithm, which requires non-negative edge weights, Bellman-Ford can handle graphs with negative edge weights and can detect negative cycles (a cycle where the sum of edge weights is negative).
+
+In this problem, all edges need to be travsersed `n` times where `n` is the number of graph nodes, as the longest possible path length is `n`.
+
+By repeately convergencing the probability in the connected points, the `endpoint` will eventually store the maximum possibility.
+
+Example: 
+![](assets/Algorithms/pwmpFSFS1.png)
 
 
+```java
+class Solution {
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
+        double[] dist = new double[n];
+        dist[start_node]=1;
+        // Travserse all points in the graph.
+        for (int k = 0; k < n; k++) {
+            boolean update =false;
+            // Travserse `edges`.
+            for (int i=0;i<edges.length;i++){
+                int[] e = edges[i];
+                double rate = succProb[i];
+                if(dist[e[1]] < dist[e[0]] * rate){
+                    dist[e[1]] = dist[e[0]] * rate;
+                    update = true;
+                }
+                if(dist[e[0]] < dist[e[1]] * rate){
+                    dist[e[0]] = dist[e[1]] * rate;
+                    update = true;
+                }
+            }
+            if(!update){
+                break;
+            }
+        }
+        return dist[end_node];
+    }
+}
+```
 
 
 # SQL Problems
