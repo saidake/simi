@@ -6,11 +6,12 @@
 #
 # Prerequisites:
 #   Modify the required configurations in the bash file with your own values.
+#
 # Usage:
 #   ./execr.sh <remote-bash-file-path>
 #
 # Author: Craig Brown
-# Since: Oct 4, 2024
+# Date: Oct 4, 2024
 # ************************************************************************************
 
 # ================================================================== Required Configurations

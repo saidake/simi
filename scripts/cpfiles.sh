@@ -9,11 +9,12 @@
 #        of each asset file.
 #   2. Put your files in the 'assets' folder.
 #   3. Modify the required configurations in the bash file with your own values.
+#
 # Usage:
 #   ./upload-assets.sh
 #
 # Author: Craig Brown
-# Created: Oct 4, 2024
+# Date: Oct 4, 2024
 # ************************************************************************************
 
 # ================================================================== Required Configurations

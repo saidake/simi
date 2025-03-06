@@ -3,6 +3,7 @@
 # ************************************************************************************
 # This bash file can run in your local environment to deploy jar file to the remote server
 # and control the execution of the jar file like restart, stop etc.
+#
 # Prerequisites:
 #   Modify the required configurations in the bash file with your own values.
 #
@@ -17,7 +18,7 @@
 #   ./simidep.sh startjmx  - Start application with JMX enabled
 #
 # Author: Craig Brown
-# Created: Oct 6, 2024
+# Date: Oct 6, 2024
 # ************************************************************************************
 
 #========================================================== Required Configurations
