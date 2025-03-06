@@ -15,9 +15,15 @@
 * **SpringBoot / Third Party Package / Extensions / junit / \[mockito-core\] / Mockito**
   * Use `doReturn` to return different values on consecutive calls.  
 ### Java_v1.2.0
-* **Java.pdf / Java / java.base / java.util / concurrent / locks / AbstractQueuedSynchronizer**
+* **Java / java.base / java.util / concurrent / locks / AbstractQueuedSynchronizer**
   * Add a usage example for the `newCondition()` method.
-  
+### Linux_v1.1.0
+* **Linux / Bash Script / Core**
+  * Provide detailed explanation for commands like `make`, `make clean`, `make install` and `set`.
+* **Linux / Bash Script / Statement / Function**
+  * Provide usage examples for a bash function. 
+* **Linux / Commands / Service / Service File**
+  * Introduce options for configuring a systemctl service file.
 ### Japanese_v1.1.0
 * **Japanese / Verb / 簡体**
   * Provide a comprehensive explanation of the plain form.
