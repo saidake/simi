@@ -231,9 +231,9 @@ public class StopWatchDebug {
         Files.writeString(Path.of(filepath), System.lineSeparator()+print, StandardOpenOption.APPEND);
         return print;
     }
-    public static String print(@Nullable boolean showLastTaskTitle,@Nullable Integer limitLevel) {
+    public static String print(boolean showLastTaskTitle, @Nullable Integer limitLevel) {
         if(stopWatch.isRunning())stop();
-        if(asyncStopWatch.isRunning())asyncStopWatch.stop();
+        if(asyncStopWatch!=null&&asyncStopWatch.isRunning())asyncStopWatch.stop();
         //A. define common data
         long totalTimeMillis = stopWatch.getTotalTimeMillis();
         double totalTimeSeconds = stopWatch.getTotalTimeSeconds();
@@ -242,7 +242,7 @@ public class StopWatchDebug {
         String taskHeader = stopWatch.getId() + ": total running time [ " + String.format(TOTAL_TIME_MILLIS_FORMAT, totalTimeMillis) + "ms / " + String.format(TOTAL_TIME_SECONDS_FORMAT, totalTimeSeconds) + "s ]";
         if(showLastTaskTitle){
             String taskEndString = LOG_TITLE + limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
-            String asyncTaskEndString = LOG_TITLE + limitTaskName(asyncStopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
+            String asyncTaskEndString = asyncStopWatch==null?"":LOG_TITLE + limitTaskName(asyncStopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
             sb=new StringBuilder(taskEndString+asyncTaskEndString);
         }
         else sb=new StringBuilder();
@@ -255,8 +255,8 @@ public class StopWatchDebug {
         Map<String,Integer> taskNameTimesMap =new HashMap<>();
         LinkedList<TaskInfo> parentTaskInfoList=new LinkedList<>();
         //A. traverse taskInfo list
-        for (StopWatch.TaskInfo task : stopWatch.getTaskInfo()) {
-            String taskName = task.getTaskName();
+        for (StopWatch.TaskInfo taskInfo : stopWatch.getTaskInfo()) {
+            String taskName = taskInfo.getTaskName();
             Integer times = taskNameTimesMap.merge(taskName, 1, (oldValue, value) -> ++oldValue);
             String durationRealTaskName = getDurationRealTaskName(taskName);
             Integer level = StopWatchDebug.taskNameLevelMap.get(durationRealTaskName);
@@ -276,7 +276,7 @@ public class StopWatchDebug {
                     currentTaskInfo.setTaskName(durationRealTaskName);
                     currentTaskInfo.setLevel(level);
                     currentTaskInfo.setPercent(currentLevelPercent);
-                    if(parentTaskInfoList.size()==0){
+                    if(parentTaskInfoList.isEmpty()){
                         parentTaskInfoList.add(currentTaskInfo);
                     } else {
                         //C. check parentTaskInfo
@@ -288,69 +288,38 @@ public class StopWatchDebug {
                                 break;
                             }
                             parentTaskInfoList.pollLast();
-                            if(parentTaskInfoList.size()==0)break;
+                            if(parentTaskInfoList.isEmpty())break;
                         }
                     }
                 }
             }
             //B. content string
-            sb.append("|")
-                    .append(String.format(TASK_NAME_VALUE_FORMAT, taskName));
-            sb.append("|")
-                    .append(level!=null?String.format(TASK_LEVEL_VALUE_FORMAT, level):TASK_LEVEL_EMPTY_STRING);
-            sb.append("|")
-                    .append(String.format(TASK_EXECUTION_NUMBER_VALUE_FORMAT, times));
-            sb.append("|")
-                    .append(String.format(TIME_MILLIS_VALUE_FORMAT, task.getTimeMillis()));
-            sb.append("|")
-                    .append(String.format(TIME_SECONDS_VALUE_FORMAT, task.getTimeSeconds()));
-            sb.append("|")
-                    .append(durationByStart!=null?String.format(TIME_DURATION_MILLIS_VALUE_FORMAT, durationByStart):TIME_DURATION_TIME_EMPTY_STRING);
-            sb.append("|")
-                    .append(currentLevelPercent!=null?String.format(TIME_DURATION_PERCENT_VALUE_FORMAT, currentLevelPercent):TIME_DURATION_PERCENT_EMPTY_STRING);
-            sb.append("|")
-                    .append(String.format(TIME_PERCENT_VALUE_FORMAT, (double) task.getTimeMillis()*100 / totalTimeMillis))
-                    .append("|");
-            sb.append(System.lineSeparator());
+            printSyncTaskStatisticHeader(taskInfo, sb, taskName, level, times, durationByStart, currentLevelPercent, totalTimeMillis);
         }
 
 
         Map<String,Integer> asyncTaskNameTimesMap =new HashMap<>();
-        for (StopWatch.TaskInfo task : asyncStopWatch.getTaskInfo()) {
-            String taskName = task.getTaskName();
-            String durationRealTaskName = getAsyncDurationRealTaskName(taskName);
-            Integer times = asyncTaskNameTimesMap.merge(taskName, 1, (oldValue, value) -> ++oldValue);
-            Long durationByStart=null;
-            if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)){
-                Map<Integer, Long> timesDurationMap = asyncTaskTimesDurationMap.get(durationRealTaskName);
-                Assert.notNull(timesDurationMap,"asynchronous millis null exception");
-                Long duration = timesDurationMap.get(times);
-                Assert.notNull(duration,"asynchronous duration null exception");
-                durationByStart=duration;
+        if(asyncStopWatch!=null){
+            for (StopWatch.TaskInfo taskInfo : asyncStopWatch.getTaskInfo()) {
+                String taskName = taskInfo.getTaskName();
+                String durationRealTaskName = getAsyncDurationRealTaskName(taskName);
+                Integer times = asyncTaskNameTimesMap.merge(taskName, 1, (oldValue, value) -> ++oldValue);
+                Long durationByStart=null;
+                if(taskName.endsWith(ASYNC_DURATION_START_SUFFIX)){
+                    Map<Integer, Long> timesDurationMap = asyncTaskTimesDurationMap.get(durationRealTaskName);
+                    Assert.notNull(timesDurationMap,"asynchronous millis null exception");
+                    Long duration = timesDurationMap.get(times);
+                    Assert.notNull(duration,"asynchronous duration null exception");
+                    durationByStart=duration;
+                }
+                //B. content string
+                printAsyncTaskStatisticHeader(sb, taskName, times, durationByStart);
             }
-            //B. content string
-            sb.append("|")
-                    .append(String.format(TASK_NAME_VALUE_FORMAT, taskName));
-            sb.append("|")
-                    .append(TASK_LEVEL_EMPTY_STRING);
-            sb.append("|")
-                    .append(String.format(TASK_EXECUTION_NUMBER_VALUE_FORMAT, times));
-            sb.append("|")
-                    .append(TIME_MILLIS_VALUE_EMPTY_STRING);
-            sb.append("|")
-                    .append(TIME_SECONDS_VALUE_EMPTY_STRING);
-            sb.append("|")
-                    .append(durationByStart!=null?String.format(TIME_DURATION_MILLIS_VALUE_FORMAT, durationByStart):TIME_DURATION_TIME_EMPTY_STRING);
-            sb.append("|")
-                    .append(TIME_DURATION_PERCENT_EMPTY_STRING);
-            sb.append("|")
-                    .append(TIME_PERCENT_EMPTY_STRING)
-                    .append("|");
-            sb.append(System.lineSeparator());
         }
+
         sb.append(TITLE_DIVIDER).append(System.lineSeparator());
         //B. level statistics string
-        if(parentTaskInfoList.size()>0){
+        if(!parentTaskInfoList.isEmpty()){
             TaskInfo parentTaskInfo = parentTaskInfoList.getFirst();
             List<StringBuilder> levelStringList=new LinkedList<>();
             //C. header string
@@ -362,6 +331,48 @@ public class StopWatchDebug {
         }
         clearSessionMap();
         return sb.toString();
+    }
+
+    private static void printAsyncTaskStatisticHeader(StringBuilder sb, String taskName, Integer times, Long durationByStart) {
+        sb.append("|")
+                .append(String.format(TASK_NAME_VALUE_FORMAT, taskName));
+        sb.append("|")
+                .append(TASK_LEVEL_EMPTY_STRING);
+        sb.append("|")
+                .append(String.format(TASK_EXECUTION_NUMBER_VALUE_FORMAT, times));
+        sb.append("|")
+                .append(TIME_MILLIS_VALUE_EMPTY_STRING);
+        sb.append("|")
+                .append(TIME_SECONDS_VALUE_EMPTY_STRING);
+        sb.append("|")
+                .append(durationByStart !=null?String.format(TIME_DURATION_MILLIS_VALUE_FORMAT, durationByStart):TIME_DURATION_TIME_EMPTY_STRING);
+        sb.append("|")
+                .append(TIME_DURATION_PERCENT_EMPTY_STRING);
+        sb.append("|")
+                .append(TIME_PERCENT_EMPTY_STRING)
+                .append("|");
+        sb.append(System.lineSeparator());
+    }
+
+    private static void printSyncTaskStatisticHeader(StopWatch.TaskInfo taskInfo, StringBuilder sb, String taskName, Integer level, Integer times, Long durationByStart, Double currentLevelPercent, long totalTimeMillis) {
+        sb.append("|")
+                .append(String.format(TASK_NAME_VALUE_FORMAT, taskName));
+        sb.append("|")
+                .append(level !=null?String.format(TASK_LEVEL_VALUE_FORMAT, level):TASK_LEVEL_EMPTY_STRING);
+        sb.append("|")
+                .append(String.format(TASK_EXECUTION_NUMBER_VALUE_FORMAT, times));
+        sb.append("|")
+                .append(String.format(TIME_MILLIS_VALUE_FORMAT, taskInfo.getTimeMillis()));
+        sb.append("|")
+                .append(String.format(TIME_SECONDS_VALUE_FORMAT, taskInfo.getTimeSeconds()));
+        sb.append("|")
+                .append(durationByStart !=null?String.format(TIME_DURATION_MILLIS_VALUE_FORMAT, durationByStart):TIME_DURATION_TIME_EMPTY_STRING);
+        sb.append("|")
+                .append(currentLevelPercent !=null?String.format(TIME_DURATION_PERCENT_VALUE_FORMAT, currentLevelPercent):TIME_DURATION_PERCENT_EMPTY_STRING);
+        sb.append("|")
+                .append(String.format(TIME_PERCENT_VALUE_FORMAT, (double) taskInfo.getTimeMillis()*100 / totalTimeMillis))
+                .append("|");
+        sb.append(System.lineSeparator());
     }
 
     private static void buildLevelString(TaskInfo parentTaskInfo, List<StringBuilder> levelStringList) {
@@ -378,7 +389,7 @@ public class StopWatchDebug {
                     .append("|").append(System.lineSeparator());
             else currentString.append("|").append("ERROR").append(" ".repeat(LEVEL_TIME_PERCENT_EMPTY_STRING_LENGTH-5))
                     .append("|").append(System.lineSeparator());
-            if(taskInfo.getChildTaskInfoList().size()>0)buildLevelString(taskInfo,levelStringList);
+            if(!taskInfo.getChildTaskInfoList().isEmpty())buildLevelString(taskInfo,levelStringList);
         }
         currentString.append(TITLE_DIVIDER).append(System.lineSeparator());
         levelStringList.add(currentString);
@@ -464,10 +475,6 @@ public class StopWatchDebug {
     }
 
     //======================================================================================================= Data Utils
-    public static void main(String[] args) throws InterruptedException {
-        printTest();
-        printTest();
-    }
 
     private static void printTest() throws InterruptedException {
         System.out.println(StopWatchDebug.initAndStart("one"));
@@ -543,6 +550,12 @@ public class StopWatchDebug {
         System.out.println(StopWatchDebug.duration("test33",3));
         voidCompletableFuture.join();
         voidCompletableFuture2.join();
+        System.out.println(StopWatchDebug.print());
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println(StopWatchDebug.initAndStart("one"));
+        Thread.sleep(200);
         System.out.println(StopWatchDebug.print());
     }
 }
