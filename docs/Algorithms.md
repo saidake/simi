@@ -5356,9 +5356,34 @@ If there is no path from `start` to `end`, return `0`. Your answer will be accep
 * There is at most one edge between every two nodes.
 
 ### Dijkstra Solution
+Dijkstra's Algorithm is a famous algorithm used for finding the shortest path between nodes in a graph.
+
+Example:
+
+![](assets/Algorithms/pwmpFSFS1.png)
+
+`graph` initalizaition process:
+```
+edges =    [[0,1],[1,2],[0,2],[2,3],[2,6][0,6],[6,5],[5,4]]
+succProb  = [0.5, 0.5,  0.2,  0.3,  0.4, 0.9,  0.2,  0.4]
+start = 0
+end = 6
+
+graph:
+0 [Pair(0.5, 1), Pair(0.2, 2), Pair(0.9, 6)]
+1 [Pair(0.5, 0), Pair(0.5, 2)] 
+2 [Pair(0.5, 1), Pair(0.2, 0), Pair(0.3, 3), Pair(0.4, 6)]
+3 [Pair(0.3, 2)] 
+4 [Pair(0.4, 5)]
+5 [Pair(0.2, 6), Pair(0.4, 5)]
+6 [Pair(0.4, 2), Pair(0.9, 0), Pair(0.2, 5)]
+...
+```
+
 ```java
 class Solution {
     public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
+        // Initialize the `graph` array
         List<List<Pair>> graph = new ArrayList<List<Pair>>();
         for (int i = 0; i < n; i++) {
             graph.add(new ArrayList<Pair>());
@@ -5369,9 +5394,9 @@ class Solution {
             graph.get(e[1]).add(new Pair(succProb[i], e[0]));
         }
 
+        // Max heap ordered by probability of pairs
         PriorityQueue<Pair> que = new PriorityQueue<Pair>();
         double[] prob = new double[n];
-
         que.offer(new Pair(1, start));
         prob[start] = 1;
         while (!que.isEmpty()) {
@@ -5413,36 +5438,57 @@ class Pair implements Comparable<Pair> {
 }
 ```
 ### Bellman-Ford Solution (Optimal performance)
-The Bellman-Ford algorithm is a single-source shortest path algorithm used in graph theory to find the shortest paths from a single source vertex to all other vertices in a weighted graph.
+The Bellman-Ford Algorithm is another algorithm used to find the shortest paths from a single source node to **all other nodes** in a weighted graph. Unlike Dijkstra's algorithm, Bellman-Ford can handle graphs with **negative weight edges** and can detect negative weight cycles.
 
-Unlike Dijkstra’s algorithm, which requires non-negative edge weights, Bellman-Ford can handle graphs with negative edge weights and can detect negative cycles (a cycle where the sum of edge weights is negative).
+In this problem, since the longest possible connected path length is `n`,
+ where `n` is the number of graph nodes, 
+ all edges need to be travsersed `n` times to converge path probability at points with higher probability, starting from the `start_node`.
 
-In this problem, all edges need to be travsersed `n` times where `n` is the number of graph nodes, as the longest possible path length is `n`.
 
-By repeately convergencing the probability in the connected points, the `endpoint` will eventually store the maximum possibility.
+Define an array `pathProb` to store the total path probability for each graph node, starting from the `start_node`
 
-Example: 
+The following example illustrates the convergence process in detail:
+
 ![](assets/Algorithms/pwmpFSFS1.png)
+```
+edges =    [[0,1],[1,2],[0,2],[2,3],[2,6][0,6],[6,5],[5,4]]
+succProb  = [0.5, 0.5,  0.2,  0.3,  0.4, 0.9,  0.2,  0.4]
+start = 0
+end = 6
 
+Edge [0,1]:
+    pathProb[1]= max(pathProb[1], pathProb[0] x 0.5) = 0.5
+
+Edge [1,2]:
+    pathProb[2]= max(pathProb[2], pathProb[1] x 0.5) = 0.25
+
+Edge [0,2]:
+    pathProb[2]= max(pathProb[2], pathProb[0] x 0.5) = 0.5 (The smaller path probability `0.25` from the previous step is ignored)
+
+Edge [2,3]:
+    pathProb[3]= max(pathProb[3], pathProb[2] x 0.3) = 0.15
+    
+...
+```
 
 ```java
 class Solution {
     public double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
-        double[] dist = new double[n];
-        dist[start_node]=1;
-        // Travserse all points in the graph.
+        double[] pathProb = new double[n];
+        pathProb[start_node]=1;
+        // Travserse all graph nodes
         for (int k = 0; k < n; k++) {
             boolean update =false;
-            // Travserse `edges`.
+            // Travserse `edges` array
             for (int i=0;i<edges.length;i++){
                 int[] e = edges[i];
-                double rate = succProb[i];
-                if(dist[e[1]] < dist[e[0]] * rate){
-                    dist[e[1]] = dist[e[0]] * rate;
+                double prob = succProb[i];
+                if(pathProb[e[1]] < pathProb[e[0]] * prob){
+                    pathProb[e[1]] = pathProb[e[0]] * prob;
                     update = true;
                 }
-                if(dist[e[0]] < dist[e[1]] * rate){
-                    dist[e[0]] = dist[e[1]] * rate;
+                if(pathProb[e[0]] < pathProb[e[1]] * prob){
+                    pathProb[e[0]] = pathProb[e[1]] * prob;
                     update = true;
                 }
             }
@@ -5450,11 +5496,17 @@ class Solution {
                 break;
             }
         }
-        return dist[end_node];
+        return weight[end_node];
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(n\times m)$
+  * The outer loop iterates `n` times, and the inner loop iterates `m` times, where `n` is the number of graph nodes and `m` is the length of `edges` array.
+  Therefore, the overall time complexity is $O(n\times m)$.
 
+* Space Complexity: $O(n)$
+  * `pathProb` has a space complexity of $O(n)$.
 
 # SQL Problems
 ## 1. Odd and Even Transactions
