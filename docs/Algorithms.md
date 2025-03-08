@@ -5394,28 +5394,34 @@ class Solution {
             graph.get(e[1]).add(new Pair(succProb[i], e[0]));
         }
 
-        // Max heap ordered by probability of pairs
+        // Max heap ordered by path probability of pairs
         PriorityQueue<Pair> que = new PriorityQueue<Pair>();
-        double[] prob = new double[n];
+        double[] pathProb = new double[n];
         que.offer(new Pair(1, start));
-        prob[start] = 1;
+        pathProb[start] = 1;
+        // Iterate through all elements in the queue.
         while (!que.isEmpty()) {
-            Pair pair = que.poll();
-            double pr = pair.probability;
-            int node = pair.node;
-            if (pr < prob[node]) {
+            // The pair with highest path probatility.
+            Pair maxPair = que.poll();
+            double maxPathProb = maxPair.probability;
+            int mxPPNode = maxPair.node;
+            if (maxPathProb < pathProb[mxPPNode]) {
+                System.out.println("test");
                 continue;
             }
-            for (Pair pairNext : graph.get(node)) {
-                double prNext = pairNext.probability;
-                int nodeNext = pairNext.node;
-                if (prob[nodeNext] < prob[node] * prNext) {
-                    prob[nodeNext] = prob[node] * prNext;
-                    que.offer(new Pair(prob[nodeNext], nodeNext));
+            // Traverse all pairs connected to the current node.
+            for (Pair curPair : graph.get(mxPPNode)) {
+                double curProb = curPair.probability;
+                int curNode = curPair.node;
+                // If the path probability from `mxPPNode` to `curNode` exceeds its previous heighest path probatility, update  `curNode`'s path probatility and add it to the queue.
+                if (pathProb[curNode] < pathProb[mxPPNode] * curProb) {
+                    pathProb[curNode] = pathProb[mxPPNode] * curProb;
+                    //TODO analyze the circular scenario
+                    que.offer(new Pair(pathProb[curNode], curNode));
                 }
             }
         }
-        return prob[end];
+        return pathProb[end];
     }
 }
 
@@ -5437,6 +5443,11 @@ class Pair implements Comparable<Pair> {
     }
 }
 ```
+#### Time and Space Complexity
+* Time Complexity: $O(n\times m)$
+
+* Space Complexity: $O(n)$
+
 ### Bellman-Ford Solution (Optimal performance)
 The Bellman-Ford Algorithm is another algorithm used to find the shortest paths from a single source node to **all other nodes** in a weighted graph. Unlike Dijkstra's algorithm, Bellman-Ford can handle graphs with **negative weight edges** and can detect negative weight cycles.
 
