@@ -22,6 +22,8 @@
   * Provide detailed explanation for commands like `make`, `make clean`, `make install` and `set`.
 * **Linux / Bash Script / Statement / Function**
   * Provide usage examples for a bash function. 
+* **Linux / Bash Script / Statement / Control Flow / while**
+  * Provided usage examples for `IFS=`. 
 * **Linux / Commands / Service / Service File**
   * Introduce options for configuring a systemctl service file.
 ### Japanese_v1.1.0
