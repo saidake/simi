@@ -5362,7 +5362,9 @@ Example:
 
 ![](assets/Algorithms/pwmpFSFS1.png)
 
-`graph` initalizaition process:
+Define an array `graph` to store the connected nodes to each graph node.
+
+Initalizaition process for `graph`:
 ```
 edges =    [[0,1],[1,2],[0,2],[2,3],[2,6][0,6],[6,5],[5,4]]
 succProb  = [0.5, 0.5,  0.2,  0.3,  0.4, 0.9,  0.2,  0.4]
@@ -5379,6 +5381,11 @@ graph:
 6 [Pair(0.4, 2), Pair(0.9, 0), Pair(0.2, 5)]
 ...
 ```
+Define a max heap `que` to retrieve the `Pair` with highest path probability.
+
+1. Insert `Pair(1, 0)` into `que` to assign an initial path probability for the start node `0`.
+2. Continuously poll nodes from `que`, traverse their connected nodes, and insert those with  hiegher path probatility into `que`.
+3. In a circular graph, a node may appear more than once, skip such cases.
 
 ```java
 class Solution {
@@ -5388,6 +5395,7 @@ class Solution {
         for (int i = 0; i < n; i++) {
             graph.add(new ArrayList<Pair>());
         }
+        // Populate `graph` with connected nodes for each gragh node.
         for (int i = 0; i < edges.length; i++) {
             int[] e = edges[i];
             graph.get(e[0]).add(new Pair(succProb[i], e[1]));
@@ -5405,18 +5413,17 @@ class Solution {
             Pair maxPair = que.poll();
             double maxPathProb = maxPair.probability;
             int mxPPNode = maxPair.node;
+            // In a circular graph, a node may appear more than once.
             if (maxPathProb < pathProb[mxPPNode]) {
-                System.out.println("test");
                 continue;
             }
-            // Traverse all pairs connected to the current node.
+            // Traverse all pairs connected to `mxPPNode`.
             for (Pair curPair : graph.get(mxPPNode)) {
                 double curProb = curPair.probability;
                 int curNode = curPair.node;
-                // If the path probability from `mxPPNode` to `curNode` exceeds its previous heighest path probatility, update  `curNode`'s path probatility and add it to the queue.
+                // Update `curNode`' path probability if a larger one is found.
                 if (pathProb[curNode] < pathProb[mxPPNode] * curProb) {
                     pathProb[curNode] = pathProb[mxPPNode] * curProb;
-                    //TODO analyze the circular scenario
                     que.offer(new Pair(pathProb[curNode], curNode));
                 }
             }
@@ -5444,9 +5451,19 @@ class Pair implements Comparable<Pair> {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: $O(n\times m)$
+* Time Complexity: 
+  * Initialize the `graph` array
+  
+    This step assigned a initial pair array for each graph node, resulting in a time complexity of $O(n)$.
+  * Populate `graph` with connected nodes for each gragh node.
+  
+    The population process needs to traverse all `edges`, it has $O(m)$ time complexity where `m` is the length of `edges`.
 
-* Space Complexity: $O(n)$
+  * Iterate through all elements in the queue.
+  
+    The outer loop 
+
+* Space Complexity: 
 
 ### Bellman-Ford Solution (Optimal performance)
 The Bellman-Ford Algorithm is another algorithm used to find the shortest paths from a single source node to **all other nodes** in a weighted graph. Unlike Dijkstra's algorithm, Bellman-Ford can handle graphs with **negative weight edges** and can detect negative weight cycles.
