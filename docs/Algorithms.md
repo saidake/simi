@@ -5451,19 +5451,30 @@ class Pair implements Comparable<Pair> {
 }
 ```
 #### Time and Space Complexity
-* Time Complexity: 
+* Time Complexity: $O(m \log n)$
   * Initialize the `graph` array
   
-    This step assigned a initial pair array for each graph node, resulting in a time complexity of $O(n)$.
+    This step assigned a initial pair array for each graph node, resulting in a time complexity of $O(n)$ where `n` is the number of graph nodes.
   * Populate `graph` with connected nodes for each gragh node.
   
     The population process needs to traverse all `edges`, it has $O(m)$ time complexity where `m` is the length of `edges`.
 
   * Iterate through all elements in the queue.
   
-    The outer loop 
+    The `poll` and `offer` methods have an approximately time complexity of $O(\log n)$, where `n` is the number of elements in the priority queue, even if some nodes may appear multiple times in a circular case.
 
-* Space Complexity: 
+    There are at most $O(m)$ `offer` operations, each costing $O(\log n)$, provided that each polled `maxPPNode` has a higher path probatility.
+
+    Thus, this step has a time compleixty of $O(m \log n)$.
+
+  Therefore, the overall time complexity is $O(m \log n)$.
+
+* Space Complexity: $O(m+n)$
+  * `graph` stores all connected nodes for each graph node, requiring $O(m)$ space, where `m` is the length of `edges`.
+  * `que` has a worst-case space complexity $O(n)$ when each polled `maxPPNode` has a higher path probatility.
+  * `pathProb` takes $O(n)$ space for each graph node to store path probatility.
+ 
+   Thus, the total space complexity is $O(m+n)$.
 
 ### Bellman-Ford Solution (Optimal performance)
 The Bellman-Ford Algorithm is another algorithm used to find the shortest paths from a single source node to **all other nodes** in a weighted graph. Unlike Dijkstra's algorithm, Bellman-Ford can handle graphs with **negative weight edges** and can detect negative weight cycles.
