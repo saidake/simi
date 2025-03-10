@@ -27,7 +27,7 @@ public class StopWatchDebug {
     private static final DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     private static final Map<String,Integer> taskNameLevelMap =new HashMap<>();
     private static final Map<String, List<Long>> taskDurationMap =new HashMap<>();
-    private static StopWatch stopWatch;
+    private static volatile StopWatch stopWatch;
 
     private static final Map<String, Map<Integer,Long>> asyncTaskTimesDurationMap =new HashMap<>();
     private static final Map<String, Integer> asyncTaskTimesMap =new HashMap<>();
@@ -116,32 +116,42 @@ public class StopWatchDebug {
             + "|"+String.format(LEVEL_TIME_PERCENT_HEADER_FORMAT,"percent")
             + "|";
     //================================================================================================== Start and stop
+    private static void initializeStopWatchSingleton(String watchId){
+        if(stopWatch==null){
+            synchronized (StopWatchDebug.class){
+                if(stopWatch==null){
+                    stopWatch = new StopWatch(watchId);
+                }
+            }
+        }
+    }
+
     public static void init() {
-        stopWatch = new StopWatch("StopWatch");
+        initializeStopWatchSingleton("WATCH");
     }
     public static void init(String watchId) {
-        stopWatch = new StopWatch(watchId);
+        initializeStopWatchSingleton(watchId);
     }
 
     public static String initAndStart(String taskName) {
-        stopWatch = new StopWatch("WATCH");
+        initializeStopWatchSingleton("WATCH");
         return startAndGetTitle(taskName);
     }
 
     public static String initAndStart(String watchId, String taskName) {
-        stopWatch = new StopWatch(watchId);
+        initializeStopWatchSingleton(watchId);
         return startAndGetTitle(taskName);
     }
 
     public static String startAndGetTitle(String taskName) {
-        if(stopWatch ==null) stopWatch = new StopWatch("StopWatch");
+        if(stopWatch ==null) initializeStopWatchSingleton("WATCH");
         setDurationMillis(taskName);
         stopWatch.start(taskName);
         return LOG_TITLE + dateTimeFormatter.format(LocalDateTime.now()) + LOG_TITLE_TIME_DIVIDER +
                 limitTaskName(taskName) + LOG_TITLE_START;
     }
     public static String restart(String taskName) {
-        if(stopWatch ==null) stopWatch = new StopWatch("StopWatch");
+        if(stopWatch ==null) initializeStopWatchSingleton("WATCH");
         if(stopWatch.isRunning()) return stopAndGetTitle() + System.lineSeparator()+ startAndGetTitle(taskName);
         return startAndGetTitle(taskName);
     }
