@@ -11,6 +11,8 @@ import java.math.MathContext;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -22,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @Slf4j
 public class StopWatchDebug {
-
+    private static final DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     private static final Map<String,Integer> taskNameLevelMap =new HashMap<>();
     private static final Map<String, List<Long>> taskDurationMap =new HashMap<>();
     private static StopWatch stopWatch;
@@ -37,7 +39,8 @@ public class StopWatchDebug {
     private static final String DURATION_START_SUFFIX="-start";
     private static final String DURATION_END_SUFFIX="-end";
     //============================================================================================== task log string
-    private static final String LOG_TITLE ="[STOP_WATCH_TASK: ";
+    private static final String LOG_TITLE ="[STOP_WATCH_TASK - ";
+    private static final String LOG_TITLE_TIME_DIVIDER =" : ";
     private static final String LOG_TITLE_START =" ] start=====================================";
     private static final String LOG_TITLE_END =  " ] end=======================================";
     /**
@@ -134,7 +137,8 @@ public class StopWatchDebug {
         if(stopWatch ==null) stopWatch = new StopWatch("StopWatch");
         setDurationMillis(taskName);
         stopWatch.start(taskName);
-        return LOG_TITLE + limitTaskName(taskName) + LOG_TITLE_START;
+        return LOG_TITLE + dateTimeFormatter.format(LocalDateTime.now()) + LOG_TITLE_TIME_DIVIDER +
+                limitTaskName(taskName) + LOG_TITLE_START;
     }
     public static String restart(String taskName) {
         if(stopWatch ==null) stopWatch = new StopWatch("StopWatch");
@@ -174,13 +178,15 @@ public class StopWatchDebug {
         }
         return endString==null?startString: endString +System.lineSeparator()+ startString;
     }
+
     public static String stopAndGetTitle() {
         stop();
-        return LOG_TITLE + limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END;
+        return LOG_TITLE + dateTimeFormatter.format(LocalDateTime.now()) + LOG_TITLE_TIME_DIVIDER +
+                limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END;
     }
 
     public static void stop() {
-        stopWatch.stop();
+        if(stopWatch.isRunning())stopWatch.stop();
     }
 
     //===================================================================================================== Duration
@@ -237,15 +243,14 @@ public class StopWatchDebug {
         // Common data
         long totalTimeMillis = stopWatch.getTotalTimeMillis();
         double totalTimeSeconds = stopWatch.getTotalTimeSeconds();
-        StringBuilder sb;
+        StringBuilder sb=new StringBuilder();
         // Print header string
         if(stopWatch.getTaskInfo().length>0){
-            String taskEndString = LOG_TITLE + limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
+            String taskEndString = stopAndGetTitle() + System.lineSeparator();
             String asyncTaskEndString = asyncStopWatch==null?"":LOG_TITLE +
                     limitTaskName(asyncStopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
-            sb=new StringBuilder(taskEndString+asyncTaskEndString);
+            sb.append(taskEndString).append(asyncTaskEndString);
         }
-        else sb=new StringBuilder();
         sb.append(TITLE_DIVIDER).append(System.lineSeparator());
         String taskHeader = stopWatch.getId() +
                 ": total running time [ " + String.format(TOTAL_TIME_MILLIS_FORMAT, totalTimeMillis) + "ms / " +
@@ -274,7 +279,7 @@ public class StopWatchDebug {
                     Long parentDuration=parentDurationMap.get(level-1);
                     if(parentDuration!=null)currentLevelPercent=durationByStart.doubleValue()*100/parentDuration;
                 }
-                //B. level statistics data
+                // Level statistics data
                 if(level!=null&&(currentLevelPercent!=null||level==1)){
                     TaskInfo currentTaskInfo = new TaskInfo();
                     currentTaskInfo.setTaskName(durationRealTaskName);
@@ -283,7 +288,7 @@ public class StopWatchDebug {
                     if(parentTaskInfoList.isEmpty()){
                         parentTaskInfoList.add(currentTaskInfo);
                     } else {
-                        //C. check parentTaskInfo
+                        // Check parentTaskInfo
                         for (TaskInfo lastTaskInfo = parentTaskInfoList.getLast();;lastTaskInfo = parentTaskInfoList.getLast()){
                             if(lastTaskInfo==null)break;
                             if(lastTaskInfo.getLevel()<level){
