@@ -18,13 +18,13 @@ No need to add `System.out.println(System.currentTimeMillis());` anymore! it sim
 
 Example output:
 
-![](./docs/assets/main/swt1.png)
+![](docs/assets/main/swt1.png)
 
 ### Usage
 
 Copy this class to your project, then add a line breakpoint to execute its methods without suspending the entire program in **IDEA debug mode**.
 
-![](./docs/assets/main/swt2.png)
+![](docs/assets/main/swt2.png)
 
 The `main` method of the `StopWatchDebugger` class contains several usage examples for reference.
 
