@@ -212,49 +212,52 @@ public class StopWatchDebug {
     }
 
     public static String durationEndPrint(String taskName) {
-        return restart(taskName+DURATION_END_SUFFIX)+System.lineSeparator()+print(true,null);
+        return restart(taskName+DURATION_END_SUFFIX)+System.lineSeparator()+print(null);
     }
 
     public static String durationEndPrint(String taskName, Integer level) {
         Assert.isTrue(level>0,"level must be greater than or equal to 1");
         addTaskLevel(taskName,level);
-        return restart(taskName+DURATION_END_SUFFIX)+System.lineSeparator()+print(true,null);
+        return restart(taskName+DURATION_END_SUFFIX)+System.lineSeparator()+print(null);
     }
     public static String durationEndPrint(String taskName, Integer level, Integer limitLevel) {
         Assert.isTrue(level>0,"level must be greater than or equal to 1");
         addTaskLevel(taskName,level);
-        return restart(taskName+DURATION_END_SUFFIX)+System.lineSeparator()+print(true,limitLevel);
+        return restart(taskName+DURATION_END_SUFFIX)+System.lineSeparator()+print(limitLevel);
     }
     //========================================================================================================= Print
     public static String printFile(String filepath) throws IOException {
-        String print = print(false, null);
+        String print = print(null);
         Files.writeString(Path.of(filepath), System.lineSeparator()+print, StandardOpenOption.APPEND);
         return print;
     }
-    public static String print(boolean showLastTaskTitle, @Nullable Integer limitLevel) {
+    public static String print(@Nullable Integer limitLevel) {
         if(stopWatch.isRunning())stop();
         if(asyncStopWatch!=null&&asyncStopWatch.isRunning())asyncStopWatch.stop();
-        //A. define common data
+        // Common data
         long totalTimeMillis = stopWatch.getTotalTimeMillis();
         double totalTimeSeconds = stopWatch.getTotalTimeSeconds();
         StringBuilder sb;
-        //A. header string
-        String taskHeader = stopWatch.getId() + ": total running time [ " + String.format(TOTAL_TIME_MILLIS_FORMAT, totalTimeMillis) + "ms / " + String.format(TOTAL_TIME_SECONDS_FORMAT, totalTimeSeconds) + "s ]";
-        if(showLastTaskTitle){
+        // Print header string
+        if(stopWatch.getTaskInfo().length>0){
             String taskEndString = LOG_TITLE + limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
-            String asyncTaskEndString = asyncStopWatch==null?"":LOG_TITLE + limitTaskName(asyncStopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
+            String asyncTaskEndString = asyncStopWatch==null?"":LOG_TITLE +
+                    limitTaskName(asyncStopWatch.getLastTaskName()) + LOG_TITLE_END + System.lineSeparator();
             sb=new StringBuilder(taskEndString+asyncTaskEndString);
         }
         else sb=new StringBuilder();
         sb.append(TITLE_DIVIDER).append(System.lineSeparator());
+        String taskHeader = stopWatch.getId() +
+                ": total running time [ " + String.format(TOTAL_TIME_MILLIS_FORMAT, totalTimeMillis) + "ms / " +
+                String.format(TOTAL_TIME_SECONDS_FORMAT, totalTimeSeconds) + "s ]";
         sb.append(taskHeader);
         sb.append(System.lineSeparator());
         sb.append(TASK_CONTENT_HEADER).append(System.lineSeparator());
-        //A. define traverse data
+        // Define traversal common data
         Map<Integer, Long> parentDurationMap=new HashMap<>();
         Map<String,Integer> taskNameTimesMap =new HashMap<>();
         LinkedList<TaskInfo> parentTaskInfoList=new LinkedList<>();
-        //A. traverse taskInfo list
+        // Traverse taskInfo list
         for (StopWatch.TaskInfo taskInfo : stopWatch.getTaskInfo()) {
             String taskName = taskInfo.getTaskName();
             Integer times = taskNameTimesMap.merge(taskName, 1, (oldValue, value) -> ++oldValue);
@@ -263,6 +266,7 @@ public class StopWatchDebug {
             if(limitLevel!=null&&level!=null&&level>limitLevel)continue;
             Long durationByStart=null;
             Double currentLevelPercent=null;
+            // Collect message level info
             if(taskName.endsWith(DURATION_START_SUFFIX)) {
                 durationByStart=getDuration(durationRealTaskName, times);
                 if(level!=null){
@@ -293,7 +297,7 @@ public class StopWatchDebug {
                     }
                 }
             }
-            //B. content string
+            // Print Content string
             printSyncTaskStatisticHeader(taskInfo, sb, taskName, level, times, durationByStart, currentLevelPercent, totalTimeMillis);
         }
 
@@ -354,7 +358,9 @@ public class StopWatchDebug {
         sb.append(System.lineSeparator());
     }
 
-    private static void printSyncTaskStatisticHeader(StopWatch.TaskInfo taskInfo, StringBuilder sb, String taskName, Integer level, Integer times, Long durationByStart, Double currentLevelPercent, long totalTimeMillis) {
+    private static void printSyncTaskStatisticHeader(StopWatch.TaskInfo taskInfo, StringBuilder sb, String taskName,
+                                                     Integer level, Integer times, Long durationByStart, Double currentLevelPercent,
+                                                     long totalTimeMillis) {
         sb.append("|")
                 .append(String.format(TASK_NAME_VALUE_FORMAT, taskName));
         sb.append("|")
@@ -384,8 +390,10 @@ public class StopWatchDebug {
             //C. content string
             currentString.append("|").append(String.format(LEVEL_TASK_NAME_VALUE_FORMAT, taskInfo.getTaskName()));
             currentString.append("|").append(String.format(LEVEL_LEVEL_VALUE_FORMAT, taskInfo.getLevel()));
-            int repeatTimes = new BigDecimal(LEVEL_TIME_PERCENT_EMPTY_STRING_LENGTH, MathContext.UNLIMITED).multiply(BigDecimal.valueOf(taskInfo.getPercent())).divide(BigDecimal.valueOf(100)).intValue();
-            if(LEVEL_TIME_PERCENT_EMPTY_STRING_LENGTH-repeatTimes>0)currentString.append("|").append("#".repeat(repeatTimes)).append(" ".repeat(LEVEL_TIME_PERCENT_EMPTY_STRING_LENGTH-repeatTimes))
+            int repeatTimes = new BigDecimal(LEVEL_TIME_PERCENT_EMPTY_STRING_LENGTH, MathContext.UNLIMITED)
+                    .multiply(BigDecimal.valueOf(taskInfo.getPercent())).divide(BigDecimal.valueOf(100)).intValue();
+            if(LEVEL_TIME_PERCENT_EMPTY_STRING_LENGTH-repeatTimes>0)currentString.append("|").append("#".repeat(repeatTimes))
+                    .append(" ".repeat(LEVEL_TIME_PERCENT_EMPTY_STRING_LENGTH-repeatTimes))
                     .append("|").append(System.lineSeparator());
             else currentString.append("|").append("ERROR").append(" ".repeat(LEVEL_TIME_PERCENT_EMPTY_STRING_LENGTH-5))
                     .append("|").append(System.lineSeparator());
@@ -396,7 +404,7 @@ public class StopWatchDebug {
     }
 
     public static String print() {
-        return print(true,null);
+        return print(null);
     }
 
     //===================================================================================================== Data Utils
@@ -554,8 +562,12 @@ public class StopWatchDebug {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        System.out.println(StopWatchDebug.initAndStart("one"));
-        Thread.sleep(200);
+        System.out.println(StopWatchDebug.initAndStart("test1"));
+        Thread.sleep(2000);
+        System.out.println(StopWatchDebug.restart("test2"));
+        Thread.sleep(3000);
+        System.out.println(StopWatchDebug.restart("test3"));
+        Thread.sleep(4000);
         System.out.println(StopWatchDebug.print());
     }
 }
