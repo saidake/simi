@@ -2,6 +2,7 @@ package com.simi.common.util.log;
 import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.util.Assert;
 import org.springframework.util.StopWatch;
 
@@ -23,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
  * @since 1.0
  */
 @Slf4j
-public class StopWatchDebug {
+public class StopWatchDebugger {
     private static final DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     private static final Map<String,Integer> taskNameLevelMap =new HashMap<>();
     private static final Map<String, List<Long>> taskDurationMap =new HashMap<>();
@@ -40,13 +41,15 @@ public class StopWatchDebug {
     private static final String DURATION_END_SUFFIX="-end";
     //============================================================================================== task log string
     private static final String LOG_TITLE ="[STOP_WATCH_TASK - ";
-    private static final String LOG_TITLE_TIME_DIVIDER =" : ";
+    private static final String LOG_TITLE_TIME_DELIMITER1 =" - ";
+    private static final String LOG_TITLE_TIME_DELIMITER2 =" : ";
     private static final String LOG_TITLE_START =" ] start=====================================";
     private static final String LOG_TITLE_END =  " ] end=======================================";
     /**
      * limits task Name.(e.g. "[STOP_WATCH_TASK: start    ] end=======================================")
      */
     private static final String TITLE_TASK_FORMAT ="%-13s";
+    private static final String THREAD_NAME_FORMAT ="%-10s";
     private static final String TITLE_DIVIDER ="------------------------------------------------------------------------------------------------------------------------------------------";
 
     //====================================================================================== task content header format
@@ -118,7 +121,7 @@ public class StopWatchDebug {
     //================================================================================================== Start and stop
     private static void initializeStopWatchSingleton(String watchId){
         if(stopWatch==null){
-            synchronized (StopWatchDebug.class){
+            synchronized (StopWatchDebugger.class){
                 if(stopWatch==null){
                     stopWatch = new StopWatch(watchId);
                 }
@@ -143,13 +146,28 @@ public class StopWatchDebug {
         return startAndGetTitle(taskName);
     }
 
-    public static String startAndGetTitle(String taskName) {
+    private static String stopAndGetTitle() {
+        stop();
+        return LOG_TITLE +
+                dateTimeFormatter.format(LocalDateTime.now()) + LOG_TITLE_TIME_DELIMITER1 +
+                limitThreadName(Thread.currentThread().getName()) + LOG_TITLE_TIME_DELIMITER2 +
+                limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END;
+    }
+
+    private static void stop() {
+        if(stopWatch.isRunning())stopWatch.stop();
+    }
+
+    private static String startAndGetTitle(String taskName) {
         if(stopWatch ==null) initializeStopWatchSingleton("WATCH");
         setDurationMillis(taskName);
         stopWatch.start(taskName);
-        return LOG_TITLE + dateTimeFormatter.format(LocalDateTime.now()) + LOG_TITLE_TIME_DIVIDER +
+        return LOG_TITLE+
+                dateTimeFormatter.format(LocalDateTime.now()) + LOG_TITLE_TIME_DELIMITER1 +
+                limitThreadName(Thread.currentThread().getName()) + LOG_TITLE_TIME_DELIMITER2 +
                 limitTaskName(taskName) + LOG_TITLE_START;
     }
+
     public static String restart(String taskName) {
         if(stopWatch ==null) initializeStopWatchSingleton("WATCH");
         if(stopWatch.isRunning()) return stopAndGetTitle() + System.lineSeparator()+ startAndGetTitle(taskName);
@@ -187,16 +205,6 @@ public class StopWatchDebug {
 
         }
         return endString==null?startString: endString +System.lineSeparator()+ startString;
-    }
-
-    public static String stopAndGetTitle() {
-        stop();
-        return LOG_TITLE + dateTimeFormatter.format(LocalDateTime.now()) + LOG_TITLE_TIME_DIVIDER +
-                limitTaskName(stopWatch.getLastTaskName()) + LOG_TITLE_END;
-    }
-
-    public static void stop() {
-        if(stopWatch.isRunning())stopWatch.stop();
     }
 
     //===================================================================================================== Duration
@@ -277,7 +285,7 @@ public class StopWatchDebug {
             String taskName = taskInfo.getTaskName();
             Integer times = taskNameTimesMap.merge(taskName, 1, (oldValue, value) -> ++oldValue);
             String durationRealTaskName = getDurationRealTaskName(taskName);
-            Integer level = StopWatchDebug.taskNameLevelMap.get(durationRealTaskName);
+            Integer level = StopWatchDebugger.taskNameLevelMap.get(durationRealTaskName);
             if(limitLevel!=null&&level!=null&&level>limitLevel)continue;
             Long durationByStart=null;
             Double currentLevelPercent=null;
@@ -488,6 +496,11 @@ public class StopWatchDebug {
         return String.format(TITLE_TASK_FORMAT,target);
     }
 
+    private static String limitThreadName(String threadName){
+        return String.format(THREAD_NAME_FORMAT, Strings.isBlank(threadName)?"NONE":threadName);
+    }
+
+
     // Map<Integer, Map<String,List<Double>>> levelTaskNamePercentMap=new HashMap<>();
     @Data
     private static class TaskInfo{
@@ -497,31 +510,55 @@ public class StopWatchDebug {
         List<TaskInfo> childTaskInfoList=new LinkedList<>();
     }
 
-    //======================================================================================================= Data Utils
+    //======================================================================================================= Test
+    public static void main(String[] args) throws InterruptedException {
+        simplePrintTest();
+        durationPrintTest();
+    }
 
-    private static void printTest() throws InterruptedException {
-        System.out.println(StopWatchDebug.initAndStart("one"));
-        System.out.println(StopWatchDebug.duration("test1",1));
+    /**
+     * Test the time logging functionality.
+     *
+     * @throws InterruptedException Thread interrupted exception
+     */
+    private static void simplePrintTest() throws InterruptedException {
+        System.out.println(StopWatchDebugger.initAndStart("test1"));
+        Thread.sleep(2000);
+        System.out.println(StopWatchDebugger.restart("test2"));
+        Thread.sleep(3000);
+        System.out.println(StopWatchDebugger.restart("test3"));
+        Thread.sleep(4000);
+        System.out.println(StopWatchDebugger.print());
+    }
+
+    /**
+     * Test the duration logging functionality.
+     *
+     * @throws InterruptedException Thread interrupted exception
+     */
+    private static void durationPrintTest() throws InterruptedException {
+        System.out.println(StopWatchDebugger.initAndStart("one"));
+        System.out.println(StopWatchDebugger.duration("test1",1));
         for (int i = 0; i < 100; i++) {
             Thread.sleep(10);
         }
-        System.out.println(StopWatchDebug.duration("test1"));
-        System.out.println(StopWatchDebug.duration("test2",2));
+        System.out.println(StopWatchDebugger.duration("test1"));
+        System.out.println(StopWatchDebugger.duration("test2",2));
         for (int i = 0; i < 40; i++) {
             Thread.sleep(10);
         }
-        System.out.println(StopWatchDebug.duration("test2",2));
-        System.out.println(StopWatchDebug.duration("test21",2));
+        System.out.println(StopWatchDebugger.duration("test2",2));
+        System.out.println(StopWatchDebugger.duration("test21",2));
         for (int i = 0; i < 30; i++) {
             Thread.sleep(10);
         }
-        System.out.println(StopWatchDebug.duration("test21",2));
-        System.out.println(StopWatchDebug.duration("test3",3));
+        System.out.println(StopWatchDebugger.duration("test21",2));
+        System.out.println(StopWatchDebugger.duration("test3",3));
         for (int i = 0; i < 10; i++) {
             Thread.sleep(10);
         }
         CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
-            System.out.println(StopWatchDebug.asyncDuration("async1"));
+            System.out.println(StopWatchDebugger.asyncDuration("async1"));
             for (int i = 0; i < 30; i++) {
                 try {
                     Thread.sleep(20);
@@ -529,8 +566,8 @@ public class StopWatchDebug {
                     e.printStackTrace();
                 }
             }
-            System.out.println(StopWatchDebug.asyncDuration("async1"));
-            System.out.println(StopWatchDebug.asyncDuration("async1"));
+            System.out.println(StopWatchDebugger.asyncDuration("async1"));
+            System.out.println(StopWatchDebugger.asyncDuration("async1"));
             for (int i = 0; i < 30; i++) {
                 try {
                     Thread.sleep(20);
@@ -538,15 +575,15 @@ public class StopWatchDebug {
                     e.printStackTrace();
                 }
             }
-            System.out.println(StopWatchDebug.asyncDuration("async1"));
+            System.out.println(StopWatchDebugger.asyncDuration("async1"));
         });
-        System.out.println(StopWatchDebug.duration("test3",3));
-        System.out.println(StopWatchDebug.duration("test22",2));
+        System.out.println(StopWatchDebugger.duration("test3",3));
+        System.out.println(StopWatchDebugger.duration("test22",2));
         for (int i = 0; i < 30; i++) {
             Thread.sleep(10);
         }
         CompletableFuture<Void> voidCompletableFuture2 = CompletableFuture.runAsync(() -> {
-            System.out.println(StopWatchDebug.asyncDuration("async2"));
+            System.out.println(StopWatchDebugger.asyncDuration("async2"));
             for (int i = 0; i < 30; i++) {
                 try {
                     Thread.sleep(20);
@@ -554,8 +591,8 @@ public class StopWatchDebug {
                     e.printStackTrace();
                 }
             }
-            System.out.println(StopWatchDebug.asyncDuration("async2"));
-            System.out.println(StopWatchDebug.asyncDuration("async2"));
+            System.out.println(StopWatchDebugger.asyncDuration("async2"));
+            System.out.println(StopWatchDebugger.asyncDuration("async2"));
             for (int i = 0; i < 30; i++) {
                 try {
                     Thread.sleep(20);
@@ -563,26 +600,16 @@ public class StopWatchDebug {
                     e.printStackTrace();
                 }
             }
-            System.out.println(StopWatchDebug.asyncDuration("async2"));
+            System.out.println(StopWatchDebugger.asyncDuration("async2"));
         });
-        System.out.println(StopWatchDebug.duration("test22",2));
-        System.out.println(StopWatchDebug.duration("test33",3));
+        System.out.println(StopWatchDebugger.duration("test22",2));
+        System.out.println(StopWatchDebugger.duration("test33",3));
         for (int i = 0; i < 10; i++) {
             Thread.sleep(10);
         }
-        System.out.println(StopWatchDebug.duration("test33",3));
+        System.out.println(StopWatchDebugger.duration("test33",3));
         voidCompletableFuture.join();
         voidCompletableFuture2.join();
-        System.out.println(StopWatchDebug.print());
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        System.out.println(StopWatchDebug.initAndStart("test1"));
-        Thread.sleep(2000);
-        System.out.println(StopWatchDebug.restart("test2"));
-        Thread.sleep(3000);
-        System.out.println(StopWatchDebug.restart("test3"));
-        Thread.sleep(4000);
-        System.out.println(StopWatchDebug.print());
+        System.out.println(StopWatchDebugger.print());
     }
 }

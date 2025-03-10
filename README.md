@@ -10,6 +10,26 @@
 [Back to Top](#table-of-contents) 
 
 Simi is a modular maven project designed to explore various architectural and integration techniques, featuring detailed documentation to help you configure and use it.
+# Core Functionality
+## StopWatchDebugger
+`StopWatchDebugger` is a performance optimization tool that tracks sync and async task execution times without suspending the programe and modifying your original code.
+
+No need to add `System.out.println(System.currentTimeMillis());` anymore! it simplifies time logging for performance testing.
+
+Example output:
+
+![](./docs/assets/main/swt1.png)
+
+### Usage
+
+Copy this class to your project, then add a line breakpoint to execute its methods without suspending the entire program in **IDEA debug mode**.
+
+![](./docs/assets/main/swt2.png)
+
+The `main` method of the `StopWatchDebugger` class contains several usage examples for reference.
+
+The `stopwatch` instance within `StopWatchDebugger` is protected in singleton mode, ensuring correct functionality in a multi-threaded environment for synchronous execution time testing.
+
 # Directory Structure
 [Back to Top](#table-of-contents)
 ## docs
