@@ -68,6 +68,7 @@
     - [25. Maximum Number of Operations With the Same Score I](#25-maximum-number-of-operations-with-the-same-score-i)
     - [29. Power Set LCCI](#29-power-set-lcci)
     - [36. Find Triangular Sum of an Array](#36-find-triangular-sum-of-an-array)
+    - [42. Count Prefix and Suffix Pairs I](#42-count-prefix-and-suffix-pairs-i)
   - Two Pointer
     - [26. Boats to Save People](#26-boats-to-save-people)
     - [27. Find the Lexicographically Largest String From the Box I](#27-find-the-lexicographically-largest-string-from-the-box-i)
@@ -5591,8 +5592,9 @@ Therefore, the answer is 0.
 * `1 <= words.length <= 50`
 * `1 <= words[i].length <= 10`
 * `words[i]` consists only of lowercase English letters.
-
-### Implementation
+### Traversal Solution
+Iterate through all possible pairs in the `words` array and check `isPrefixAndSuffix(words[i], words[j])` for each.
+#### Implementation
 ```java
 class Solution {
     public int countPrefixSuffixPairs(String[] words) {
@@ -5609,9 +5611,78 @@ class Solution {
 ```
 #### Time and Space Complexity
 * Time Complexity: $O(n^2)$
+
   The number of iterations of the main loop is $\sum_{i=0}^{i=n}i=\frac{n\times(n+1)}{2}$, resulting in a time complexity of $O(n^2)$
 
 * Space Complexity: $O(1)$
+
+## 43. Total Cost to Hire K Workers
+[Back to Top](#table-of-contents)  
+### Overview
+You are given a 0-indexed integer array `costs` where `costs[i]` is the cost of hiring the i-th worker.
+
+You are also given two integers `k` and `candidates`. We want to hire exactly `k` workers according to the following rules:
+* You will run `k` sessions and hire exactly one worker in each session.
+* In each hiring session, choose the worker with the lowest cost from either the first `candidates` workers or the last `candidates` workers. Break the tie by the smallest index.
+  * For example, if `costs = [3,2,7,7,1,2]` and `candidates = 2`, then in the first hiring session, we will choose the 4-th worker because they have the lowest cost `[3,2,7,7,1,2]`.
+  * In the second hiring session, we will choose 1st worker because they have the same lowest cost as 4th worker but they have the smallest index [3,2,7,7,2]. Please note that the indexing may be changed in the process.
+
+* If there are fewer than candidates workers remaining, choose the worker with the lowest cost among them. Break the tie by the smallest index.
+* A worker can only be chosen once.
+Return the total cost to hire exactly `k` workers.
+
+**Example 1:**
+> **Input:** costs = [17,12,10,2,7,2,11,20,8], k = 3, candidates = 4  
+> **Output:** 11  
+> **Explanation:** We hire 3 workers in total. The total cost is initially 0.
+> - In the first hiring round we choose the worker from [17,12,10,2,7,2,11,20,8]. The lowest cost is 2, and we break the tie by the smallest index, which is 3. The total cost = 0 + 2 = 2.
+> - In the second hiring round we choose the worker from [17,12,10,7,2,11,20,8]. The lowest cost is 2 (index 4). The total cost = 2 + 2 = 4.
+> - In the third hiring round we choose the worker from [17,12,10,7,11,20,8]. The lowest cost is 7 (index 3). The total cost = 4 + 7 = 11. Notice that the worker with index 3 was common in the first and last four workers.
+The total hiring cost is 11.
+
+**Example 2:**
+> **Input:** costs = [1,2,4,1], k = 3, candidates = 3  
+> **Output:** 4  
+> **Explanation:** We hire 3 workers in total. The total cost is initially 0.
+> - In the first hiring round we choose the worker from [1,2,4,1]. The lowest cost is 1, and we break the tie by the smallest index, which is 0. The total cost = 0 + 1 = 1. Notice that workers with index 1 and 2 are common in the first and last 3 workers.
+> - In the second hiring round we choose the worker from [2,4,1]. The lowest cost is 1 (index 2). The total cost = 1 + 1 = 2.
+> - In the third hiring round there are less than three candidates. We choose the worker from the remaining workers [2,4]. The lowest cost is 2 (index 0). The total cost = 2 + 2 = 4.
+The total hiring cost is 4.
+
+**Constraints:**
+* `1 <= costs.length <= 10^5` 
+* `1 <= costs[i] <= 10^5`
+* `1 <= k, candidates <= costs.length`
+
+### Analysis
+
+#### Implementation
+```java
+class Solution {
+    public long totalCost(int[] costs, int k, int candidates) {
+        int[] indecies=new int[costs.length];
+        for(int i=0; i<costs.length; i++){
+            indecies[i]=i;
+            for(int j=i+1; j<costs.length; j++){
+                if(costs[j]<costs[i]){
+                    indecies[i]=j;
+                    indecies[j]=i;
+                }
+            }
+        }
+       long totalCost=0;
+        int prev=1;
+        int num=0;
+        for(num<k){
+            int ind=indecies[0];
+            totalCost+=costs[ind];
+            num++;
+        }
+        return totalCost;
+    }
+}
+```
+
 
 # SQL Problems
 ## 1. Odd and Even Transactions
