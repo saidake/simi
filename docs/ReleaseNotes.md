@@ -3,35 +3,10 @@
 - [Simi](#simi)
   - [Simi 1.2.0 Release - OneDrive Document Migration](#simi-120-release---onedrive-document-migration)
     - [Core Updates](#core-updates)
-    - [SpringBoot\_v1.1.0.pdf](#springboot_v110pdf)
-    - [Java\_v1.1.0.pdf](#java_v110pdf)
-    - [Node\_v1.1.0.pdf](#node_v110pdf)
-    - [Config\_v1.1.0.pdf](#config_v110pdf)
   - [Simi 1.1.0 Release - Sandbox Module](#simi-110-release---sandbox-module)
 # Simi
 ## Simi 1.3.0 Release - Simi Toolkit
-* Updated Japanese_v1.1.0.pdf from version 1.0.0.
-### SpringBoot_v1.2.0
-* **SpringBoot / Third Party Package / Extensions / junit / \[mockito-core\] / Mockito**
-  * Use `doReturn` to return different values on consecutive calls.  
-### Java_v1.2.0
-* **Java / java.base / java.util / concurrent / locks / AbstractQueuedSynchronizer**
-  * Add a usage example for the `newCondition()` method.
-### Linux_v1.1.0
-* **Linux / Bash Script / Core**
-  * Provide detailed explanation for commands like `make`, `make clean`, `make install` and `set`.
-* **Linux / Bash Script / Statement / Function**
-  * Provide usage examples for a bash function. 
-* **Linux / Bash Script / Statement / Control Flow / while**
-  * Provided usage examples for `IFS=`. 
-* **Linux / Commands / Service / Service File**
-  * Introduce options for configuring a systemctl service file.
-### Japanese_v1.1.0
-* **Japanese / Verb / 簡体**
-  * Provide a comprehensive explanation of the plain form.
-* **Japanese / Verb / 敬体**
-  * Provide a comprehensive explanation of the polite form.
-
+* Migrated core documents from Simi 1.2.0 Release to Simi Docs 1.3.0 Release.
 ## Simi 1.2.0 Release - OneDrive Document Migration
 ### Core Updates
 * Migrated documents from OneDrive to Git.
