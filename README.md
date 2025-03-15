@@ -2,9 +2,7 @@
 - [Introduction](#introduction)
 - [Directory Structure](#directory-structure)
   - [docs](#docs)
-    - [Algorithms.md](#algorithmsmd)
     - [Env.md](#envmd)
-    - [Standards.md](#standardsmd)
   - [Simi Sandbox](#simi-sandbox)
 # Introduction
 [Back to Top](#table-of-contents) 
@@ -33,9 +31,6 @@ The `stopwatch` instance within `StopWatchDebugger` is protected in singleton mo
 # Directory Structure
 [Back to Top](#table-of-contents)
 ## docs
-### Algorithms.md
-This file contains solutions to various algorithm problems, each with detailed comments, explanations, and illustrative diagrams.  
-For more information, check out the [Algorithms File](docs/Algorithms.md).
 
 ### Env.md
 This file contains details about the local runtime environment.
@@ -46,10 +41,7 @@ For more information, check out the [Env File](docs/Env.md).
 A guide for configuring various server or CI/CD environments.
 
 For more information, check out the [Configuration File](docs/Configuration.md).
-### SystemDesign.md
-A guild for designing system functionalities and establishing development standards.
 
-For more information, check out the [SystemDesign File](docs/SystemDesign.md).
 ## AAA 
 A resource directory containing startup configuration files needed by other modules.
 
