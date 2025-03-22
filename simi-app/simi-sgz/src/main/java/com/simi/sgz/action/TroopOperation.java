@@ -86,6 +86,8 @@ public class TroopOperation {
         log.info("Detected number: {}", result.trim());
         String processedStr=result.trim()
                 .replaceAll("B","8")
+                .replaceAll("A","4")
+                .replaceAll("O","0")
                 .replaceAll("¢","0")
                 .replaceAll("E","6")
                 .replaceAll("\\D+","");
