@@ -8,9 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -43,13 +41,19 @@ public class ReviewToolApp {
 
     public static void main(String[] args) throws IOException {
         System.out.println("\\*");
-        Stack<String> lines=readMatchPatterns();
+        Stack<String> lines= generateRandomLines();
         System.out.println("-------------------------------------------");
         lines.forEach(System.out::println);
         prependLines(lines);
     }
 
-    private static Stack<String> readMatchPatterns() throws IOException {
+    /**
+     * Generate random lines based on the patterns and content in the KeyPoints file.
+     *
+     * @return Random lines
+     * @throws IOException IO Exception
+     */
+    private static Stack<String> generateRandomLines() throws IOException {
         Stack<String> res=new Stack<>();
         // Open the Key Points file
         @Cleanup BufferedReader reader = new BufferedReader(new FileReader(KEY_POINTS.toString()));
@@ -106,6 +110,16 @@ public class ReviewToolApp {
         return res;
     }
 
+    /**
+     * Push a random line to the stack result.
+     *
+     * @param randomLineNum The number of random lines to be generated
+     * @param currentMatchPattern The current match pattern
+     * @param filePath  The external file path
+     * @param currentRemovalPattern The removal match pattern
+     * @param res The stack result including random lines
+     * @throws IOException IO exception
+     */
     private static void pushRandomLine(int randomLineNum, String currentMatchPattern, Path filePath, String currentRemovalPattern, Stack<String> res) throws IOException {
         for(; randomLineNum >0; randomLineNum--){
             String finalCurrentMatchPattern = currentMatchPattern;
@@ -128,6 +142,12 @@ public class ReviewToolApp {
     }
 
 
+    /**
+     * Prepend the random lines to the review log file.
+     *
+     * @param newLines  Final random lines
+     * @throws IOException  IO exception
+     */
     public static void prependLines(Stack<String> newLines) throws IOException {
         Path tempPath = Files.createTempFile("tempFile", ".tmp");
 
