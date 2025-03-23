@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -41,10 +43,10 @@ public class ReviewToolApp {
 
     public static void main(String[] args) throws IOException {
         System.out.println("\\*");
-        @Cleanup FileWriter fw = new FileWriter(REVIEW_LOG_FILE_PATH.toString(),true);
         Stack<String> lines=readMatchPatterns();
         System.out.println("-------------------------------------------");
         lines.forEach(System.out::println);
+        prependLines(lines);
     }
 
     private static Stack<String> readMatchPatterns() throws IOException {
@@ -123,5 +125,30 @@ public class ReviewToolApp {
      */
     private static String getFileNamePrefix(String fileName){
         return fileName.replaceAll(".md","")+": ";
+    }
+
+
+    public static void prependLines(Stack<String> newLines) throws IOException {
+        Path tempPath = Files.createTempFile("tempFile", ".tmp");
+
+        try (BufferedWriter writer = Files.newBufferedWriter(tempPath);
+             BufferedReader reader = Files.newBufferedReader(REVIEW_LOG_FILE_PATH)) {
+
+            // Write new lines at the top
+            for (String line : newLines) {
+                writer.write(line);
+                writer.newLine();
+            }
+
+            // Append original content
+            String existingLine;
+            while ((existingLine = reader.readLine()) != null) {
+                writer.write(existingLine);
+                writer.newLine();
+            }
+        }
+
+        // Replace original file with the temp file
+        Files.move(tempPath, REVIEW_LOG_FILE_PATH, StandardCopyOption.REPLACE_EXISTING);
     }
 }
