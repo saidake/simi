@@ -2,17 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.simi</groupId>
         <artifactId>simi-sandbox</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>simi-aaa</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>simi-extension-test</artifactId>
     <packaging>pom</packaging>
+
     <modules>
-        <module>simi-system-test</module>
-        <module>simi-lib-test</module>
+        <module>cap-parent</module>
     </modules>
 </project>

@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.simi</groupId>
-        <artifactId>simi-servers</artifactId>
+        <artifactId>simi-server-test</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>simi-aws-consumer</artifactId>
+    <artifactId>aws-consumer</artifactId>
 
     <dependencyManagement>
         <dependencies>

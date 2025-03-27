@@ -9,8 +9,8 @@
     <version>1.0</version>
 
     <modules>
-        <module>simi-aaa</module>
-        <module>simi-extensions</module>
-        <module>simi-servers</module>
+        <module>simi-core-test</module>
+        <module>simi-extension-test</module>
+        <module>simi-server-test</module>
     </modules>
 </project>

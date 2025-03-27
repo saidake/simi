@@ -10,7 +10,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>simi-lib-test</artifactId>
+    <artifactId>java-module</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
