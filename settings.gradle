@@ -1,0 +1,28 @@
+plugins {
+    id "io.spring.develocity.conventions" version "0.0.22"
+    id "org.gradle.toolchains.foojay-resolver-convention" version "0.9.0"
+}
+
+rootProject.name = 'simi'
+
+include "spring-parent"
+rootProject.name="simi"
+rootProject.children.each {project ->
+    project.buildFileName = "${project.name}.gradle"
+}
+
+settings.gradle.projectsLoaded {
+    develocity {
+        buildScan {
+            File buildDir = settings.gradle.rootProject
+                    .getLayout().getBuildDirectory().getAsFile().get()
+            buildDir.mkdirs()
+            new File(buildDir, "build-scan-uri.txt").text = "(build scan not generated)"
+            buildScanPublished { scan ->
+                if (buildDir.exists()) {
+                    new File(buildDir, "build-scan-uri.txt").text = "${scan.buildScanUri}\n"
+                }
+            }
+        }
+    }
+}
