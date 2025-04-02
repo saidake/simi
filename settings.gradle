@@ -5,7 +5,8 @@ plugins {
 
 rootProject.name = 'simi'
 
-include "spring-parent"
+include "simi-parent"
+
 rootProject.name="simi"
 rootProject.children.each {project ->
     project.buildFileName = "${project.name}.gradle"
