@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.simi'
+version = '1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.alibaba:transmittable-thread-local:2.12.1'
+    implementation 'com.simi:simi-common-utils:1.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-security:3.4.2'
+
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+}
