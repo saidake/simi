@@ -1,5 +1,0 @@
-plugins {
-    // kotlinVersion is managed in gradle.properties
-    id 'org.jetbrains.kotlin.plugin.serialization' version "${kotlinVersion}" apply false
-    id 'buildlogic.java-application-conventions'
-}

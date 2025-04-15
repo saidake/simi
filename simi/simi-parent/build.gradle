@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.jetbrains.kotlin.plugin.serialization' version "${kotlinVersion}" apply false
 }
 
 group = 'com.simi'

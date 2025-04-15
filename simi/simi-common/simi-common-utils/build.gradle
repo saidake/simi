@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.simi'
+version = '1.2.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17 // or your target version
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Custom Modules
+    implementation platform(project(":simi:simi-parent"))
+    implementation project(':simi:simi-common:simi-common-util-core')
+
+    // Core
+    implementation 'jakarta.servlet:jakarta.servlet-api'
+
+    // DB
+    compileOnly  'org.springframework.boot:spring-boot-starter-data-redis'
+    compileOnly  'redis.clients:jedis'
+
+    // Extensions
+    implementation 'com.alibaba:transmittable-thread-local'
+
+    // Data Utils
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'commons-io:commons-io'
+    implementation 'commons-codec:commons-codec'
+    implementation 'joda-time:joda-time'
+    implementation 'cn.hutool:hutool-all'
+
+    // Security
+    compileOnly  'io.jsonwebtoken:jjwt'
+    compileOnly  'com.auth0:java-jwt'
+    compileOnly  'org.bouncycastle:bcprov-jdk15on'
+
+    // JAR File Dependencies
+    implementation 'org.dom4j:dom4j'
+    implementation 'jaxen:jaxen:2.0.0'
+    implementation 'org.yaml:snakeyaml:1.33'
+}
+
+// Optional dependencies support
+configurations {
+    optional
+    compileOnly.extendsFrom optional
+}
