@@ -8,6 +8,8 @@
 # often involve many server addresses. Directly using a password is the simplest
 # method.
 #
+# Some servers may not support `rsync -avz`, consider using scp instead.
+#
 # Rules:
 #  * Any error will terminate the script.
 #  * After each step, the user must confirm that the process works as intended.
@@ -86,7 +88,8 @@ fi
 echo "[START]==================================== Upload the local file"
 echo "Local file info:"
 ls -al "$LOCAL_FILE"
-sshpass -p "$LOGIN_PWD" scp "$LOCAL_FILE" "$LOGIN_USER@$SERVER_IP:$REMOTE_UPLOAD_FILE"
+ask "Does the command 'sshpass -p \"$LOGIN_PWD\" rsync -avz \"$LOCAL_FILE\" \"$LOGIN_USER@$SERVER_IP:$REMOTE_UPLOAD_FILE\"' look correct to you? (y/n): "
+sshpass -p "$LOGIN_PWD" rsync -avz "$LOCAL_FILE" "$LOGIN_USER@$SERVER_IP:$REMOTE_UPLOAD_FILE"
 echo
 echo "Upload completed, Print the remote uploaded file: $REMOTE_UPLOAD_FILE"
 remote_execute "ls -al $REMOTE_UPLOAD_FILE"
