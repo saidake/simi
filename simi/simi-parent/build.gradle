@@ -1,84 +1,83 @@
 plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.plugin.serialization' version "${kotlinVersion}" apply false
+    id 'java-platform'
 }
 
 group = 'com.simi'
 version = '1.2.0'
 description = 'simi-parent'
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+repositories {
+    mavenCentral()  // Ensure this is defined
 }
 
-repositories {
-    mavenCentral()
+
+javaPlatform {
+    allowDependencies()
 }
 
 dependencies {
     // Core dependencies
-    implementation platform('org.springframework.boot:spring-boot-dependencies:3.0.5')
-    implementation platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.2')
+    api platform('org.springframework.boot:spring-boot-dependencies:3.0.5')
+    api platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.2')
 
     constraints {
         // AWS SDK
-        implementation 'com.amazonaws:aws-java-sdk-bom:1.12.201'
-        implementation 'software.amazon.awssdk:bom:2.17.173'
+        api 'com.amazonaws:aws-java-sdk-bom:1.12.201'
+        api 'software.amazon.awssdk:bom:2.17.173'
 
         // Jakarta Mail
-        implementation 'com.sun.mail:jakarta.mail:1.6.7'
+        api 'com.sun.mail:jakarta.mail:1.6.7'
 
         // Spring Boot and Spring Cloud
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.cloud:spring-cloud-starter'
+        api 'org.springframework.boot:spring-boot-starter-web'
+        api 'org.springframework.cloud:spring-cloud-starter'
 
         // Custom dependencies
-        implementation 'com.simi:simi-toolkit-core:1.2.0'
-        implementation 'com.simi:simi-util-core:1.2.0'
-        implementation 'com.simi:simi-common-utils:1.2.0'
-        implementation 'com.simi:simi-common-test:1.2.0'
-        implementation 'com.simi:simi-common-log:1.2.0'
-        implementation 'com.simi:simi-common-thread:1.2.0'
-        implementation 'com.simi:simi-config:1.2.0'
-        implementation 'com.simi:simi-swagger-ui:1.2.0'
+        api 'com.simi:simi-toolkit-core:1.2.0'
+        api 'com.simi:simi-util-core:1.2.0'
+        api 'com.simi:simi-common-utils:1.2.0'
+        api 'com.simi:simi-common-test:1.2.0'
+        api 'com.simi:simi-common-log:1.2.0'
+        api 'com.simi:simi-common-thread:1.2.0'
+        api 'com.simi:simi-config:1.2.0'
+        api 'com.simi:simi-swagger-ui:1.2.0'
 
         // Extensions
-        implementation 'org.jasypt:jasypt:1.9.3'
-        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
-        implementation 'com.googlecode.libphonenumber:libphonenumber:8.0.0'
-        implementation 'org.ehcache:ehcache:3.10.0'
-        implementation 'com.github.kwhat:jnativehook:2.2.2'
+        api 'org.jasypt:jasypt:1.9.3'
+        api 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
+        api 'com.googlecode.libphonenumber:libphonenumber:8.0.0'
+        api 'org.ehcache:ehcache:3.10.0'
+        api 'com.github.kwhat:jnativehook:2.2.2'
 
-        // Data utilities
-        implementation 'org.projectlombok:lombok:1.18.36'
-        implementation 'org.apache.commons:commons-lang3:3.12.0'
-        implementation 'com.alibaba:transmittable-thread-local:2.12.1'
-        implementation 'joda-time:joda-time:2.10.6'
-        implementation 'commons-io:commons-io:2.11.0'
-        implementation 'commons-codec:commons-codec:1.15'
-        implementation 'net.sf.dozer:dozer:5.5.1'
-        implementation 'com.google.guava:guava:32.1.1-jre'
-        implementation 'cn.hutool:hutool-all:5.8.15'
+        // Data utils
+        api 'org.projectlombok:lombok:1.18.36'
+        api 'org.apache.commons:commons-lang3:3.12.0'
+        api 'com.alibaba:transmittable-thread-local:2.12.1'
+        api 'joda-time:joda-time:2.10.6'
+        api 'commons-io:commons-io:2.11.0'
+        api 'commons-codec:commons-codec:1.15'
+        api 'net.sf.dozer:dozer:5.5.1'
+        api 'com.google.guava:guava:32.1.1-jre'
+        api 'cn.hutool:hutool-all:5.8.15'
 
         // Security
-        implementation 'io.jsonwebtoken:jjwt:0.9.1'
-        implementation 'com.auth0:java-jwt:3.4.0'
-        implementation 'org.bouncycastle:bcprov-jdk15on:1.58'
+        api 'io.jsonwebtoken:jjwt:0.9.1'
+        api 'com.auth0:java-jwt:3.4.0'
+        api 'org.bouncycastle:bcprov-jdk15on:1.58'
 
         // Logging
-        implementation 'org.slf4j:slf4j-api:2.0.7'
-        implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-        implementation 'ch.qos.logback:logback-classic:1.4.11'
+        api 'org.slf4j:slf4j-api:2.0.7'
+        api 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+        api 'ch.qos.logback:logback-classic:1.4.11'
 
         // File Processing
-        implementation 'org.apache.pdfbox:pdfbox:2.0.26'
-        implementation 'org.apache.xmlgraphics:fop:2.6'
-        implementation 'org.apache.poi:poi:5.2.1'
-        implementation 'org.apache.poi:poi-ooxml:5.2.1'
-        implementation 'com.alibaba:easyexcel:3.2.1'
-        implementation 'org.dom4j:dom4j:2.1.4'
-        implementation 'org.yaml:snakeyaml:2.2'
+        api 'org.apache.pdfbox:pdfbox:2.0.26'
+        api 'org.apache.xmlgraphics:fop:2.6'
+        api 'org.apache.poi:poi:5.2.1'
+        api 'org.apache.poi:poi-ooxml:5.2.1'
+        api 'com.alibaba:easyexcel:3.2.1'
+        api 'org.dom4j:dom4j:2.1.4'
+        api 'org.yaml:snakeyaml:2.2'
     }
 
 }

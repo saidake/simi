@@ -7,6 +7,9 @@ rootProject.name = 'simi-sandbox'
 include "simi", "sandbox"
 
 include "simi:simi-parent"
-include "simi:simi-common:simi-common-utils"
+include "simi:simi-common:simi-common-log"
+include "simi:simi-common:simi-common-test"
+include "simi:simi-common:simi-common-thread"
 include "simi:simi-common:simi-common-util-core"
-include "simi:simi-app:simi-review-tool"
+include "simi:simi-common:simi-common-utils"
+//include "simi:simi-app:simi-review-tool"

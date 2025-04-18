@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.simi'
+version = '1.2.0'
+
+dependencies {
+    implementation platform(project(":simi:simi-parent"))
+    implementation project(':simi:simi-common:simi-common-util-core')
+    annotationProcessor platform(project(":simi:simi-parent")) // ✅ Add this line
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Optional spring-web, treated as compileOnly to mimic <optional>true>
+    compileOnly 'org.springframework:spring-web'
+}
