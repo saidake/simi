@@ -13,7 +13,7 @@ dependencies {
     // Custom Modules
     implementation platform(project(":simi:simi-parent"))
     annotationProcessor platform(project(":simi:simi-parent")) // ✅ Add this line
-    implementation project(':simi:simi-common:simi-common-util-core')
+    api project(':simi:simi-common:simi-common-util-core')
 
     // Core
     api 'jakarta.servlet:jakarta.servlet-api'

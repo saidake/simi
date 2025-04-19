@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.simi'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":simi:simi-parent"))
+    annotationProcessor platform(project(":simi:simi-parent")) // ✅ Add this line
+    implementation project(':simi:simi-common:simi-common-utils')
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}

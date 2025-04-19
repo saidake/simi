@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.simi'
+version = '1.2.0' // Inherited from parent
+description = 'Frontend Swagger Documentation UI Module'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+// Modern resource configuration
+tasks.named('processResources') {
+    // Set destination directory
+    into("META-INF/resources") {
+        from("src/main/resources")
+    }
+}

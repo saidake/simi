@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.simi'
+version = '1.2.0' // Inherited from parent
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // Assuming Java 17 from parent
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":simi:simi-parent"))
+
+    // Spring Cloud dependency
+    api 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+}

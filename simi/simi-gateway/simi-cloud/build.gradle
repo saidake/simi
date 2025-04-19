@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.simi'
+version = '1.2.0' // Inherited from parent
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // Recommended for Spring Cloud 2022+
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Inherit versions from parent BOM
+    implementation platform(project(':simi:simi-parent'))
+    implementation project(':simi:simi-config')
+
+    // Spring Cloud Gateway
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+}

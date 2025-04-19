@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.simi'
+version = '1.2.0' // Inherited from parent
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":simi:simi-parent"))
+    annotationProcessor platform(project(":simi:simi-parent")) // ✅ Add this line
+    implementation project(':simi:simi-common:simi-common-utils')
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
