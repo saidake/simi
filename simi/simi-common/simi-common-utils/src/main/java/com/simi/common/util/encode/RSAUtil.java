@@ -5,7 +5,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URLDecoder;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;

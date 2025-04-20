@@ -1,0 +1,43 @@
+plugins {
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'java'
+}
+
+group = 'com.simi'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-dependencies:3.3.1'
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2024.0.0'
+    }
+}
+
+dependencies {
+    implementation platform(project(":simi:simi-parent"))
+    annotationProcessor platform(project(":simi:simi-parent"))
+    implementation project(':simi:simi-common:simi-common-test')
+
+    // Spring Boot Starter Web for Servlet-based web applications
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Boot Starter Test for testing dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Temporal SDK dependency
+    implementation 'io.temporal:temporal-sdk:1.24.1'
+
+    // Temporal Testing dependency
+    testImplementation 'io.temporal:temporal-testing:1.24.1'
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+}
+
+test {
+    useJUnitPlatform()
+}

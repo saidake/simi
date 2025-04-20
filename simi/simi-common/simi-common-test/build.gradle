@@ -9,16 +9,15 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     implementation platform(project(":simi:simi-parent"))
-    implementation project(':simi:simi-common:simi-common-utils')
-    annotationProcessor platform(project(":simi:simi-parent")) // ✅ Add this line
+    annotationProcessor platform(project(":simi:simi-parent"))
+    api project(':simi:simi-common:simi-common-utils')
 
     // Lombok is compile-only and needs annotationProcessor if you use it for generating code
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations'
+    api 'com.fasterxml.jackson.core:jackson-databind'
+    api 'com.fasterxml.jackson.core:jackson-annotations'
 }

@@ -17,12 +17,10 @@
 package com.simi.common.log.util;
 
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.HttpUtil;
 import com.simi.common.log.entity.SysLog;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -32,6 +30,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Objects;
 
 @UtilityClass
@@ -57,15 +56,21 @@ public class SysLogUtils {
 	}
 
 	public EvaluationContext getContext(Object[] arguments, Method signatureMethod) {
-		String[] parameterNames =  new LocalVariableTableParameterNameDiscoverer().getParameterNames(signatureMethod);
 		EvaluationContext context = new StandardEvaluationContext();
-		if (parameterNames == null) {
+
+		// Retrieve method parameters using reflection (works if compiled with -parameters)
+		Parameter[] parameters = signatureMethod.getParameters();
+
+		if (parameters == null || parameters.length == 0) {
 			return context;
 		}
+
 		// Populate method parameters into evaluation context
 		for (int i = 0; i < arguments.length; i++) {
-			context.setVariable(parameterNames[i], arguments[i]);
+			// Use the parameter name from reflection
+			context.setVariable(parameters[i].getName(), arguments[i]);
 		}
+
 		return context;
 	}
 

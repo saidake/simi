@@ -4,14 +4,12 @@ plugins {
 
 rootProject.name = 'simi-sandbox'
 
-include "simi", "sandbox"
-
 include "simi:simi-parent"
 include "simi:simi-common:simi-common-log"
-include "simi:simi-common:simi-common-test"
 include "simi:simi-common:simi-common-thread"
 include "simi:simi-common:simi-common-util-core"
 include "simi:simi-common:simi-common-utils"
+include "simi:simi-common:simi-common-test"
 include "simi:simi-core:simi-toolkit-core"
 include "simi:simi-app:simi-review-tool"
 include "simi:simi-app:simi-initializer-app"
@@ -20,3 +18,8 @@ include "simi:simi-config"
 include "simi:simi-custom:simi-swagger-ui"
 include "simi:simi-gateway:simi-cloud"
 include "simi:simi-gateway:simi-eureka"
+include "sandbox:server-test:aws-base"
+include "sandbox:server-test:aws-consumer"
+include "sandbox:server-test:temporal"
+include "sandbox:simi-test:log-aspect"
+include "sandbox:core-test:java-module"

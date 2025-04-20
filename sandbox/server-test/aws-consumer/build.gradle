@@ -1,0 +1,42 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.simi'
+version = '1.2.0'
+
+repositories {
+    mavenCentral()
+}
+
+
+
+dependencies {
+    //implementation platform('org.springframework.boot:spring-boot-dependencies:3.0.5')
+    implementation platform(project(":simi:simi-parent"))
+    annotationProcessor platform(project(":simi:simi-parent"))
+    implementation project(':simi:simi-common:simi-common-test')
+
+    // Core Dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-webflux', {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+
+    // Amazon Dependencies
+    implementation 'software.amazon.awssdk:netty-nio-client:2.20.20'
+    implementation 'software.amazon.awssdk:lambda:2.20.20'
+    implementation 'software.amazon.awssdk:sqs:2.20.20'
+
+    // Annotation Processor
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+    // Test Dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -18,7 +18,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//TODO: Log4j doesn't work
 @Slf4j
 @Disabled
 @SpringBootTest(classes = SimiWebFluxApp.class) // This annotation will load the full application context

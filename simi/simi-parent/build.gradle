@@ -10,7 +10,6 @@ repositories {
     mavenCentral()  // Ensure this is defined
 }
 
-
 javaPlatform {
     allowDependencies()
 }

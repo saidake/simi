@@ -12,7 +12,7 @@ repositories {
 dependencies {
     // Custom Modules
     implementation platform(project(":simi:simi-parent"))
-    annotationProcessor platform(project(":simi:simi-parent")) // ✅ Add this line
+    annotationProcessor platform(project(":simi:simi-parent"))
     api project(':simi:simi-common:simi-common-util-core')
 
     // Core
