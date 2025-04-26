@@ -11,7 +11,7 @@
 #   3. Modify the required configurations in the bash file with your own values.
 #
 # Usage:
-#   ./upload-assets.sh
+#   ./cpfiles.sh
 #
 # Author: Craig Brown
 # Date: Oct 4, 2024
