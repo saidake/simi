@@ -76,7 +76,6 @@ dependencies {
         api 'org.apache.poi:poi-ooxml:5.2.1'
         api 'com.alibaba:easyexcel:3.2.1'
         api 'org.dom4j:dom4j:2.1.4'
-        api 'org.yaml:snakeyaml:2.2'
     }
 
 }

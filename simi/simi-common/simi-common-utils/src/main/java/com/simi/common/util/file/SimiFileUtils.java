@@ -18,6 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 /**
  * The class consists exclusively of static method for reading file or write file.
@@ -37,10 +38,25 @@ public class SimiFileUtils {
      * @return  A random line
      * @throws IOException IO Exception during the file reading process
      */
-    public static String readRandomLine(Path path, Predicate<String> linePredicate) throws IOException {
-        List<String> collect = Files.lines(path).filter(linePredicate).toList();
+    public static String readRandomLine(Path path, @Nullable Predicate<String> linePredicate) throws IOException {
+        @Cleanup Stream<String> lines = Files.lines(path);
+        List<String> collect =
+                linePredicate != null
+                        ? lines.filter(linePredicate).toList()
+                        : lines.toList();
         Assert.notEmpty(collect);
         return collect.get(ThreadLocalRandom.current().nextInt(collect.size()));
+    }
+
+    /**
+     * Read a random line from the specified file.
+     *
+     * @param path  Source file path
+     * @return  A random line
+     * @throws IOException IO Exception during the file reading process
+     */
+    public static String readRandomLine(Path path) throws IOException {
+        return readRandomLine(path, null);
     }
 
     /**

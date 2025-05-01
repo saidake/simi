@@ -41,6 +41,5 @@ dependencies {
     // JAR File Dependencies
     api 'org.dom4j:dom4j'
     api 'jaxen:jaxen:2.0.0'
-    api 'org.yaml:snakeyaml:1.33'
 }
 

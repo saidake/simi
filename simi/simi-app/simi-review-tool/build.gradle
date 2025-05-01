@@ -16,9 +16,11 @@ repositories {
 
 dependencies {
     implementation platform(project(":simi:simi-parent"))
-    annotationProcessor platform(project(":simi:simi-parent")) // ✅ Add this line
+    annotationProcessor platform(project(":simi:simi-parent"))
     implementation project(':simi:simi-common:simi-common-utils')
 
+    implementation 'org.yaml:snakeyaml'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'ch.qos.logback:logback-classic'
 }
