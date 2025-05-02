@@ -65,24 +65,20 @@ public class ReviewToolApp {
      */
     public static void prependLines(List<String> newLines) throws IOException {
         Path tempPath = Files.createTempFile("tempFile", ".tmp");
+        @Cleanup BufferedWriter writer = Files.newBufferedWriter(tempPath);
+        @Cleanup BufferedReader reader = Files.newBufferedReader(REVIEW_LOG_FILE_PATH);
 
-        try (BufferedWriter writer = Files.newBufferedWriter(tempPath);
-             BufferedReader reader = Files.newBufferedReader(REVIEW_LOG_FILE_PATH)) {
-
-            // Write new lines at the top
-            for (String line : newLines) {
-                writer.write(line);
-                writer.newLine();
-            }
-
-            // Append original content
-            String existingLine;
-            while ((existingLine = reader.readLine()) != null) {
-                writer.write(existingLine);
-                writer.newLine();
-            }
+        // Write new lines at the top
+        for (String line : newLines) {
+            writer.write(line);
+            writer.newLine();
         }
-
+        // Append original content
+        String existingLine;
+        while ((existingLine = reader.readLine()) != null) {
+            writer.write(existingLine);
+            writer.newLine();
+        }
         // Replace original file with the temp file
         Files.move(tempPath, REVIEW_LOG_FILE_PATH, StandardCopyOption.REPLACE_EXISTING);
     }
