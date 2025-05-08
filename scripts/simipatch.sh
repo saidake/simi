@@ -51,10 +51,6 @@ REMOTE_BACKUP_COMMAND="cp $REMOTE_BACKUP_SOURCE_FILE $REMOTE_BACKUP_TARGET_FILE 
 REMOTE_OVERWRITE_COMMAND="cp $REMOTE_OVERWRITE_SOURCE_FILE $REMOTE_OVERWRITE_TARGET_FILE -f"
 
 set -e
-# wsl -d Ubuntu
-# mount -t drvfs C: /mnt/c
-# cd /mnt/c/Users/simi/Desktop/DevProjects/simi-sandbox/scripts
-# C:\Users\simi\Desktop\DevProjects\simi-sandbox\scripts
 
 # Choice function to interact with the user
 ask() {
