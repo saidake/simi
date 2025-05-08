@@ -34,19 +34,29 @@
     </td>
 </tr>
 <tr>
+    <td>test-server</td>
+    <td>Vmware</td>
+    <td>192.168.127.130</td>
+    <td>N/A</td>
+    <td>Integration Server</td>
+    <td>
+N/A
+    </td>
+</tr>
+<tr>
+    <td>test-server / Spark</td>
+    <td>Vmware</td>
+    <td>192.168.127.130:7077</td>
+    <td><a href="http://192.168.127.130:8080">http://192.168.127.130:8080</a></td>
+    <td>Test Spark server</td>
+    <td>N/A</td>
+</tr>
+<tr>
     <td>Temporal 4.9.0 </td>
     <td>Docker Container</td>
     <td>127.0.0.1:7233</td>
     <td><a href="http://127.0.0.1:48160">http://127.0.0.1:48160</a></td>
     <td>Test temporal server</td>
-    <td>N/A</td>
-</tr>
-<tr>
-    <td>Spark 4.9.0 </td>
-    <td>Docker Container</td>
-    <td>127.0.0.1:7077</td>
-    <td><a href="http://127.0.0.1:48161">http://127.0.0.1:48161</a></td>
-    <td>Test Spark server</td>
     <td>N/A</td>
 </tr>
 </tbody>
