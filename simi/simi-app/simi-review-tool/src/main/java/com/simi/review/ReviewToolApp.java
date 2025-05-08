@@ -11,7 +11,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -29,10 +28,7 @@ import java.util.*;
 @Slf4j
 public class ReviewToolApp {
     private static final Path CONFIG_FILE =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi-docs\\review.yml");
-    private static final Path KEY_POINTS =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi-docs\\temp\\KeyPoints.txt");
     private static final Path REVIEW_LOG_FILE_PATH =Path.of("C:\\Users\\simi\\Desktop\\DevProjects\\simi-docs\\temp\\ReviewLogs.md");
-
-    private static final DateTimeFormatter dateFormater= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static void main(String[] args) throws IOException {
         // Load configuration file
