@@ -19,9 +19,9 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation platform(project(":simi:simi-parent"))
-    annotationProcessor platform(project(":simi:simi-parent"))
-    implementation project(':simi:simi-common:simi-common-test')
+    implementation platform(project(":simi-parent"))
+    annotationProcessor platform(project(":simi-parent"))
+    implementation project(':simi-common:simi-common-test')
 
     // Spring Boot Starter Web for Servlet-based web applications
     implementation 'org.springframework.boot:spring-boot-starter-web'

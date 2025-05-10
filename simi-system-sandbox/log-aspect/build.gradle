@@ -11,10 +11,10 @@ repositories {
 
 dependencies {
     //implementation platform('org.springframework.boot:spring-boot-dependencies:3.0.5')
-    implementation platform(project(":simi:simi-parent"))
-    annotationProcessor platform(project(":simi:simi-parent"))
-    implementation project(':simi:simi-config')
-    implementation project(':simi:simi-common:simi-common-log')
+    implementation platform(project(":simi-parent"))
+    annotationProcessor platform(project(":simi-parent"))
+    implementation project(':simi-config')
+    implementation project(':simi-common:simi-common-log')
 
     // Lombok dependency
     compileOnly 'org.projectlombok:lombok:1.18.36'

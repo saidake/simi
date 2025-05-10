@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.simi'
+version = '1.0.0'
+
+repositories {
+     mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":simi-parent"))
+    annotationProcessor platform(project(":simi-parent")) // ✅ Add this line
+    implementation project(':simi-common:simi-common-utils')
+    implementation project(':simi-core:simi-toolkit-core')
+}
+
+application {
+    mainClass = 'com.saidake.jar.initializer.SimiInitializerApp'
+}
+
+jar {
+    archiveBaseName = 'simi-initializer-app' // Replaces archivesBaseName
+    manifest {
+        attributes 'Main-Class': 'com.saidake.jar.initializer.SimiInitializerApp'
+    }
+}
+
+tasks.register('fatJar', Jar) {
+    archiveClassifier = 'all'
+    manifest.from jar.manifest  // Inherit manifest from the main jar task
+
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    with jar  // Include the output of the standard jar task
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// To build the fat jar, run: gradle fatJar

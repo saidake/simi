@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.simi'
+version = '1.2.0'  // Inherited from parent
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Inherit versions from parent BOM
+    implementation platform(project(':simi-parent'))
+    annotationProcessor platform(project(':simi-parent'))
+    implementation project(':simi-config')
+
+    // Eureka Server
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+}

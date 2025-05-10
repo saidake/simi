@@ -1,0 +1,26 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()  // Ensure this is defined
+}
+
+
+group = 'com.simi'
+version = '1.2.0'
+
+dependencies {
+    // Inherit dependency versions from simi-parent platform
+    implementation platform(project(":simi-parent"))
+
+    // Core dependencies (versions inherited from the platform)
+    api 'org.slf4j:slf4j-api'
+    api 'org.apache.commons:commons-lang3'
+}

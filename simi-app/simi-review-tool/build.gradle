@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.simi'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":simi-parent"))
+    annotationProcessor platform(project(":simi-parent"))
+    implementation project(':simi-common:simi-common-utils')
+
+    implementation 'org.yaml:snakeyaml'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'ch.qos.logback:logback-classic'
+}

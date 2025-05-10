@@ -10,10 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation platform(project(":simi:simi-parent"))
-    annotationProcessor platform(project(":simi:simi-parent"))
+    implementation platform(project(":simi-parent"))
+    annotationProcessor platform(project(":simi-parent"))
     implementation platform('org.springframework.boot:spring-boot-dependencies:3.0.5')
-    implementation project(':simi:simi-common:simi-common-test')
+    implementation project(':simi-common:simi-common-test')
 
     // Annotation Processing
     compileOnly 'org.projectlombok:lombok:1.18.26'

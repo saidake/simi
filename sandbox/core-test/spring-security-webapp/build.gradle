@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.simi'
+version = '1.2.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('org.springframework.boot:spring-boot-dependencies:3.0.3')
+    implementation platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.5')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.slf4j:slf4j-api:2.0.6'
+//    implementation 'ch.qos.logback:logback-classic:1.4.5'
+
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.slf4j:slf4j-api:2.0.12'
+    testImplementation 'ch.qos.logback:logback-classic:1.5.3'
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+}
+test {
+    useJUnitPlatform()
+}
+
+tasks.named('bootJar') {
+    mainClass.set('com.simi.sandbox.spring.security.SpringSecurityApp') // Replace accordingly
+}

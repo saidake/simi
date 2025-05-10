@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.simi'
+version = '1.2.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":simi-parent"))
+    annotationProcessor platform(project(":simi-parent"))
+    api project(':simi-common:simi-common-utils')
+
+    // Lombok is compile-only and needs annotationProcessor if you use it for generating code
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    api 'com.fasterxml.jackson.core:jackson-databind'
+    api 'com.fasterxml.jackson.core:jackson-annotations'
+}

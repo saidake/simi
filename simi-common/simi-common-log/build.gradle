@@ -1,0 +1,31 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.simi'
+version = '1.2.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":simi-parent"))
+    implementation project(':simi-common:simi-common-utils')
+    annotationProcessor platform(project(":simi-parent")) // ✅ Add this line
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Core
+    api 'org.aspectj:aspectjweaver'
+    api 'org.springframework:spring-expression'
+    api 'org.springframework:spring-context'
+    api 'org.springframework:spring-web'
+
+    compileOnly 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
+
+    // Spring Boot Actuator Autoconfigure
+    api 'org.springframework.boot:spring-boot-actuator-autoconfigure'
+}

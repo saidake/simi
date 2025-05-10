@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.simi'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":simi-parent"))
+    annotationProcessor platform(project(":simi-parent")) // ✅ Add this line
+    implementation project(':simi-common:simi-common-utils')
+
+    // External dependencies
+    implementation 'net.sourceforge.tess4j:tess4j:5.15.0'
+    implementation 'com.google.guava:guava'
+    implementation 'com.github.kwhat:jnativehook'
+    implementation 'org.yaml:snakeyaml'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
