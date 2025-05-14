@@ -17,6 +17,11 @@ import java.util.stream.IntStream;
 @Slf4j
 public class TestController {
 
+    @GetMapping("/ping")
+    public Mono<String> ping() {
+        return Mono.just("ping");
+    }
+
     @GetMapping("/testGet")
     public Mono<String> getTest(@RequestParam(required = false) Integer id) {
         log.info("id: {}", id);
