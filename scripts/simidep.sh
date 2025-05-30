@@ -8,6 +8,7 @@
 #   Modify the required configurations in the bash file with your own values.
 #
 # Usage
+#   ./simidep.sh deploy    - Deploy the jar file
 #   ./simidep.sh start     - Start the application
 #   ./simidep.sh restart   - Restart the application
 #   ./simidep.sh stop      - Stop the application
@@ -22,7 +23,6 @@
 # ************************************************************************************
 
 #========================================================== Required Configurations
-
 # The root directory where the application is deployed
 APP_HOME=/root
 # The port the application will listen on
@@ -37,9 +37,12 @@ JAR_LOG_PATH=/tmp/simi.log
 #========================================================== Optional Configurations
 # Declare a global variable to determine whether to use SSH or execute locally
 USE_SSH=true  # Set to true for SSH execution, false for local execution
+
 # If the current bash file is executed via ssh, the remote server user and host need to be configured.
 REMOTE_USER=root
 REMOTE_HOST='192.168.127.128'
+REMOTE_APP_HOME=/root/
+REMOTE_APP_JAR_NAME=simi-webflux-1.0-SNAPSHOT.jar
 
 #JAVA_OPTS="-Xms512m -Xmx512m -Xmn256m -Djava.awt.headless=true -XX:MaxPermSize=128m -Duser.timezone=GMT+8"
 JAVA_OPTS="-Xms512m -Xmx512m -Xmn256m -Djava.awt.headless=true -Duser.timezone=GMT+8"
