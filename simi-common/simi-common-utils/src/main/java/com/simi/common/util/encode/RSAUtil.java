@@ -1,5 +1,6 @@
 package com.simi.common.util.encode;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -10,6 +11,7 @@ import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+@UtilityClass
 public class RSAUtil {
 
     private static final BouncyCastleProvider PROVIDER = new BouncyCastleProvider();

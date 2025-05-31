@@ -1,4 +1,4 @@
-package com.simi.common.util.server;
+package com.simi.common.util.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

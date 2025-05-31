@@ -1,5 +1,6 @@
 package com.simi.common.util.data;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.text.ParseException;
  * Utility class for precise arithmetic calculations using BigDecimal.
  */
 @Slf4j
+@UtilityClass
 public final class BigDecimalUtils {
 
 	/**

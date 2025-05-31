@@ -1,5 +1,6 @@
 package com.simi.common.util.data;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@UtilityClass
 public class StringUtil {
     private static Pattern linePattern = Pattern.compile("_(\\w)");   // Pattern to match underscore followed by a word character
     private static Pattern humpPattern = Pattern.compile("[A-Z]");     // Pattern to match uppercase letters

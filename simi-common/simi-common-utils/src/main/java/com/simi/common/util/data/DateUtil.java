@@ -1,5 +1,6 @@
 package com.simi.common.util.data;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Slf4j
+@UtilityClass
 public class DateUtil {
 
     public static final Long HOUR = 60 * 60 * 1000L;

@@ -1,6 +1,7 @@
 package com.simi.common.util.log;
 import jakarta.annotation.Nullable;
 import lombok.Data;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.util.Assert;
@@ -24,6 +25,7 @@ import java.util.concurrent.CompletableFuture;
  * @since 1.0
  */
 @Slf4j
+@UtilityClass
 public class StopWatchDebugger {
     private static final DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     private static final Map<String,Integer> taskNameLevelMap =new HashMap<>();

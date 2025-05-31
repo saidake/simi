@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
+@UtilityClass
 public class JwtUtil {
     public interface JwtKeyConstant{
         String BOOS_KEY = "fffffsssssfffffsssssfffffsssssaa";

@@ -1,5 +1,7 @@
 package com.simi.common.util.data;
 
+import lombok.experimental.UtilityClass;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -11,6 +13,7 @@ import java.text.NumberFormat;
  * Java's BigDecimal class helps to perform precise business calculations
  * without the inaccuracies of float and double.
  */
+@UtilityClass
 public class AmountUtil {
 
     /**

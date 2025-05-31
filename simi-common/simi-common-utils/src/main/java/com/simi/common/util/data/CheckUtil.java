@@ -1,5 +1,8 @@
 package com.simi.common.util.data;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class CheckUtil {
     public static void throwErrorMessage(String message) {
         throw new RuntimeException(message);

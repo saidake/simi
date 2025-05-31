@@ -1,5 +1,6 @@
 package com.simi.common.util.encode;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 @Slf4j
+@UtilityClass
 public class MD5Util {
     public static final int MD532 = 32;
     public static final int MD516 = 16;

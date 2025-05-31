@@ -1,5 +1,7 @@
 package com.simi.common.util.data;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -11,6 +13,7 @@ import java.util.Locale;
  * Provides methods to convert between different date-time types, compare times,
  * and perform date arithmetic such as adding minutes, days, months, and years.
  */
+@UtilityClass
 public final class LocalDateTimeUtil {
 
     public static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
@@ -63,9 +66,6 @@ public final class LocalDateTimeUtil {
      */
     public static String getDateTime() {
         return timeFormat.format(Instant.now());
-    }
-
-    private LocalDateTimeUtil() {
     }
 
     /**

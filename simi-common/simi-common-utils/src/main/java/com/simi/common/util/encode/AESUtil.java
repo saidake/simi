@@ -1,10 +1,13 @@
 package com.simi.common.util.encode;
 
+import lombok.experimental.UtilityClass;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+@UtilityClass
 public class AESUtil {
     /**
      * Encrypts a string using AES encryption with GCM mode.

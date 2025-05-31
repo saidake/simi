@@ -1,5 +1,6 @@
 package com.simi.common.util.encode;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
@@ -8,6 +9,7 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+@UtilityClass
 public class DESUtil {
     /**
      * Generates a secret key using the specified seed.

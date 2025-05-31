@@ -1,6 +1,7 @@
 package com.simi.common.util.network;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
+@UtilityClass
 public class IpUtil {
     private final static String UNKNOWN_STR = "unknown";
 
