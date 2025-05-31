@@ -8,44 +8,60 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * Utility class for extracting client IP addresses from servlet-based HTTP requests.
+ * <p>
+ * This class provides methods to accurately determine the originating IP address of a client
+ * by inspecting common HTTP headers that may be set by proxies or load balancers (e.g., X-Forwarded-For).
+ * Falls back to the remote address of the request if no headers are present.
+ * </p>
+ *
+ * Designed for use in traditional Servlet environments (e.g., Spring MVC).
+ *
+ * @author Craig Brown
+ * @since 1.2.1
+ */
 @Slf4j
 @UtilityClass
-public class IpUtil {
+public class IpUtilsServlet {
     private final static String UNKNOWN_STR = "unknown";
 
+    // Common headers that may contain the client's real IP behind proxies/load balancers
+    private final String[] POSSIBLE_CLIENT_IP_HEADERS = {
+            "X-Forwarded-For",
+            "Proxy-Client-IP",
+            "WL-Proxy-Client-IP",
+            "HTTP_CLIENT_IP",
+            "HTTP_X_FORWARDED_FOR"
+    };
+
     /**
-     * Retrieves the client IP address of the user accessing the application, suitable for both public and local network environments.
-     * This method checks multiple HTTP headers that may contain the client's real IP, including:
-     * - X-Forwarded-For
-     * - Proxy-Client-IP
-     * - WL-Proxy-Client-IP
-     * - HTTP_CLIENT_IP
-     * - HTTP_X_FORWARDED_FOR
-     * If none of these headers are available or valid, it falls back to the remote address from the request.
-     * If the IP address is a loopback address (127.0.0.1 or equivalent), the server's internal IP is returned.
+     * Retrieves the client IP address of the user accessing the application,
+     * suitable for both public and local network environments.
+     * If none of these headers are available or valid, it falls back to the
+     * remote address from the request. If the IP address is a loopback address
+     * (127.0.0.1 or equivalent), the server's internal IP is returned.
+     *
+     * @param request Http request
+     * @return IP Address
      */
-    public static String getRemoteAddr(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
+    public static Optional<String> getRemoteAddr(HttpServletRequest request) {
+        String ip = null;
+        for (String header : POSSIBLE_CLIENT_IP_HEADERS) {
+            ip = request.getHeader(header);
+            if (!isEmptyIP(ip)) {
+                break;
+            }
+        }
         if (isEmptyIP(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-            if (isEmptyIP(ip)) {
-                ip = request.getHeader("WL-Proxy-Client-IP");
-                if (isEmptyIP(ip)) {
-                    ip = request.getHeader("HTTP_CLIENT_IP");
-                    if (isEmptyIP(ip)) {
-                        ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-                        if (isEmptyIP(ip)) {
-                            ip = request.getRemoteAddr();
-                            if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
-                                // If the IP is a loopback address, return the server's internal IP
-                                ip = getServerInnerIP();
-                            }
-                        }
-                    }
-                }
+            ip = request.getRemoteAddr();
+            if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
+                ip = getServerInnerIP();
             }
         } else if (ip.length() > 15) {
             String[] ips = ip.split(",");
@@ -56,7 +72,7 @@ public class IpUtil {
                 }
             }
         }
-        return ip;
+        return Optional.ofNullable(ip);
     }
 
     /**
