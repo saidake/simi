@@ -57,8 +57,7 @@ public class RequestResponseLoggingFilter implements WebFilter {
                     byte[] bytes = new byte[dataBuffer.readableByteCount()];
                     dataBuffer.read(bytes);
                     DataBufferUtils.release(dataBuffer);
-                    String body = new String(bytes, StandardCharsets.UTF_8);
-                    return truncateBody(body, MAX_REQUEST_BODY_LENGTH);
+                    return new String(bytes, StandardCharsets.UTF_8);
                 })
                 .defaultIfEmpty("");
 
@@ -111,7 +110,7 @@ public class RequestResponseLoggingFilter implements WebFilter {
             // Log response before commit
             ServerHttpResponse response = decoratedResponse.getDelegate();
             response.beforeCommit(() -> {
-                String responseBody = truncateBody(responseBodyHolder.toString(), MAX_RESPONSE_BODY_LENGTH);
+                String responseBody = responseBodyHolder.toString();
                 logResponse(exchange, responseBody, startTime);
                 return Mono.empty();
             });
@@ -138,7 +137,7 @@ public class RequestResponseLoggingFilter implements WebFilter {
                 request.getMethod(),
                 request.getURI(),
                 headers,
-                body.isEmpty() ? "<empty>" : body);
+                body.isEmpty() ? "<empty>" : truncateBody(body, MAX_REQUEST_BODY_LENGTH));
     }
 
     private void logResponse(ServerWebExchange exchange, String body, long startTime) {
@@ -158,7 +157,7 @@ public class RequestResponseLoggingFilter implements WebFilter {
                 exchange.getRequest().getURI(),
                 response.getStatusCode(),
                 headers,
-                body.isEmpty() ? "<empty>" : body,
+                body.isEmpty() ? "<empty>" : truncateBody(body, MAX_RESPONSE_BODY_LENGTH),
                 duration);
     }
 
