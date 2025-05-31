@@ -1,3 +1,5 @@
 rootProject.name = 'simi-sandbox'
 
 include ":simi-common:simi-common-utils"
+include ':simi-common:simi-common-req-res-log'
+
