@@ -1,4 +1,4 @@
-package com.simi.common.util.file;
+package com.simi.labs.common.utils.file;
 
 import jakarta.annotation.Nullable;
 import lombok.Cleanup;

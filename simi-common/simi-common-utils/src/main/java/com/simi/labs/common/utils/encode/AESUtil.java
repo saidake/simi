@@ -1,4 +1,4 @@
-package com.simi.common.util.encode;
+package com.simi.labs.common.utils.encode;
 
 import lombok.experimental.UtilityClass;
 

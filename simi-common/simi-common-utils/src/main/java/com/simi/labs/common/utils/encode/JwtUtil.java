@@ -1,6 +1,6 @@
-package com.simi.common.util.encode;
+package com.simi.labs.common.utils.encode;
 
-import com.simi.common.util.data.DateUtil;
+import com.simi.labs.common.utils.data.DateUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

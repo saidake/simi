@@ -1,4 +1,4 @@
-package com.simi.common.util.log;
+package com.simi.labs.common.utils.log;
 import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.experimental.UtilityClass;

@@ -1,4 +1,4 @@
-package com.simi.common.util.network;
+package com.simi.labs.common.utils.network;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;

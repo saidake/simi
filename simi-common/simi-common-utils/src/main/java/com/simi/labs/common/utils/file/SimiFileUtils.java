@@ -1,7 +1,7 @@
-package com.simi.common.util.file;
+package com.simi.labs.common.utils.file;
 
 import cn.hutool.core.lang.Assert;
-import com.simi.common.util.SmpAssert;
+import com.simi.labs.common.utils.SmpAssert;
 import jakarta.annotation.Nullable;
 import lombok.Cleanup;
 import lombok.experimental.UtilityClass;

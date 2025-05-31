@@ -1,4 +1,4 @@
-package com.simi.common.util.data;
+package com.simi.labs.common.utils.data;
 
 import lombok.experimental.UtilityClass;
 

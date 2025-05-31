@@ -1,4 +1,4 @@
-package com.simi.common.util;
+package com.simi.labs.common.utils;
 
 
 import jakarta.annotation.Nullable;

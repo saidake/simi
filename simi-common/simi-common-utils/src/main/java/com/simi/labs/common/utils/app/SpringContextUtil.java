@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simi.common.util.app;
+package com.simi.labs.common.utils.app;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
