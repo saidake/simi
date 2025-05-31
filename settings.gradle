@@ -1,27 +1,3 @@
-plugins {
-    id "org.gradle.toolchains.foojay-resolver-convention" version "0.9.0"
-}
-
 rootProject.name = 'simi-sandbox'
 
-include ":simi-parent"
-include ":simi-common:simi-common-log"
-include ":simi-common:simi-common-thread"
-include ":simi-common:simi-common-util-core"
 include ":simi-common:simi-common-utils"
-include ":simi-common:simi-common-test"
-include ":simi-core:simi-toolkit-core"
-include ":simi-app:simi-review-tool"
-include ":simi-app:simi-initializer-app"
-include ":simi-app:simi-sgz"
-include ":simi-config"
-include ":simi-custom:simi-swagger-ui"
-include ":simi-gateway:simi-cloud"
-include ":simi-gateway:simi-eureka"
-include ":simi-system-sandbox:log-aspect"
-include ":sandbox:server-test:aws-base"
-include ":sandbox:server-test:aws-consumer"
-include ":sandbox:server-test:temporal"
-include ":sandbox:core-test:java-module"
-include ":sandbox:core-test:spring-security-webflux"
-include ":sandbox:core-test:spring-security-webapp"

@@ -1,0 +1,61 @@
+[libraries]
+# Spring BOMs
+spring-boot-bom = { group = "org.springframework.boot", name = "spring-boot-dependencies", version = "3.0.5" }
+spring-cloud-bom = { group = "org.springframework.cloud", name = "spring-cloud-dependencies", version = "2022.0.2" }
+
+# Spring Starters
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version = "3.0.5" }
+spring-cloud-starter = { group = "org.springframework.cloud", name = "spring-cloud-starter", version = "2022.0.2" }
+
+# AWS
+aws-java-sdk-bom = { group = "com.amazonaws", name = "aws-java-sdk-bom", version = "1.12.201" }
+aws-sdk-v2-bom = { group = "software.amazon.awssdk", name = "bom", version = "2.17.173" }
+
+# Email
+jakarta-mail = { group = "com.sun.mail", name = "jakarta.mail", version = "1.6.7" }
+
+# Custom Simi libraries
+simi-toolkit-core = { group = "com.simi", name = "simi-toolkit-core", version = "1.2.0" }
+simi-util-core = { group = "com.simi", name = "simi-util-core", version = "1.2.0" }
+simi-common-utils = { group = "com.simi", name = "simi-common-utils", version = "1.2.0" }
+simi-common-test = { group = "com.simi", name = "simi-common-test", version = "1.2.0" }
+simi-common-log = { group = "com.simi", name = "simi-common-log", version = "1.2.0" }
+simi-common-thread = { group = "com.simi", name = "simi-common-thread", version = "1.2.0" }
+simi-config = { group = "com.simi", name = "simi-config", version = "1.2.0" }
+simi-swagger-ui = { group = "com.simi", name = "simi-swagger-ui", version = "1.2.0" }
+
+# Utils and tools
+jasypt = { group = "org.jasypt", name = "jasypt", version = "1.9.3" }
+springdoc-openapi = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version = "2.0.4" }
+libphonenumber = { group = "com.googlecode.libphonenumber", name = "libphonenumber", version = "8.0.0" }
+ehcache = { group = "org.ehcache", name = "ehcache", version = "3.10.0" }
+jnativehook = { group = "com.github.kwhat", name = "jnativehook", version = "2.2.2" }
+
+# Data
+lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.36" }
+commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version = "3.12.0" }
+transmittable-thread-local = { group = "com.alibaba", name = "transmittable-thread-local", version = "2.12.1" }
+joda-time = { group = "joda-time", name = "joda-time", version = "2.10.6" }
+commons-io = { group = "commons-io", name = "commons-io", version = "2.11.0" }
+commons-codec = { group = "commons-codec", name = "commons-codec", version = "1.15" }
+dozer = { group = "net.sf.dozer", name = "dozer", version = "5.5.1" }
+guava = { group = "com.google.guava", name = "guava", version = "32.1.1-jre" }
+hutool = { group = "cn.hutool", name = "hutool-all", version = "5.8.15" }
+
+# Security
+jjwt = { group = "io.jsonwebtoken", name = "jjwt", version = "0.9.1" }
+java-jwt = { group = "com.auth0", name = "java-jwt", version = "3.4.0" }
+bouncycastle = { group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.58" }
+
+# Logging
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.7" }
+log4jdbc = { group = "org.bgee.log4jdbc-log4j2", name = "log4jdbc-log4j2-jdbc4.1", version = "1.16" }
+logback-classic = { group = "ch.qos.logback", name = "logback-classic", version = "1.4.11" }
+
+# File Handling
+pdfbox = { group = "org.apache.pdfbox", name = "pdfbox", version = "2.0.26" }
+fop = { group = "org.apache.xmlgraphics", name = "fop", version = "2.6" }
+poi = { group = "org.apache.poi", name = "poi", version = "5.2.1" }
+poi-ooxml = { group = "org.apache.poi", name = "poi-ooxml", version = "5.2.1" }
+easyexcel = { group = "com.alibaba", name = "easyexcel", version = "3.2.1" }
+dom4j = { group = "org.dom4j", name = "dom4j", version = "2.1.4" }

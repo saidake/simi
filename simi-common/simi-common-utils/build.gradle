@@ -1,45 +1,51 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 group = 'com.simi'
-version = '1.2.0'
+version = '1.2.1'
 
 repositories {
-    mavenCentral()  // Ensure this is defined
+    mavenCentral()
 }
 
 dependencies {
     // Custom Modules
-    implementation platform(project(":simi-parent"))
-    annotationProcessor platform(project(":simi-parent"))
-    api project(':simi-common:simi-common-util-core')
+    api 'commons-io:commons-io:2.11.0'
+    api 'commons-codec:commons-codec:1.15'
+    api 'joda-time:joda-time:2.12.5'
+    api 'cn.hutool:hutool-all:5.8.22'
+    api 'org.slf4j:slf4j-api:2.0.13'
+    api 'org.apache.commons:commons-lang3:3.13.0'
+    api 'com.alibaba:transmittable-thread-local:2.14.2'
 
-    // Core
-    api 'jakarta.servlet:jakarta.servlet-api'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    compileOnly 'org.springframework.boot:spring-boot-starter-data-redis:3.0.5'
+    compileOnly 'redis.clients:jedis:5.0.0-alpha2'
 
-    // DB
-    compileOnly  'org.springframework.boot:spring-boot-starter-data-redis'
-    compileOnly  'redis.clients:jedis'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-    // Extensions
-    api 'com.alibaba:transmittable-thread-local'
+    compileOnly 'io.jsonwebtoken:jjwt:0.9.1'
+    compileOnly 'com.auth0:java-jwt:4.4.0'
+    compileOnly 'org.bouncycastle:bcprov-jdk15on:1.70'
 
-    // Data Utils
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    api 'commons-io:commons-io'
-    api 'commons-codec:commons-codec'
-    api 'joda-time:joda-time'
-    api 'cn.hutool:hutool-all'
-
-    // Security
-    compileOnly  'io.jsonwebtoken:jjwt'
-    compileOnly  'com.auth0:java-jwt'
-    compileOnly  'org.bouncycastle:bcprov-jdk15on'
-
-    // JAR File Dependencies
-    api 'org.dom4j:dom4j'
+    api 'org.dom4j:dom4j:2.1.4'
     api 'jaxen:jaxen:2.0.0'
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = 'com.simi.labs'
+            artifactId = 'simi-common-utils'
+            version = '1.2.1'
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}
