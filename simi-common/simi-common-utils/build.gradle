@@ -23,6 +23,7 @@ dependencies {
     compileOnly 'org.springframework.boot:spring-boot-starter-data-redis:3.0.5'
     compileOnly 'org.springframework.boot:spring-boot-starter-webflux:3.0.5'
     compileOnly 'redis.clients:jedis:5.0.0-alpha2'
+    compileOnly 'de.mkammerer:argon2-jvm:2.11'
 
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
