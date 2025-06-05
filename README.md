@@ -3,85 +3,85 @@
 - [Directory Structure](#directory-structure)
   - [docs](#docs)
     - [Env.md](#envmd)
-  - [Simi Sandbox](#simi-sandbox)
+    - [ReleaseNotes.md](#releasenotesmd)
+  - [AAA](#aaa)
+  - [simi-common](#simi-common)
+    - [simi-common-utils](#simi-common-utils)
+  - [sandbox](#sandbox)
+    - [extension-test](#extension-test)
+      - [simi-cap](#simi-cap)
+  - [simi-app](#simi-app)
+    - [simi-initializer-app](#simi-initializer-app)
+    - [simi-sgz](#simi-sgz)
+  - [simi-config](#simi-config)
+  - [simi-custom](#simi-custom)
+  - [simi-gateway](#simi-gateway)
+
 # Introduction
-[Back to Top](#table-of-contents) 
+[Back to Top](#table-of-contents)
 
-Simi is a modular maven project designed to explore various architectural and integration techniques, featuring detailed documentation to help you configure and use it.
-# Core Functionality
-## StopWatchDebugger
-`StopWatchDebugger` is a performance optimization tool that tracks sync and async task execution times without suspending the programe and modifying your original code.
-
-No need to add `System.out.println(System.currentTimeMillis());` anymore! it simplifies time logging for performance testing.
-
-Example output:
-
-![](docs/assets/main/swt1.png)
-
-### Usage
-
-Copy this class to your project, then add a line breakpoint to execute its methods without suspending the entire program in **IDEA debug mode**.
-
-![](docs/assets/main/swt2.png)
-
-The `main` method of the `StopWatchDebugger` class contains several usage examples for reference.
-
-The `stopwatch` instance within `StopWatchDebugger` is protected in singleton mode, ensuring correct functionality in a multi-threaded environment for synchronous execution time testing.
+**Simi Sandbox** is a modular Gradle project used to explore architecture and integration techniques.  
+It includes documentation and tools to help with configuration and usage.
 
 # Directory Structure
 [Back to Top](#table-of-contents)
+
 ## docs
 
 ### Env.md
-This file contains details about the local runtime environment.
+Describes the local runtime environment.  
+See [Env.md](docs/Env.md) for details.
 
-For more information, check out the [Env File](docs/Env.md).
+### ReleaseNotes.md
+Contains release notes.  
+See [ReleaseNotes.md](docs/ReleaseNotes.md) for details.
 
-### Configuration.md
-A guide for configuring various server or CI/CD environments.
-
-For more information, check out the [Configuration File](docs/Configuration.md).
-
-## AAA 
-A resource directory containing startup configuration files needed by other modules.
-
-## scripts
-A folder containing bash and batch files required by other modules.
-* cpfiles.sh
-  - Copy local files to remote server.
-* execr.sh
-  - Execute a remote bash script with its environment variables.
-* simidep.sh 
-  - Deploy a jar file to remote server.
-
-## simi-sandbox
-The simi-sandbox is a dedicated Maven module designed as a versatile environment for testing, experimenting, and showcasing various code implementations.
-
-### simi-cap  
-Simi Cap is a CAP demo application.  
-The [Cloud Application Programming Model (CAP)](https://cap.cloud.sap/docs/java/getting-started) is a framework of languages, libraries, and tools for building enterprise-grade services and applications.
-
-## simi-app
-Some simple applications that includes specific functionalities.
-
-### simi-initializer-app  
-Simi Initializer is an IntelliJ IDEA plugin designed to streamline the initial configuration of Maven projects with complex local setups.  
-It automates startup configurations like adjusting certificate file locations, adding local-specific dependencies, and modifying server IP addresses.
-
-### simi-sgz  
-Simi Sgz is an automation script module designed for the game <a href="https://sangokushi.qookkagames.jp">Three Kingdoms Tactics<a/>.
+## AAA
+Startup configuration files used by other modules.
 
 ## simi-common
-Common modules shared by other modules.
+
+### simi-common-utils
+
+- `StopWatchDebugger`  
+  Utility for measuring sync and async execution times without modifying original code.  
+  Run its `main` method to see output.  
+  Works in multi-threaded environments using a singleton `stopwatch`.
+
+  ![](docs/assets/main/swt1.png)
+
+  Usage: Copy the class into your project and debug using breakpoints in **IDEA**.  
+  ![](docs/assets/main/swt2.png)
+
+- `IpUtilsServlet`  
+  Gets client IPs in servlet-based web apps.
+
+- `IpUtilsWebFlux`  
+  Gets client IPs in WebFlux-based apps.
+
+## sandbox
+A Maven module for testing, experimenting, and showcasing code.
+
+### extension-test
+
+#### simi-cap
+CAP demo app.  
+Based on the [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap/docs/java/getting-started).
+
+## simi-app
+
+### simi-initializer-app
+An IntelliJ IDEA plugin that simplifies Maven project setup.  
+It handles certificate paths, local dependencies, and server IPs.
+
+### simi-sgz
+Automation scripts for the game [Three Kingdoms Tactics](https://sangokushi.qookkagames.jp).
 
 ## simi-config
-Common configuration files for use by other modules.
+Shared configuration files.
 
 ## simi-custom
 Custom modules.
 
 ## simi-gateway
-Gateway modules.
-
-## simi-parent
-A parent module that manages the dependency versions of other modules.
+Gateway-related modules.
