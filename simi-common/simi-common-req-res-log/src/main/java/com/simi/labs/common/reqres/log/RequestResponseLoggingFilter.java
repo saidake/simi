@@ -40,7 +40,7 @@ public class RequestResponseLoggingFilter implements WebFilter {
     private static final int MAX_REQUEST_BODY_LENGTH = 1000;
     private static final int MAX_RESPONSE_BODY_LENGTH = 1000;
 
-    @Value("${similabs.logging.enable-response-body:false}")
+    @Value("${simi.logging.enable-response-body:false}")
     private boolean logResponseEnabled;
 
     @Override
